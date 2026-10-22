@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "simplemachines:block/solid_fuel_generator_front_on",
-    "side": "simplemachines:block/solid_fuel_generator_side",
-    "top": "simplemachines:block/solid_fuel_generator_top"
-  }
-}

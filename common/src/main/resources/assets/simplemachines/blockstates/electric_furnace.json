@@ -1,0 +1,566 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "tier": "iron"
+      },
+      "apply": {
+        "model": "simplemachines:block/iron_chassis"
+      }
+    },
+    {
+      "when": {
+        "tier": "steel"
+      },
+      "apply": {
+        "model": "simplemachines:block/steel_chassis"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core"
+      },
+      "when": {
+        "facing": "north",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_on"
+      },
+      "when": {
+        "facing": "north",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop"
+      },
+      "when": {
+        "facing": "north",
+        "worktop": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop"
+      },
+      "when": {
+        "facing": "north",
+        "worktop": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop"
+      },
+      "when": {
+        "facing": "north",
+        "worktop": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop"
+      },
+      "when": {
+        "facing": "north",
+        "worktop": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_on",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "worktop": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "worktop": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "worktop": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "worktop": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_on",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "worktop": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "worktop": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "worktop": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "worktop": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_on",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "worktop": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "worktop": "iron"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "worktop": "copper"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "steel"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "worktop": "steel"
+      }
+    }
+  ]
+}

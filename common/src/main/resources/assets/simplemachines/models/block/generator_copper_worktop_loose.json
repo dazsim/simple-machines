@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "worktop": "simplemachines:block/copper_worktop",
+    "particle": "simplemachines:block/copper_worktop"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        15.5,
+        0
+      ],
+      "to": [
+        16,
+        17.5,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#worktop"
+        },
+        "south": {
+          "texture": "#worktop"
+        },
+        "east": {
+          "texture": "#worktop"
+        },
+        "west": {
+          "texture": "#worktop"
+        },
+        "up": {
+          "texture": "#worktop"
+        },
+        "down": {
+          "texture": "#worktop"
+        }
+      }
+    }
+  ]
+}

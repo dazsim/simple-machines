@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "simplemachines:block/rolling_mill"
+    "model": "simplemachines:block/rolling_mill_item"
   }
 }

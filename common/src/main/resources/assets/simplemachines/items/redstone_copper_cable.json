@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "simplemachines:block/redstone_copper_cable_item"
+  }
+}

@@ -1,7 +1,2381 @@
 {
-  "variants": {
-    "": {
-      "model": "simplemachines:block/steel_chassis"
+  "multipart": [
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_chassis"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "furnace",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "rolling",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_worktop_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "generator",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board_loose"
+      },
+      "when": {
+        "facing": "north",
+        "step": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board"
+      },
+      "when": {
+        "facing": "north",
+        "step": "4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels_loose"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels_loose"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels_loose"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels_loose"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "furnace",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "rolling",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_worktop_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "generator",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "step": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "step": "4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "furnace",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "rolling",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_worktop_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "generator",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "step": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "step": "4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_core",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_wood_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_iron_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_copper_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/furnace_steel_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "furnace",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_core",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_wood_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_iron_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_copper_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/rolling_steel_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "rolling",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_core",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_wood_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "worktop": "wood",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_iron_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "worktop": "iron",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_copper_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "worktop": "copper",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_steel_worktop_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "generator",
+        "worktop": "steel",
+        "step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "step": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/control_board",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "step": "4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "wood",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/wood_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "wood",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/iron_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/copper_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/steel_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "steel",
+        "step": "6|7"
+      }
     }
-  }
+  ]
 }

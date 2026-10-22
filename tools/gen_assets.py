@@ -224,8 +224,6 @@ def main():
     save(extruder_front(False), tb + "extruder_front.png")
     save(extruder_front(True), tb + "extruder_front_on.png")
     save(steel_frame(), tb + "steel_chassis.png")
-    save(sprite(INGOT, STEEL), ti + "steel_ingot.png")
-    save(sprite(INGOT, RCOPPER), ti + "redstone_copper_ingot.png")
     save(sprite(ROD, IRON), ti + "iron_rod.png")
     save(sprite(ROD, COPPER), ti + "copper_rod.png")
     save(sprite(ROD, STEEL), ti + "steel_rod.png")

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "simplemachines:block/solid_fuel_generator"
+  }
+}

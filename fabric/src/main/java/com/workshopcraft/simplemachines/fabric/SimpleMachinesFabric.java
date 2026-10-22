@@ -1,9 +1,12 @@
 package com.workshopcraft.simplemachines.fabric;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import team.reborn.energy.api.EnergyStorage;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -22,6 +25,19 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerRecipeSerializers(direct(BuiltInRegistries.RECIPE_SERIALIZER));
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.alloyFurnaceEntity);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.generatorEntity);
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.rollingMillEntity);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.generatorEntity);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.rollingMillEntity);
+        EnergyBuffer.pusher = (level, pos, side, amount) -> {
+            final EnergyStorage s = EnergyStorage.SIDED.find(level, pos, side);
+            if (s == null || !s.supportsInsertion()) return 0;
+            try (Transaction tx = Transaction.openOuter()) {
+                final long n = s.insert(amount, tx);
+                tx.commit();
+                return (int) n;
+            }
+        };
     }
 
     private static <T> BiConsumer<Identifier, T> direct(Registry<T> registry) {

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Fuel-burning machine: input slots, then one fuel slot, then one output slot. */
-public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseContainerBlockEntity implements WorldlyContainer {
+public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseContainerBlockEntity implements WorldlyContainer, Ticking {
     public static final int DATA_COUNT = 4;
 
     protected final int inputs;
@@ -100,6 +100,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         return new MachineInput(new ArrayList<>(items.subList(0, inputs)));
     }
 
+    @Override
     public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {
         final boolean wasLit = litTime > 0;
         boolean changed = false;

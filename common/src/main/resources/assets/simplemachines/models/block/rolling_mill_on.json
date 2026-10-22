@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "simplemachines:block/rolling_mill_front_on",
+    "side": "simplemachines:block/rolling_mill_side",
+    "top": "simplemachines:block/rolling_mill_top"
+  }
+}

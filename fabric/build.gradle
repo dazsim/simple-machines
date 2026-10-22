@@ -6,6 +6,8 @@ dependencies {
     minecraft("com.mojang:minecraft:${minecraft_version}")
     implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     implementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
+    implementation("teamreborn:energy:${team_reborn_energy_version}")
+    include("teamreborn:energy:${team_reborn_energy_version}")
 }
 
 loom {

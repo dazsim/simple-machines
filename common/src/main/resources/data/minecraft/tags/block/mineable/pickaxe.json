@@ -2,6 +2,8 @@
   "values": [
     "simplemachines:alloy_furnace",
     "simplemachines:extruder",
+    "simplemachines:solid_fuel_generator",
+    "simplemachines:rolling_mill",
     "simplemachines:steel_chassis"
   ]
 }

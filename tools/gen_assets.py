@@ -114,6 +114,58 @@ def extruder_top():
     rect(t, 6, 6, 9, 9, DARK + (255,))
     return t
 
+def warm_side(seed):
+    t = plate(IRON, seed, rivets=False)
+    copper_trim(t, 0, 0, 15, 15)
+    for (x, y) in [(2, 2), (13, 2), (2, 13), (13, 13)]:
+        px(t, x, y, COPPER[0] + (255,)); px(t, x + 1, y + 1, COPPER[2] + (255,))
+    return t
+
+def generator_front(lit):
+    t = warm_side(17)
+    rect(t, 3, 5, 12, 13, COPPER[1] + (255,))
+    copper_trim(t, 3, 5, 12, 13)
+    rect(t, 4, 6, 11, 12, DARK + (255,))
+    if lit:
+        rnd = random.Random(19)
+        for x in range(4, 12):
+            h = rnd.randint(3, 6)
+            for y in range(12 - h, 13):
+                px(t, x, y, FIRE[min(2, (12 - y) * 3 // (h + 1))] + (255,))
+    for x in [5, 7, 9, 11]:
+        rect(t, x, 6, x, 12, IRON[3] + (255,))
+    rect(t, 4, 9, 11, 9, IRON[3] + (255,))
+    for x in range(4, 12, 2):
+        px(t, x, 2, IRON[3] + (255,)); px(t, x, 3, DARK + (255,))
+    return t
+
+def generator_top():
+    t = warm_side(23)
+    for y in [4, 7, 10]:
+        rect(t, 4, y, 11, y, DARK + (255,))
+        rect(t, 4, y + 1, 11, y + 1, IRON[0] + (255,))
+    return t
+
+def mill_front(lit):
+    t = warm_side(29)
+    rect(t, 3, 3, 12, 12, IRON[3] + (255,))
+    for y0 in [4, 9]:
+        rect(t, 4, y0, 11, y0 + 2, COPPER[1] + (255,))
+        rect(t, 4, y0, 11, y0, COPPER[0] + (255,))
+        rect(t, 4, y0 + 2, 11, y0 + 2, COPPER[2] + (255,))
+    rect(t, 4, 7, 11, 8, (DARK if not lit else FIRE[1]) + (255,))
+    if lit:
+        rect(t, 4, 7, 11, 7, FIRE[0] + (255,))
+    rect(t, 1, 14, 14, 14, IRON[3] + (255,))
+    return t
+
+def mill_top():
+    t = warm_side(31)
+    rect(t, 4, 5, 11, 10, IRON[3] + (255,))
+    rect(t, 5, 6, 10, 9, DARK + (255,))
+    rect(t, 5, 7, 10, 8, COPPER[2] + (255,))
+    return t
+
 def steel_frame():
     rnd = random.Random(13)
     t = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
@@ -199,18 +251,32 @@ def gui(inputs):
             slot(7 + c * 18, 83 + r * 18)
     for c in range(9):
         slot(7 + c * 18, 141)
-    xs = [46, 64] if inputs == 2 else [55]
-    for x in xs:
-        slot(x, 16)
-    slot(55, 52)
-    slot(111, 30, 26)
     grey = (139, 139, 139, 255)
+    if inputs in ("gen", "mill"):
+        rect(t, 152, 16, 168, 70, (255, 255, 255, 255))
+        rect(t, 152, 16, 167, 69, (55, 55, 55, 255))
+        rect(t, 153, 17, 166, 68, (40, 30, 28, 255))
+        if inputs == "gen":
+            slot(79, 52)
+            for (x0, y0, x1, y1) in [(86, 38, 87, 47), (83, 41, 84, 48), (89, 42, 90, 48), (84, 48, 90, 49)]:
+                rect(t, x0, y0, x1, y1, grey)
+            return t
+        slot(55, 34)
+        slot(111, 30, 26)
+        inputs = 0
+    else:
+        xs = [46, 64] if inputs == 2 else [55]
+        for x in xs:
+            slot(x, 16)
+        slot(55, 52)
+        slot(111, 30, 26)
     for i in range(16):
         rect(t, 80, 41, 80 + min(i, 15), 42, grey)
     for k in range(8):
         rect(t, 95 + k, 35 + k, 95 + k, 48 - k, grey)
-    for (x0, y0, x1, y1) in [(62, 38, 63, 47), (59, 41, 60, 48), (65, 42, 66, 48), (60, 48, 66, 49)]:
-        rect(t, x0, y0, x1, y1, grey)
+    if inputs:
+        for (x0, y0, x1, y1) in [(62, 38, 63, 47), (59, 41, 60, 48), (65, 42, 66, 48), (60, 48, 66, 49)]:
+            rect(t, x0, y0, x1, y1, grey)
     return t
 
 def main():
@@ -223,15 +289,25 @@ def main():
     save(extruder_top(), tb + "extruder_top.png")
     save(extruder_front(False), tb + "extruder_front.png")
     save(extruder_front(True), tb + "extruder_front_on.png")
+    save(warm_side(37), tb + "solid_fuel_generator_side.png")
+    save(generator_top(), tb + "solid_fuel_generator_top.png")
+    save(generator_front(False), tb + "solid_fuel_generator_front.png")
+    save(generator_front(True), tb + "solid_fuel_generator_front_on.png")
+    save(warm_side(41), tb + "rolling_mill_side.png")
+    save(mill_top(), tb + "rolling_mill_top.png")
+    save(mill_front(False), tb + "rolling_mill_front.png")
+    save(mill_front(True), tb + "rolling_mill_front_on.png")
     save(steel_frame(), tb + "steel_chassis.png")
     save(sprite(ROD, IRON), ti + "iron_rod.png")
     save(sprite(ROD, COPPER), ti + "copper_rod.png")
     save(sprite(ROD, STEEL), ti + "steel_rod.png")
     save(gui(2), A + "/textures/gui/alloy_furnace.png")
     save(gui(1), A + "/textures/gui/extruder.png")
+    save(gui("gen"), A + "/textures/gui/solid_fuel_generator.png")
+    save(gui("mill"), A + "/textures/gui/rolling_mill.png")
     save(alloy_front(True).resize((64, 64), Image.NEAREST), R + "/simplemachines_logo.png")
 
-    for m in ["alloy_furnace", "extruder"]:
+    for m in ["alloy_furnace", "extruder", "solid_fuel_generator", "rolling_mill"]:
         variants = {}
         for i, f in enumerate(["north", "east", "south", "west"]):
             for lit in ["false", "true"]:
@@ -265,7 +341,7 @@ def main():
     for it in items:
         jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
-    blocks = ["alloy_furnace", "extruder", "steel_chassis"]
+    blocks = ["alloy_furnace", "extruder", "solid_fuel_generator", "rolling_mill", "steel_chassis"]
     for b in blocks:
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{b}"}}, f"{A}/items/{b}.json")
         jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
@@ -282,9 +358,13 @@ def main():
         "item.simplemachines.steel_rod": "Steel Rod",
         "block.simplemachines.alloy_furnace": "Alloy Furnace",
         "block.simplemachines.extruder": "Extruder",
+        "block.simplemachines.solid_fuel_generator": "Solid Fuel Generator",
+        "block.simplemachines.rolling_mill": "Rolling Mill",
         "block.simplemachines.steel_chassis": "Steel Chassis",
         "container.simplemachines.alloy_furnace": "Alloy Furnace",
         "container.simplemachines.extruder": "Extruder",
+        "container.simplemachines.solid_fuel_generator": "Solid Fuel Generator",
+        "container.simplemachines.rolling_mill": "Rolling Mill",
     }, f"{A}/lang/en_us.json")
 
     jdump({"values": [f"{MOD}:{b}" for b in blocks]}, f"{D}/minecraft/tags/block/mineable/pickaxe.json")
@@ -301,11 +381,19 @@ def main():
         jdump({"type": f"{MOD}:extruding", "input": {"ingredient": f"#c:ingots/{m}"},
                "result": {"id": f"{MOD}:{m}_rod", "count": 2}, "cooking_time": 400}, rec + f"extruding/{m}_rod.json")
 
+    for m in ["iron", "copper", "steel"]:
+        jdump({"type": f"{MOD}:rolling", "input": {"ingredient": f"#c:ingots/{m}"},
+               "result": {"id": f"{MOD}:{m}_rod", "count": 2}, "cooking_time": 100}, rec + f"rolling/{m}_rod.json")
+
     def shaped(name, pattern, key):
         jdump({"type": "minecraft:crafting_shaped", "category": "misc", "key": key, "pattern": pattern,
                "result": {"id": f"{MOD}:{name}"}}, rec + name + ".json")
     shaped("alloy_furnace", ["BBB", "CFC", "BBB"], {"B": "minecraft:bricks", "C": "#c:ingots/copper", "F": "minecraft:furnace"})
     shaped("extruder", ["III", "IPI", "IFI"], {"I": "#c:ingots/iron", "P": "minecraft:piston", "F": "minecraft:furnace"})
+    shaped("solid_fuel_generator", ["RIR", "CFC", "RIR"], {"R": "#c:rods/iron", "I": "#c:ingots/iron",
+           "C": f"{MOD}:redstone_copper_ingot", "F": "minecraft:furnace"})
+    shaped("rolling_mill", ["RCR", "PBP", "RCR"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot",
+           "P": "minecraft:piston", "B": "#c:storage_blocks/iron"})
     shaped("steel_chassis", ["IRI", "RRR", "IRI"], {"I": "#c:ingots/steel", "R": "#c:rods/steel"})
 
 main()

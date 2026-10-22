@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,17 +39,17 @@ public abstract class MachineBlock extends BaseEntityBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 
-    protected abstract BlockEntityType<? extends MachineBlockEntity<?>> entityType();
+    protected abstract BlockEntityType<?> entityType();
 
     @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (!(level instanceof ServerLevel server) || type != entityType()) return null;
-        return (l, pos, s, be) -> ((MachineBlockEntity<?>) be).serverTick(server, pos, s);
+        return (l, pos, s, be) -> ((Ticking) be).serverTick(server, pos, s);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof MachineBlockEntity<?> be) player.openMenu(be);
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof BaseContainerBlockEntity be) player.openMenu(be);
         return InteractionResult.SUCCESS;
     }
 

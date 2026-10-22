@@ -7,7 +7,11 @@
   "item.simplemachines.steel_rod": "Steel Rod",
   "block.simplemachines.alloy_furnace": "Alloy Furnace",
   "block.simplemachines.extruder": "Extruder",
+  "block.simplemachines.solid_fuel_generator": "Solid Fuel Generator",
+  "block.simplemachines.rolling_mill": "Rolling Mill",
   "block.simplemachines.steel_chassis": "Steel Chassis",
   "container.simplemachines.alloy_furnace": "Alloy Furnace",
-  "container.simplemachines.extruder": "Extruder"
+  "container.simplemachines.extruder": "Extruder",
+  "container.simplemachines.solid_fuel_generator": "Solid Fuel Generator",
+  "container.simplemachines.rolling_mill": "Rolling Mill"
 }

@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.neoforge;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.client.EnergyScreen;
 import com.workshopcraft.simplemachines.client.MachineScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -13,6 +14,8 @@ public class SimpleMachinesNeoForgeClient {
         modBus.addListener((RegisterMenuScreensEvent e) -> {
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
             e.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
+            e.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
+            e.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);
         });
     }
 }

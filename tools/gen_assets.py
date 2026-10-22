@@ -305,7 +305,6 @@ def main():
     save(gui(1), A + "/textures/gui/extruder.png")
     save(gui("gen"), A + "/textures/gui/solid_fuel_generator.png")
     save(gui("mill"), A + "/textures/gui/rolling_mill.png")
-    save(alloy_front(True).resize((64, 64), Image.NEAREST), R + "/simplemachines_logo.png")
 
     for m in ["alloy_furnace", "extruder", "solid_fuel_generator", "rolling_mill"]:
         variants = {}

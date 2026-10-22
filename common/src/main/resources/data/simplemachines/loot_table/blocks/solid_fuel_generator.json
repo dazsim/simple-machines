@@ -12,7 +12,25 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "simplemachines:solid_fuel_generator"
+          "name": "simplemachines:solid_fuel_generator",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "simplemachines:solid_fuel_generator",
+              "properties": [
+                "tier",
+                "panel",
+                "worktop"
+              ]
+            },
+            {
+              "function": "minecraft:copy_components",
+              "source": "block_entity",
+              "include": [
+                "simplemachines:energy"
+              ]
+            }
+          ]
         }
       ]
     }

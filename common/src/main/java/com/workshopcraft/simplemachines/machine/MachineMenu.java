@@ -37,10 +37,10 @@ public class MachineMenu extends AbstractContainerMenu {
         this.data = data;
         this.level = inventory.player.level();
         if (inputs == 2) {
-            addSlot(new Slot(container, 0, 47, 17));
-            addSlot(new Slot(container, 1, 65, 17));
+            addSlot(new InputSlot(container, 0, 47, 17));
+            addSlot(new InputSlot(container, 1, 65, 17));
         } else {
-            addSlot(new Slot(container, 0, 56, 17));
+            addSlot(new InputSlot(container, 0, 56, 17));
         }
         addSlot(new Slot(container, inputs, 56, 53) {
             @Override
@@ -100,5 +100,16 @@ public class MachineMenu extends AbstractContainerMenu {
         final int done = data.get(2);
         final int total = data.get(3);
         return total == 0 || done == 0 ? 0 : Mth.clamp((float) done / total, 0, 1);
+    }
+
+    static class InputSlot extends Slot {
+        InputSlot(Container container, int slot, int x, int y) {
+            super(container, slot, x, y);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return container.canPlaceItem(getContainerSlot(), stack);
+        }
     }
 }

@@ -34,9 +34,6 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
     protected final int inputs;
     private final int fuelSlot;
     private final int outSlot;
-    private final int[] top;
-    private final int[] sides;
-    private final int[] bottom;
     private final RecipeType<R> type;
     private final RecipeManager.CachedCheck<MachineInput, R> check;
     private NonNullList<ItemStack> items;
@@ -74,6 +71,8 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         }
     };
 
+    private static final int[] NONE = new int[0];
+
     protected MachineBlockEntity(BlockEntityType<?> beType, BlockPos pos, BlockState state, int inputs, RecipeType<R> type) {
         super(beType, pos, state);
         this.inputs = inputs;
@@ -82,14 +81,6 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         this.type = type;
         this.check = RecipeManager.createCheck(type);
         this.items = NonNullList.withSize(inputs + 2, ItemStack.EMPTY);
-        top = new int[inputs];
-        sides = new int[inputs + 1];
-        sides[0] = fuelSlot;
-        for (int i = 0; i < inputs; i++) {
-            top[i] = i;
-            sides[i + 1] = i;
-        }
-        bottom = new int[]{outSlot};
     }
 
     protected ContainerData data() {
@@ -115,7 +106,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
             final ItemStack fuel = items.get(fuelSlot);
             final int burn = level.fuelValues().burnDuration(fuel);
             if (burn > 0) {
-                litTime = litDuration = burn;
+                litTime = litDuration = burn * 2 / 3;
                 final Item fuelItem = fuel.getItem();
                 fuel.shrink(1);
                 if (fuel.isEmpty()) {
@@ -127,7 +118,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         }
 
         if (ready) {
-            cookTotal = recipe.value().cookTime();
+            cookTotal = recipe.value().cookTime() * 5 / 4;
             if (litTime > 0) {
                 if (++cookTime >= cookTotal) {
                     cookTime = 0;
@@ -160,20 +151,6 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         return ItemStack.isSameItemSameComponents(out, result) && out.getCount() + result.getCount() <= out.getMaxStackSize();
     }
 
-    /** Hopper rule: an input slot takes an item only if no other input slot already holds it, so one input cannot block the other. */
-    private boolean acceptsInput(int slot, ItemStack stack) {
-        if (!(level instanceof ServerLevel server)) return false;
-        final ItemStack here = items.get(slot);
-        if (!here.isEmpty()) return ItemStack.isSameItemSameComponents(here, stack);
-        for (int i = 0; i < inputs; i++) {
-            if (i != slot && ItemStack.isSameItemSameComponents(items.get(i), stack)) return false;
-        }
-        for (RecipeHolder<?> holder : server.recipeAccess().getRecipes()) {
-            if (holder.value().getType() == type && ((MachineRecipe) holder.value()).usesItem(stack)) return true;
-        }
-        return false;
-    }
-
     @Override
     public void setItem(int slot, ItemStack stack) {
         final boolean same = !stack.isEmpty() && ItemStack.isSameItemSameComponents(items.get(slot), stack);
@@ -189,24 +166,26 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == outSlot) return false;
         if (slot == fuelSlot) return level != null && level.fuelValues().isFuel(stack);
-        return true;
+        if (!(level instanceof ServerLevel server)) return true;
+        for (RecipeHolder<?> holder : server.recipeAccess().getRecipes()) {
+            if (holder.value().getType() == type && ((MachineRecipe) holder.value()).usesItem(stack)) return true;
+        }
+        return false;
     }
 
     @Override
     public int[] getSlotsForFace(Direction side) {
-        return side == Direction.UP ? top : side == Direction.DOWN ? bottom : sides;
+        return NONE;
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
-        if (side == Direction.DOWN || slot == outSlot) return false;
-        if (slot == fuelSlot) return side != Direction.UP && canPlaceItem(slot, stack);
-        return acceptsInput(slot, stack);
+        return false;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
-        return side == Direction.DOWN && slot == outSlot;
+        return false;
     }
 
     @Override

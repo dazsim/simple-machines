@@ -16,6 +16,7 @@ public class SimpleMachinesNeoForgeClient {
             e.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
             e.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
             e.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);
+            e.register(SimpleMachines.ELECTRIC_FURNACE_MENU, EnergyScreen::new);
         });
     }
 }

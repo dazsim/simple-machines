@@ -15,16 +15,19 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public record RollingRecipe(CountedIngredient input, ItemStackTemplate result, int cookTime) implements MachineRecipe {
+/** Rods by default; recipes marked sheet run when the mill is switched to sheets. */
+public record RollingRecipe(CountedIngredient input, ItemStackTemplate result, int cookTime, boolean sheet) implements MachineRecipe {
     public static final MapCodec<RollingRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             CountedIngredient.CODEC.fieldOf("input").forGetter(RollingRecipe::input),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(RollingRecipe::result),
-            Codec.intRange(1, 72000).optionalFieldOf("cooking_time", 100).forGetter(RollingRecipe::cookTime)
+            Codec.intRange(1, 72000).optionalFieldOf("cooking_time", 100).forGetter(RollingRecipe::cookTime),
+            Codec.BOOL.optionalFieldOf("sheet", false).forGetter(RollingRecipe::sheet)
     ).apply(i, RollingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, RollingRecipe> STREAM_CODEC = StreamCodec.composite(
             CountedIngredient.STREAM_CODEC, RollingRecipe::input,
             ItemStackTemplate.STREAM_CODEC, RollingRecipe::result,
             ByteBufCodecs.VAR_INT, RollingRecipe::cookTime,
+            ByteBufCodecs.BOOL, RollingRecipe::sheet,
             RollingRecipe::new);
 
     @Override

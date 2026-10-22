@@ -1,6 +1,9 @@
 package com.workshopcraft.simplemachines.machine;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.assembly.Tier;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -23,6 +26,7 @@ import org.jspecify.annotations.Nullable;
 public class GeneratorBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Ticking, EnergyMachine {
     public static final int CAPACITY = 40_000;
     public static final int PER_TICK = 40;
+    public static final int STEEL_PER_TICK = 60;
     public static final int MAX_OUT = 200;
     private static final int[] SLOTS = {0};
 
@@ -39,6 +43,7 @@ public class GeneratorBlockEntity extends BaseContainerBlockEntity implements Wo
                 case 1 -> litDuration;
                 case 2 -> energy.energy & 0xFFFF;
                 case 3 -> energy.energy >>> 16;
+                case 4 -> energy.capacity / 1000;
                 default -> 0;
             };
         }
@@ -75,9 +80,15 @@ public class GeneratorBlockEntity extends BaseContainerBlockEntity implements Wo
 
     @Override
     public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {
+        final Tier tier = state.getValue(PoweredMachineBlock.TIER);
+        final int capacity = CAPACITY * tier.storage;
+        energy.capacity = capacity;
+        energy.maxOut = MAX_OUT * tier.storage;
+        if (energy.energy > capacity) energy.energy = capacity;
+        final int rate = tier == Tier.IRON ? PER_TICK : STEEL_PER_TICK;
         final boolean wasLit = litTime > 0;
         final int before = energy.energy;
-        if (litTime <= 0 && energy.energy < CAPACITY) {
+        if (litTime <= 0 && energy.energy < capacity) {
             final ItemStack fuel = items.get(0);
             final int burn = isSolidFuel(level, fuel) ? level.fuelValues().burnDuration(fuel) : 0;
             if (burn > 0) {
@@ -85,9 +96,9 @@ public class GeneratorBlockEntity extends BaseContainerBlockEntity implements Wo
                 fuel.shrink(1);
             }
         }
-        if (litTime > 0 && energy.energy < CAPACITY) {
+        if (litTime > 0 && energy.energy < capacity) {
             litTime--;
-            energy.energy = Math.min(CAPACITY, energy.energy + PER_TICK);
+            energy.energy = Math.min(capacity, energy.energy + rate);
         }
         energy.pushToNeighbours(level, pos);
         final boolean lit = litTime > 0;
@@ -125,7 +136,7 @@ public class GeneratorBlockEntity extends BaseContainerBlockEntity implements Wo
         ContainerHelper.loadAllItems(input, items);
         litTime = input.getIntOr("lit_time", 0);
         litDuration = input.getIntOr("lit_duration", 0);
-        energy.energy = Math.clamp(input.getIntOr("energy", 0), 0, CAPACITY);
+        energy.energy = Math.max(0, input.getIntOr("energy", 0));
     }
 
     @Override
@@ -135,6 +146,23 @@ public class GeneratorBlockEntity extends BaseContainerBlockEntity implements Wo
         output.putInt("lit_time", litTime);
         output.putInt("lit_duration", litDuration);
         output.putInt("energy", energy.energy);
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (energy.energy > 0) components.set(SimpleMachines.ENERGY, energy.energy);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        energy.energy = components.getOrDefault(SimpleMachines.ENERGY, 0);
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("energy");
     }
 
     @Override

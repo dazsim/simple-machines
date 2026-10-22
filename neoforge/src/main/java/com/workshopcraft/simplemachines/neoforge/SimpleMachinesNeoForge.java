@@ -3,6 +3,7 @@ package com.workshopcraft.simplemachines.neoforge;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -26,9 +27,11 @@ public class SimpleMachinesNeoForge {
                 return n;
             }
         };
+        EnergyBuffer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Energy.BLOCK, pos, side) != null;
     }
 
     private static void onRegister(RegisterEvent e) {
+        e.register(Registries.DATA_COMPONENT_TYPE, h -> SimpleMachines.registerComponents(h::register));
         e.register(Registries.BLOCK, h -> SimpleMachines.registerBlocks(h::register));
         e.register(Registries.ITEM, h -> SimpleMachines.registerItems(h::register));
         e.register(Registries.CREATIVE_MODE_TAB, h -> SimpleMachines.registerTabs(h::register));
@@ -39,11 +42,13 @@ public class SimpleMachinesNeoForge {
     }
 
     private static void onCapabilities(RegisterCapabilitiesEvent e) {
-        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.alloyFurnaceEntity, WorldlyContainerWrapper::new);
-        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.extruderEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.generatorEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.rollingMillEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.generatorEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
         e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.rollingMillEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
+        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.electricFurnaceEntity, WorldlyContainerWrapper::new);
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.electricFurnaceEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
+        e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
+                level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.cable);
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "#c:plates/iron"
+  },
+  "pattern": [
+    "SSS"
+  ],
+  "result": {
+    "id": "simplemachines:iron_worktop"
+  }
+}

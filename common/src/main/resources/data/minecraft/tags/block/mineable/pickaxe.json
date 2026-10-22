@@ -2,8 +2,11 @@
   "values": [
     "simplemachines:alloy_furnace",
     "simplemachines:extruder",
-    "simplemachines:solid_fuel_generator",
+    "simplemachines:electric_furnace",
     "simplemachines:rolling_mill",
-    "simplemachines:steel_chassis"
+    "simplemachines:solid_fuel_generator",
+    "simplemachines:iron_chassis",
+    "simplemachines:steel_chassis",
+    "simplemachines:redstone_copper_cable"
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "simplemachines:redstone_copper_ingot"
+  },
+  "pattern": [
+    "RRR"
+  ],
+  "result": {
+    "id": "simplemachines:redstone_copper_cable",
+    "count": 8
+  }
+}

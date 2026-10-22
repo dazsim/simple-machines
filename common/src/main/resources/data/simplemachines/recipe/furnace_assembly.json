@@ -3,16 +3,14 @@
   "category": "misc",
   "key": {
     "R": "#c:rods/iron",
-    "I": "#c:ingots/iron",
     "C": "simplemachines:redstone_copper_ingot",
     "F": "minecraft:furnace"
   },
   "pattern": [
-    "RIR",
-    "CFC",
-    "RIR"
+    "RCR",
+    "RFR"
   ],
   "result": {
-    "id": "simplemachines:solid_fuel_generator"
+    "id": "simplemachines:furnace_assembly"
   }
 }

@@ -3,6 +3,7 @@ package com.workshopcraft.simplemachines.machine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 
 /** Plain energy store; each loader wraps it in its own energy API. */
 public class EnergyBuffer {
@@ -13,9 +14,16 @@ public class EnergyBuffer {
         int push(ServerLevel level, BlockPos pos, Direction side, int amount);
     }
 
-    public final int capacity;
-    public final int maxIn;
-    public final int maxOut;
+    /** Set by the loader: whether the block at pos exposes energy on side. Used by cables to decide connections. */
+    public static Lookup lookup = (level, pos, side) -> false;
+
+    public interface Lookup {
+        boolean has(Level level, BlockPos pos, Direction side);
+    }
+
+    public int capacity;
+    public int maxIn;
+    public int maxOut;
     public int energy;
     private final Runnable onChange;
 

@@ -4,15 +4,14 @@
   "key": {
     "R": "#c:rods/iron",
     "C": "simplemachines:redstone_copper_ingot",
-    "P": "minecraft:piston",
-    "B": "#c:storage_blocks/iron"
+    "I": "#c:ingots/iron",
+    "F": "minecraft:furnace"
   },
   "pattern": [
     "RCR",
-    "PBP",
-    "RCR"
+    "IFI"
   ],
   "result": {
-    "id": "simplemachines:rolling_mill"
+    "id": "simplemachines:generator_assembly"
   }
 }

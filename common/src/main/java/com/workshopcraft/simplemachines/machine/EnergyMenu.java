@@ -14,11 +14,14 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/** Generator (1 fuel slot) or Rolling Mill (input + output). Data: two progress values, energy low and high 16 bits. */
+/**
+ * Generator (1 fuel slot), or Rolling Mill and Electric Furnace (input + output).
+ * Data: two progress values, energy low and high 16 bits, capacity in thousands, mill mode.
+ */
 public class EnergyMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 4;
+    public static final int DATA_COUNT = 6;
     public final boolean generator;
-    public final int capacity;
+    public final boolean mill;
     private final Container container;
     private final ContainerData data;
     private final Level level;
@@ -31,10 +34,14 @@ public class EnergyMenu extends AbstractContainerMenu {
         return new EnergyMenu(SimpleMachines.ROLLING_MILL_MENU, id, inventory, new SimpleContainer(2), new SimpleContainerData(DATA_COUNT));
     }
 
+    public static EnergyMenu electricFurnace(int id, Inventory inventory) {
+        return new EnergyMenu(SimpleMachines.ELECTRIC_FURNACE_MENU, id, inventory, new SimpleContainer(2), new SimpleContainerData(DATA_COUNT));
+    }
+
     public EnergyMenu(MenuType<?> type, int id, Inventory inventory, Container container, ContainerData data) {
         super(type, id);
         generator = type == SimpleMachines.GENERATOR_MENU;
-        capacity = generator ? GeneratorBlockEntity.CAPACITY : RollingMillBlockEntity.CAPACITY;
+        mill = type == SimpleMachines.ROLLING_MILL_MENU;
         checkContainerSize(container, generator ? 1 : 2);
         checkContainerDataCount(data, DATA_COUNT);
         this.container = container;
@@ -48,7 +55,7 @@ public class EnergyMenu extends AbstractContainerMenu {
                 }
             });
         } else {
-            addSlot(new Slot(container, 0, 56, 35));
+            addSlot(new MachineMenu.InputSlot(container, 0, 56, 35));
             addSlot(new Slot(container, 1, 116, 35) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
@@ -89,8 +96,23 @@ public class EnergyMenu extends AbstractContainerMenu {
         return (data.get(2) & 0xFFFF) | (data.get(3) & 0xFFFF) << 16;
     }
 
+    public int capacity() {
+        return Math.max(1, data.get(4)) * 1000;
+    }
+
+    public boolean sheets() {
+        return data.get(5) == 1;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (id != 0 || !(container instanceof RollingMillBlockEntity be)) return false;
+        be.toggleMode();
+        return true;
+    }
+
     public float energyFraction() {
-        return Mth.clamp((float) energy() / capacity, 0, 1);
+        return Mth.clamp((float) energy() / capacity(), 0, 1);
     }
 
     /** Generator: remaining burn. Rolling Mill: work done. */

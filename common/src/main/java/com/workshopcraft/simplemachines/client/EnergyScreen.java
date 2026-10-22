@@ -3,28 +3,46 @@ package com.workshopcraft.simplemachines.client;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.EnergyMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import org.jspecify.annotations.Nullable;
 
 public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
     private static final Identifier LIT = Identifier.withDefaultNamespace("container/furnace/lit_progress");
     private static final Identifier BURN = Identifier.withDefaultNamespace("container/furnace/burn_progress");
     private static final int BAR_X = 153, BAR_Y = 17, BAR_W = 14, BAR_H = 52;
     private final Identifier texture;
+    private @Nullable Button mode;
 
     public EnergyScreen(EnergyMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
-        texture = SimpleMachines.id(menu.generator ? "textures/gui/solid_fuel_generator.png" : "textures/gui/rolling_mill.png");
+        texture = SimpleMachines.id(menu.generator ? "textures/gui/solid_fuel_generator.png"
+                : menu.mill ? "textures/gui/rolling_mill.png" : "textures/gui/electric_furnace.png");
     }
 
     @Override
     protected void init() {
         super.init();
         titleLabelX = (imageWidth - font.width(title)) / 2;
+        if (menu.mill) {
+            mode = addRenderableWidget(Button.builder(modeLabel(), b -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0))
+                    .bounds(leftPos + 8, topPos + 34, 42, 18).build());
+        }
+    }
+
+    private Component modeLabel() {
+        return Component.translatable(menu.sheets() ? "gui.simplemachines.sheets" : "gui.simplemachines.rods");
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        if (mode != null) mode.setMessage(modeLabel());
     }
 
     @Override
@@ -45,7 +63,7 @@ public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
-            graphics.setTooltipForNextFrame(Component.literal(menu.energy() + " / " + menu.capacity + " FE"), mouseX, mouseY);
+            graphics.setTooltipForNextFrame(Component.literal(menu.energy() + " / " + menu.capacity() + " FE"), mouseX, mouseY);
         }
     }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:bricks",
+    "C": "#c:ingots/copper",
+    "F": "minecraft:furnace"
+  },
+  "pattern": [
+    "BBB",
+    "CFC",
+    "BBB"
+  ],
+  "result": {
+    "id": "simplemachines:alloy_furnace"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "itemGroup.simplemachines": "Simple Machines",
+  "item.simplemachines.steel_ingot": "Steel Ingot",
+  "item.simplemachines.redstone_copper_ingot": "Redstone Copper Ingot",
+  "item.simplemachines.iron_rod": "Iron Rod",
+  "item.simplemachines.copper_rod": "Copper Rod",
+  "item.simplemachines.steel_rod": "Steel Rod",
+  "block.simplemachines.alloy_furnace": "Alloy Furnace",
+  "block.simplemachines.extruder": "Extruder",
+  "block.simplemachines.steel_chassis": "Steel Chassis",
+  "container.simplemachines.alloy_furnace": "Alloy Furnace",
+  "container.simplemachines.extruder": "Extruder"
+}

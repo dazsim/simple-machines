@@ -1,0 +1,11 @@
+{
+  "type": "simplemachines:extruding",
+  "input": {
+    "ingredient": "#c:ingots/copper"
+  },
+  "result": {
+    "id": "simplemachines:copper_rod",
+    "count": 2
+  },
+  "cooking_time": 400
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "#c:ingots/iron",
+    "P": "minecraft:piston",
+    "F": "minecraft:furnace"
+  },
+  "pattern": [
+    "III",
+    "IPI",
+    "IFI"
+  ],
+  "result": {
+    "id": "simplemachines:extruder"
+  }
+}

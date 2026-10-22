@@ -1,0 +1,13 @@
+{
+  "type": "simplemachines:alloying",
+  "first": {
+    "ingredient": "#c:ingots/copper"
+  },
+  "second": {
+    "ingredient": "#c:dusts/redstone"
+  },
+  "result": {
+    "id": "simplemachines:redstone_copper_ingot"
+  },
+  "cooking_time": 200
+}

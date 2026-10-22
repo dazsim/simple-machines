@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "#c:ingots/steel",
+    "R": "#c:rods/steel"
+  },
+  "pattern": [
+    "IRI",
+    "RRR",
+    "IRI"
+  ],
+  "result": {
+    "id": "simplemachines:steel_chassis"
+  }
+}

@@ -4,6 +4,16 @@ import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import com.workshopcraft.simplemachines.machine.ChargerBlockEntity;
+import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
+import com.workshopcraft.simplemachines.pipe.Transfer;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import com.workshopcraft.simplemachines.assembly.Assembly;
@@ -32,11 +42,47 @@ public class SimpleMachinesNeoForge {
                 return n;
             }
         };
+        Transfer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Item.BLOCK, pos, side) != null;
+        Transfer.mover = (level, from, fromSide, to, toSide, max) -> {
+            final ResourceHandler<ItemResource> source = level.getCapability(Capabilities.Item.BLOCK, from, fromSide);
+            final ResourceHandler<ItemResource> target = level.getCapability(Capabilities.Item.BLOCK, to, toSide);
+            if (source == null || target == null) return 0;
+            return ResourceHandlerUtil.moveStacking(source, target, r -> true, max, null);
+        };
+        Transfer.invalidator = (level, pos) -> level.invalidateCapabilities(pos);
+        ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
+            @Override
+            public boolean chargeable(ItemStack stack) {
+                if (stack.isEmpty()) return false;
+                final EnergyHandler h = ItemAccess.forStack(stack.copy()).getCapability(Capabilities.Energy.ITEM);
+                return h != null && h.getCapacityAsLong() > 0;
+            }
+
+            @Override
+            public int insert(Container container, int slot, int amount) {
+                final EnergyHandler h = item(container, slot);
+                if (h == null) return 0;
+                try (Transaction tx = Transaction.openRoot()) {
+                    final int n = h.insert(amount, tx);
+                    tx.commit();
+                    return n;
+                }
+            }
+
+            @Override
+            public boolean full(Container container, int slot) {
+                final EnergyHandler h = item(container, slot);
+                if (h == null || h.getAmountAsLong() >= h.getCapacityAsLong()) return true;
+                try (Transaction tx = Transaction.openRoot()) {
+                    return h.insert(1, tx) == 0;
+                }
+            }
+        };
         EnergyBuffer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Energy.BLOCK, pos, side) != null;
     }
 
     private static void onUseBlock(PlayerInteractEvent.RightClickBlock e) {
-        if (Assembly.screwdriver(e.getLevel(), e.getPos(), e.getEntity(), e.getItemStack())) {
+        if (Assembly.screwdriver(e.getLevel(), e.getPos(), e.getEntity(), e.getItemStack(), e.getHitVec())) {
             e.setCanceled(true);
             e.setCancellationResult(InteractionResult.SUCCESS);
         }
@@ -54,13 +100,20 @@ public class SimpleMachinesNeoForge {
     }
 
     private static void onCapabilities(RegisterCapabilitiesEvent e) {
-        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.generatorEntity, WorldlyContainerWrapper::new);
-        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.rollingMillEntity, WorldlyContainerWrapper::new);
-        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.generatorEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
-        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.rollingMillEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
-        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.electricFurnaceEntity, WorldlyContainerWrapper::new);
-        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.electricFurnaceEntity, (be, side) -> new BufferEnergyHandler(be.energy()));
+        for (BlockEntityType<? extends WorkBlockEntity> type : SimpleMachines.WORK_ENTITIES) work(e, type);
+        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.alloyFurnaceEntity, WorldlyContainerWrapper::new);
+        e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.extruderEntity, WorldlyContainerWrapper::new);
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.cable);
+    }
+
+    private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {
+        e.registerBlockEntity(Capabilities.Item.BLOCK, type, WorldlyContainerWrapper::new);
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, type, (be, side) -> new BufferEnergyHandler(be.energy(), be.energyIn(side), be.energyOut(side)));
+    }
+
+    private static EnergyHandler item(Container container, int slot) {
+        final ItemStack stack = container.getItem(slot);
+        return stack.isEmpty() ? null : ItemAccess.forStack(stack).getCapability(Capabilities.Energy.ITEM);
     }
 }

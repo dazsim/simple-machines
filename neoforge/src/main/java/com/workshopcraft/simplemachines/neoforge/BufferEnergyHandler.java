@@ -7,9 +7,17 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 public class BufferEnergyHandler extends SnapshotJournal<Integer> implements EnergyHandler {
     private final EnergyBuffer buffer;
+    private final boolean in;
+    private final boolean out;
 
     public BufferEnergyHandler(EnergyBuffer buffer) {
+        this(buffer, true, true);
+    }
+
+    public BufferEnergyHandler(EnergyBuffer buffer, boolean in, boolean out) {
         this.buffer = buffer;
+        this.in = in;
+        this.out = out;
     }
 
     @Override
@@ -24,6 +32,7 @@ public class BufferEnergyHandler extends SnapshotJournal<Integer> implements Ene
 
     @Override
     public int insert(int amount, TransactionContext tx) {
+        if (!in) return 0;
         final int n = Math.min(buffer.capacity - buffer.energy, Math.min(amount, buffer.maxIn));
         if (n <= 0) return 0;
         updateSnapshots(tx);
@@ -33,6 +42,7 @@ public class BufferEnergyHandler extends SnapshotJournal<Integer> implements Ene
 
     @Override
     public int extract(int amount, TransactionContext tx) {
+        if (!out) return 0;
         final int n = Math.min(buffer.energy, Math.min(amount, buffer.maxOut));
         if (n <= 0) return 0;
         updateSnapshots(tx);

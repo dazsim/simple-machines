@@ -4,6 +4,9 @@ import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.MachineBlock;
 import com.workshopcraft.simplemachines.machine.PoweredMachineBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
+import com.workshopcraft.simplemachines.pipe.Pipes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -128,8 +132,9 @@ public final class Assembly {
         return level.getBlockEntity(pos) instanceof Worktops.Holder h ? h.worktop() : "";
     }
 
-    /** Any c:tools/screwdriver: screws parts in, sneak takes the last one off or opens a machine back up. */
-    public static boolean screwdriver(Level level, BlockPos pos, Player player, ItemStack held) {
+    /** Any c:tools/screwdriver: screws parts in, sneak takes the last one off or opens a machine back up; on a machine it toggles auto-output of the clicked face. */
+    public static boolean screwdriver(Level level, BlockPos pos, Player player, ItemStack held, BlockHitResult hit) {
+        final Direction face = hit.getDirection();
         if (!held.is(Worktops.SCREWDRIVERS) || !player.mayBuild()) return false;
         final BlockState state = level.getBlockState(pos);
         final boolean sneak = player.isSecondaryUseActive();
@@ -144,7 +149,16 @@ public final class Assembly {
             if (!level.isClientSide()) disassemble(state, level, pos);
             return true;
         }
-        return false;
+        if (state.getBlock() instanceof PoweredMachineBlock && level.getBlockEntity(pos) instanceof WorkBlockEntity be && be.hasOutputs()) {
+            if (!level.isClientSide()) {
+                final boolean on = be.toggleOutput(face);
+                player.sendOverlayMessage(Component.translatable(on ? "message.simplemachines.output_on" : "message.simplemachines.output_off",
+                        Component.translatable("direction.simplemachines." + face.getSerializedName())));
+                ratchet(level, pos);
+            }
+            return true;
+        }
+        return Pipes.screwdriver(level, pos, player, held, hit);
     }
 
     public static List<ItemStack> parts(BlockState state, String worktop) {

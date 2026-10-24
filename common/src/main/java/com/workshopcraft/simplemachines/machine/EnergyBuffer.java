@@ -38,6 +38,13 @@ public class EnergyBuffer {
         onChange.run();
     }
 
+    /** Offers up to maxOut to the neighbour on one side, returns the amount taken. */
+    public int pushTo(ServerLevel level, BlockPos pos, Direction d, int limit) {
+        final int n = pusher.push(level, pos.relative(d), d.getOpposite(), Math.min(limit, Math.min(energy, maxOut)));
+        energy -= n;
+        return n;
+    }
+
     public void pushToNeighbours(ServerLevel level, BlockPos pos) {
         int left = Math.min(energy, maxOut);
         for (Direction d : Direction.values()) {

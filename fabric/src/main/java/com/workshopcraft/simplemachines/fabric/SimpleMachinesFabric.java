@@ -14,6 +14,16 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import com.workshopcraft.simplemachines.machine.ChargerBlockEntity;
+import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
+import com.workshopcraft.simplemachines.pipe.Transfer;
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.BiConsumer;
 
@@ -28,16 +38,48 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerMenus(direct(BuiltInRegistries.MENU));
         SimpleMachines.registerRecipeTypes(direct(BuiltInRegistries.RECIPE_TYPE));
         SimpleMachines.registerRecipeSerializers(direct(BuiltInRegistries.RECIPE_SERIALIZER));
-        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.generatorEntity);
-        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.rollingMillEntity);
-        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.generatorEntity);
-        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.rollingMillEntity);
-        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.electricFurnaceEntity);
-        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.electricFurnaceEntity);
+        for (BlockEntityType<? extends WorkBlockEntity> type : SimpleMachines.WORK_ENTITIES) work(type);
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.alloyFurnaceEntity);
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
-                Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand)) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+                Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+        Transfer.lookup = (level, pos, side) -> ItemStorage.SIDED.find(level, pos, side) != null;
+        Transfer.mover = (level, from, fromSide, to, toSide, max) -> {
+            final Storage<ItemVariant> source = ItemStorage.SIDED.find(level, from, fromSide);
+            final Storage<ItemVariant> target = ItemStorage.SIDED.find(level, to, toSide);
+            if (source == null || target == null) return 0;
+            return (int) StorageUtil.move(source, target, v -> true, max, null);
+        };
+        ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
+            @Override
+            public boolean chargeable(ItemStack stack) {
+                final EnergyStorage s = EnergyStorage.ITEM.find(stack, ContainerItemContext.withConstant(stack));
+                return s != null && s.supportsInsertion();
+            }
+
+            @Override
+            public int insert(Container container, int slot, int amount) {
+                final EnergyStorage s = item(container, slot);
+                if (s == null) return 0;
+                try (Transaction tx = Transaction.openOuter()) {
+                    final long n = s.insert(amount, tx);
+                    tx.commit();
+                    return (int) n;
+                }
+            }
+
+            @Override
+            public boolean full(Container container, int slot) {
+                final EnergyStorage s = item(container, slot);
+                return s == null || !s.supportsInsertion() || s.getAmount() >= s.getCapacity();
+            }
+
+            private EnergyStorage item(Container container, int slot) {
+                return EnergyStorage.ITEM.find(container.getItem(slot), ContainerItemContext.ofSingleSlot(ContainerStorage.of(container, null).getSlot(slot)));
+            }
+        };
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyStorage s = EnergyStorage.SIDED.find(level, pos, side);
@@ -48,6 +90,11 @@ public class SimpleMachinesFabric implements ModInitializer {
                 return (int) n;
             }
         };
+    }
+
+    private static <T extends WorkBlockEntity> void work(BlockEntityType<T> type) {
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), type);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy(), be.energyIn(side), be.energyOut(side)), type);
     }
 
     private static <T> BiConsumer<Identifier, T> direct(Registry<T> registry) {

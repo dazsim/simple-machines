@@ -37,6 +37,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
     private final RecipeType<R> type;
     private final RecipeManager.CachedCheck<MachineInput, R> check;
     private NonNullList<ItemStack> items;
+    private final int[] slots;
     private int litTime;
     private int litDuration;
     private int cookTime;
@@ -71,7 +72,6 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         }
     };
 
-    private static final int[] NONE = new int[0];
 
     protected MachineBlockEntity(BlockEntityType<?> beType, BlockPos pos, BlockState state, int inputs, RecipeType<R> type) {
         super(beType, pos, state);
@@ -81,6 +81,8 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         this.type = type;
         this.check = RecipeManager.createCheck(type);
         this.items = NonNullList.withSize(inputs + 2, ItemStack.EMPTY);
+        this.slots = new int[inputs + 2];
+        for (int i = 0; i < slots.length; i++) slots[i] = i;
     }
 
     protected ContainerData data() {
@@ -167,6 +169,9 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         if (slot == outSlot) return false;
         if (slot == fuelSlot) return level != null && level.fuelValues().isFuel(stack);
         if (!(level instanceof ServerLevel server)) return true;
+        if (items.get(slot).isEmpty()) {
+            for (int i = 0; i < inputs; i++) if (i != slot && ItemStack.isSameItemSameComponents(items.get(i), stack)) return false;
+        }
         for (RecipeHolder<?> holder : server.recipeAccess().getRecipes()) {
             if (holder.value().getType() == type && ((MachineRecipe) holder.value()).usesItem(stack)) return true;
         }
@@ -175,17 +180,17 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
 
     @Override
     public int[] getSlotsForFace(Direction side) {
-        return NONE;
+        return slots;
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
-        return false;
+        return canPlaceItem(slot, stack);
     }
 
     @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
-        return false;
+        return slot == outSlot;
     }
 
     @Override

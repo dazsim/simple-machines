@@ -7,23 +7,32 @@ import team.reborn.energy.api.EnergyStorage;
 
 public class BufferEnergyStorage extends SnapshotParticipant<Integer> implements EnergyStorage {
     private final EnergyBuffer buffer;
+    private final boolean in;
+    private final boolean out;
 
     public BufferEnergyStorage(EnergyBuffer buffer) {
+        this(buffer, true, true);
+    }
+
+    public BufferEnergyStorage(EnergyBuffer buffer, boolean in, boolean out) {
         this.buffer = buffer;
+        this.in = in;
+        this.out = out;
     }
 
     @Override
     public boolean supportsInsertion() {
-        return buffer.maxIn > 0;
+        return in && buffer.maxIn > 0;
     }
 
     @Override
     public boolean supportsExtraction() {
-        return buffer.maxOut > 0;
+        return out && buffer.maxOut > 0;
     }
 
     @Override
     public long insert(long amount, TransactionContext tx) {
+        if (!in) return 0;
         final int n = (int) Math.min(buffer.capacity - buffer.energy, Math.min(amount, buffer.maxIn));
         if (n <= 0) return 0;
         updateSnapshots(tx);
@@ -33,6 +42,7 @@ public class BufferEnergyStorage extends SnapshotParticipant<Integer> implements
 
     @Override
     public long extract(long amount, TransactionContext tx) {
+        if (!out) return 0;
         final int n = (int) Math.min(buffer.energy, Math.min(amount, buffer.maxOut));
         if (n <= 0) return 0;
         updateSnapshots(tx);

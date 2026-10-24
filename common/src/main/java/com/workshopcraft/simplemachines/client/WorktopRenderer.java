@@ -23,7 +23,12 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.machine.Ported;
+import com.workshopcraft.simplemachines.pipe.ItemPipeBlock;
+import net.minecraft.world.level.Level;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,6 +46,8 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         String worktop = "";
         boolean loose;
         int topLight;
+        int ports;
+        final int[] portLight = new int[6];
     }
 
     public WorktopRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -65,14 +72,24 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
             s.facing = state.getValue(MachineBlock.FACING);
             s.core = machine.core();
             s.loose = false;
+            ports(be, state, s);
         } else {
             s.worktop = "";
         }
+        if (!(state.getBlock() instanceof PoweredMachineBlock)) s.ports = 0;
         s.topLight = be.getLevel() == null ? s.lightCoords : LevelRenderer.getLightCoords(be.getLevel(), be.getBlockPos().above());
     }
 
     @Override
     public void submit(State s, PoseStack pose, SubmitNodeCollector out, CameraRenderState camera) {
+        if (s.ports != 0) {
+            final TextureAtlasSprite port = get(Identifier.fromNamespaceAndPath(SimpleMachines.MODID, "block/port"));
+            out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+                for (Direction d : Direction.Plane.HORIZONTAL) {
+                    if ((s.ports & Ported.bit(d)) != 0) port(new Quads(p, vc, s.portLight[d.get3DDataValue()], OverlayTexture.NO_OVERLAY), d, port);
+                }
+            });
+        }
         if (s.worktop.isEmpty()) return;
         final TextureAtlasSprite sprite = sprite(s.worktop);
         final float[][] rects = rects(s.core);
@@ -88,6 +105,36 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
                     draw(new Quads(p, new SheetedDecalTextureGenerator(vc, c.cameraPose(), 1F), s.topLight, OverlayTexture.NO_OVERLAY), rects, sprite));
         }
         pose.popPose();
+    }
+
+    private static final float PORT_OUT = 0.45F;
+
+    private static void ports(BlockEntity be, BlockState state, State s) {
+        s.ports = 0;
+        final Level level = be.getLevel();
+        if (level == null) return;
+        final int outputs = be instanceof Ported ported ? ported.outputSides() : 0;
+        final Direction facing = state.getValue(MachineBlock.FACING);
+        for (Direction d : Direction.Plane.HORIZONTAL) {
+            if (d == facing) continue;
+            final BlockPos n = be.getBlockPos().relative(d);
+            if ((outputs & Ported.bit(d)) != 0 || ItemPipeBlock.link(level.getBlockState(n), d.getOpposite()).inventory()) {
+                s.ports |= Ported.bit(d);
+                s.portLight[d.get3DDataValue()] = LevelRenderer.getLightCoords(level, n);
+            }
+        }
+    }
+
+    // a square socket on the outside of the side panel
+    private static void port(Quads q, Direction d, TextureAtlasSprite sp) {
+        final float lo = PORT_OUT, hi = 16 - PORT_OUT;
+        switch (d) {
+            case NORTH -> q.face(NORTH, 6, 6, lo, 10, 10, lo, sp, 6, 6, 10, 10);
+            case SOUTH -> q.face(SOUTH, 6, 6, hi, 10, 10, hi, sp, 6, 6, 10, 10);
+            case WEST -> q.face(WEST, lo, 6, 6, lo, 10, 10, sp, 6, 6, 10, 10);
+            case EAST -> q.face(EAST, hi, 6, 6, hi, 10, 10, sp, 6, 6, 10, 10);
+            default -> {}
+        }
     }
 
     // same surface as a Much More Storage worktop, minus the opening over the core
@@ -107,6 +154,9 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         final float[] hole = switch (core) {
             case FURNACE -> new float[]{5, 5, 11, 11};
             case ROLLING -> new float[]{4, 6, 12, 10};
+            case CRUSHER -> new float[]{4, 4, 12, 12};
+            case ALLOY, WATER -> new float[]{5, 5, 11, 11};
+            case SAW -> new float[]{7, 3, 9, 13};
             default -> null;
         };
         if (hole == null) return new float[][]{{0, 0, 16, 16}};

@@ -38,6 +38,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.SimpleContainerData;
+import com.workshopcraft.simplemachines.machine.*;
+import com.workshopcraft.simplemachines.pipe.ItemPipeBlock;
+import com.workshopcraft.simplemachines.recipe.ProcessRecipe;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -46,6 +51,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +66,22 @@ public class SimpleMachines {
     public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER = new RecipeSerializer<>(AlloyingRecipe.MAP_CODEC, AlloyingRecipe.STREAM_CODEC);
     public static final RecipeSerializer<ExtrudingRecipe> EXTRUDING_SERIALIZER = new RecipeSerializer<>(ExtrudingRecipe.MAP_CODEC, ExtrudingRecipe.STREAM_CODEC);
     public static final RecipeSerializer<RollingRecipe> ROLLING_SERIALIZER = new RecipeSerializer<>(RollingRecipe.MAP_CODEC, RollingRecipe.STREAM_CODEC);
+    public static final RecipeType<ProcessRecipe> CRUSHING = type("crushing");
+    public static final RecipeType<ProcessRecipe> SAWING = type("sawing");
+    public static final RecipeSerializer<ProcessRecipe> CRUSHING_SERIALIZER = new RecipeSerializer<>(
+            ProcessRecipe.mapCodec(ProcessRecipe.Kind.CRUSHING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.CRUSHING));
+    public static final RecipeSerializer<ProcessRecipe> SAWING_SERIALIZER = new RecipeSerializer<>(
+            ProcessRecipe.mapCodec(ProcessRecipe.Kind.SAWING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.SAWING));
+    public static final List<Layout> LAYOUTS = List.of(Layout.PROCESS, Layout.ALLOY, Layout.BATTERY, Layout.STONE, Layout.HIVE, Layout.GRID);
+    public static final Map<Layout, MenuType<PoweredMenu>> MENUS = new HashMap<>();
+    /** Machines the chassis can become, by core. */
+    public static final Map<Core, Block> MACHINES = new EnumMap<>(Core.class);
+    public static final Map<Core, BlockEntityType<?>> MACHINE_ENTITIES = new EnumMap<>(Core.class);
+    /** Every block entity type built on WorkBlockEntity, for the loaders' item and energy capabilities. */
+    public static final List<BlockEntityType<? extends WorkBlockEntity>> WORK_ENTITIES = new ArrayList<>();
+    /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
+    public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
+            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -81,6 +103,7 @@ public class SimpleMachines {
     public static Block ironChassis;
     public static Block steelChassis;
     public static Block cable;
+    public static Block itemPipe;
     public static Item screwdriver;
     public static Item controlBoard;
     public static BlockEntityType<AlloyFurnaceBlockEntity> alloyFurnaceEntity;
@@ -115,6 +138,22 @@ public class SimpleMachines {
                 .isViewBlocking((s, l, p) -> false).isSuffocating((s, l, p) -> false);
     }
 
+    public static MenuType<PoweredMenu> menuFor(Layout layout) {
+        return MENUS.get(layout);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static MenuType<PoweredMenu> menu(Layout layout) {
+        final MenuType<PoweredMenu>[] holder = new MenuType[1];
+        holder[0] = new MenuType<>((id, inv) -> new PoweredMenu(holder[0], id, inv, new SimpleContainer(layout.slots().length),
+                new SimpleContainerData(EnergyMenu.DATA_COUNT), layout), FeatureFlags.VANILLA_SET);
+        return holder[0];
+    }
+
+    static {
+        for (Layout l : LAYOUTS) MENUS.put(l, menu(l));
+    }
+
     private static BlockBehaviour.Properties chassis(String name) {
         return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
                 .mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(4.0F).sound(SoundType.METAL)
@@ -139,6 +178,17 @@ public class SimpleMachines {
         cable = new CableBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("redstone_copper_cable")))
                 .mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("redstone_copper_cable"), cable);
+        itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
+                .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
+        r.accept(id("item_pipe"), itemPipe);
+        MACHINES.put(Core.FURNACE, electricFurnace);
+        MACHINES.put(Core.ROLLING, rollingMill);
+        MACHINES.put(Core.GENERATOR, generator);
+        for (Core core : NEW_CORES) {
+            final Block b = new WorkMachineBlock(core == Core.BATTERY ? built(core.block).lightLevel(st -> 0) : built(core.block), core);
+            r.accept(id(core.block), b);
+            MACHINES.put(core, b);
+        }
     }
 
     public static void registerItems(BiConsumer<Identifier, Item> r) {
@@ -168,6 +218,9 @@ public class SimpleMachines {
         add(r, "solid_fuel_generator", new BlockItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
         add(r, "rolling_mill", new BlockItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
         add(r, "electric_furnace", new BlockItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
+        for (Core core : NEW_CORES) add(r, core.block, new BlockItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
+        add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
+        for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
     }
 
     private static Item.Properties props(String name) {
@@ -204,11 +257,33 @@ public class SimpleMachines {
         r.accept(id("rolling_mill"), rollingMillEntity);
         electricFurnaceEntity = new BlockEntityType<>(ElectricFurnaceBlockEntity::new, Set.of(electricFurnace));
         r.accept(id("electric_furnace"), electricFurnaceEntity);
+        entity(r, Core.BATTERY, BatteryBlockEntity::new);
+        entity(r, Core.CRUSHER, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.CRUSHER), p, st, CRUSHING, "crusher"));
+        entity(r, Core.SAW, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.SAW), p, st, SAWING, "sawmill"));
+        entity(r, Core.HARVESTER, HarvesterBlockEntity::new);
+        entity(r, Core.ALLOY, AlloySmelterBlockEntity::new);
+        entity(r, Core.STONE, (p, st) -> new SourceBlockEntity(p, st, SourceBlockEntity.Kind.STONE));
+        entity(r, Core.WATER, (p, st) -> new SourceBlockEntity(p, st, SourceBlockEntity.Kind.WATER));
+        entity(r, Core.HIVE, (p, st) -> new SourceBlockEntity(p, st, SourceBlockEntity.Kind.HIVE));
+        entity(r, Core.SHEARER, ShearerBlockEntity::new);
+        entity(r, Core.CHARGER, ChargerBlockEntity::new);
+        WORK_ENTITIES.add(generatorEntity);
+        WORK_ENTITIES.add(rollingMillEntity);
+        WORK_ENTITIES.add(electricFurnaceEntity);
         chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
         r.accept(id("chassis"), chassisEntity);
     }
 
+    private static <T extends WorkBlockEntity> void entity(BiConsumer<Identifier, BlockEntityType<?>> r, Core core,
+                                                           BlockEntityType.BlockEntitySupplier<T> factory) {
+        final BlockEntityType<T> type = new BlockEntityType<>(factory, Set.of(MACHINES.get(core)));
+        MACHINE_ENTITIES.put(core, type);
+        WORK_ENTITIES.add(type);
+        r.accept(id(core.block), type);
+    }
+
     public static void registerMenus(BiConsumer<Identifier, MenuType<?>> r) {
+        for (Layout l : LAYOUTS) r.accept(id("powered_" + l.name()), MENUS.get(l));
         r.accept(id("alloy_furnace"), ALLOY_MENU);
         r.accept(id("extruder"), EXTRUDER_MENU);
         r.accept(id("solid_fuel_generator"), GENERATOR_MENU);
@@ -220,11 +295,15 @@ public class SimpleMachines {
         r.accept(id("alloying"), ALLOYING);
         r.accept(id("extruding"), EXTRUDING);
         r.accept(id("rolling"), ROLLING);
+        r.accept(id("crushing"), CRUSHING);
+        r.accept(id("sawing"), SAWING);
     }
 
     public static void registerRecipeSerializers(BiConsumer<Identifier, RecipeSerializer<?>> r) {
         r.accept(id("alloying"), ALLOYING_SERIALIZER);
         r.accept(id("extruding"), EXTRUDING_SERIALIZER);
         r.accept(id("rolling"), ROLLING_SERIALIZER);
+        r.accept(id("crushing"), CRUSHING_SERIALIZER);
+        r.accept(id("sawing"), SAWING_SERIALIZER);
     }
 }

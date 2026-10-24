@@ -6,6 +6,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import com.workshopcraft.simplemachines.assembly.Assembly;
+import net.minecraft.world.InteractionResult;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -18,6 +22,7 @@ public class SimpleMachinesNeoForge {
     public SimpleMachinesNeoForge(IEventBus modBus) {
         modBus.addListener(SimpleMachinesNeoForge::onRegister);
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
+        NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, pos, side);
             if (h == null) return 0;
@@ -28,6 +33,13 @@ public class SimpleMachinesNeoForge {
             }
         };
         EnergyBuffer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Energy.BLOCK, pos, side) != null;
+    }
+
+    private static void onUseBlock(PlayerInteractEvent.RightClickBlock e) {
+        if (Assembly.screwdriver(e.getLevel(), e.getPos(), e.getEntity(), e.getItemStack())) {
+            e.setCanceled(true);
+            e.setCancellationResult(InteractionResult.SUCCESS);
+        }
     }
 
     private static void onRegister(RegisterEvent e) {

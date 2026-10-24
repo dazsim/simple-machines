@@ -18,9 +18,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
+import com.workshopcraft.simplemachines.assembly.Worktops;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 
 /** Single input, single output machine that runs on FE. Speed and storage follow the chassis tier. */
-public abstract class PoweredBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Ticking, EnergyMachine {
+public abstract class PoweredBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Ticking, EnergyMachine, Worktops.Holder {
     private static final int[] IN = {0};
     private static final int[] OUT = {1};
 
@@ -177,6 +183,7 @@ public abstract class PoweredBlockEntity extends BaseContainerBlockEntity implem
         progress = input.getIntOr("progress", 0);
         total = input.getIntOr("total", 0);
         energy.energy = Math.max(0, input.getIntOr("energy", 0));
+        worktop = input.getStringOr("worktop", Worktops.DEFAULT);
     }
 
     @Override
@@ -186,23 +193,53 @@ public abstract class PoweredBlockEntity extends BaseContainerBlockEntity implem
         output.putInt("progress", progress);
         output.putInt("total", total);
         output.putInt("energy", energy.energy);
+        output.putString("worktop", worktop);
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
         if (energy.energy > 0) components.set(SimpleMachines.ENERGY, energy.energy);
+        components.set(SimpleMachines.WORKTOP, worktop);
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
         energy.energy = components.getOrDefault(SimpleMachines.ENERGY, 0);
+        worktop = components.getOrDefault(SimpleMachines.WORKTOP, Worktops.DEFAULT);
     }
 
     @Override
     public void removeComponentsFromTag(ValueOutput output) {
         output.discard("energy");
+        output.discard("worktop");
+    }
+
+    private String worktop = Worktops.DEFAULT;
+
+    @Override
+    public String worktop() {
+        return worktop;
+    }
+
+    @Override
+    public void setWorktop(String id) {
+        worktop = id;
+        setChanged();
+        if (level != null) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        final CompoundTag tag = new CompoundTag();
+        tag.putString("worktop", worktop);
+        return tag;
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

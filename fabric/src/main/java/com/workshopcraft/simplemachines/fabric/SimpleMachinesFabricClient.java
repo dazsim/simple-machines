@@ -4,7 +4,9 @@ import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.client.EnergyScreen;
 import com.workshopcraft.simplemachines.client.MachineScreen;
 import net.fabricmc.api.ClientModInitializer;
+import com.workshopcraft.simplemachines.client.WorktopRenderer;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 
 public class SimpleMachinesFabricClient implements ClientModInitializer {
     @Override
@@ -14,5 +16,9 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
         MenuScreens.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);
         MenuScreens.register(SimpleMachines.ELECTRIC_FURNACE_MENU, EnergyScreen::new);
+        BlockEntityRenderers.register(SimpleMachines.chassisEntity, WorktopRenderer::new);
+        BlockEntityRenderers.register(SimpleMachines.generatorEntity, WorktopRenderer::new);
+        BlockEntityRenderers.register(SimpleMachines.rollingMillEntity, WorktopRenderer::new);
+        BlockEntityRenderers.register(SimpleMachines.electricFurnaceEntity, WorktopRenderer::new);
     }
 }

@@ -2,7 +2,10 @@ package com.workshopcraft.simplemachines.fabric;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
+import com.workshopcraft.simplemachines.assembly.Assembly;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.world.InteractionResult;
 import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
@@ -33,6 +36,8 @@ public class SimpleMachinesFabric implements ModInitializer {
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy()), SimpleMachines.electricFurnaceEntity);
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
+        UseBlockCallback.EVENT.register((player, level, hand, hit) ->
+                Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand)) ? InteractionResult.SUCCESS : InteractionResult.PASS);
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyStorage s = EnergyStorage.SIDED.find(level, pos, side);

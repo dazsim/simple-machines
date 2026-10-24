@@ -36,29 +36,506 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_front_panel"
+        "model": "simplemachines:block/generator_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/wood_side_panels"
+        "model": "simplemachines:block/oak_side_panels"
       },
       "when": {
         "facing": "north",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_worktop"
+        "model": "simplemachines:block/generator_spruce_front_panel"
       },
       "when": {
         "facing": "north",
-        "worktop": "wood"
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/spruce_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_birch_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/birch_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_jungle_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/jungle_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_acacia_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/acacia_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_dark_oak_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/dark_oak_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_mangrove_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/mangrove_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cherry_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cherry_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pale_oak_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pale_oak_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_bamboo_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/bamboo_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_crimson_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crimson_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_warped_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/warped_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_white_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/white_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_orange_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/orange_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_magenta_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/magenta_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_blue_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_blue_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_yellow_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/yellow_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_lime_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/lime_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pink_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pink_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_gray_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/gray_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_gray_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_gray_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cyan_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cyan_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_purple_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/purple_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_blue_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/blue_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_brown_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/brown_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_green_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/green_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_red_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/red_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_black_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "black_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/black_concrete_side_panels"
+      },
+      "when": {
+        "facing": "north",
+        "panel": "black_concrete"
       }
     },
     {
@@ -81,15 +558,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_iron_worktop"
-      },
-      "when": {
-        "facing": "north",
-        "worktop": "iron"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_copper_front_panel"
       },
       "when": {
@@ -104,15 +572,6 @@
       "when": {
         "facing": "north",
         "panel": "copper"
-      }
-    },
-    {
-      "apply": {
-        "model": "simplemachines:block/generator_copper_worktop"
-      },
-      "when": {
-        "facing": "north",
-        "worktop": "copper"
       }
     },
     {
@@ -135,15 +594,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_steel_worktop"
-      },
-      "when": {
-        "facing": "north",
-        "worktop": "steel"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_core",
         "y": 90
       },
@@ -164,32 +614,562 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_front_panel",
+        "model": "simplemachines:block/generator_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/wood_side_panels",
+        "model": "simplemachines:block/oak_side_panels",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_worktop",
+        "model": "simplemachines:block/generator_spruce_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "worktop": "wood"
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/spruce_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_birch_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/birch_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_jungle_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/jungle_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_acacia_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/acacia_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_dark_oak_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/dark_oak_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_mangrove_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/mangrove_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cherry_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cherry_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pale_oak_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pale_oak_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_bamboo_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/bamboo_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_crimson_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crimson_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_warped_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/warped_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_white_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/white_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_orange_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/orange_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_magenta_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/magenta_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_blue_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_blue_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_yellow_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/yellow_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_lime_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/lime_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pink_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pink_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_gray_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/gray_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_gray_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_gray_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cyan_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cyan_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_purple_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/purple_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_blue_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/blue_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_brown_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/brown_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_green_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/green_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_red_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/red_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_black_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "black_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/black_concrete_side_panels",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "panel": "black_concrete"
       }
     },
     {
@@ -214,16 +1194,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_iron_worktop",
-        "y": 90
-      },
-      "when": {
-        "facing": "east",
-        "worktop": "iron"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_copper_front_panel",
         "y": 90
       },
@@ -244,16 +1214,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_copper_worktop",
-        "y": 90
-      },
-      "when": {
-        "facing": "east",
-        "worktop": "copper"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_steel_front_panel",
         "y": 90
       },
@@ -270,16 +1230,6 @@
       "when": {
         "facing": "east",
         "panel": "steel"
-      }
-    },
-    {
-      "apply": {
-        "model": "simplemachines:block/generator_steel_worktop",
-        "y": 90
-      },
-      "when": {
-        "facing": "east",
-        "worktop": "steel"
       }
     },
     {
@@ -304,32 +1254,562 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_front_panel",
+        "model": "simplemachines:block/generator_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/wood_side_panels",
+        "model": "simplemachines:block/oak_side_panels",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_worktop",
+        "model": "simplemachines:block/generator_spruce_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "worktop": "wood"
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/spruce_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_birch_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/birch_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_jungle_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/jungle_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_acacia_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/acacia_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_dark_oak_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/dark_oak_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_mangrove_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/mangrove_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cherry_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cherry_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pale_oak_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pale_oak_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_bamboo_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/bamboo_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_crimson_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crimson_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_warped_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/warped_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_white_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/white_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_orange_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/orange_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_magenta_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/magenta_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_blue_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_blue_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_yellow_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/yellow_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_lime_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/lime_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pink_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pink_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_gray_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/gray_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_gray_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_gray_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cyan_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cyan_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_purple_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/purple_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_blue_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/blue_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_brown_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/brown_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_green_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/green_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_red_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/red_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_black_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "black_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/black_concrete_side_panels",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "panel": "black_concrete"
       }
     },
     {
@@ -354,16 +1834,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_iron_worktop",
-        "y": 180
-      },
-      "when": {
-        "facing": "south",
-        "worktop": "iron"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_copper_front_panel",
         "y": 180
       },
@@ -384,16 +1854,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_copper_worktop",
-        "y": 180
-      },
-      "when": {
-        "facing": "south",
-        "worktop": "copper"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_steel_front_panel",
         "y": 180
       },
@@ -410,16 +1870,6 @@
       "when": {
         "facing": "south",
         "panel": "steel"
-      }
-    },
-    {
-      "apply": {
-        "model": "simplemachines:block/generator_steel_worktop",
-        "y": 180
-      },
-      "when": {
-        "facing": "south",
-        "worktop": "steel"
       }
     },
     {
@@ -444,32 +1894,562 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_front_panel",
+        "model": "simplemachines:block/generator_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/wood_side_panels",
+        "model": "simplemachines:block/oak_side_panels",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "panel": "wood"
+        "panel": "oak"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_wood_worktop",
+        "model": "simplemachines:block/generator_spruce_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "worktop": "wood"
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/spruce_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "spruce"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_birch_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/birch_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "birch"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_jungle_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/jungle_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "jungle"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_acacia_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/acacia_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "acacia"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_dark_oak_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/dark_oak_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "dark_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_mangrove_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/mangrove_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "mangrove"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cherry_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cherry_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "cherry"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pale_oak_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pale_oak_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "pale_oak"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_bamboo_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/bamboo_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "bamboo"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_crimson_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crimson_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "crimson"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_warped_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/warped_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "warped"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_white_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/white_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "white_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_orange_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/orange_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "orange_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_magenta_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/magenta_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "magenta_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_blue_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_blue_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "light_blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_yellow_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/yellow_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "yellow_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_lime_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/lime_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "lime_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_pink_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/pink_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "pink_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_gray_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/gray_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_light_gray_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/light_gray_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "light_gray_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_cyan_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/cyan_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "cyan_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_purple_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/purple_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "purple_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_blue_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/blue_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "blue_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_brown_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/brown_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "brown_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_green_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/green_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "green_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_red_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/red_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "red_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/generator_black_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "black_concrete"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/black_concrete_side_panels",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "panel": "black_concrete"
       }
     },
     {
@@ -494,16 +2474,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_iron_worktop",
-        "y": 270
-      },
-      "when": {
-        "facing": "west",
-        "worktop": "iron"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_copper_front_panel",
         "y": 270
       },
@@ -524,16 +2494,6 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/generator_copper_worktop",
-        "y": 270
-      },
-      "when": {
-        "facing": "west",
-        "worktop": "copper"
-      }
-    },
-    {
-      "apply": {
         "model": "simplemachines:block/generator_steel_front_panel",
         "y": 270
       },
@@ -550,16 +2510,6 @@
       "when": {
         "facing": "west",
         "panel": "steel"
-      }
-    },
-    {
-      "apply": {
-        "model": "simplemachines:block/generator_steel_worktop",
-        "y": 270
-      },
-      "when": {
-        "facing": "west",
-        "worktop": "steel"
       }
     }
   ]

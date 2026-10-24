@@ -9,8 +9,8 @@
     "top": "simplemachines:block/furnace_core_top",
     "bottom": "simplemachines:block/core_bottom",
     "particle": "simplemachines:block/core_side",
-    "panel": "minecraft:block/oak_planks",
-    "worktop": "minecraft:block/spruce_planks"
+    "panel": "simplemachines:block/oak_panel",
+    "worktop": "simplemachines:block/oak_worktop"
   },
   "elements": [
     {

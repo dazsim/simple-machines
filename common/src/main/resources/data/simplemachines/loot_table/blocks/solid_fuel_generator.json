@@ -19,15 +19,15 @@
               "block": "simplemachines:solid_fuel_generator",
               "properties": [
                 "tier",
-                "panel",
-                "worktop"
+                "panel"
               ]
             },
             {
               "function": "minecraft:copy_components",
               "source": "block_entity",
               "include": [
-                "simplemachines:energy"
+                "simplemachines:energy",
+                "simplemachines:worktop"
               ]
             }
           ]

@@ -3,7 +3,7 @@ package com.workshopcraft.simplemachines;
 import com.workshopcraft.simplemachines.assembly.ChassisBlock;
 import com.workshopcraft.simplemachines.assembly.Core;
 import com.workshopcraft.simplemachines.assembly.Finish;
-import com.workshopcraft.simplemachines.assembly.ScrewdriverItem;
+import com.workshopcraft.simplemachines.assembly.ChassisBlockEntity;
 import com.workshopcraft.simplemachines.assembly.Tier;
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.machine.AlloyFurnaceBlock;
@@ -67,6 +67,8 @@ public class SimpleMachines {
     public static final MenuType<EnergyMenu> ELECTRIC_FURNACE_MENU = new MenuType<>(EnergyMenu::electricFurnace, FeatureFlags.VANILLA_SET);
     public static final DataComponentType<Integer> ENERGY = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
+    public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
+            .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     public static final Map<Core, Item> ASSEMBLIES = new EnumMap<>(Core.class);
     public static final Map<Finish, Item> PANELS = new EnumMap<>(Finish.class);
     public static final Map<Finish, Item> WORKTOPS = new EnumMap<>(Finish.class);
@@ -86,6 +88,7 @@ public class SimpleMachines {
     public static BlockEntityType<GeneratorBlockEntity> generatorEntity;
     public static BlockEntityType<RollingMillBlockEntity> rollingMillEntity;
     public static BlockEntityType<ElectricFurnaceBlockEntity> electricFurnaceEntity;
+    public static BlockEntityType<ChassisBlockEntity> chassisEntity;
     private static final List<Item> TAB = new ArrayList<>();
 
     public static Identifier id(String path) {
@@ -143,7 +146,7 @@ public class SimpleMachines {
                 "iron_sheet", "copper_sheet", "steel_sheet")) {
             add(r, name, new Item(props(name)));
         }
-        screwdriver = add(r, "screwdriver", new ScrewdriverItem(props("screwdriver").stacksTo(1)));
+        screwdriver = add(r, "screwdriver", new Item(props("screwdriver").stacksTo(1)));
         add(r, "alloy_furnace", new BlockItem(alloyFurnace, props("alloy_furnace").useBlockDescriptionPrefix()));
         add(r, "extruder", new BlockItem(extruder, props("extruder").useBlockDescriptionPrefix()));
         add(r, "iron_chassis", new BlockItem(ironChassis, props("iron_chassis").useBlockDescriptionPrefix()));
@@ -179,6 +182,7 @@ public class SimpleMachines {
 
     public static void registerComponents(BiConsumer<Identifier, DataComponentType<?>> r) {
         r.accept(id("energy"), ENERGY);
+        r.accept(id("worktop"), WORKTOP);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -200,6 +204,8 @@ public class SimpleMachines {
         r.accept(id("rolling_mill"), rollingMillEntity);
         electricFurnaceEntity = new BlockEntityType<>(ElectricFurnaceBlockEntity::new, Set.of(electricFurnace));
         r.accept(id("electric_furnace"), electricFurnaceEntity);
+        chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
+        r.accept(id("chassis"), chassisEntity);
     }
 
     public static void registerMenus(BiConsumer<Identifier, MenuType<?>> r) {

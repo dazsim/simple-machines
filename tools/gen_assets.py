@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # Writes textures and the json resources. Run from the repo root: python3 tools/gen_assets.py
-import json, os, random
+import json, os, random, shutil, sys
 from PIL import Image
+sys.path.insert(0, os.path.dirname(__file__))
+import icons
 
 R = "common/src/main/resources"
 A = R + "/assets/simplemachines"
@@ -273,12 +275,16 @@ def main():
         jdump({"type": f"{MOD}:rolling", "input": {"ingredient": f"#c:ingots/{m}"},
                "result": {"id": f"{MOD}:{m}_rod", "count": 2}, "cooking_time": 100}, rec + f"rolling/{m}_rod.json")
 
-    def shaped(name, pattern, key, count=1):
+    def shaped(name, pattern, key, count=1, cond=False):
         result = {"id": f"{MOD}:{name}"}
         if count > 1:
             result["count"] = count
-        jdump({"type": "minecraft:crafting_shaped", "category": "misc", "key": key, "pattern": pattern,
-               "result": result}, rec + name + ".json")
+        r = {}
+        if cond:
+            r["neoforge:conditions"] = [{"type": "neoforge:not", "value": {"type": "neoforge:mod_loaded", "modid": "muchmorestorage"}}]
+            r["fabric:load_conditions"] = [{"condition": "fabric:not", "value": {"condition": "fabric:all_mods_loaded", "values": ["muchmorestorage"]}}]
+        r.update({"type": "minecraft:crafting_shaped", "category": "misc", "key": key, "pattern": pattern, "result": result})
+        jdump(r, rec + name + ".json")
     shaped("alloy_furnace", ["BBB", "CFC", "BBB"], {"B": "minecraft:bricks", "C": "#c:ingots/copper", "F": "minecraft:furnace"})
     shaped("extruder", ["III", "IPI", "IFI"], {"I": "#c:ingots/iron", "P": "minecraft:piston", "F": "minecraft:furnace"})
     shaped("steel_chassis", ["IRI", "RRR", "IRI"], {"I": "#c:ingots/steel", "R": "#c:rods/steel"})
@@ -289,13 +295,17 @@ def main():
 BUILT = ["electric_furnace", "rolling_mill", "solid_fuel_generator"]
 CHASSIS = ["iron_chassis", "steel_chassis"]
 CORES = {"furnace": "electric_furnace", "rolling": "rolling_mill", "generator": "solid_fuel_generator"}
-FINISHES = ["wood", "iron", "copper", "steel"]
+WOODS = ["oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak", "bamboo", "crimson", "warped"]
+COLOURS = ["white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple",
+           "blue", "brown", "green", "red", "black"]
+CONCRETES = [c + "_concrete" for c in COLOURS]
+METALS = ["iron", "copper", "steel"]
+FINISHES = WOODS + CONCRETES + METALS
 FACINGS = [("north", 0), ("east", 90), ("south", 180), ("west", 270)]
 COPPER4 = [(236, 146, 104), (196, 108, 76), (160, 84, 58), (110, 54, 38)]
-WOOD = [(190, 152, 98), (162, 130, 78), (134, 106, 64), (98, 78, 46)]
 RED = [(255, 76, 52), (196, 36, 30), (110, 20, 18)]
 BOARD = (44, 56, 72)
-PALETTES = {"iron": IRON, "copper": COPPER4, "steel": STEEL, "wood": WOOD}
+PALETTES = {"iron": IRON, "copper": COPPER4, "steel": STEEL}
 # front opening per core as (x0, y0, x1, y1) in model space; the generator and furnace show fire, the mill its rollers
 FRONT_HOLE = {"furnace": (4, 4, 12, 11), "rolling": (3, 6, 13, 10), "generator": (5, 3, 11, 10)}
 SIDE_HOLE = (6, 6, 10, 10)
@@ -411,63 +421,6 @@ def cable_tex():
         px(t, 6, i, RCOPPER[0] + (255,)); px(t, 9, i, RCOPPER[2] + (255,))
     return t
 
-SHEET = [
-    "................",
-    "................",
-    "................",
-    "................",
-    "........oooooo..",
-    ".....oooHHHHHHo.",
-    "..oooHHHHHHHHMo.",
-    ".oHHHHHHHHHMMLo.",
-    ".oMHHHHHHMMMLLo.",
-    ".oLMMMMMMMMLLDo.",
-    ".oDLLLLLLLLLDo..",
-    "..ooDDDDDDDDo...",
-    "....oooooooo....",
-    "................",
-    "................",
-    "................",
-]
-
-PANELS = [
-    "................",
-    "..oooooooooo....",
-    "..oHHHHHHHHo....",
-    "..oHMMMMMMLo....",
-    "..oHMoooooooooo.",
-    "..oHMoHHHHHHHHo.",
-    "..oHMoHMMMMMMLo.",
-    "..oHMoHMMMMMMLo.",
-    "..oHMoHMMMMMMLo.",
-    "..oLLoHMMMMMMLo.",
-    "..ooooHMMMMMMLo.",
-    "......oHMMMMMLo.",
-    "......oLLLLLLLo.",
-    "......oooooooooo",
-    "................",
-    "................",
-]
-
-WORKTOP = [
-    "................",
-    "................",
-    "................",
-    "................",
-    "......oooooooo..",
-    "....ooHHHHHHHo..",
-    "..ooHHHHHHHHMo..",
-    ".oHHHHHHHHHMMo..",
-    ".oHHHHHHHHMMLo..",
-    ".oMMMMMMMMMLDo..",
-    ".oLLLLLLLLLDo...",
-    ".ooooooooooo....",
-    "................",
-    "................",
-    "................",
-    "................",
-]
-
 BOARD_ITEM = [
     "................",
     "................",
@@ -568,9 +521,19 @@ def model(name, elements, textures, parent="minecraft:block/block"):
     return f"{MOD}:block/{name}"
 
 def finish_tex(f, part):
-    if f == "wood":
-        return "minecraft:block/oak_planks" if part == "panel" else "minecraft:block/spruce_planks"
+    if part == "worktop" and f in CONCRETES:
+        return f"minecraft:block/{f}"
     return f"{MOD}:block/{f}_{part}"
+
+def ramp(f):
+    if f in METALS:
+        src = icons.MC + f"item/{f}_ingot.png" if f != "steel" else A + "/textures/item/steel_ingot.png"
+        return icons.ramp_of(src)
+    src = icons.MMS + f"block/{f}_worktop.png" if f in WOODS else icons.MC + f"block/{f}.png"
+    return icons.ramp_from(icons.mean_of(src))
+
+def kind(f):
+    return "wood" if f in WOODS else "metal" if f in METALS else "concrete"
 
 def built(shaped, rec):
     tb, ti = A + "/textures/block/", A + "/textures/item/"
@@ -587,10 +550,15 @@ def built(shaped, rec):
     for f in ["iron", "copper", "steel"]:
         save(sheet_tex(f), tb + f"{f}_panel.png")
         save(worktop_tex(f), tb + f"{f}_worktop.png")
-        save(sprite(SHEET, PALETTES[f]), ti + f"{f}_sheet.png")
+        save(icons.sheet(ramp(f)), ti + f"{f}_sheet.png")
+    # wood and concrete finishes share Much More Storage's textures so the two mods match side by side
+    for f in WOODS + CONCRETES:
+        shutil.copy(icons.MMS + f"block/{f}_body_side.png", tb + f"{f}_panel.png")
+    for f in WOODS:
+        shutil.copy(icons.MMS + f"block/{f}_worktop.png", tb + f"{f}_worktop.png")
     for f in FINISHES:
-        save(sprite(PANELS, PALETTES[f]), ti + f"{f}_panels.png")
-        save(sprite(WORKTOP, PALETTES[f]), ti + f"{f}_worktop.png")
+        save(icons.panels(ramp(f), kind(f)), ti + f"{f}_panels.png")
+        save(icons.worktop(ramp(f), kind(f)), ti + f"{f}_worktop.png")
     save(board_item(), ti + "control_board.png")
     save(cable_tex(), tb + "redstone_copper_cable.png")
     save(Image.open("/workspace/mods/morestorage-261/common/src/main/resources/assets/muchmorestorage/textures/item/screwdriver.png"),
@@ -613,12 +581,10 @@ def built(shaped, rec):
     model("control_board_loose", board_elements(True), board_t)
     for f in FINISHES:
         pt = {"panel": finish_tex(f, "panel"), "particle": finish_tex(f, "panel")}
-        wt = {"worktop": finish_tex(f, "worktop"), "particle": finish_tex(f, "worktop")}
         for loose in ["", "_loose"]:
             model(f"{f}_side_panels{loose}", side_panels(bool(loose)), pt)
             for c in CORES:
                 model(f"{c}_{f}_front_panel{loose}", front_panel(c, bool(loose)), pt)
-                model(f"{c}_{f}_worktop{loose}", worktop_elements(c, bool(loose)), wt)
 
     def part(m, when, y):
         a = {"apply": {"model": f"{MOD}:block/{m}"}}
@@ -638,7 +604,6 @@ def built(shaped, rec):
                 for fin in FINISHES:
                     parts.append(part(f"{c}_{fin}_front_panel_loose", {"facing": f, "core": c, "panel": fin, "step": "5"}, y))
                     parts.append(part(f"{c}_{fin}_front_panel", {"facing": f, "core": c, "panel": fin, "step": "6|7"}, y))
-                    parts.append(part(f"{c}_{fin}_worktop_loose", {"facing": f, "core": c, "worktop": fin, "step": "7"}, y))
             parts.append(part("control_board_loose", {"facing": f, "step": "3"}, y))
             parts.append(part("control_board", {"facing": f, "step": "4|5|6|7"}, y))
             for fin in FINISHES:
@@ -659,17 +624,16 @@ def built(shaped, rec):
             for fin in FINISHES:
                 parts.append(part(f"{c}_{fin}_front_panel", {"facing": f, "panel": fin}, y))
                 parts.append(part(f"{fin}_side_panels", {"facing": f, "panel": fin}, y))
-                parts.append(part(f"{c}_{fin}_worktop", {"facing": f, "worktop": fin}, y))
         jdump({"multipart": parts}, f"{A}/blockstates/{block}.json")
         elements = frame_elements() + core_elements(False) + front_panel(c, False) + side_panels(False) + worktop_elements(c, False)
         item = model(f"{block}_item", elements, {"frame": f"{MOD}:block/iron_chassis", "floor": f"{MOD}:block/chassis_floor",
-                     **core_tex(c, ""), "panel": finish_tex("wood", "panel"), "worktop": finish_tex("wood", "worktop")})
+                     **core_tex(c, ""), "panel": finish_tex("oak", "panel"), "worktop": finish_tex("oak", "worktop")})
         jdump({"model": {"type": "minecraft:model", "model": item}}, f"{A}/items/{block}.json")
         jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
                "conditions": [{"condition": "minecraft:survives_explosion"}],
                "entries": [{"type": "minecraft:item", "name": f"{MOD}:{block}", "functions": [
-                   {"function": "minecraft:copy_state", "block": f"{MOD}:{block}", "properties": ["tier", "panel", "worktop"]},
-                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy"]}]}]}],
+                   {"function": "minecraft:copy_state", "block": f"{MOD}:{block}", "properties": ["tier", "panel"]},
+                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop"]}]}]}],
                "random_sequence": f"{MOD}:blocks/{block}"}, f"{D}/{MOD}/loot_table/blocks/{block}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{c}_core"}}, f"{A}/items/{c}_assembly.json")
 
@@ -733,7 +697,7 @@ def built(shaped, rec):
         lang[f"item.simplemachines.{m}_rod"] = f"{m.title()} Rod"
         lang[f"item.simplemachines.{m}_sheet"] = f"{m.title()} Sheet"
     for f in FINISHES:
-        name = "Wooden" if f == "wood" else f.title()
+        name = f.replace("_", " ").title()
         lang[f"item.simplemachines.{f}_panels"] = f"{name} Panels"
         lang[f"item.simplemachines.{f}_worktop"] = f"{name} Worktop"
     jdump(lang, f"{A}/lang/en_us.json")
@@ -744,8 +708,16 @@ def built(shaped, rec):
         jdump({"values": [f"{MOD}:{m}_sheet"]}, f"{D}/c/tags/item/plates/{m}.json")
         shaped(f"{m}_panels", ["SS", "SS"], {"S": f"#c:plates/{m}"})
         shaped(f"{m}_worktop", ["SSS"], {"S": f"#c:plates/{m}"})
-    shaped("wood_panels", ["SS", "SS"], {"S": "#minecraft:wooden_slabs"})
-    shaped("wood_worktop", ["SSS"], {"S": "#minecraft:wooden_slabs"})
+    # worktops match Much More Storage's recipes, so with it installed its worktops are used instead
+    for f in WOODS:
+        shaped(f"{f}_panels", ["SS", "SS"], {"S": f"minecraft:{f}_slab"})
+        shaped(f"{f}_worktop", ["SSS"], {"S": f"minecraft:{f}_slab"}, cond=True)
+    for f in CONCRETES:
+        shaped(f"{f}_panels", ["CC", "CC"], {"C": f"minecraft:{f}"}, 2)
+        shaped(f"{f}_worktop", ["CCC"], {"C": f"minecraft:{f}"}, 2, cond=True)
+    jdump({"values": [f"{MOD}:{f}_worktop" for f in FINISHES]}, f"{D}/c/tags/item/worktops.json")
+    jdump({"values": [{"id": f"{m}:screwdriver", "required": False} for m in [MOD, "muchmorestorage", "morelighting"]]},
+          f"{D}/c/tags/item/tools/screwdriver.json")
     shaped("iron_chassis", ["IBI", "B B", "IBI"], {"I": "#c:ingots/iron", "B": "minecraft:iron_bars"})
     shaped("screwdriver", ["C", "S"], {"C": "#c:ingots/copper", "S": "minecraft:stick"})
     shaped("control_board", ["RDR", "CCC"], {"R": f"{MOD}:redstone_copper_ingot", "D": "#c:dusts/redstone", "C": "#c:ingots/copper"})

@@ -11,7 +11,8 @@ Contents so far:
 - Rolling Mill: 20 FE/t, rolls iron, copper and steel ingots into 2 rods or one sheet. The button in its screen switches between rods and sheets.
 - Electric Furnace: 20 FE/t, normal smelting recipes, a bit faster than a furnace.
 - Redstone Copper Cable: carries up to 1000 FE/t, connects to anything that takes or gives FE.
-- Parts: furnace, rolling and generator assemblies, control board, wood, iron, copper and steel panels and worktops, screwdriver.
+- Parts: furnace, rolling and generator assemblies, control board, panels and worktops, screwdriver.
+- Finishes for panels and worktops: the twelve woods, the sixteen concrete colours, iron, copper and steel.
 - Steel ingot, Redstone Copper Ingot, iron, copper and steel rods and sheets.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
@@ -25,7 +26,21 @@ Place a chassis, then right click it with each part in turn and use the screwdri
 3. Panels for the sides.
 4. A worktop on the open top.
 
-Each part sits loose until it is screwed in. Wood panels and worktop are cheap, metal ones come from sheets made in the Rolling Mill. Sneak and use the screwdriver to take the last part off again. Breaking a part-built chassis drops its parts.
+Each part sits loose until it is screwed in. Wood panels come from four slabs, concrete panels from four concrete (makes two), worktops from three slabs or three concrete (makes two). Metal ones come from sheets made in the Rolling Mill. Sneak and use the screwdriver to take the last part off again. Breaking a part-built chassis drops its parts.
+
+## Much More Storage and other mods
+
+- Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
+- With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
+- Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.4
+
+- Copper, iron and steel sheets redrawn as flat sheets.
+- Panels and worktops in all twelve woods and sixteen concrete colours, drawn to match Much More Storage.
+- Worktop sits on the machine as its own piece and shows the chosen finish.
+- Shared worktop and screwdriver tags, see above.
+- Breaking change: the old single `wood` finish is gone, so worlds from alpha.3 with wood panels or worktops will lose them.
 
 Hoppers: top feeds the inputs, sides feed fuel first and then the inputs, bottom takes the output.
 

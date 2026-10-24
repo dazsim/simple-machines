@@ -2,7 +2,6 @@ package com.workshopcraft.simplemachines.assembly;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.workshopcraft.simplemachines.SimpleMachines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -20,6 +19,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
@@ -29,14 +31,13 @@ import java.util.List;
  * Open frame that machines are built on. Steps: 0 empty, 1 assembly loose, 2 assembly fixed, 3 board loose,
  * 4 board fixed, 5 panels loose, 6 panels fixed, 7 worktop loose. Screwing the worktop in finishes the machine.
  */
-public class ChassisBlock extends Block {
+public class ChassisBlock extends Block implements EntityBlock {
     public static final MapCodec<ChassisBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Tier.CODEC.fieldOf("tier").forGetter(b -> b.tier), propertiesCodec()).apply(i, ChassisBlock::new));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<Core> CORE = EnumProperty.create("core", Core.class);
     public static final IntegerProperty STEP = IntegerProperty.create("step", 0, 7);
     public static final EnumProperty<Finish> PANEL = EnumProperty.create("panel", Finish.class);
-    public static final EnumProperty<Finish> WORKTOP = EnumProperty.create("worktop", Finish.class);
 
     public final Tier tier;
 
@@ -44,7 +45,12 @@ public class ChassisBlock extends Block {
         super(properties);
         this.tier = tier;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(CORE, Core.NONE)
-                .setValue(STEP, 0).setValue(PANEL, Finish.NONE).setValue(WORKTOP, Finish.NONE));
+                .setValue(STEP, 0).setValue(PANEL, Finish.NONE));
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ChassisBlockEntity(pos, state);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class ChassisBlock extends Block {
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
                                           InteractionHand hand, BlockHitResult hit) {
-        if (stack.is(SimpleMachines.screwdriver)) return InteractionResult.PASS;
+        if (stack.is(Worktops.SCREWDRIVERS)) return InteractionResult.PASS;
         final InteractionResult result = Assembly.fit(state, level, pos, player, stack);
         return result != null ? result : InteractionResult.TRY_WITH_EMPTY_HAND;
     }
@@ -68,7 +74,7 @@ public class ChassisBlock extends Block {
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         final List<ItemStack> drops = new ArrayList<>(super.getDrops(state, params));
-        drops.addAll(Assembly.parts(state));
+        drops.addAll(Assembly.parts(state, params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChassisBlockEntity be ? be.worktop() : ""));
         return drops;
     }
 
@@ -84,6 +90,6 @@ public class ChassisBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CORE, STEP, PANEL, WORKTOP);
+        builder.add(FACING, CORE, STEP, PANEL);
     }
 }

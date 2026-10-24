@@ -21,7 +21,6 @@ import java.util.List;
 import static com.workshopcraft.simplemachines.assembly.ChassisBlock.CORE;
 import static com.workshopcraft.simplemachines.assembly.ChassisBlock.PANEL;
 import static com.workshopcraft.simplemachines.assembly.ChassisBlock.STEP;
-import static com.workshopcraft.simplemachines.assembly.ChassisBlock.WORKTOP;
 
 public final class Assembly {
     private Assembly() {
@@ -32,15 +31,15 @@ public final class Assembly {
         final int step = state.getValue(STEP);
         final Core core = Core.of(stack);
         final Finish panels = Finish.panelsOf(stack);
-        final Finish worktop = Finish.worktopOf(stack);
+        final String worktop = Worktops.of(stack);
         final boolean board = stack.is(SimpleMachines.controlBoard);
-        if (core == Core.NONE && panels == Finish.NONE && worktop == Finish.NONE && !board) return null;
+        if (core == Core.NONE && panels == Finish.NONE && worktop.isEmpty() && !board) return null;
 
         BlockState next = null;
         if (core != Core.NONE && step == 0) next = state.setValue(CORE, core).setValue(STEP, 1);
         else if (board && step == 2) next = state.setValue(STEP, 3);
         else if (panels != Finish.NONE && step == 4) next = state.setValue(PANEL, panels).setValue(STEP, 5);
-        else if (worktop != Finish.NONE && step == 6) next = state.setValue(WORKTOP, worktop).setValue(STEP, 7);
+        else if (!worktop.isEmpty() && step == 6) next = state.setValue(STEP, 7);
 
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (next == null) {
@@ -48,6 +47,7 @@ public final class Assembly {
             return InteractionResult.SUCCESS;
         }
         level.setBlock(pos, next, Block.UPDATE_ALL);
+        if (!worktop.isEmpty() && level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
         stack.consume(1, player);
         level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.8F, 0.9F);
         return InteractionResult.SUCCESS;
@@ -72,11 +72,12 @@ public final class Assembly {
         }
         if (step == 7) {
             final Tier tier = ((ChassisBlock) state.getBlock()).tier;
+            final String worktop = worktopAt(level, pos);
             level.setBlock(pos, state.getValue(CORE).machine().defaultBlockState()
                     .setValue(MachineBlock.FACING, state.getValue(ChassisBlock.FACING))
                     .setValue(PoweredMachineBlock.TIER, tier)
-                    .setValue(PoweredMachineBlock.PANEL, state.getValue(PANEL))
-                    .setValue(PoweredMachineBlock.WORKTOP, state.getValue(WORKTOP)), Block.UPDATE_ALL);
+                    .setValue(PoweredMachineBlock.PANEL, state.getValue(PANEL)), Block.UPDATE_ALL);
+            if (level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
         } else {
             level.setBlock(pos, state.setValue(STEP, step + 1), Block.UPDATE_ALL);
         }
@@ -91,8 +92,9 @@ public final class Assembly {
         final ItemStack part;
         final BlockState next;
         if (step == 7) {
-            part = new ItemStack(state.getValue(WORKTOP).worktop());
-            next = state.setValue(WORKTOP, Finish.NONE).setValue(STEP, 6);
+            part = Worktops.stack(worktopAt(level, pos));
+            if (level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop("");
+            next = state.setValue(STEP, 6);
         } else if (step >= 5) {
             part = new ItemStack(state.getValue(PANEL).panels());
             next = state.setValue(PANEL, Finish.NONE).setValue(STEP, 4);
@@ -112,23 +114,46 @@ public final class Assembly {
     /** Opens a finished machine back up: contents drop, the worktop comes off, the rest stays on the chassis. */
     public static void disassemble(BlockState state, Level level, BlockPos pos) {
         final PoweredMachineBlock block = (PoweredMachineBlock) state.getBlock();
-        final Finish worktop = state.getValue(PoweredMachineBlock.WORKTOP);
+        final String worktop = worktopAt(level, pos);
         level.setBlock(pos, state.getValue(PoweredMachineBlock.TIER).chassis().defaultBlockState()
                 .setValue(ChassisBlock.FACING, state.getValue(MachineBlock.FACING))
                 .setValue(CORE, block.core())
                 .setValue(PANEL, state.getValue(PoweredMachineBlock.PANEL))
                 .setValue(STEP, 6), Block.UPDATE_ALL);
-        Block.popResource(level, pos.above(), new ItemStack(worktop.worktop()));
+        Block.popResource(level, pos.above(), Worktops.stack(worktop));
         ratchet(level, pos);
     }
 
-    public static List<ItemStack> parts(BlockState state) {
+    private static String worktopAt(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof Worktops.Holder h ? h.worktop() : "";
+    }
+
+    /** Any c:tools/screwdriver: screws parts in, sneak takes the last one off or opens a machine back up. */
+    public static boolean screwdriver(Level level, BlockPos pos, Player player, ItemStack held) {
+        if (!held.is(Worktops.SCREWDRIVERS) || !player.mayBuild()) return false;
+        final BlockState state = level.getBlockState(pos);
+        final boolean sneak = player.isSecondaryUseActive();
+        if (state.getBlock() instanceof ChassisBlock) {
+            if (!level.isClientSide()) {
+                if (sneak) unscrew(state, level, pos);
+                else screw(state, level, pos, player);
+            }
+            return true;
+        }
+        if (state.getBlock() instanceof PoweredMachineBlock && sneak) {
+            if (!level.isClientSide()) disassemble(state, level, pos);
+            return true;
+        }
+        return false;
+    }
+
+    public static List<ItemStack> parts(BlockState state, String worktop) {
         final int step = state.getValue(STEP);
         final List<ItemStack> parts = new ArrayList<>();
         if (step >= 1) parts.add(new ItemStack(state.getValue(CORE).item()));
         if (step >= 3) parts.add(new ItemStack(SimpleMachines.controlBoard));
         if (step >= 5) parts.add(new ItemStack(state.getValue(PANEL).panels()));
-        if (step >= 7) parts.add(new ItemStack(state.getValue(WORKTOP).worktop()));
+        if (step >= 7 && !worktop.isEmpty()) parts.add(Worktops.stack(worktop));
         return parts;
     }
 

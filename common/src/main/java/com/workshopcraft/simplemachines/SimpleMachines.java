@@ -1,5 +1,8 @@
 package com.workshopcraft.simplemachines;
 
+import com.workshopcraft.simplemachines.item.PoweredToolItem;
+import net.minecraft.tags.BlockTags;
+
 import com.workshopcraft.simplemachines.assembly.ChassisBlock;
 import com.workshopcraft.simplemachines.assembly.Core;
 import com.workshopcraft.simplemachines.assembly.Finish;
@@ -106,6 +109,8 @@ public class SimpleMachines {
     public static Block itemPipe;
     public static Item screwdriver;
     public static Item controlBoard;
+    public static Item powerCell;
+    public static final List<Item> TOOLS = new ArrayList<>();
     public static BlockEntityType<AlloyFurnaceBlockEntity> alloyFurnaceEntity;
     public static BlockEntityType<ExtruderBlockEntity> extruderEntity;
     public static BlockEntityType<GeneratorBlockEntity> generatorEntity;
@@ -221,6 +226,10 @@ public class SimpleMachines {
         for (Core core : NEW_CORES) add(r, core.block, new BlockItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
+        powerCell = add(r, "power_cell", new Item(props("power_cell")));
+        TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), BlockTags.MINEABLE_WITH_PICKAXE, 5.0F, -2.8F)));
+        TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), BlockTags.MINEABLE_WITH_AXE, 8.0F, -3.0F)));
+        TOOLS.add(add(r, "electric_shovel", new PoweredToolItem(props("electric_shovel"), BlockTags.MINEABLE_WITH_SHOVEL, 5.5F, -3.0F)));
     }
 
     private static Item.Properties props(String name) {
@@ -242,7 +251,10 @@ public class SimpleMachines {
         r.accept(id("main"), CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                 .title(Component.translatable("itemGroup.simplemachines"))
                 .icon(() -> new ItemStack(alloyFurnace))
-                .displayItems((params, out) -> TAB.forEach(out::accept))
+                .displayItems((params, out) -> {
+                    TAB.forEach(out::accept);
+                    TOOLS.forEach(t -> out.accept(PoweredToolItem.charged(t)));
+                })
                 .build());
     }
 

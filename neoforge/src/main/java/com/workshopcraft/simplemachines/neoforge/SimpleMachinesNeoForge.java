@@ -1,6 +1,8 @@
 package com.workshopcraft.simplemachines.neoforge;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.item.PoweredToolItem;
+import net.minecraft.world.item.Item;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -80,6 +82,12 @@ public class SimpleMachinesNeoForge {
                     return h.insert(1, tx) == 0;
                 }
             }
+
+            @Override
+            public int charge(Container container, int slot) {
+                final EnergyHandler h = item(container, slot);
+                return h == null || h.getCapacityAsLong() <= 0 ? 0 : (int) (1000 * h.getAmountAsLong() / h.getCapacityAsLong());
+            }
         };
         EnergyBuffer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Energy.BLOCK, pos, side) != null;
     }
@@ -110,6 +118,8 @@ public class SimpleMachinesNeoForge {
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.cable);
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE), SimpleMachines.MACHINES.get(Core.BATTERY));
+        e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
+                PoweredToolItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.TOOLS.toArray(new Item[0]));
     }
 
     private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {

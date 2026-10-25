@@ -140,5 +140,11 @@
   "message.simplemachines.pipe_link": "Pipe end: input",
   "message.simplemachines.pipe_extract": "Pipe end: output",
   "message.simplemachines.pipe_off": "Pipe end: disconnected",
-  "message.simplemachines.pipe_no_inventory": "No inventory on that side"
+  "message.simplemachines.pipe_no_inventory": "No inventory on that side",
+  "item.simplemachines.power_cell": "Power Cell",
+  "item.simplemachines.electric_drill": "Electric Drill",
+  "item.simplemachines.chainsaw": "Chainsaw",
+  "item.simplemachines.electric_shovel": "Electric Shovel",
+  "tooltip.simplemachines.charge": "Charge: %s / %s FE",
+  "tooltip.simplemachines.no_charge": "Out of charge: recharge it in a Charger"
 }

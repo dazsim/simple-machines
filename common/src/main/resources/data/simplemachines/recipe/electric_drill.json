@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "#c:plates/steel",
+    "R": "#c:rods/steel",
+    "P": "simplemachines:power_cell",
+    "B": "simplemachines:control_board"
+  },
+  "pattern": [
+    "SSS",
+    "RPR",
+    " B "
+  ],
+  "result": {
+    "id": "simplemachines:electric_drill"
+  }
+}

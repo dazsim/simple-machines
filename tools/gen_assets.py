@@ -4,6 +4,7 @@ import json, os, random, shutil, sys
 from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 import icons
+import powered_icons
 
 R = "common/src/main/resources"
 A = R + "/assets/simplemachines"
@@ -290,6 +291,7 @@ def main():
     shaped("steel_chassis", ["IRI", "RRR", "IRI"], {"I": "#c:ingots/steel", "R": "#c:rods/steel"})
     built(shaped, rec)
     machines(shaped, rec)
+    powered(shaped)
 
 # ---- assembled machines, chassis, parts and cable ----
 
@@ -996,6 +998,34 @@ def machines(shaped, rec):
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]
     jdump({"values": vals + [f"{MOD}:item_pipe"]}, tag)
+
+# ---- powered tools ----
+
+TOOLS = {"electric_drill": ("Electric Drill", powered_icons.drill, "pickaxes"),
+         "chainsaw": ("Chainsaw", powered_icons.chainsaw, "axes"),
+         "electric_shovel": ("Electric Shovel", powered_icons.shovel, "shovels")}
+
+def flat_item(name, tex, parent="minecraft:item/generated"):
+    save(tex, f"{A}/textures/item/{name}.png")
+    jdump({"parent": parent, "textures": {"layer0": f"{MOD}:item/{name}"}}, f"{A}/models/item/{name}.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{name}"}}, f"{A}/items/{name}.json")
+
+def powered(shaped):
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    flat_item("power_cell", powered_icons.cell())
+    lang["item.simplemachines.power_cell"] = "Power Cell"
+    for name, (title, draw, tag) in TOOLS.items():
+        flat_item(name, draw(), "minecraft:item/handheld")
+        lang[f"item.simplemachines.{name}"] = title
+        jdump({"values": [f"{MOD}:{name}"]}, f"{D}/minecraft/tags/item/{tag}.json")
+    lang["tooltip.simplemachines.charge"] = "Charge: %s / %s FE"
+    lang["tooltip.simplemachines.no_charge"] = "Out of charge: recharge it in a Charger"
+    jdump(lang, f"{A}/lang/en_us.json")
+    S, R, P, B = "#c:plates/steel", "#c:rods/steel", f"{MOD}:power_cell", f"{MOD}:control_board"
+    shaped("power_cell", ["SRS", "SDS", "SRS"], {"S": "#c:plates/copper", "R": f"{MOD}:redstone_copper_ingot", "D": "minecraft:redstone_block"})
+    shaped("electric_drill", ["SSS", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
+    shaped("chainsaw", ["SS ", "SPR", " BR"], {"S": S, "R": R, "P": P, "B": B})
+    shaped("electric_shovel", [" S ", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
 
 def loot_self(b):
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,

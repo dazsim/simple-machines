@@ -1,6 +1,8 @@
 package com.workshopcraft.simplemachines.fabric;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.item.PoweredToolItem;
+import net.minecraft.world.item.Item;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import com.workshopcraft.simplemachines.assembly.Assembly;
 import net.fabricmc.api.ModInitializer;
@@ -78,12 +80,20 @@ public class SimpleMachinesFabric implements ModInitializer {
                 return s == null || !s.supportsInsertion() || s.getAmount() >= s.getCapacity();
             }
 
+            @Override
+            public int charge(Container container, int slot) {
+                final EnergyStorage s = item(container, slot);
+                return s == null || s.getCapacity() <= 0 ? 0 : (int) (1000 * s.getAmount() / s.getCapacity());
+            }
+
             private EnergyStorage item(Container container, int slot) {
                 return EnergyStorage.ITEM.find(container.getItem(slot), ContainerItemContext.ofSingleSlot(ContainerStorage.of(container, null).getSlot(slot)));
             }
         };
         EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE),
                 SimpleMachines.MACHINES.get(Core.BATTERY).asItem());
+        EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, PoweredToolItem.CAPACITY, PoweredToolItem.RATE),
+                SimpleMachines.TOOLS.toArray(new Item[0]));
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyStorage s = EnergyStorage.SIDED.find(level, pos, side);

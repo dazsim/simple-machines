@@ -25,6 +25,11 @@ public class ChargerBlockEntity extends WorkBlockEntity {
         int insert(Container container, int slot, int amount);
 
         boolean full(Container container, int slot);
+
+        /** How full the item in slot is, 0 to 1000. */
+        default int charge(Container container, int slot) {
+            return 0;
+        }
     }
 
     public static ItemEnergy itemEnergy = new ItemEnergy() {
@@ -80,12 +85,12 @@ public class ChargerBlockEntity extends WorkBlockEntity {
                 if (n > 0) {
                     energy.energy -= n;
                     working = true;
-                    total = 100;
-                    progress = (progress + 1) % total;
                     setChanged();
                 }
             }
         }
+        total = 1000;
+        progress = items.get(0).isEmpty() ? 0 : itemEnergy.charge(this, 0);
         setLit(level, pos, state, working);
     }
 

@@ -110,7 +110,8 @@ public class HotSparkParticle extends SingleQuadParticle {
         for (int i = 0; i < n; i++) {
             final float k = n == 1 ? 0F : (float) i / (n - 1);
             final float fade = 1F - 0.55F * k;
-            final float r = rCol * (1F - 0.15F * k), g = gCol * (1F - 0.45F * k), b = bCol * (1F - 0.6F * k);
+            final float r = rCol * (1F - 0.15F * k);
+            final float g = gCol * (1F - (white ? 0.08F : 0.45F) * k), b = bCol * (1F - (white ? 0.2F : 0.6F) * k);
             state.add(getLayer(), x + tx * k, y + ty * k, z + tz * k, rotation.x, rotation.y, rotation.z, rotation.w,
                     size * fade, getU0(), getU1(), getV0(), getV1(), ARGB.colorFromFloat(alpha, r, g, b), light);
         }

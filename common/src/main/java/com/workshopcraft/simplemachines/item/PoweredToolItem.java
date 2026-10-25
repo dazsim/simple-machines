@@ -13,7 +13,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
@@ -138,6 +140,23 @@ public class PoweredToolItem extends Item {
         final float speed = super.getDestroySpeed(stack, state);
         if (speed <= 1.0F) return speed;
         return speed * speedFactor(stack) * (hard(state) && !steel(stack) ? HARD_IRON_FACTOR : 1F);
+    }
+
+    // the charge changes every block; keep the tool steady in hand and keep digging (NeoForge and Fabric hooks)
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged || !oldStack.is(newStack.getItem());
+    }
+
+    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+        return !oldStack.is(newStack.getItem());
+    }
+
+    public boolean allowComponentsUpdateAnimation(Player player, InteractionHand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
+    }
+
+    public boolean allowContinuingBlockBreaking(Player player, ItemStack oldStack, ItemStack newStack) {
+        return oldStack.is(newStack.getItem());
     }
 
     @Override

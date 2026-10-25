@@ -126,12 +126,12 @@ def tricone(kind, frame, running):
     els = []
     for i in range(3):
         beta = math.radians(120 * i + 20 * frame)
-        leg = fbox((16.25, cy + 1.1, cz - 0.85), (18.75, cy + 2.6, cz + 0.85), "leg")
+        leg = fbox((16.25, cy + 1.2, cz - 1.0), (19.25, cy + 3.0, cz + 1.0), "leg")
         leg["rotation"] = {"origin": [16.25, cy, cz], "x": round(math.degrees(beta), 3), "y": 0, "z": 0}
         els.append(leg)
         m = mul(rx(beta), rz(-math.radians(32)))
-        bx, by, bz = 18.0, cy + 1.45 * math.cos(beta), cz + 1.45 * math.sin(beta)
-        for x0, x1, h in ((0, 1.2, 2.6), (1.2, 2.2, 2.0), (2.2, 3.0, 1.3), (3.0, 3.5, 0.6)):
+        bx, by, bz = 18.5, cy + 1.9 * math.cos(beta), cz + 1.9 * math.sin(beta)
+        for x0, x1, h in ((0, 1.4, 3.4), (1.4, 2.6, 2.6), (2.6, 3.5, 1.7), (3.5, 4.1, 0.8)):
             e = fbox((bx + x0, by - h / 2, bz - h / 2), (bx + x1, by + h / 2, bz + h / 2), "cone")
             e["rotation"] = dict({"origin": [round(bx, 4), round(by, 4), round(bz, 4)]}, **euler(m))
             els.append(e)

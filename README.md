@@ -25,6 +25,8 @@ Contents so far:
 - Mechanical Hive: 20 FE/t, makes honeycomb, and honey bottles from glass bottles.
 - Charger: charges FE items placed in it, 500 FE/t (1000 on steel).
 - Item Pipe: moves items between inventories, see below.
+- Electric Drill, Chainsaw and Electric Shovel, see below.
+- Overclocker Circuit and Energy Cell machine upgrades, see below.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
 
@@ -34,8 +36,9 @@ Place a chassis, then right click it with each part in turn and use the screwdri
 
 1. A mechanical assembly, which decides the machine.
 2. A control board.
-3. Panels for the sides.
-4. A worktop on the open top.
+3. Up to two upgrades (optional).
+4. Panels for the sides.
+5. A worktop on the open top.
 
 Each part sits loose until it is screwed in. Wood panels come from four slabs, concrete panels from four concrete (makes two), worktops from three slabs or three concrete (makes two). Metal ones come from sheets made in the Rolling Mill. Sneak and use the screwdriver to take the last part off again. Breaking a part-built chassis drops its parts.
 
@@ -45,11 +48,29 @@ Item pipes connect to each other and to anything with an inventory. Use any scre
 
 Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard. Sides that output or have a pipe on them show a port. All sides are off to start with. Hoppers and other mods see inputs and outputs the same way: inputs can be filled, outputs can be emptied.
 
+## Upgrades
+
+After the control board is screwed in, right click with an Overclocker Circuit or Energy Cell and screw it in. A machine has two upgrade slots and any mix fits; the step can be skipped. Each Overclocker adds half the base speed, and FE use and intake rise with it, so two run at double speed. Each Energy Cell adds the base storage again, so two hold triple. Upgrades stay in the machine when it is broken and carried, show in its tooltip and screen, and drop back when it is taken apart.
+
+## Powered tools
+
+The Electric Drill (pickaxe), Chainsaw (axe) and Electric Shovel each hold 50k FE and use 50 FE a block, mining at diamond tier. When empty they are slow and drop nothing. Charge them in the Charger. They use FE on NeoForge and Team Reborn Energy on Fabric. All three are made from steel sheets and rods, a Power Cell and a control board.
+
+## Manual (Simple Books)
+
+With Simple Books installed, getting your first screwdriver gives you the Simple Machines Manual, a blueprint style guide to every machine, the assembly steps with recipes, tiers, finishes, cables, pipes, auto-output, upgrades and tools. Another copy is crafted from a book and a screwdriver. Simple Books is optional; without it the manual, its recipe and advancement are simply not loaded.
+
 ## Much More Storage and other mods
 
 - Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.7
+
+- Electric Drill, Chainsaw and Electric Shovel, charged in the Charger.
+- Overclocker Circuit and Energy Cell upgrades, an optional assembly step after the control board.
+- Simple Machines Manual for Simple Books (optional dependency).
 
 ## 0.1.0-alpha.6
 

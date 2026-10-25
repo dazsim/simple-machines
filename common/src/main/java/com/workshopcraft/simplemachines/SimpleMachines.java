@@ -5,6 +5,7 @@ import com.workshopcraft.simplemachines.item.MachineItem;
 import com.workshopcraft.simplemachines.item.PoweredToolItem;
 import com.workshopcraft.simplemachines.item.UpgradeItem;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.sounds.SoundEvent;
 
 import com.workshopcraft.simplemachines.assembly.ChassisBlock;
 import com.workshopcraft.simplemachines.assembly.Core;
@@ -99,6 +100,8 @@ public class SimpleMachines {
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     public static final DataComponentType<String> UPGRADES_FITTED = DataComponentType.<String>builder()
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    public static final SoundEvent DRILL_SOUND = SoundEvent.createVariableRangeEvent(id("item.electric_drill.run"));
+    public static final SoundEvent CHAINSAW_SOUND = SoundEvent.createVariableRangeEvent(id("item.chainsaw.run"));
     public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
     public static final Map<Core, Item> ASSEMBLIES = new EnumMap<>(Core.class);
     public static final Map<Finish, Item> PANELS = new EnumMap<>(Finish.class);
@@ -234,9 +237,9 @@ public class SimpleMachines {
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
-        TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), BlockTags.MINEABLE_WITH_PICKAXE, 5.0F, -2.8F)));
-        TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), BlockTags.MINEABLE_WITH_AXE, 8.0F, -3.0F)));
-        TOOLS.add(add(r, "electric_shovel", new PoweredToolItem(props("electric_shovel"), BlockTags.MINEABLE_WITH_SHOVEL, 5.5F, -3.0F)));
+        TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), DRILL_SOUND,
+                List.of(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL), 5.0F, -2.8F)));
+        TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), CHAINSAW_SOUND, List.of(BlockTags.MINEABLE_WITH_AXE), 8.0F, -3.0F)));
     }
 
     private static Item.Properties props(String name) {
@@ -247,6 +250,11 @@ public class SimpleMachines {
         r.accept(id(name), item);
         TAB.add(item);
         return item;
+    }
+
+    public static void registerSounds(BiConsumer<Identifier, SoundEvent> r) {
+        r.accept(DRILL_SOUND.location(), DRILL_SOUND);
+        r.accept(CHAINSAW_SOUND.location(), CHAINSAW_SOUND);
     }
 
     public static void registerComponents(BiConsumer<Identifier, DataComponentType<?>> r) {

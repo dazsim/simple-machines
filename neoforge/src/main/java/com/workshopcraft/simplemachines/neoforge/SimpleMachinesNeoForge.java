@@ -101,6 +101,7 @@ public class SimpleMachinesNeoForge {
 
     private static void onRegister(RegisterEvent e) {
         e.register(Registries.DATA_COMPONENT_TYPE, h -> SimpleMachines.registerComponents(h::register));
+        e.register(Registries.SOUND_EVENT, h -> SimpleMachines.registerSounds(h::register));
         e.register(Registries.BLOCK, h -> SimpleMachines.registerBlocks(h::register));
         e.register(Registries.ITEM, h -> SimpleMachines.registerItems(h::register));
         e.register(Registries.CREATIVE_MODE_TAB, h -> SimpleMachines.registerTabs(h::register));

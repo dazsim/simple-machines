@@ -11,6 +11,10 @@ import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.minecraft.client.Minecraft;
+import com.workshopcraft.simplemachines.client.ToolEffects;
 import net.neoforged.fml.common.Mod;
 import com.workshopcraft.simplemachines.client.WorktopRenderer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -19,6 +23,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 @Mod(value = SimpleMachines.MODID, dist = Dist.CLIENT)
 public class SimpleMachinesNeoForgeClient {
     public SimpleMachinesNeoForgeClient(IEventBus modBus) {
+        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> ToolEffects.tick(Minecraft.getInstance()));
         modBus.addListener((RegisterMenuScreensEvent e) -> {
             for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) e.register(m, PoweredScreen::new);
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);

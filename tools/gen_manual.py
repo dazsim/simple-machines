@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # blueprint manual for Simple Books: pages, template, drawings, recipe and advancement; run from repo root (gen_assets.py calls it)
+import shutil
 import json, math, os
 from PIL import Image, ImageDraw, ImageFont
 
@@ -244,12 +245,10 @@ def tool_body(sh, x, y):
 
 def d_tools():
     sh = Sheet()
-    tool_body(sh, 30, 120); sh.poly([(200, 132), (250, 140), (250, 160), (200, 168)]); sh.text((120, 290), "drill", 13)
-    x = 250; tool_body(sh, x, 120)
+    tool_body(sh, 60, 120); sh.poly([(230, 132), (280, 140), (280, 160), (230, 168)]); sh.text((150, 290), "drill", 13)
+    x = 330; tool_body(sh, x, 120)
     sh.poly([(x + 170, 125), (x + 300 - 70, 125), (x + 250, 145), (x + 230, 165), (x + 170, 165)])
     sh.text((x + 100, 290), "chainsaw", 13)
-    sh.poly([(520, 100), (600, 100), (600, 180), (560, 200), (520, 180)]); sh.line((560, 200), (560, 270), 3)
-    sh.text((560, 290), "shovel", 13)
     sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "50k FE each, 50 FE a block, recharge in the Charger", 12, SOFT)
     sh.save("tools")
 
@@ -306,6 +305,7 @@ def page(name, section, sort, title, sub, body, drawing, caption, right_title, s
     jdump(p, f"{BOOK}/pages/{name}.json")
 
 def pages():
+    shutil.rmtree(f"{BOOK}/pages", ignore_errors=True)
     M = MOD + ":"
     page("intro", "start", 0, "Simple Machines", "Workshop manual",
          "Powered machines built by hand. Every machine starts as a chassis; you fit its parts one at a time and fix each with a screwdriver.\n\nStart with an Alloy Furnace and an Extruder, which burn fuel. They make the steel, redstone copper and rods everything else needs.",
@@ -363,14 +363,10 @@ def pages():
          "upgrades", "Upgrade cards on the control board", "Recipes",
          [craft("overclocker_circuit"), craft("energy_cell"),
           text("Fitted upgrades show on the machine's tooltip and in its screen.")])
-    page("tools", "tools", 0, "Powered Tools", "Drill, Chainsaw and Electric Shovel",
-         "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
+    page("tools", "tools", 0, "Powered Tools", "Electric Drill and Chainsaw",
+         "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nThe Drill mines anything a pickaxe or a shovel does, the Chainsaw anything an axe does.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
          "tools", "Side views", "Recipes",
-         [craft("power_cell"), craft("electric_drill")])
-    page("tools_more", "tools", 1, "More Tools", "Chainsaw and Electric Shovel",
-         "The Chainsaw mines anything an axe does and the Electric Shovel anything a shovel does.\n\nAll three are built from steel sheets and rods, a Power Cell and a control board.",
-         "tools", "Side views", "Recipes",
-         [craft("chainsaw"), craft("electric_shovel")])
+         [craft("power_cell"), craft("electric_drill"), craft("chainsaw")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)

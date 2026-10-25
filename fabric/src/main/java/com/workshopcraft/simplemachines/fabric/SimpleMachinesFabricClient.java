@@ -4,6 +4,8 @@ import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.client.EnergyScreen;
 import com.workshopcraft.simplemachines.client.MachineScreen;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import com.workshopcraft.simplemachines.client.ToolEffects;
 import com.workshopcraft.simplemachines.client.WorktopRenderer;
 import net.minecraft.client.gui.screens.MenuScreens;
 import com.workshopcraft.simplemachines.assembly.Core;
@@ -17,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 public class SimpleMachinesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        ClientTickEvents.END_CLIENT_TICK.register(ToolEffects::tick);
         MenuScreens.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);

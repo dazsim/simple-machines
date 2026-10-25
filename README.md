@@ -25,7 +25,7 @@ Contents so far:
 - Mechanical Hive: 20 FE/t, makes honeycomb, and honey bottles from glass bottles.
 - Charger: charges FE items placed in it, 500 FE/t (1000 on steel).
 - Item Pipe: moves items between inventories, see below.
-- Electric Drill, Chainsaw and Electric Shovel, see below.
+- Electric Drill and Chainsaw, see below.
 - Overclocker Circuit and Energy Cell machine upgrades, see below.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
@@ -54,7 +54,7 @@ After the control board is screwed in, right click with an Overclocker Circuit o
 
 ## Powered tools
 
-The Electric Drill (pickaxe), Chainsaw (axe) and Electric Shovel each hold 50k FE and use 50 FE a block, mining at diamond tier. When empty they are slow and drop nothing. Charge them in the Charger. They use FE on NeoForge and Team Reborn Energy on Fabric. All three are made from steel sheets and rods, a Power Cell and a control board.
+The Electric Drill (pickaxe and shovel blocks) and Chainsaw (axe blocks) each hold 50k FE and use 50 FE a block, mining at diamond tier. When empty they are slow and drop nothing. Charge them in the Charger. They use FE on NeoForge and Team Reborn Energy on Fabric. Both are made from steel sheets and rods, a Power Cell and a control board. While mining they play a looping motor sound (with subtitles) and throw sparks off stone and ore, or bits of the block off dirt, sand, gravel and wood.
 
 ## Manual (Simple Books)
 
@@ -65,6 +65,11 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 - Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.8
+
+- Drill and Chainsaw sounds and mining particles.
+- The Electric Shovel is merged into the Electric Drill, which now mines shovel blocks too. Old shovels vanish from worlds.
 
 ## 0.1.0-alpha.7
 

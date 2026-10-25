@@ -1003,9 +1003,8 @@ def machines(shaped, rec):
 
 # ---- powered tools ----
 
-TOOLS = {"electric_drill": ("Electric Drill", powered_icons.drill, "pickaxes"),
-         "chainsaw": ("Chainsaw", powered_icons.chainsaw, "axes"),
-         "electric_shovel": ("Electric Shovel", powered_icons.shovel, "shovels")}
+TOOLS = {"electric_drill": ("Electric Drill", powered_icons.drill, ["pickaxes", "shovels"]),
+         "chainsaw": ("Chainsaw", powered_icons.chainsaw, ["axes"])}
 
 def flat_item(name, tex, parent="minecraft:item/generated"):
     save(tex, f"{A}/textures/item/{name}.png")
@@ -1016,10 +1015,15 @@ def powered(shaped):
     lang = json.load(open(f"{A}/lang/en_us.json"))
     flat_item("power_cell", powered_icons.cell())
     lang["item.simplemachines.power_cell"] = "Power Cell"
-    for name, (title, draw, tag) in TOOLS.items():
+    tags = {}
+    for name, (title, draw, ts) in TOOLS.items():
         flat_item(name, draw(), "minecraft:item/handheld")
         lang[f"item.simplemachines.{name}"] = title
-        jdump({"values": [f"{MOD}:{name}"]}, f"{D}/minecraft/tags/item/{tag}.json")
+        for t in ts: tags.setdefault(t, []).append(f"{MOD}:{name}")
+        lang[f"subtitles.simplemachines.{name}"] = f"{title} runs"
+    for t, v in tags.items(): jdump({"values": v}, f"{D}/minecraft/tags/item/{t}.json")
+    jdump({f"item.{n}.run": {"subtitle": f"subtitles.simplemachines.{n}", "sounds": [{"name": f"{MOD}:item/{n}", "stream": False}]}
+           for n in TOOLS}, f"{A}/sounds.json")
     lang["tooltip.simplemachines.charge"] = "Charge: %s / %s FE"
     lang["tooltip.simplemachines.no_charge"] = "Out of charge: recharge it in a Charger"
     jdump(lang, f"{A}/lang/en_us.json")
@@ -1027,7 +1031,6 @@ def powered(shaped):
     shaped("power_cell", ["SRS", "SDS", "SRS"], {"S": "#c:plates/copper", "R": f"{MOD}:redstone_copper_ingot", "D": "minecraft:redstone_block"})
     shaped("electric_drill", ["SSS", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
     shaped("chainsaw", ["SS ", "SPR", " BR"], {"S": S, "R": R, "P": P, "B": B})
-    shaped("electric_shovel", [" S ", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
 
 def upgrades(shaped):
     lang = json.load(open(f"{A}/lang/en_us.json"))

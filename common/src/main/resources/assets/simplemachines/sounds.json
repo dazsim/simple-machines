@@ -1,0 +1,20 @@
+{
+  "item.electric_drill.run": {
+    "subtitle": "subtitles.simplemachines.electric_drill",
+    "sounds": [
+      {
+        "name": "simplemachines:item/electric_drill",
+        "stream": false
+      }
+    ]
+  },
+  "item.chainsaw.run": {
+    "subtitle": "subtitles.simplemachines.chainsaw",
+    "sounds": [
+      {
+        "name": "simplemachines:item/chainsaw",
+        "stream": false
+      }
+    ]
+  }
+}

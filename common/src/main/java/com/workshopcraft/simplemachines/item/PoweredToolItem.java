@@ -7,6 +7,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -25,12 +26,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
 /**
- * Drill, chainsaw or shovel running on FE kept in the energy component. Diamond-tier while charged; with too little
+ * Drill or chainsaw running on FE kept in the energy component. Diamond-tier while charged; with too little
  * charge left for a block it digs like a bare hand and drops nothing that needs a tool. Never breaks.
  */
 public class PoweredToolItem extends Item {
@@ -40,16 +42,20 @@ public class PoweredToolItem extends Item {
     public static final int PER_HIT = 50;
     public static final float SPEED = 8.5F;
 
-    public PoweredToolItem(Properties properties, TagKey<Block> mineable, float damage, float attackSpeed) {
+    public final SoundEvent sound;
+
+    public PoweredToolItem(Properties properties, SoundEvent sound, List<TagKey<Block>> mineable, float damage, float attackSpeed) {
         super(tool(properties, mineable, damage, attackSpeed));
+        this.sound = sound;
     }
 
-    private static Properties tool(Properties p, TagKey<Block> mineable, float damage, float attackSpeed) {
+    private static Properties tool(Properties p, List<TagKey<Block>> mineable, float damage, float attackSpeed) {
         final HolderGetter<Block> blocks = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
+        final List<Tool.Rule> rules = new ArrayList<>();
+        rules.add(Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)));
+        for (TagKey<Block> tag : mineable) rules.add(Tool.Rule.minesAndDrops(blocks.getOrThrow(tag), SPEED));
         return p.stacksTo(1).enchantable(10)
-                .component(DataComponents.TOOL, new Tool(List.of(
-                        Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)),
-                        Tool.Rule.minesAndDrops(blocks.getOrThrow(mineable), SPEED)), 1.0F, 0, true))
+                .component(DataComponents.TOOL, new Tool(rules, 1.0F, 0, true))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, damage - 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
@@ -66,7 +72,7 @@ public class PoweredToolItem extends Item {
         return stack;
     }
 
-    private static boolean powered(ItemStack stack) {
+    public static boolean powered(ItemStack stack) {
         return energy(stack) >= PER_BLOCK;
     }
 

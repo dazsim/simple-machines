@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -178,6 +180,13 @@ public class PoweredToolItem extends Item {
             }
         }
         return true;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity owner,
+            @Nullable EquipmentSlot slot) {
+        if (slot == EquipmentSlot.MAINHAND && owner instanceof net.minecraft.server.level.ServerPlayer player
+                && level.getGameTime() % 2 == 0) ToolSparks.broadcast(this, stack, level, player);
     }
 
     public static boolean fells(ItemStack stack, BlockState state) {

@@ -98,6 +98,10 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
 
+## 0.1.0-alpha.10
+
+- Drill sparks now fly from the tip of the bit instead of the middle of the block, sprayed back off the face. Other players see them too.
+
 ## 0.1.0-alpha.9
 
 - New drill bit: a chunky tricone roller-cone bit on a threaded shank. The cones turn while mining. The drill body is yellow.

@@ -23,10 +23,14 @@ public class HotSparkParticle extends SingleQuadParticle {
     private static final int MAX_SEGMENTS = 14;
     private final boolean white;
     private int bounces;
+    private final double x0, y0, z0;
 
     HotSparkParticle(ClientLevel level, double x, double y, double z, double xd, double yd, double zd, TextureAtlasSprite sprite, boolean white) {
         super(level, x, y, z, sprite);
         this.white = white;
+        x0 = x;
+        y0 = y;
+        z0 = z;
         this.xd = xd;
         this.yd = yd;
         this.zd = zd;
@@ -103,8 +107,18 @@ public class HotSparkParticle extends SingleQuadParticle {
     @Override
     protected void extractRotatedQuad(QuadParticleRenderState state, Quaternionf rotation, float x, float y, float z, float partialTick) {
         final float size = getQuadSize(partialTick);
-        final float tx = (float) -xd * 2.6F, ty = (float) -yd * 2.6F, tz = (float) -zd * 2.6F;
-        final float len = Mth.sqrt(tx * tx + ty * ty + tz * tz);
+        float tx = (float) -xd * 2.6F, ty = (float) -yd * 2.6F, tz = (float) -zd * 2.6F;
+        float len = Mth.sqrt(tx * tx + ty * ty + tz * tz);
+        // the tail never reaches back past where the spark left the tip
+        final double px = Mth.lerp(partialTick, xo, this.x) - x0, py = Mth.lerp(partialTick, yo, this.y) - y0, pz = Mth.lerp(partialTick, zo, this.z) - z0;
+        final float flown = (float) Math.sqrt(px * px + py * py + pz * pz);
+        if (len > flown && len > 0) {
+            final float k = flown / len;
+            tx *= k;
+            ty *= k;
+            tz *= k;
+            len = flown;
+        }
         final int n = Math.min(MAX_SEGMENTS, 1 + (int) (len / (size * 0.6F)));
         final int light = getLightCoords(partialTick);
         for (int i = 0; i < n; i++) {

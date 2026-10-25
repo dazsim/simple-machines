@@ -1,0 +1,105 @@
+{
+  "parent": "simplemachines:item/tool/base_drill",
+  "textures": {
+    "f": "simplemachines:item/tool_fins",
+    "particle": "simplemachines:item/tool_fins"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        12,
+        6.75
+      ],
+      "to": [
+        2.5,
+        14.0,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#f"
+        },
+        "south": {
+          "texture": "#f"
+        },
+        "east": {
+          "texture": "#f"
+        },
+        "west": {
+          "texture": "#f"
+        },
+        "up": {
+          "texture": "#f"
+        },
+        "down": {
+          "texture": "#f"
+        }
+      }
+    },
+    {
+      "from": [
+        3.25,
+        12,
+        6.75
+      ],
+      "to": [
+        3.75,
+        14.0,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#f"
+        },
+        "south": {
+          "texture": "#f"
+        },
+        "east": {
+          "texture": "#f"
+        },
+        "west": {
+          "texture": "#f"
+        },
+        "up": {
+          "texture": "#f"
+        },
+        "down": {
+          "texture": "#f"
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        12,
+        6.75
+      ],
+      "to": [
+        5.0,
+        14.0,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#f"
+        },
+        "south": {
+          "texture": "#f"
+        },
+        "east": {
+          "texture": "#f"
+        },
+        "west": {
+          "texture": "#f"
+        },
+        "up": {
+          "texture": "#f"
+        },
+        "down": {
+          "texture": "#f"
+        }
+      }
+    }
+  ]
+}

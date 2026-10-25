@@ -185,6 +185,11 @@ DISPLAY = {
     "firstperson_lefthand": {"rotation": [0, -80, -5], "translation": [1, 2, -1], "scale": [0.4, 0.4, 0.4]},
 }
 
+# first person drill: aimed along the view with the bit tip on the crosshair (fov 70 hand camera)
+DRILL_FP = {"rotation": [-180.0, 54.17, -156.12], "translation": [-2.31, 1.57, -8.06], "scale": [0.899, 0.899, 0.899]}
+DRILL_DISPLAY = dict(DISPLAY, firstperson_righthand=DRILL_FP, firstperson_lefthand=DRILL_FP)
+SHARED = ["frame_iron", "frame_steel", "board", "battery", "cell_1", "cell_2", "fins_1", "fins_1_hot", "fins_2", "fins_2_hot"]
+
 def m(name):
     return {"type": "minecraft:model", "model": f"{MOD}:item/tool/{name}"}
 
@@ -232,9 +237,12 @@ def tool_model(core):
     without_tip = [v for v in range(64) if not v & 34]
     tip = {"type": "minecraft:select", "property": "minecraft:component", "component": f"{MOD}:tool_parts",
            "cases": [{"when": without_tip, "model": EMPTY}], "fallback": tip_model(core == "chainsaw_core")}
-    return {"model": {"type": "minecraft:composite", "models": [
+    out = {"model": {"type": "minecraft:composite", "models": [
         gated(1, frame), gated(2, running(core)), tip, gated(4, m("board")), gated(8, m("battery")),
         gated(16, by_upgrades("cell", UPS[1])), gated(16, by_upgrades("fins", UPS[0], True))]}}
+    if core == "drill_core":
+        for n in SHARED: out = json.loads(json.dumps(out).replace(f'"{MOD}:item/tool/{n}"', f'"{MOD}:item/tool/drill_{n}"'))
+    return out
 
 LANG = {
     "block.simplemachines.tool_stand": "Tool Stand",
@@ -276,10 +284,15 @@ def main(A, D, save, jdump, shaped, flat_item, loot_self):
     jdump(lang, f"{A}/lang/en_us.json")
     textures(save, A)
     jdump({"parent": "minecraft:item/handheld", "gui_light": "side", "display": DISPLAY}, f"{A}/models/item/tool/base.json")
+    jdump({"parent": "minecraft:item/handheld", "gui_light": "side", "display": DRILL_DISPLAY}, f"{A}/models/item/tool/base_drill.json")
     def part(name, built):
         els, tx = built
         tx = dict(tx, particle=list(tx.values())[0])
-        jdump({"parent": f"{MOD}:item/tool/base", "textures": tx, "elements": els}, f"{A}/models/item/tool/{name}.json")
+        drill = name.startswith(("drill_", "bit_"))
+        base = "base_drill" if drill else "base"
+        jdump({"parent": f"{MOD}:item/tool/{base}", "textures": tx, "elements": els}, f"{A}/models/item/tool/{name}.json")
+        if name in SHARED:
+            jdump({"parent": f"{MOD}:item/tool/base_drill", "textures": tx, "elements": els}, f"{A}/models/item/tool/drill_{name}.json")
     part("frame_iron", PARTS["frame"]("iron"))
     part("frame_steel", PARTS["frame"]("steel"))
     part("drill_core", drill_core(False))

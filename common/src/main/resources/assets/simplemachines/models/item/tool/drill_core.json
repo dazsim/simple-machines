@@ -1,5 +1,5 @@
 {
-  "parent": "simplemachines:item/tool/base",
+  "parent": "simplemachines:item/tool/base_drill",
   "textures": {
     "motor": "simplemachines:item/tool_motor",
     "chuck": "simplemachines:item/tool_chuck",

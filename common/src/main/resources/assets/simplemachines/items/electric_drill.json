@@ -56,13 +56,13 @@
               "when": "steel",
               "model": {
                 "type": "minecraft:model",
-                "model": "simplemachines:item/tool/frame_steel"
+                "model": "simplemachines:item/tool/drill_frame_steel"
               }
             }
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "simplemachines:item/tool/frame_iron"
+            "model": "simplemachines:item/tool/drill_frame_iron"
           }
         }
       },
@@ -337,7 +337,7 @@
         ],
         "fallback": {
           "type": "minecraft:model",
-          "model": "simplemachines:item/tool/board"
+          "model": "simplemachines:item/tool/drill_board"
         }
       },
       {
@@ -387,7 +387,7 @@
         ],
         "fallback": {
           "type": "minecraft:model",
-          "model": "simplemachines:item/tool/battery"
+          "model": "simplemachines:item/tool/drill_battery"
         }
       },
       {
@@ -447,7 +447,7 @@
               ],
               "model": {
                 "type": "minecraft:model",
-                "model": "simplemachines:item/tool/cell_1"
+                "model": "simplemachines:item/tool/drill_cell_1"
               }
             },
             {
@@ -456,7 +456,7 @@
               ],
               "model": {
                 "type": "minecraft:model",
-                "model": "simplemachines:item/tool/cell_2"
+                "model": "simplemachines:item/tool/drill_cell_2"
               }
             }
           ],
@@ -525,11 +525,11 @@
                 "property": "simplemachines:tool_running",
                 "on_true": {
                   "type": "minecraft:model",
-                  "model": "simplemachines:item/tool/fins_1_hot"
+                  "model": "simplemachines:item/tool/drill_fins_1_hot"
                 },
                 "on_false": {
                   "type": "minecraft:model",
-                  "model": "simplemachines:item/tool/fins_1"
+                  "model": "simplemachines:item/tool/drill_fins_1"
                 }
               }
             },
@@ -542,11 +542,11 @@
                 "property": "simplemachines:tool_running",
                 "on_true": {
                   "type": "minecraft:model",
-                  "model": "simplemachines:item/tool/fins_2_hot"
+                  "model": "simplemachines:item/tool/drill_fins_2_hot"
                 },
                 "on_false": {
                   "type": "minecraft:model",
-                  "model": "simplemachines:item/tool/fins_2"
+                  "model": "simplemachines:item/tool/drill_fins_2"
                 }
               }
             }

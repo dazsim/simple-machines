@@ -1,5 +1,5 @@
 {
-  "parent": "simplemachines:item/tool/base",
+  "parent": "simplemachines:item/tool/base_drill",
   "textures": {
     "cone": "simplemachines:item/tool_cone_std_spin",
     "leg": "simplemachines:item/tool_bitsteel",

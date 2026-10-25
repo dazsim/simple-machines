@@ -109,7 +109,7 @@ public class HotSparkParticle extends SingleQuadParticle {
         final float size = getQuadSize(partialTick);
         float tx = (float) -xd * 2.6F, ty = (float) -yd * 2.6F, tz = (float) -zd * 2.6F;
         float len = Mth.sqrt(tx * tx + ty * ty + tz * tz);
-        // the tail never reaches back past where the spark left the tip
+        // the tail never reaches back past where the spark started
         final double px = Mth.lerp(partialTick, xo, this.x) - x0, py = Mth.lerp(partialTick, yo, this.y) - y0, pz = Mth.lerp(partialTick, zo, this.z) - z0;
         final float flown = (float) Math.sqrt(px * px + py * py + pz * pz);
         if (len > flown && len > 0) {

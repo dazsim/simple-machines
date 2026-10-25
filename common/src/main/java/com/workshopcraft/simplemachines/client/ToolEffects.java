@@ -2,7 +2,6 @@ package com.workshopcraft.simplemachines.client;
 
 import com.workshopcraft.simplemachines.item.PoweredToolItem;
 import com.workshopcraft.simplemachines.item.ToolSparks;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
@@ -10,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -18,10 +16,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3fc;
 
-/** Client tick: a looping motor sound and sparks off the bit tip (dust or chips at the block face) while a charged tool digs. */
+/** Client tick: a looping motor sound and sparks or dust at the crosshair while a charged tool digs. */
 public final class ToolEffects {
-    // where the bit tip sits on screen in first person (x right, y up, -1..1) and how far out the sparks start
-    private static final double TIP_X = 0.46, TIP_Y = -0.4, TIP_DEPTH = 0.75;
     private static Loop loop;
     private static int age;
 
@@ -57,11 +53,11 @@ public final class ToolEffects {
         final Direction face = hit.getDirection();
         final Vec3 look = mc.player.getLookAngle();
         final ParticleOptions particle = ToolSparks.particle(kind, state);
-        final boolean tip = kind != ToolSparks.Kind.DUST && mc.options.getCameraType().isFirstPerson();
-        final Vec3 at = tip ? tip(mc, hit) : ToolSparks.contact(hit, mc.player.getEyePosition());
+        final boolean near = kind != ToolSparks.Kind.DUST && mc.options.getCameraType().isFirstPerson();
+        final Vec3 at = ToolSparks.contact(hit, mc.player.getEyePosition());
         for (int i = ToolSparks.count(kind, false); i > 0; i--) {
             Vec3 v = ToolSparks.spray(r, face, look, kind);
-            if (tip) {
+            if (near) {
                 // fan across the view rather than straight into the camera
                 final Vector3fc f = mc.gameRenderer.getMainCamera().forwardVector();
                 final double towards = v.x * f.x() + v.y * f.y() + v.z * f.z();
@@ -69,21 +65,8 @@ public final class ToolEffects {
                 v = v.scale(0.6);
             }
             final Particle p = mc.particleEngine.createParticle(particle, at.x, at.y, at.z, v.x, v.y, v.z);
-            if (tip && p != null) p.scale(0.5F);
+            if (near && p != null) p.scale(0.5F);
         }
-    }
-
-    /** First person: the world point behind the drill tip as drawn in hand, so the sparks leave the bit. */
-    private static Vec3 tip(Minecraft mc, BlockHitResult hit) {
-        final Camera cam = mc.gameRenderer.getMainCamera();
-        final Vec3 eye = cam.position();
-        final double d = Math.min(TIP_DEPTH, eye.distanceTo(hit.getLocation()) * 0.85);
-        final double tanV = Math.tan(Math.toRadians(cam.getFov() / 2.0));
-        final double aspect = (double) mc.getWindow().getWidth() / Math.max(1, mc.getWindow().getHeight());
-        final double side = (mc.player.getMainArm() == HumanoidArm.RIGHT ? -1 : 1) * TIP_X * tanV * aspect * d;
-        final double up = TIP_Y * tanV * d;
-        final Vector3fc f = cam.forwardVector(), u = cam.upVector(), l = cam.leftVector();
-        return eye.add(f.x() * d + l.x() * side + u.x() * up, f.y() * d + l.y() * side + u.y() * up, f.z() * d + l.z() * side + u.z() * up);
     }
 
     private static final class Loop extends AbstractTickableSoundInstance {

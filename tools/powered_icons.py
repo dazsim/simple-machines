@@ -139,10 +139,13 @@ def tool_frame(steel):
     outline(t, OUT)
     return t
 
+YEL = [(255, 222, 110), (232, 182, 40), (150, 110, 20)]
+DIA = [(200, 255, 250), (110, 230, 240), (40, 150, 170)]
+
 def drill_motor():
     t = blank()
-    _rect(t, 1, 5, 9, 11, RC[1]); _rect(t, 1, 5, 9, 5, RC[0]); _rect(t, 1, 11, 9, 11, RC[2])
-    for x in (3, 5, 7): _rect(t, x, 7, x, 9, RC[2])
+    _rect(t, 1, 5, 9, 11, YEL[1]); _rect(t, 1, 5, 9, 5, YEL[0]); _rect(t, 1, 11, 9, 11, YEL[2])
+    for x in (3, 5, 7): _rect(t, x, 7, x, 9, YEL[2])
     _rect(t, 10, 6, 11, 10, STEEL[3]); _rect(t, 12, 8, 15, 8, STEEL[1]); _rect(t, 12, 7, 14, 7, STEEL[2])
     outline(t, OUT)
     return t
@@ -161,5 +164,29 @@ def battery_module():
     _rect(t, 3, 4, 12, 12, STEEL[3]); _rect(t, 3, 4, 12, 4, STEEL[1]); _rect(t, 3, 12, 12, 12, STEEL[4])
     _rect(t, 3, 7, 12, 8, RC[1]); _rect(t, 10, 10, 11, 10, (120, 230, 140))
     _rect(t, 5, 2, 6, 3, STEEL[2]); _rect(t, 9, 2, 10, 3, STEEL[2])
+    outline(t, OUT)
+    return t
+
+def diamond_drill_bit():
+    t = blank()
+    _rect(t, 1, 7, 4, 9, STEEL[2])
+    for x in (1, 3): _rect(t, x, 7, x, 9, STEEL[4])
+    _rect(t, 5, 5, 8, 11, STEEL[3]); _rect(t, 5, 5, 8, 5, STEEL[1])
+    for (x0, y0) in ((9, 3), (9, 10), (11, 6)):
+        _rect(t, x0, y0, x0 + 3, y0 + 3, STEEL[3])
+        for dx, dy in ((0, 0), (2, 0), (1, 2), (3, 2), (0, 3)): t.putpixel((x0 + dx, y0 + dy), DIA[0 if dx % 2 else 1] + (255,))
+    outline(t, OUT)
+    return t
+
+def diamond_tipped_chain():
+    t = blank()
+    for i in range(12):
+        x, y = 2 + i, 12 - i * 9 // 11
+        _rect(t, x, y - 1, x, y, IRON[2])
+        if i % 2 == 0: t.putpixel((x, y - 2), DIA[1] + (255,))
+    for i in range(12):
+        x, y = 2 + i, 14 - i * 9 // 11
+        t.putpixel((x, y), IRON[3] + (255,))
+        if i % 2: t.putpixel((x, y + 1), DIA[0] + (255,))
     outline(t, OUT)
     return t

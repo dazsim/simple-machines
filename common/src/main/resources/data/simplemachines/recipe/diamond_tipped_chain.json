@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:diamond",
+    "C": "minecraft:iron_chain"
+  },
+  "pattern": [
+    "DCD",
+    "C C",
+    "DCD"
+  ],
+  "result": {
+    "id": "simplemachines:diamond_tipped_chain"
+  }
+}

@@ -3,12 +3,13 @@
   "category": "misc",
   "key": {
     "R": "#c:rods/steel",
-    "S": "minecraft:smooth_stone_slab"
+    "S": "minecraft:smooth_stone_slab",
+    "B": "minecraft:smooth_stone"
   },
   "pattern": [
+    "SSS",
     " R ",
-    " R ",
-    "SSS"
+    "BBB"
   ],
   "result": {
     "id": "simplemachines:tool_stand"

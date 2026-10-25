@@ -2,7 +2,6 @@
   "parent": "simplemachines:item/tool/base",
   "textures": {
     "engine": "simplemachines:item/tool_engine",
-    "bar": "simplemachines:item/tool_bar",
     "grip": "simplemachines:item/tool_grip",
     "particle": "simplemachines:item/tool_engine"
   },
@@ -36,38 +35,6 @@
         },
         "down": {
           "texture": "#engine"
-        }
-      }
-    },
-    {
-      "from": [
-        10,
-        8,
-        7.6
-      ],
-      "to": [
-        22,
-        11,
-        8.4
-      ],
-      "faces": {
-        "north": {
-          "texture": "#bar"
-        },
-        "south": {
-          "texture": "#bar"
-        },
-        "east": {
-          "texture": "#bar"
-        },
-        "west": {
-          "texture": "#bar"
-        },
-        "up": {
-          "texture": "#bar"
-        },
-        "down": {
-          "texture": "#bar"
         }
       }
     },

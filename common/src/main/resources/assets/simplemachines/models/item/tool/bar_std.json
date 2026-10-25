@@ -1,0 +1,41 @@
+{
+  "parent": "simplemachines:item/tool/base",
+  "textures": {
+    "bar": "simplemachines:item/tool_bar",
+    "particle": "simplemachines:item/tool_bar"
+  },
+  "elements": [
+    {
+      "from": [
+        10,
+        8,
+        7.6
+      ],
+      "to": [
+        22,
+        11,
+        8.4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bar"
+        },
+        "south": {
+          "texture": "#bar"
+        },
+        "east": {
+          "texture": "#bar"
+        },
+        "west": {
+          "texture": "#bar"
+        },
+        "up": {
+          "texture": "#bar"
+        },
+        "down": {
+          "texture": "#bar"
+        }
+      }
+    }
+  ]
+}

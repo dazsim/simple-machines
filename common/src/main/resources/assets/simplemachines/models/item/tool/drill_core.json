@@ -3,7 +3,8 @@
   "textures": {
     "motor": "simplemachines:item/tool_motor",
     "chuck": "simplemachines:item/tool_chuck",
-    "bit": "simplemachines:item/tool_bit",
+    "thread": "simplemachines:item/tool_thread",
+    "steel": "simplemachines:item/tool_bitsteel",
     "particle": "simplemachines:item/tool_motor"
   },
   "elements": [
@@ -74,32 +75,204 @@
     {
       "from": [
         12,
-        9.25,
-        7.5
+        8.5,
+        6.75
       ],
       "to": [
-        17,
-        10.25,
-        8.5
+        14.5,
+        11.0,
+        9.25
       ],
       "faces": {
         "north": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         },
         "south": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         },
         "east": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         },
         "west": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         },
         "up": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         },
         "down": {
-          "texture": "#bit"
+          "texture": "#thread",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        14.5,
+        8.0,
+        6.25
+      ],
+      "to": [
+        15.25,
+        11.5,
+        9.75
+      ],
+      "faces": {
+        "north": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        15.25,
+        7.75,
+        6
+      ],
+      "to": [
+        17,
+        11.75,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#steel",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
         }
       }
     }

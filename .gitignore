@@ -27,3 +27,4 @@ runs
 .vscode
 .DS_Store
 logs
+tools/__pycache__/

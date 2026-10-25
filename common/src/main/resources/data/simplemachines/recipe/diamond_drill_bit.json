@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:diamond",
+    "S": "#c:plates/steel",
+    "T": "#c:rods/steel"
+  },
+  "pattern": [
+    " DS",
+    "DSD",
+    "TD "
+  ],
+  "result": {
+    "id": "simplemachines:diamond_drill_bit"
+  }
+}

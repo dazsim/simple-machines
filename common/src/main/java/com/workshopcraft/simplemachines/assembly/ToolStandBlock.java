@@ -33,7 +33,12 @@ import java.util.List;
 public class ToolStandBlock extends Block implements EntityBlock {
     public static final MapCodec<ToolStandBlock> CODEC = simpleCodec(ToolStandBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE = Shapes.or(Block.box(1, 0, 1, 15, 2, 15), Block.box(6.5, 2, 6.5, 9.5, 4.5, 9.5), Block.box(2, 4.5, 5, 14, 6, 11));
+    // anvil sized: foot, waist and a long cradle 14 px up
+    private static final VoxelShape SHAPE_NS = Shapes.or(Block.box(2, 0, 2, 14, 5, 14), Block.box(6, 5, 4, 10, 10, 12),
+            Block.box(1, 10, 3, 15, 12, 13), Block.box(0, 12, 3, 16, 14, 13));
+    private static final VoxelShape SHAPE_EW = Shapes.or(Block.box(2, 0, 2, 14, 5, 14), Block.box(4, 5, 6, 12, 10, 10),
+            Block.box(3, 10, 1, 13, 12, 15), Block.box(3, 12, 0, 13, 14, 16));
+    public static final float TOP = 14F / 16F;
 
     public ToolStandBlock(Properties properties) {
         super(properties);
@@ -57,7 +62,7 @@ public class ToolStandBlock extends Block implements EntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(FACING).getAxis() == Direction.Axis.X ? SHAPE_EW : SHAPE_NS;
     }
 
     @Override

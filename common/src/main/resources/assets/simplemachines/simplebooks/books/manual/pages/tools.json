@@ -28,13 +28,14 @@
     {
       "kind": "craft_shaped",
       "pattern": [
+        "SSS",
         " R ",
-        " R ",
-        "SSS"
+        "BBB"
       ],
       "key": {
         "R": "#c:rods/steel",
-        "S": "minecraft:smooth_stone_slab"
+        "S": "minecraft:smooth_stone_slab",
+        "B": "minecraft:smooth_stone"
       },
       "output": "simplemachines:tool_stand"
     }

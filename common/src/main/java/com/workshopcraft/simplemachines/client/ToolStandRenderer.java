@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 
 /** Draws the tool on a Tool Stand with only the parts fitted so far; a loose part floats just above its place. */
 public class ToolStandRenderer implements BlockEntityRenderer<ToolStandBlockEntity, ToolStandRenderer.State> {
-    public static final int FRAME = 1, CORE = 2, BOARD = 4, BATTERY = 8, UPGRADES = 16;
+    public static final int FRAME = 1, CORE = 2, BOARD = 4, BATTERY = 8, UPGRADES = 16, TIP = 32;
     private final ItemModelResolver items;
 
     public static class State extends BlockEntityRenderState {
@@ -59,8 +59,14 @@ public class ToolStandRenderer implements BlockEntityRenderer<ToolStandBlockEnti
         ups.sort(java.util.Comparator.comparingInt(Enum::ordinal));
         if (!ups.isEmpty()) fixed.set(SimpleMachines.UPGRADES_FITTED, Upgrade.join(ups));
         fixed.set(SimpleMachines.TOOL_PARTS, fixedParts | UPGRADES);
+        if (be.tipLoose()) fixed.set(SimpleMachines.TOOL_TIP, "none");
         if (fixedParts != 0) items.updateForTopItem(s.fixed, fixed, ItemDisplayContext.FIXED, be.getLevel(), null, seed);
-        if (loosePart != 0 || be.loose() != null) {
+        if (be.tipLoose()) {
+            final ItemStack loose = base.copy();
+            loose.set(SimpleMachines.TOOL_TIP, "diamond");
+            loose.set(SimpleMachines.TOOL_PARTS, TIP);
+            items.updateForTopItem(s.loose, loose, ItemDisplayContext.FIXED, be.getLevel(), null, seed + 1);
+        } else if (loosePart != 0 || be.loose() != null) {
             final ItemStack loose = base.copy();
             if (be.loose() != null) loose.set(SimpleMachines.UPGRADES_FITTED, be.loose().id);
             loose.set(SimpleMachines.TOOL_PARTS, be.loose() != null ? UPGRADES : loosePart);
@@ -78,7 +84,7 @@ public class ToolStandRenderer implements BlockEntityRenderer<ToolStandBlockEnti
     private static void draw(State s, ItemStackRenderState item, float lift, PoseStack pose, SubmitNodeCollector out) {
         if (item.isEmpty()) return;
         pose.pushPose();
-        pose.translate(0.5F, 6F / 16F + lift, 0.5F);
+        pose.translate(0.5F, ToolStandBlock.TOP + lift, 0.5F);
         pose.mulPose(Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
         item.submit(pose, out, s.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         pose.popPose();

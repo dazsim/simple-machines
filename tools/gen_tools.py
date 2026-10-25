@@ -91,8 +91,27 @@ def textures(save, A):
     for n, img in t.items():
         save(img, f"{A}/textures/item/{n}.png" if n != "tool_stand" and n != "tool_stand_top" else f"{A}/textures/block/{n}.png")
 
+def auto_uv(a, b, d):
+    """vanilla's uv from the element bounds, moved back inside the sprite when the box pokes past 0..16"""
+    (x1, y1, z1), (x2, y2, z2) = a, b
+    uv = {"down": [x1, 16 - z2, x2, 16 - z1], "up": [x1, z1, x2, z2], "north": [16 - x2, 16 - y2, 16 - x1, 16 - y1],
+          "south": [x1, 16 - y2, x2, 16 - y1], "west": [z1, 16 - y2, z2, 16 - y1], "east": [16 - z2, 16 - y2, 16 - z1, 16 - y1]}[d]
+    for i in (0, 1):
+        lo, hi = uv[i], uv[i + 2]
+        if hi - lo > 16: lo, hi = 0, 16
+        elif lo < 0: lo, hi = 0, hi - lo
+        elif hi > 16: lo, hi = lo - (hi - 16), 16
+        uv[i], uv[i + 2] = round(lo, 4), round(hi, 4)
+    return uv
+
 def box(a, b, t, skip=()):
-    return {"from": list(a), "to": list(b), "faces": {d: {"texture": "#" + t} for d in ["north", "south", "east", "west", "up", "down"] if d not in skip}}
+    faces = {}
+    for d in ["north", "south", "east", "west", "up", "down"]:
+        if d in skip: continue
+        f = {"texture": "#" + t}
+        if any(v < 0 or v > 16 for v in list(a) + list(b)): f["uv"] = auto_uv(a, b, d)
+        faces[d] = f
+    return {"from": list(a), "to": list(b), "faces": faces}
 
 def fbox(a, b, t, **kw):
     """box with every face showing the whole texture"""
@@ -155,7 +174,9 @@ def saw_core():
             {"engine": f"{MOD}:item/tool_motor", "grip": f"{MOD}:item/tool_grip"})
 
 def saw_bar(tex_name):
-    return [box((10, 8, 7.6), (22, 11, 8.4), "bar")], {"bar": f"{MOD}:item/{tex_name}"}
+    # the bar is 12 long, so map the whole sprite: chain along the top and bottom edges, not the next sprite in the atlas
+    uv = {"north": [0, 0, 16, 16], "south": [0, 0, 16, 16], "up": [0, 0, 16, 1], "down": [0, 15, 16, 16], "east": [0, 0, 1, 16], "west": [0, 0, 1, 16]}
+    return [{"from": [10, 8, 7.6], "to": [22, 11, 8.4], "faces": {d: {"texture": "#bar", "uv": u} for d, u in uv.items()}}], {"bar": f"{MOD}:item/{tex_name}"}
 
 # the tool lies along X, nose at +X, grip down; both tools share the frame, battery, board and upgrade spots
 PARTS = {

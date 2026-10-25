@@ -103,6 +103,7 @@ With Simple Books installed, getting your first screwdriver (from any mod) gives
 - The chainsaw now uses the drill's yellow housing and the same greys, and the manual covers spin-up, sparks, tool tiers, upgrades, tree felling, cables, dyes and pipe ends.
 - The manual is crafted from a book, any screwdriver and a copper ingot, and the screwdriver is given back. Any screwdriver now triggers the free first copy.
 - Every recipe unlocks in the recipe book once you hold one of its ingredients, and the `c:` tags have names in JEI and EMI.
+- The chainsaw bar no longer shows a stray texture past its tip, and battery and cell faces stay on their own texture.
 - The manual has cards for steel rods, the Charger and Power Cell, and all 11 assemblies.
 
 ## 0.1.0-alpha.12

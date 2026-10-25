@@ -59,6 +59,7 @@ public class PoweredToolItem extends Item {
         for (TagKey<Block> tag : mineable) rules.add(Tool.Rule.minesAndDrops(blocks.getOrThrow(tag), SPEED));
         return p.stacksTo(1).enchantable(10)
                 .component(DataComponents.TOOL, new Tool(rules, 1.0F, 0, true))
+                .component(DataComponents.SWING_ANIMATION, new net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType.NONE, 6))
                 .attributes(ItemAttributeModifiers.builder()
                         .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, damage - 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                         .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)

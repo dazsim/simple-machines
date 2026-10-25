@@ -51,12 +51,12 @@ public final class ToolEffects {
         final RandomSource r = mc.level.getRandom();
         final Vec3 at = hit.getLocation().add(face.getStepX() * 0.05, face.getStepY() * 0.05, face.getStepZ() * 0.05);
         final boolean hard = state.is(BlockTags.MINEABLE_WITH_PICKAXE) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL);
-        final int n = hard ? 5 : 4;
+        final int n = hard ? 7 : 4;
         for (int i = 0; i < n; i++) {
             final double sx = face.getStepX() * 0.15 + (r.nextDouble() - 0.5) * 0.25;
             final double sy = face.getStepY() * 0.15 + r.nextDouble() * 0.15;
             final double sz = face.getStepZ() * 0.15 + (r.nextDouble() - 0.5) * 0.25;
-            if (hard) mc.level.addParticle(SimpleMachines.HOT_SPARK, at.x, at.y, at.z, sx * 1.6, sy * 1.6 + 0.08, sz * 1.6);
+            if (hard) mc.level.addParticle(SimpleMachines.HOT_SPARK, at.x, at.y, at.z, sx * 1.8, sy * 1.2 + 0.04, sz * 1.8);
             else mc.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), at.x, at.y, at.z, sx, sy, sz);
         }
     }

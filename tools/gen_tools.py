@@ -57,8 +57,8 @@ def textures(save, A):
     for y in range(8):
         for x in range(8):
             d = abs(x - 3.5) + abs(y - 3.5)
-            if d < 2.5: spark.putpixel((x, y), (255, 255, 255, 255))
-            elif d < 3.5: spark.putpixel((x, y), (235, 235, 235, 255))
+            if d < 1.5: spark.putpixel((x, y), (255, 255, 255, 255))
+            elif d < 2.5: spark.putpixel((x, y), (225, 225, 225, 255))
     save(spark, f"{A}/textures/particle/hot_spark.png")
     os.makedirs(f"{A}/particles", exist_ok=True)
     open(f"{A}/particles/hot_spark.json", "w").write(json.dumps({"textures": [f"{MOD}:hot_spark"]}, indent=2) + "\n")
@@ -103,8 +103,8 @@ DISPLAY = {
     "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [0.8, 0.8, 0.8]},
     "thirdperson_righthand": {"rotation": [90, -90, 0], "translation": [0, 2, 1.5], "scale": [0.7, 0.7, 0.7]},
     "thirdperson_lefthand": {"rotation": [90, -90, 0], "translation": [0, 2, 1.5], "scale": [0.7, 0.7, 0.7]},
-    "firstperson_righthand": {"rotation": [0, 95, 5], "translation": [0, 3, 0], "scale": [0.45, 0.45, 0.45]},
-    "firstperson_lefthand": {"rotation": [0, -95, -5], "translation": [0, 3, 0], "scale": [0.45, 0.45, 0.45]},
+    "firstperson_righthand": {"rotation": [0, 80, 5], "translation": [1, 2, -1], "scale": [0.4, 0.4, 0.4]},
+    "firstperson_lefthand": {"rotation": [0, -80, -5], "translation": [1, 2, -1], "scale": [0.4, 0.4, 0.4]},
 }
 
 def m(name):

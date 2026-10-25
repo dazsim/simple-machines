@@ -24,7 +24,7 @@ public class HotSparkParticle extends SingleQuadParticle {
         hasPhysics = false;
         gravity = 0.9F;
         lifetime = 8 + random.nextInt(10);
-        quadSize = 0.035F + random.nextFloat() * 0.03F;
+        quadSize = 0.016F + random.nextFloat() * 0.016F;
         bounces = random.nextInt(3) == 0 ? 1 + random.nextInt(2) : 0;
         colour();
     }

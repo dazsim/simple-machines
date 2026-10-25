@@ -58,7 +58,19 @@ After the control board is screwed in, right click with an Overclocker Circuit o
 
 ## Powered tools
 
-The Electric Drill (pickaxe and shovel blocks) and Chainsaw (axe blocks) each hold 50k FE and use 50 FE a block, mining at diamond tier. When empty they are slow and drop nothing. Charge them in the Charger. They use FE on NeoForge and Team Reborn Energy on Fabric. Both are made from steel sheets and rods, a Power Cell and a control board. While mining they play a looping motor sound (with subtitles) and throw sparks off stone and ore, or bits of the block off dirt, sand, gravel and wood.
+The Electric Drill (pickaxe and shovel blocks) and Chainsaw (axe blocks) are built on a Tool Stand rather than crafted. Place the stand and fit the parts in order, right clicking with each and then with a screwdriver:
+
+1. Tool frame (iron or steel)
+2. Core: a Drill Motor makes a drill, a Chainsaw Bar a chainsaw
+3. Control board
+4. Battery module
+5. Upgrades, optional, up to two: Overclocker Circuit or Energy Cell
+
+Take the finished tool off with an empty hand. To change one, put it back on an empty stand and sneak with the screwdriver: the last part comes off and drops, so you can strip it down and swap the core, frame or upgrades. The battery module keeps its charge. Breaking the stand drops it and whatever is on it.
+
+A tool holds 50k FE, uses 50 FE a block and mines at diamond tier. A steel frame digs 25% faster. Each Overclocker adds half the speed and half the FE per block; each Energy Cell adds 50k FE. The parts show on the tool: steel or iron frame, a heat sink per Overclocker, a bigger battery pack per Cell. When empty a tool is slow and drops nothing. Charge it in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.
+
+While digging, the drill bit spins and the chainsaw chain runs, a motor sound loops (with subtitles), hot orange steel sparks fly off stone and ore, and dirt, sand, gravel and wood throw bits of the block.
 
 ## Manual (Simple Books)
 
@@ -72,6 +84,9 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 
 ## 0.1.0-alpha.8
 
+- Drill and Chainsaw are assembled from parts on the new Tool Stand: frame, core, control board, battery module and up to two upgrades, each screwed in. Sneak with a screwdriver to strip or swap parts. The finished tool recipes are gone; frames, cores, battery module and stand have recipes.
+- 3D tool models that show their parts. The drill bit spins and the chain runs while digging.
+- Hot orange steel sparks when tools cut stone and ore.
 - Drill and Chainsaw sounds and mining particles.
 - The Electric Shovel is merged into the Electric Drill, which now mines shovel blocks too. Old shovels vanish from worlds.
 - Worktop items are now the same 3D slab as Much More Storage's, so the two mods' tops look identical in inventories. With Much More Storage installed, a Simple Machines wood or concrete worktop crafts on its own into the matching Much More Storage one so they stack. Tops from either mod still fit either mod's cabinets and machines.

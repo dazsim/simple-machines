@@ -36,32 +36,32 @@ def outline(t, col):
         px[p] = col + (255,)
 
 def sheet(p):
+    # square 14x14 plate: dark rim, lit top/left and shaded bottom/right bevel, diagonal shine and a corner glint
     t = blank()
     px = t.load()
-    for i in range(6):
-        y, l = 5 + i, 6 - i
-        r = l + 7
-        for x in range(l, r + 1):
-            d = x - l + i
-            k = 3 if i < 4 else 4
-            if i == 0 or x == l:
-                k = 2
-            if d in (5, 6) and 0 < i < 5:
+    x0, y0, x1, y1 = 2, 2, 13, 13
+    n = (x1 - x0) + (y1 - y0)
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            s = (x - x0) + (y - y0)
+            f = s / n
+            k = 2 if f < 0.2 else 3 if f < 0.78 else 4
+            c = s - int(n * 0.42)
+            if c in (0, 1):
                 k = 1
-            if d == 7 and 0 < i < 5:
+            elif c == 2:
                 k = 2
+            elif s - int(n * 0.66) == 0:
+                k = 2
+            if x == x0 or y == y0:
+                k = 1
+            if x == x1 or y == y1:
+                k = 5
             px[x, y] = p[k] + (255,)
-        px[r + 1, y] = p[6] + (255,)
-    for x in range(1, 10):
-        px[x, 11] = p[5] + (255,)
-    px[9, 11] = p[6] + (255,)
-    for q in [(13, 5), (14, 5), (14, 6)]:
-        px[q] = (0, 0, 0, 0)
-    px[12, 5] = p[1] + (255,)
-    px[13, 4] = p[4] + (255,)
-    px[14, 4] = p[5] + (255,)
-    px[14, 3] = p[6] + (255,)
-    px[13, 6] = p[3] + (255,)
+    px[x0, y0] = p[0] + (255,)
+    px[x0 + 1, y0 + 1] = p[0] + (255,)
+    px[x1, y0] = p[3] + (255,)
+    px[x0, y1] = p[3] + (255,)
     outline(t, p[7])
     return t
 

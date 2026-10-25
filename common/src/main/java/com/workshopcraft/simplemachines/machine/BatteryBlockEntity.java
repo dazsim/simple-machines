@@ -5,8 +5,11 @@ import com.workshopcraft.simplemachines.assembly.Core;
 import com.workshopcraft.simplemachines.assembly.Tier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
@@ -18,6 +21,12 @@ public class BatteryBlockEntity extends WorkBlockEntity {
 
     public BatteryBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.MACHINE_ENTITIES.get(Core.BATTERY), pos, state, 0, CAPACITY, RATE, RATE);
+    }
+
+    /** Capacity of a battery item, from the chassis tier it was built on. */
+    public static int itemCapacity(ItemStack stack) {
+        final Tier tier = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY).get(PoweredMachineBlock.TIER);
+        return CAPACITY * (tier == null ? Tier.IRON : tier).storage;
     }
 
     @Override

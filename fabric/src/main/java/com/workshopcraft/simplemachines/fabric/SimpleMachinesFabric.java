@@ -15,6 +15,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import com.workshopcraft.simplemachines.machine.ChargerBlockEntity;
+import com.workshopcraft.simplemachines.machine.BatteryBlockEntity;
+import com.workshopcraft.simplemachines.assembly.Core;
 import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
 import com.workshopcraft.simplemachines.pipe.Transfer;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
@@ -80,6 +82,8 @@ public class SimpleMachinesFabric implements ModInitializer {
                 return EnergyStorage.ITEM.find(container.getItem(slot), ContainerItemContext.ofSingleSlot(ContainerStorage.of(container, null).getSlot(slot)));
             }
         };
+        EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE),
+                SimpleMachines.MACHINES.get(Core.BATTERY).asItem());
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyStorage s = EnergyStorage.SIDED.find(level, pos, side);

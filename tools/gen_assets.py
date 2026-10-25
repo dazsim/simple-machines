@@ -654,7 +654,6 @@ def built(shaped, rec):
         shutil.copy(icons.MMS + f"block/{f}_worktop.png", tb + f"{f}_worktop.png")
     for f in FINISHES:
         save(icons.panels(ramp(f), kind(f)), ti + f"{f}_panels.png")
-        save(icons.worktop(ramp(f), kind(f)), ti + f"{f}_worktop.png")
     save(board_item(), ti + "control_board.png")
     save(cable_tex(), tb + "redstone_copper_cable.png")
     save(Image.open("/workspace/mods/morestorage-261/common/src/main/resources/assets/muchmorestorage/textures/item/screwdriver.png"),
@@ -752,7 +751,15 @@ def built(shaped, rec):
     loot_self("redstone_copper_cable")
 
     flat = ["iron_sheet", "copper_sheet", "steel_sheet", "control_board"] + \
-           [f"{f}_{k}" for f in FINISHES for k in ["panels", "worktop"]]
+           [f"{f}_panels" for f in FINISHES]
+    # worktop items copy Much More Storage's 2 px slab so both mods' tops look the same in inventories
+    for f in FINISHES:
+        uv = {"up": [0, 0, 16, 16], "down": [0, 0, 16, 16], "north": [0, 0, 16, 2], "south": [0, 14, 16, 16],
+              "east": [0, 0, 16, 2], "west": [0, 0, 16, 2]}
+        slab = {"from": [0, 7, 0], "to": [16, 9, 16], "faces": {d: {"uv": u, "texture": "#top"} for d, u in uv.items()}}
+        jdump({"parent": "minecraft:block/block", "textures": {"top": finish_tex(f, "worktop"), "particle": finish_tex(f, "worktop")},
+               "elements": [slab]}, f"{A}/models/item/{f}_worktop.json")
+        jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{f}_worktop"}}, f"{A}/items/{f}_worktop.json")
     for it in flat:
         jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
@@ -811,6 +818,12 @@ def built(shaped, rec):
     for f in CONCRETES:
         shaped(f"{f}_panels", ["CC", "CC"], {"C": f"minecraft:{f}"}, 2)
         shaped(f"{f}_worktop", ["CCC"], {"C": f"minecraft:{f}"}, 2, cond=True)
+    # with Much More Storage installed a lone worktop turns into its matching one, so old tops stack with new
+    for f in WOODS + CONCRETES:
+        jdump({"neoforge:conditions": [{"type": "neoforge:mod_loaded", "modid": "muchmorestorage"}],
+               "fabric:load_conditions": [{"condition": "fabric:all_mods_loaded", "values": ["muchmorestorage"]}],
+               "type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": [f"{MOD}:{f}_worktop"],
+               "result": {"id": f"muchmorestorage:{f}_worktop"}}, rec + f"{f}_worktop_to_mms.json")
     jdump({"values": [f"{MOD}:{f}_worktop" for f in FINISHES]}, f"{D}/c/tags/item/worktops.json")
     jdump({"values": [{"id": f"{m}:screwdriver", "required": False} for m in [MOD, "muchmorestorage", "morelighting"]]},
           f"{D}/c/tags/item/tools/screwdriver.json")

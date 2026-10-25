@@ -70,6 +70,7 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 
 - Drill and Chainsaw sounds and mining particles.
 - The Electric Shovel is merged into the Electric Drill, which now mines shovel blocks too. Old shovels vanish from worlds.
+- Worktop items are now the same 3D slab as Much More Storage's, so the two mods' tops look identical in inventories. With Much More Storage installed, a Simple Machines wood or concrete worktop crafts on its own into the matching Much More Storage one so they stack. Tops from either mod still fit either mod's cabinets and machines.
 
 ## 0.1.0-alpha.7
 

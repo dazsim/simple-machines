@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * Open frame that machines are built on. Steps: 0 empty, 1 assembly loose, 2 assembly fixed, 3 board loose,
- * 4 board fixed, 5 panels loose, 6 panels fixed, 7 worktop loose. Screwing the worktop in finishes the machine.
+ * 4 board fixed (upgrades fit here, see Upgrade), 5 panels loose, 6 panels fixed, 7 worktop loose. Screwing the worktop in finishes the machine.
  */
 public class ChassisBlock extends Block implements EntityBlock {
     public static final MapCodec<ChassisBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -74,7 +74,7 @@ public class ChassisBlock extends Block implements EntityBlock {
     @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         final List<ItemStack> drops = new ArrayList<>(super.getDrops(state, params));
-        drops.addAll(Assembly.parts(state, params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChassisBlockEntity be ? be.worktop() : ""));
+        drops.addAll(Assembly.parts(state, params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChassisBlockEntity be ? be : null));
         return drops;
     }
 

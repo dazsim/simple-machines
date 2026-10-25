@@ -3,6 +3,7 @@ package com.workshopcraft.simplemachines.machine;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.assembly.Core;
 import com.workshopcraft.simplemachines.assembly.Tier;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -26,7 +27,8 @@ public class BatteryBlockEntity extends WorkBlockEntity {
     /** Capacity of a battery item, from the chassis tier it was built on. */
     public static int itemCapacity(ItemStack stack) {
         final Tier tier = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY).get(PoweredMachineBlock.TIER);
-        return CAPACITY * (tier == null ? Tier.IRON : tier).storage;
+        final int cells = Upgrade.count(Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, "")), Upgrade.ENERGY_CELL);
+        return CAPACITY * (tier == null ? Tier.IRON : tier).storage * (1 + cells);
     }
 
     @Override

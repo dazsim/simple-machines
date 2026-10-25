@@ -77,3 +77,48 @@ def cell():
     t.putpixel((7, 2), (236, 146, 104, 255)); t.putpixel((8, 2), (196, 108, 76, 255))
     outline(t, OUT)
     return t
+
+# Machine upgrades: an item icon and a flat card texture for the chassis renderer
+PCB = [(46, 120, 84), (34, 92, 64), (24, 66, 48)]
+GOLD = [(250, 218, 92), (214, 168, 40)]
+CHIP = (30, 30, 36)
+
+def _card(t, x0, y0, x1, y1, face):
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            edge = x in (x0, x1) or y in (y0, y1)
+            t.putpixel((x, y), (PCB[2] if edge else face(x, y)) + (255,))
+
+def _overclock_face(x, y):
+    if 5 <= x <= 10 and 5 <= y <= 10:
+        return (200, 60, 52) if (x, y) in ((7, 7), (8, 8)) else CHIP
+    if y in (3, 12) and x % 2 == 1 or x in (3, 12) and y % 2 == 1:
+        return GOLD[0]
+    return PCB[0] if (x + y) % 5 else PCB[1]
+
+def _cell_face(x, y):
+    if 4 <= x <= 11 and 3 <= y <= 12:
+        if x in (4, 11) or y in (3, 12):
+            return STEEL[3]
+        return RC[0] if y >= 6 and y % 2 == 0 else RC[1] if y >= 6 else STEEL[1]
+    if y in (1, 14) and 6 <= x <= 9:
+        return GOLD[1]
+    return PCB[0] if (x + y) % 5 else PCB[1]
+
+def overclocker():
+    t = blank()
+    _card(t, 1, 2, 14, 13, _overclock_face)
+    for x in (4, 6, 9, 11):
+        t.putpixel((x, 14), GOLD[1] + (255,))
+    outline(t, OUT)
+    return t
+
+def energy_cell():
+    t = blank()
+    _card(t, 1, 0, 14, 15, _cell_face)
+    return t
+
+def card(kind):
+    t = blank()
+    _card(t, 0, 0, 15, 15, _overclock_face if kind == "overclocker_circuit" else _cell_face)
+    return t

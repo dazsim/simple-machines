@@ -2,6 +2,7 @@ package com.workshopcraft.simplemachines.machine;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.assembly.Tier;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
 import com.workshopcraft.simplemachines.assembly.Worktops;
 import com.workshopcraft.simplemachines.pipe.Transfer;
 import net.minecraft.core.BlockPos;
@@ -28,11 +29,13 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * Shared base of the chassis-built machines: FE buffer scaled by tier, worktop, sided slots and the per-side auto-output.
  * Every face takes items into input slots and gives items from output slots.
  */
-public abstract class WorkBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Ticking, EnergyMachine, Worktops.Holder, Ported {
+public abstract class WorkBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Ticking, EnergyMachine, Worktops.Holder, Ported, Upgrade.Holder {
     public static final int PUSH_INTERVAL = 8;
     public static final int PUSH_COUNT = 16;
 
@@ -46,6 +49,9 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
     protected int total;
     private int outputs;
     private String worktop = Worktops.DEFAULT;
+    private List<Upgrade> upgrades = List.of();
+    private int boost;
+    private int ticker;
 
     protected final ContainerData data = new ContainerData() {
         @Override
@@ -57,6 +63,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
                 case 3 -> energy.energy >>> 16;
                 case 4 -> energy.capacity / 1000;
                 case 5 -> mode();
+                case 6 -> Upgrade.pack(upgrades);
                 default -> 0;
             };
         }
@@ -151,12 +158,35 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {
         final Tier tier = state.getValue(PoweredMachineBlock.TIER);
-        energy.capacity = baseCapacity * tier.storage;
-        energy.maxIn = baseIn * tier.storage;
+        final int oc = Upgrade.count(upgrades, Upgrade.OVERCLOCKER);
+        energy.capacity = baseCapacity * tier.storage * (1 + Upgrade.count(upgrades, Upgrade.ENERGY_CELL));
+        energy.maxIn = baseIn * tier.storage * (2 + oc) / 2;
         energy.maxOut = baseOut * tier.storage;
         if (energy.energy > energy.capacity) energy.energy = energy.capacity;
-        work(level, pos, state, tier);
+        // each overclocker adds half a work step per tick
+        boost += oc;
+        final int runs = 1 + boost / 2;
+        boost %= 2;
+        for (int i = 0; i < runs && !isRemoved(); i++) work(level, pos, i == 0 ? state : getBlockState(), tier);
         if (outputs != 0 && (level.getGameTime() + pos.hashCode()) % PUSH_INTERVAL == 0) pushOut(level, pos);
+    }
+
+    /** True once every interval work steps, for machines that act now and then rather than every step. */
+    protected boolean due(int interval) {
+        if (++ticker < interval) return false;
+        ticker = 0;
+        return true;
+    }
+
+    @Override
+    public List<Upgrade> upgrades() {
+        return upgrades;
+    }
+
+    @Override
+    public void setUpgrades(List<Upgrade> list) {
+        upgrades = List.copyOf(list);
+        setChanged();
     }
 
     /** Auto-output: moves output slot contents into whatever sits on each output side. */
@@ -236,6 +266,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         energy.energy = Math.max(0, input.getIntOr("energy", 0));
         worktop = input.getStringOr("worktop", Worktops.DEFAULT);
         outputs = input.getIntOr("outputs", defaultOutputs(getBlockState()));
+        upgrades = Upgrade.parse(input.getStringOr("upgrades", ""));
     }
 
     @Override
@@ -247,6 +278,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         output.putInt("energy", energy.energy);
         output.putString("worktop", worktop);
         output.putInt("outputs", outputs);
+        output.putString("upgrades", Upgrade.join(upgrades));
     }
 
     @Override
@@ -254,6 +286,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         super.collectImplicitComponents(components);
         if (energy.energy > 0) components.set(SimpleMachines.ENERGY, energy.energy);
         components.set(SimpleMachines.WORKTOP, worktop);
+        if (!upgrades.isEmpty()) components.set(SimpleMachines.UPGRADES_FITTED, Upgrade.join(upgrades));
     }
 
     @Override
@@ -261,12 +294,14 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         super.applyImplicitComponents(components);
         energy.energy = components.getOrDefault(SimpleMachines.ENERGY, 0);
         worktop = components.getOrDefault(SimpleMachines.WORKTOP, Worktops.DEFAULT);
+        upgrades = Upgrade.parse(components.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
     }
 
     @Override
     public void removeComponentsFromTag(ValueOutput output) {
         output.discard("energy");
         output.discard("worktop");
+        output.discard("upgrades");
     }
 
     @Override

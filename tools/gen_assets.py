@@ -292,6 +292,7 @@ def main():
     built(shaped, rec)
     machines(shaped, rec)
     powered(shaped)
+    upgrades(shaped)
 
 # ---- assembled machines, chassis, parts and cable ----
 
@@ -727,7 +728,7 @@ def built(shaped, rec):
                "conditions": [{"condition": "minecraft:survives_explosion"}],
                "entries": [{"type": "minecraft:item", "name": f"{MOD}:{block}", "functions": [
                    {"function": "minecraft:copy_state", "block": f"{MOD}:{block}", "properties": ["tier", "panel"]},
-                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop"]}]}]}],
+                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]}]}]}],
                "random_sequence": f"{MOD}:blocks/{block}"}, f"{D}/{MOD}/loot_table/blocks/{block}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{c}_core"}}, f"{A}/items/{c}_assembly.json")
 
@@ -783,7 +784,7 @@ def built(shaped, rec):
         "gui.simplemachines.sheets": "Sheets",
         "message.simplemachines.needs_assembly": "Fit a mechanical assembly first",
         "message.simplemachines.needs_board": "Needs a control board",
-        "message.simplemachines.needs_panels": "Needs side panels",
+        "message.simplemachines.needs_panels": "Needs side panels (or fit an upgrade first)",
         "message.simplemachines.needs_worktop": "Needs a worktop",
         "message.simplemachines.loose": "Screw in the loose part first",
     }
@@ -1026,6 +1027,30 @@ def powered(shaped):
     shaped("electric_drill", ["SSS", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
     shaped("chainsaw", ["SS ", "SPR", " BR"], {"S": S, "R": R, "P": P, "B": B})
     shaped("electric_shovel", [" S ", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
+
+def upgrades(shaped):
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    for name, title, draw in [("overclocker_circuit", "Overclocker Circuit", powered_icons.overclocker),
+                              ("energy_cell", "Energy Cell", powered_icons.energy_cell)]:
+        flat_item(name, draw())
+        save(powered_icons.card(name), f"{A}/textures/block/{name}.png")
+        lang[f"item.simplemachines.{name}"] = title
+    lang["tooltip.simplemachines.overclocker_circuit"] = "Machine upgrade: +50% speed and FE use"
+    lang["tooltip.simplemachines.energy_cell"] = "Machine upgrade: +100% energy storage"
+    lang["tooltip.simplemachines.upgrade_fit"] = "Fit after the control board, then screw in (2 slots)"
+    lang["tooltip.simplemachines.upgrades"] = "Upgrades: %s"
+    lang["upgrade.simplemachines.overclocker_circuit"] = "Overclock"
+    lang["upgrade.simplemachines.energy_cell"] = "Cell"
+    lang["upgrade.simplemachines.times"] = "%s x%s"
+    lang["upgrade.simplemachines.and"] = "%s + %s"
+    lang["message.simplemachines.upgrade_early"] = "Fix the control board before fitting upgrades"
+    lang["message.simplemachines.upgrade_late"] = "Upgrades go in before the side panels"
+    lang["message.simplemachines.upgrades_full"] = "Both upgrade slots are full"
+    lang["message.simplemachines.upgrade_fitted"] = "Upgrade fitted (%s/%s)"
+    jdump(lang, f"{A}/lang/en_us.json")
+    B = f"{MOD}:control_board"
+    shaped("overclocker_circuit", ["RGR", "QBQ", "RGR"], {"R": f"{MOD}:redstone_copper_ingot", "G": "#c:ingots/gold", "Q": "#c:gems/quartz", "B": B})
+    shaped("energy_cell", [" S ", "PBP", " S "], {"S": "#c:plates/steel", "P": f"{MOD}:power_cell", "B": B})
 
 def loot_self(b):
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,

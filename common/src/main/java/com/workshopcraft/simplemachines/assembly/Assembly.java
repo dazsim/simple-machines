@@ -37,12 +37,14 @@ public final class Assembly {
         final Finish panels = Finish.panelsOf(stack);
         final String worktop = Worktops.of(stack);
         final boolean board = stack.is(SimpleMachines.controlBoard);
+        final Upgrade upgrade = Upgrade.of(stack);
+        if (upgrade != null) return fitUpgrade(step, level, pos, player, stack, upgrade);
         if (core == Core.NONE && panels == Finish.NONE && worktop.isEmpty() && !board) return null;
 
         BlockState next = null;
         if (core != Core.NONE && step == 0) next = state.setValue(CORE, core).setValue(STEP, 1);
         else if (board && step == 2) next = state.setValue(STEP, 3);
-        else if (panels != Finish.NONE && step == 4) next = state.setValue(PANEL, panels).setValue(STEP, 5);
+        else if (panels != Finish.NONE && step == 4 && looseUpgrade(level, pos) == null) next = state.setValue(PANEL, panels).setValue(STEP, 5);
         else if (!worktop.isEmpty() && step == 6) next = state.setValue(STEP, 7);
 
         if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -55,6 +57,32 @@ public final class Assembly {
         stack.consume(1, player);
         level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.8F, 0.9F);
         return InteractionResult.SUCCESS;
+    }
+
+    // upgrades sit in after the control board is fixed and before the panels, one loose at a time
+    private static InteractionResult fitUpgrade(int step, Level level, BlockPos pos, Player player, ItemStack stack, Upgrade upgrade) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        final String msg;
+        if (step < 4 || !(level.getBlockEntity(pos) instanceof ChassisBlockEntity be)) msg = step % 2 == 1 ? hint(step) : "message.simplemachines.upgrade_early";
+        else if (step > 4) msg = "message.simplemachines.upgrade_late";
+        else if (be.loose() != null) msg = hint(1);
+        else if (be.upgrades().size() >= Upgrade.SLOTS) msg = "message.simplemachines.upgrades_full";
+        else {
+            be.setLoose(upgrade);
+            stack.consume(1, player);
+            level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.8F, 1.1F);
+            return InteractionResult.SUCCESS;
+        }
+        player.sendOverlayMessage(Component.translatable(msg));
+        return InteractionResult.SUCCESS;
+    }
+
+    private static @Nullable Upgrade looseUpgrade(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be.loose() : null;
+    }
+
+    private static List<Upgrade> upgradesAt(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof Upgrade.Holder h ? List.copyOf(h.upgrades()) : List.of();
     }
 
     private static String hint(int step) {
@@ -70,6 +98,12 @@ public final class Assembly {
     /** Screws the loose part in. The worktop is last; fixing it turns the chassis into its machine. */
     public static boolean screw(BlockState state, Level level, BlockPos pos, Player player) {
         final int step = state.getValue(STEP);
+        if (step == 4 && level.getBlockEntity(pos) instanceof ChassisBlockEntity be && be.loose() != null) {
+            be.fix();
+            player.sendOverlayMessage(Component.translatable("message.simplemachines.upgrade_fitted", be.upgrades().size(), Upgrade.SLOTS));
+            ratchet(level, pos);
+            return true;
+        }
         if (step % 2 == 0) {
             player.sendOverlayMessage(Component.translatable(hint(step)));
             return false;
@@ -77,11 +111,13 @@ public final class Assembly {
         if (step == 7) {
             final Tier tier = ((ChassisBlock) state.getBlock()).tier;
             final String worktop = worktopAt(level, pos);
+            final List<Upgrade> upgrades = upgradesAt(level, pos);
             level.setBlock(pos, state.getValue(CORE).machine().defaultBlockState()
                     .setValue(MachineBlock.FACING, state.getValue(ChassisBlock.FACING))
                     .setValue(PoweredMachineBlock.TIER, tier)
                     .setValue(PoweredMachineBlock.PANEL, state.getValue(PANEL)), Block.UPDATE_ALL);
             if (level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
+            if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
         } else {
             level.setBlock(pos, state.setValue(STEP, step + 1), Block.UPDATE_ALL);
         }
@@ -102,6 +138,16 @@ public final class Assembly {
         } else if (step >= 5) {
             part = new ItemStack(state.getValue(PANEL).panels());
             next = state.setValue(PANEL, Finish.NONE).setValue(STEP, 4);
+        } else if (step == 4 && level.getBlockEntity(pos) instanceof ChassisBlockEntity be && (be.loose() != null || !be.upgrades().isEmpty())) {
+            if (be.loose() != null) {
+                part = new ItemStack(be.loose().item());
+                be.setLoose(null);
+            } else {
+                final List<Upgrade> left = new ArrayList<>(be.upgrades());
+                part = new ItemStack(left.removeLast().item());
+                be.setUpgrades(left);
+            }
+            next = state;
         } else if (step >= 3) {
             part = new ItemStack(SimpleMachines.controlBoard);
             next = state.setValue(STEP, 2);
@@ -109,7 +155,7 @@ public final class Assembly {
             part = new ItemStack(state.getValue(CORE).item());
             next = state.setValue(CORE, Core.NONE).setValue(STEP, 0);
         }
-        level.setBlock(pos, next, Block.UPDATE_ALL);
+        if (next != state) level.setBlock(pos, next, Block.UPDATE_ALL);
         Block.popResource(level, pos.above(), part);
         ratchet(level, pos);
         return true;
@@ -119,11 +165,13 @@ public final class Assembly {
     public static void disassemble(BlockState state, Level level, BlockPos pos) {
         final PoweredMachineBlock block = (PoweredMachineBlock) state.getBlock();
         final String worktop = worktopAt(level, pos);
+        final List<Upgrade> upgrades = upgradesAt(level, pos);
         level.setBlock(pos, state.getValue(PoweredMachineBlock.TIER).chassis().defaultBlockState()
                 .setValue(ChassisBlock.FACING, state.getValue(MachineBlock.FACING))
                 .setValue(CORE, block.core())
                 .setValue(PANEL, state.getValue(PoweredMachineBlock.PANEL))
                 .setValue(STEP, 6), Block.UPDATE_ALL);
+        if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
         Block.popResource(level, pos.above(), Worktops.stack(worktop));
         ratchet(level, pos);
     }
@@ -161,11 +209,16 @@ public final class Assembly {
         return Pipes.screwdriver(level, pos, player, held, hit);
     }
 
-    public static List<ItemStack> parts(BlockState state, String worktop) {
+    public static List<ItemStack> parts(BlockState state, @Nullable ChassisBlockEntity be) {
         final int step = state.getValue(STEP);
+        final String worktop = be == null ? "" : be.worktop();
         final List<ItemStack> parts = new ArrayList<>();
         if (step >= 1) parts.add(new ItemStack(state.getValue(CORE).item()));
         if (step >= 3) parts.add(new ItemStack(SimpleMachines.controlBoard));
+        if (step >= 4 && be != null) {
+            for (Upgrade u : be.upgrades()) parts.add(new ItemStack(u.item()));
+            if (be.loose() != null) parts.add(new ItemStack(be.loose().item()));
+        }
         if (step >= 5) parts.add(new ItemStack(state.getValue(PANEL).panels()));
         if (step >= 7 && !worktop.isEmpty()) parts.add(Worktops.stack(worktop));
         return parts;

@@ -27,7 +27,8 @@
               "source": "block_entity",
               "include": [
                 "simplemachines:energy",
-                "simplemachines:worktop"
+                "simplemachines:worktop",
+                "simplemachines:upgrades"
               ]
             }
           ]

@@ -11,10 +11,16 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
-/** Holds the loose worktop sitting on a chassis, which can come from any mod. */
-public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder {
+import java.util.ArrayList;
+import java.util.List;
+
+/** Holds the loose worktop sitting on a chassis, which can come from any mod, and the upgrades fitted so far. */
+public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, Upgrade.Holder {
     private String worktop = "";
+    private List<Upgrade> upgrades = new ArrayList<>();
+    private @Nullable Upgrade loose;
 
     public ChassisBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.chassisEntity, pos, state);
@@ -33,21 +39,60 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder {
     }
 
     @Override
+    public List<Upgrade> upgrades() {
+        return upgrades;
+    }
+
+    @Override
+    public void setUpgrades(List<Upgrade> list) {
+        upgrades = new ArrayList<>(list);
+        changed();
+    }
+
+    public @Nullable Upgrade loose() {
+        return loose;
+    }
+
+    public void setLoose(@Nullable Upgrade upgrade) {
+        loose = upgrade;
+        changed();
+    }
+
+    /** Screws the loose upgrade in. */
+    public void fix() {
+        if (loose == null) return;
+        upgrades.add(loose);
+        loose = null;
+        changed();
+    }
+
+    private void changed() {
+        setChanged();
+        if (level != null) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+    }
+
+    @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         worktop = input.getStringOr("worktop", "");
+        upgrades = Upgrade.parse(input.getStringOr("upgrades", ""));
+        loose = Upgrade.byId(input.getStringOr("loose_upgrade", ""));
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putString("worktop", worktop);
+        output.putString("upgrades", Upgrade.join(upgrades));
+        output.putString("loose_upgrade", loose == null ? "" : loose.id);
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         final CompoundTag tag = new CompoundTag();
         tag.putString("worktop", worktop);
+        tag.putString("upgrades", Upgrade.join(upgrades));
+        tag.putString("loose_upgrade", loose == null ? "" : loose.id);
         return tag;
     }
 

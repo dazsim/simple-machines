@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
  * Data: two progress values, energy low and high 16 bits, capacity in thousands, mill mode.
  */
 public class EnergyMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 6;
+    public static final int DATA_COUNT = 7;
     public final boolean generator;
     public final boolean mill;
     private final Container container;
@@ -94,6 +94,11 @@ public class EnergyMenu extends AbstractContainerMenu {
 
     public int energy() {
         return (data.get(2) & 0xFFFF) | (data.get(3) & 0xFFFF) << 16;
+    }
+
+    /** Packed upgrade counts, see Upgrade.pack. */
+    public int upgrades() {
+        return data.get(6);
     }
 
     public int capacity() {

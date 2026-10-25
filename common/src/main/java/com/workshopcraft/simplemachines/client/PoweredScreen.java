@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.client;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
 import com.workshopcraft.simplemachines.machine.Layout;
 import com.workshopcraft.simplemachines.machine.PoweredMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -37,6 +38,10 @@ public class PoweredScreen extends AbstractContainerScreen<PoweredMenu> {
         if (layout.arrowX() >= 0) {
             final int w = Mth.ceil(menu.progress() * 24);
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN, 24, 16, 0, 0, x + layout.arrowX(), y + layout.arrowY(), w, 16);
+        }
+        if (menu.upgrades() != 0) {
+            final Component ups = Upgrade.summary(menu.upgrades(), true);
+            graphics.text(font, ups, x + imageWidth - 8 - font.width(ups), y + inventoryLabelY, 0xFF2D5AA0, false);
         }
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);

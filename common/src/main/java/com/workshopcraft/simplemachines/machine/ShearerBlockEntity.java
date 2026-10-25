@@ -36,7 +36,7 @@ public class ShearerBlockEntity extends AreaBlockEntity {
     protected void work(ServerLevel level, BlockPos pos, BlockState state, Tier tier) {
         if (progress > 0) progress--;
         setLit(level, pos, state, progress > 0);
-        if ((level.getGameTime() + pos.hashCode()) % tier.time(INTERVAL) != 0 || energy.energy < PER_SHEAR || !hasRoom()) return;
+        if (!due(tier.time(INTERVAL)) || energy.energy < PER_SHEAR || !hasRoom()) return;
         final AABB box = area(state, tier, 3);
         final List<Mob> mobs = level.getEntitiesOfClass(Mob.class, box, m -> m instanceof Shearable s && s.readyForShearing() && m.isAlive());
         if (mobs.isEmpty()) return;

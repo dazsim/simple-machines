@@ -28,6 +28,8 @@ import net.minecraft.core.Direction;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.Ported;
 import com.workshopcraft.simplemachines.pipe.ItemPipeBlock;
+import com.workshopcraft.simplemachines.assembly.ChassisBlockEntity;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
 import net.minecraft.world.level.Level;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,6 +50,8 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         int topLight;
         int ports;
         final int[] portLight = new int[6];
+        final Upgrade[] cards = new Upgrade[Upgrade.SLOTS];
+        int looseCard = -1;
     }
 
     public WorktopRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -63,6 +67,16 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         BlockEntityRenderer.super.extractRenderState(be, s, partialTick, camera, breaking);
         final BlockState state = be.getBlockState();
         s.worktop = be.worktop();
+        java.util.Arrays.fill(s.cards, null);
+        s.looseCard = -1;
+        if (state.getBlock() instanceof ChassisBlock && be instanceof ChassisBlockEntity chassis && state.getValue(ChassisBlock.STEP) >= 4) {
+            int i = 0;
+            for (Upgrade u : chassis.upgrades()) if (i < Upgrade.SLOTS) s.cards[i++] = u;
+            if (chassis.loose() != null && i < Upgrade.SLOTS) {
+                s.looseCard = i;
+                s.cards[i] = chassis.loose();
+            }
+        }
         if (state.getBlock() instanceof ChassisBlock) {
             s.facing = state.getValue(ChassisBlock.FACING);
             s.core = state.getValue(ChassisBlock.CORE);
@@ -90,6 +104,7 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
                 }
             });
         }
+        if (s.cards[0] != null) cards(s, pose, out);
         if (s.worktop.isEmpty()) return;
         final TextureAtlasSprite sprite = sprite(s.worktop);
         final float[][] rects = rects(s.core);
@@ -104,6 +119,28 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
             out.submitCustomGeometry(pose, ModelBakery.DESTROY_TYPES.get(c.progress()), (p, vc) ->
                     draw(new Quads(p, new SheetedDecalTextureGenerator(vc, c.cameraPose(), 1F), s.topLight, OverlayTexture.NO_OVERLAY), rects, sprite));
         }
+        pose.popPose();
+    }
+
+    // upgrade cards stand on the inner side opposite the control board, a loose one sits raised
+    private static void cards(State s, PoseStack pose, SubmitNodeCollector out) {
+        pose.pushPose();
+        pose.translate(0.5F, 0, 0.5F);
+        pose.mulPose(Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
+        pose.translate(-0.5F, 0, -0.5F);
+        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+            final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
+            for (int i = 0; i < Upgrade.SLOTS; i++) {
+                if (s.cards[i] == null) continue;
+                final TextureAtlasSprite sp = get(SimpleMachines.id("block/" + s.cards[i].id));
+                final float z0 = i == 0 ? 4 : 8.5F, z1 = z0 + 3.5F;
+                final float y0 = i == s.looseCard ? 6 : 3, y1 = y0 + 8;
+                final float x0 = 2.25F, x1 = 3;
+                q.face(EAST, x0, y0, z0, x1, y1, z1, sp, 4, 0, 12, 16);
+                q.face(WEST, x0, y0, z0, x1, y1, z1, sp, 4, 0, 12, 16, SHADE);
+                for (Direction d : new Direction[]{UP, DOWN, NORTH, SOUTH}) q.face(d, x0, y0, z0, x1, y1, z1, sp, 0, 0, 1, 16, SHADE);
+            }
+        });
         pose.popPose();
     }
 

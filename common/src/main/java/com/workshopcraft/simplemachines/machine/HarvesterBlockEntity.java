@@ -29,7 +29,7 @@ public class HarvesterBlockEntity extends AreaBlockEntity {
     protected void work(ServerLevel level, BlockPos pos, BlockState state, Tier tier) {
         if (progress > 0) progress--;
         setLit(level, pos, state, progress > 0);
-        if (level.getGameTime() % tier.time(STEP) != 0 || energy.energy < PER_CROP || !hasRoom()) return;
+        if (!due(tier.time(STEP)) || energy.energy < PER_CROP || !hasRoom()) return;
         final int r = radius(tier);
         final int side = 2 * r + 1;
         final BlockPos c = centre(state, tier);

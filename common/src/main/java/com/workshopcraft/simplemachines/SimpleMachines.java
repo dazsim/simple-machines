@@ -1,6 +1,9 @@
 package com.workshopcraft.simplemachines;
 
+import com.workshopcraft.simplemachines.assembly.Upgrade;
+import com.workshopcraft.simplemachines.item.MachineItem;
 import com.workshopcraft.simplemachines.item.PoweredToolItem;
+import com.workshopcraft.simplemachines.item.UpgradeItem;
 import net.minecraft.tags.BlockTags;
 
 import com.workshopcraft.simplemachines.assembly.ChassisBlock;
@@ -94,6 +97,9 @@ public class SimpleMachines {
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    public static final DataComponentType<String> UPGRADES_FITTED = DataComponentType.<String>builder()
+            .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
     public static final Map<Core, Item> ASSEMBLIES = new EnumMap<>(Core.class);
     public static final Map<Finish, Item> PANELS = new EnumMap<>(Finish.class);
     public static final Map<Finish, Item> WORKTOPS = new EnumMap<>(Finish.class);
@@ -220,12 +226,13 @@ public class SimpleMachines {
             WORKTOPS.put(finish, add(r, worktop, new Item(props(worktop))));
         }
         add(r, "redstone_copper_cable", new BlockItem(cable, props("redstone_copper_cable").useBlockDescriptionPrefix()));
-        add(r, "solid_fuel_generator", new BlockItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
-        add(r, "rolling_mill", new BlockItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
-        add(r, "electric_furnace", new BlockItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
-        for (Core core : NEW_CORES) add(r, core.block, new BlockItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
+        add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
+        add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
+        add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
+        for (Core core : NEW_CORES) add(r, core.block, new MachineItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
+        for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
         TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), BlockTags.MINEABLE_WITH_PICKAXE, 5.0F, -2.8F)));
         TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), BlockTags.MINEABLE_WITH_AXE, 8.0F, -3.0F)));
@@ -245,6 +252,7 @@ public class SimpleMachines {
     public static void registerComponents(BiConsumer<Identifier, DataComponentType<?>> r) {
         r.accept(id("energy"), ENERGY);
         r.accept(id("worktop"), WORKTOP);
+        r.accept(id("upgrades"), UPGRADES_FITTED);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {

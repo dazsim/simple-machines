@@ -193,6 +193,10 @@ public final class Assembly {
             }
             return true;
         }
+        if (state.getBlock() instanceof ToolStandBlock) {
+            if (!level.isClientSide()) ToolParts.screwdriver(level, pos, player, sneak);
+            return true;
+        }
         if (state.getBlock() instanceof PoweredMachineBlock && sneak) {
             if (!level.isClientSide()) disassemble(state, level, pos);
             return true;

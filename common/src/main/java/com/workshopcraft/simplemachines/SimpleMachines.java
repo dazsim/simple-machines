@@ -100,6 +100,11 @@ public class SimpleMachines {
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     public static final DataComponentType<String> UPGRADES_FITTED = DataComponentType.<String>builder()
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    public static final DataComponentType<String> TOOL_FRAME = DataComponentType.<String>builder()
+            .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    /** Which parts a tool model shows, as ToolStandRenderer bits; only set on the stacks the stand draws. */
+    public static final DataComponentType<Integer> TOOL_PARTS = DataComponentType.<Integer>builder()
+            .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final SoundEvent DRILL_SOUND = SoundEvent.createVariableRangeEvent(id("item.electric_drill.run"));
     public static final SoundEvent CHAINSAW_SOUND = SoundEvent.createVariableRangeEvent(id("item.chainsaw.run"));
     public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
@@ -118,6 +123,13 @@ public class SimpleMachines {
     public static Block itemPipe;
     public static Item screwdriver;
     public static Item controlBoard;
+    public static Item ironToolFrame;
+    public static Item steelToolFrame;
+    public static Item drillMotor;
+    public static Item chainsawBar;
+    public static Item batteryModule;
+    public static Block toolStand;
+    public static BlockEntityType<com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity> toolStandEntity;
     public static Item powerCell;
     public static final List<Item> TOOLS = new ArrayList<>();
     public static BlockEntityType<AlloyFurnaceBlockEntity> alloyFurnaceEntity;
@@ -196,6 +208,10 @@ public class SimpleMachines {
         itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
+        toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("tool_stand"))).mapColor(MapColor.METAL).strength(2.0F)
+                .sound(SoundType.METAL).noOcclusion());
+        r.accept(id("tool_stand"), toolStand);
         MACHINES.put(Core.FURNACE, electricFurnace);
         MACHINES.put(Core.ROLLING, rollingMill);
         MACHINES.put(Core.GENERATOR, generator);
@@ -238,6 +254,12 @@ public class SimpleMachines {
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
+        add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
+        ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
+        steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
+        drillMotor = add(r, "drill_motor", new Item(props("drill_motor")));
+        chainsawBar = add(r, "chainsaw_bar", new Item(props("chainsaw_bar")));
+        batteryModule = add(r, "battery_module", new com.workshopcraft.simplemachines.item.BatteryModuleItem(props("battery_module").stacksTo(1)));
         TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), DRILL_SOUND,
                 List.of(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL), 5.0F, -2.8F)));
         TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), CHAINSAW_SOUND, List.of(BlockTags.MINEABLE_WITH_AXE), 8.0F, -3.0F)));
@@ -262,6 +284,8 @@ public class SimpleMachines {
         r.accept(id("energy"), ENERGY);
         r.accept(id("worktop"), WORKTOP);
         r.accept(id("upgrades"), UPGRADES_FITTED);
+        r.accept(id("tool_frame"), TOOL_FRAME);
+        r.accept(id("tool_parts"), TOOL_PARTS);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -303,6 +327,8 @@ public class SimpleMachines {
         r.accept(id("chassis"), chassisEntity);
         conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe));
         r.accept(id("conduit"), conduitEntity);
+        toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));
+        r.accept(id("tool_stand"), toolStandEntity);
     }
 
     private static <T extends WorkBlockEntity> void entity(BiConsumer<Identifier, BlockEntityType<?>> r, Core core,

@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.item;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
@@ -34,6 +35,8 @@ import java.util.function.Consumer;
 /**
  * Drill or chainsaw running on FE kept in the energy component. Diamond-tier while charged; with too little
  * charge left for a block it digs like a bare hand and drops nothing that needs a tool. Never breaks.
+ * Built on a Tool Stand: a steel frame digs a quarter faster, each Overclocker adds half the speed and half the FE per block,
+ * each Energy Cell adds the base capacity again.
  */
 public class PoweredToolItem extends Item {
     public static final int CAPACITY = 50_000;
@@ -66,6 +69,26 @@ public class PoweredToolItem extends Item {
         return stack.getOrDefault(SimpleMachines.ENERGY, 0);
     }
 
+    public static boolean steel(ItemStack stack) {
+        return "steel".equals(stack.get(SimpleMachines.TOOL_FRAME));
+    }
+
+    public static List<Upgrade> upgrades(ItemStack stack) {
+        return Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
+    }
+
+    public static int capacity(ItemStack stack) {
+        return CAPACITY * (1 + Upgrade.count(upgrades(stack), Upgrade.ENERGY_CELL));
+    }
+
+    public static int perBlock(ItemStack stack) {
+        return PER_BLOCK * (2 + Upgrade.count(upgrades(stack), Upgrade.OVERCLOCKER)) / 2;
+    }
+
+    public static float speedFactor(ItemStack stack) {
+        return (steel(stack) ? 1.25F : 1F) * (1F + 0.5F * Upgrade.count(upgrades(stack), Upgrade.OVERCLOCKER));
+    }
+
     public static ItemStack charged(Item item) {
         final ItemStack stack = new ItemStack(item);
         stack.set(SimpleMachines.ENERGY, CAPACITY);
@@ -73,7 +96,7 @@ public class PoweredToolItem extends Item {
     }
 
     public static boolean powered(ItemStack stack) {
-        return energy(stack) >= PER_BLOCK;
+        return energy(stack) >= perBlock(stack);
     }
 
     private static void use(ItemStack stack, int amount) {
@@ -84,7 +107,9 @@ public class PoweredToolItem extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return powered(stack) ? super.getDestroySpeed(stack, state) : 1.0F;
+        if (!powered(stack)) return 1.0F;
+        final float speed = super.getDestroySpeed(stack, state);
+        return speed > 1.0F ? speed * speedFactor(stack) : speed;
     }
 
     @Override
@@ -95,7 +120,7 @@ public class PoweredToolItem extends Item {
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity owner) {
         if (!level.isClientSide() && state.getDestroySpeed(level, pos) != 0.0F && powered(stack)
-                && super.getDestroySpeed(stack, state) > 1.0F) use(stack, PER_BLOCK);
+                && super.getDestroySpeed(stack, state) > 1.0F) use(stack, perBlock(stack));
         return true;
     }
 
@@ -111,7 +136,7 @@ public class PoweredToolItem extends Item {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        return Mth.clamp(Math.round(13.0F * energy(stack) / CAPACITY), 0, 13);
+        return Mth.clamp(Math.round(13.0F * energy(stack) / capacity(stack)), 0, 13);
     }
 
     @Override
@@ -122,7 +147,10 @@ public class PoweredToolItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         final NumberFormat f = NumberFormat.getIntegerInstance(Locale.ROOT);
-        out.accept(Component.translatable("tooltip.simplemachines.charge", f.format(energy(stack)), f.format(CAPACITY)).withStyle(ChatFormatting.GRAY));
+        out.accept(Component.translatable("tooltip.simplemachines.charge", f.format(energy(stack)), f.format(capacity(stack))).withStyle(ChatFormatting.GRAY));
+        out.accept(Component.translatable(steel(stack) ? "tooltip.simplemachines.steel_frame" : "tooltip.simplemachines.iron_frame").withStyle(ChatFormatting.GRAY));
+        final Component ups = Upgrade.summary(Upgrade.pack(upgrades(stack)), false);
+        if (!ups.getString().isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", ups).withStyle(ChatFormatting.BLUE));
         if (!powered(stack)) out.accept(Component.translatable("tooltip.simplemachines.no_charge").withStyle(ChatFormatting.RED));
     }
 }

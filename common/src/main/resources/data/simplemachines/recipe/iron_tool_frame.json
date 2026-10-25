@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "#c:ingots/iron",
+    "R": "#c:rods/iron"
+  },
+  "pattern": [
+    "II ",
+    "IRI",
+    " RI"
+  ],
+  "result": {
+    "id": "simplemachines:iron_tool_frame"
+  }
+}

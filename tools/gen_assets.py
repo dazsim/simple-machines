@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import icons
 import powered_icons
 import gen_manual
+import gen_tools
 
 R = "common/src/main/resources"
 A = R + "/assets/simplemachines"
@@ -1032,7 +1033,6 @@ def powered(shaped):
     lang["item.simplemachines.power_cell"] = "Power Cell"
     tags = {}
     for name, (title, draw, ts) in TOOLS.items():
-        flat_item(name, draw(), "minecraft:item/handheld")
         lang[f"item.simplemachines.{name}"] = title
         for t in ts: tags.setdefault(t, []).append(f"{MOD}:{name}")
         lang[f"subtitles.simplemachines.{name}"] = f"{title} runs"
@@ -1044,8 +1044,7 @@ def powered(shaped):
     jdump(lang, f"{A}/lang/en_us.json")
     S, R, P, B = "#c:plates/steel", "#c:rods/steel", f"{MOD}:power_cell", f"{MOD}:control_board"
     shaped("power_cell", ["SRS", "SDS", "SRS"], {"S": "#c:plates/copper", "R": f"{MOD}:redstone_copper_ingot", "D": "minecraft:redstone_block"})
-    shaped("electric_drill", ["SSS", "RPR", " B "], {"S": S, "R": R, "P": P, "B": B})
-    shaped("chainsaw", ["SS ", "SPR", " BR"], {"S": S, "R": R, "P": P, "B": B})
+    gen_tools.main(A, D, save, jdump, shaped, flat_item, loot_self)
 
 def upgrades(shaped):
     lang = json.load(open(f"{A}/lang/en_us.json"))
@@ -1056,7 +1055,7 @@ def upgrades(shaped):
         lang[f"item.simplemachines.{name}"] = title
     lang["tooltip.simplemachines.overclocker_circuit"] = "Machine upgrade: +50% speed and FE use"
     lang["tooltip.simplemachines.energy_cell"] = "Machine upgrade: +100% energy storage"
-    lang["tooltip.simplemachines.upgrade_fit"] = "Fit after the control board, then screw in (2 slots)"
+    lang["tooltip.simplemachines.upgrade_fit"] = "Fit after a machine's control board, or on a finished tool on its stand, then screw in (2 slots)"
     lang["tooltip.simplemachines.upgrades"] = "Upgrades: %s"
     lang["upgrade.simplemachines.overclocker_circuit"] = "Overclock"
     lang["upgrade.simplemachines.energy_cell"] = "Cell"

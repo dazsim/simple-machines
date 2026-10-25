@@ -1,0 +1,41 @@
+{
+  "parent": "simplemachines:item/tool/base",
+  "textures": {
+    "c": "simplemachines:item/tool_circuit",
+    "particle": "simplemachines:item/tool_circuit"
+  },
+  "elements": [
+    {
+      "from": [
+        6.5,
+        12,
+        6.75
+      ],
+      "to": [
+        9.5,
+        12.5,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#c"
+        },
+        "south": {
+          "texture": "#c"
+        },
+        "east": {
+          "texture": "#c"
+        },
+        "west": {
+          "texture": "#c"
+        },
+        "up": {
+          "texture": "#c"
+        },
+        "down": {
+          "texture": "#c"
+        }
+      }
+    }
+  ]
+}

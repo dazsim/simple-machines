@@ -120,7 +120,7 @@ public class SimpleMachinesNeoForge {
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE), SimpleMachines.MACHINES.get(Core.BATTERY));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
-                PoweredToolItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.TOOLS.toArray(new Item[0]));
+                PoweredToolItem.capacity(stack), PoweredToolItem.RATE), SimpleMachines.TOOLS.toArray(new Item[0]));
     }
 
     private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {

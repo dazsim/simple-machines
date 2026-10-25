@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": "#c:plates/steel",
+    "C": "minecraft:iron_bars",
+    "S": "simplemachines:redstone_copper_ingot",
+    "R": "minecraft:piston"
+  },
+  "pattern": [
+    "  T",
+    " TC",
+    "SR "
+  ],
+  "result": {
+    "id": "simplemachines:chainsaw_bar"
+  }
+}

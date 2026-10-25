@@ -249,7 +249,7 @@ def d_tools():
     x = 330; tool_body(sh, x, 120)
     sh.poly([(x + 170, 125), (x + 300 - 70, 125), (x + 250, 145), (x + 230, 165), (x + 170, 165)])
     sh.text((x + 100, 290), "chainsaw", 13)
-    sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "50k FE each, 50 FE a block, recharge in the Charger", 12, SOFT)
+    sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "built on a Tool Stand, recharge in the Charger", 12, SOFT)
     sh.save("tools")
 
 def textures():
@@ -364,10 +364,16 @@ def pages():
          "upgrades", "Upgrade cards on the control board", "Recipes",
          [craft("overclocker_circuit"), craft("energy_cell"),
           text("Fitted upgrades show on the machine's tooltip and in its screen.")])
-    page("tools", "tools", 0, "Powered Tools", "Electric Drill and Chainsaw",
-         "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nThe Drill mines anything a pickaxe or a shovel does, the Chainsaw anything an axe does.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
+    page("tools", "tools", 0, "Powered Tools", "Built on a Tool Stand",
+         "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Take the finished tool off with an empty hand.",
+         "tools", "Drill and chainsaw", "Order",
+         [seq("Parts in order", [M + "tool_stand", M + "steel_tool_frame", M + "drill_motor", M + "control_board", M + "battery_module", M + "overclocker_circuit"],
+              "Right click with the part, then the screwdriver."),
+          text("Put a tool back on an empty stand to change it: sneak with the screwdriver to take the last part off. Parts drop back, and the battery module keeps its charge."), craft("tool_stand")])
+    page("tool_parts", "tools", 1, "Tool Parts", "Frames, cores and upgrades",
+         "A tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nA steel frame digs 25% faster than iron. Each Overclocker adds half the speed and half the FE per block and shows a heat sink; each Energy Cell adds 50k FE and a bigger battery.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
          "tools", "Side views", "Recipes",
-         [craft("power_cell"), craft("electric_drill"), craft("chainsaw")])
+         [craft("iron_tool_frame"), craft("steel_tool_frame"), craft("drill_motor"), craft("chainsaw_bar"), craft("battery_module")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)

@@ -122,3 +122,44 @@ def card(kind):
     t = blank()
     _card(t, 0, 0, 15, 15, _overclock_face if kind == "overclocker_circuit" else _cell_face)
     return t
+
+# Tool parts, drawn side on with the nose to the right
+def _rect(t, x0, y0, x1, y1, col):
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            t.putpixel((x, y), col + (255,))
+
+def tool_frame(steel):
+    t = blank()
+    p = STEEL if steel else IRON
+    _rect(t, 2, 4, 13, 5, p[0]); _rect(t, 2, 6, 13, 7, p[2]); _rect(t, 2, 4, 3, 8, p[1])
+    _rect(t, 4, 8, 7, 14, GRIP[1]); _rect(t, 4, 8, 4, 14, GRIP[0])
+    for y in (9, 11, 13): _rect(t, 5, y, 7, y, GRIP[2])
+    _rect(t, 8, 10, 9, 10, p[1])
+    outline(t, OUT)
+    return t
+
+def drill_motor():
+    t = blank()
+    _rect(t, 1, 5, 9, 11, RC[1]); _rect(t, 1, 5, 9, 5, RC[0]); _rect(t, 1, 11, 9, 11, RC[2])
+    for x in (3, 5, 7): _rect(t, x, 7, x, 9, RC[2])
+    _rect(t, 10, 6, 11, 10, STEEL[3]); _rect(t, 12, 8, 15, 8, STEEL[1]); _rect(t, 12, 7, 14, 7, STEEL[2])
+    outline(t, OUT)
+    return t
+
+def chainsaw_bar():
+    t = blank()
+    _rect(t, 0, 6, 5, 11, RC[1]); _rect(t, 0, 6, 5, 6, RC[0])
+    _rect(t, 6, 7, 15, 10, IRON[1]); _rect(t, 6, 8, 15, 9, IRON[0])
+    for x in range(6, 16, 2):
+        t.putpixel((x, 6), (40, 40, 46, 255)); t.putpixel((x, 11), (40, 40, 46, 255))
+    outline(t, OUT)
+    return t
+
+def battery_module():
+    t = blank()
+    _rect(t, 3, 4, 12, 12, STEEL[3]); _rect(t, 3, 4, 12, 4, STEEL[1]); _rect(t, 3, 12, 12, 12, STEEL[4])
+    _rect(t, 3, 7, 12, 8, RC[1]); _rect(t, 10, 10, 11, 10, (120, 230, 140))
+    _rect(t, 5, 2, 6, 3, STEEL[2]); _rect(t, 9, 2, 10, 3, STEEL[2])
+    outline(t, OUT)
+    return t

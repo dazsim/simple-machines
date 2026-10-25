@@ -93,7 +93,7 @@ public class SimpleMachinesFabric implements ModInitializer {
         };
         EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE),
                 SimpleMachines.MACHINES.get(Core.BATTERY).asItem());
-        EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, PoweredToolItem.CAPACITY, PoweredToolItem.RATE),
+        EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, PoweredToolItem.capacity(stack), PoweredToolItem.RATE),
                 SimpleMachines.TOOLS.toArray(new Item[0]));
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;
         EnergyBuffer.pusher = (level, pos, side, amount) -> {

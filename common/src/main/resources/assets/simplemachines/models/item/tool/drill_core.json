@@ -1,0 +1,107 @@
+{
+  "parent": "simplemachines:item/tool/base",
+  "textures": {
+    "motor": "simplemachines:item/tool_motor",
+    "chuck": "simplemachines:item/tool_chuck",
+    "bit": "simplemachines:item/tool_bit",
+    "particle": "simplemachines:item/tool_motor"
+  },
+  "elements": [
+    {
+      "from": [
+        1.5,
+        7.5,
+        6.5
+      ],
+      "to": [
+        10,
+        12,
+        9.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#motor"
+        },
+        "south": {
+          "texture": "#motor"
+        },
+        "east": {
+          "texture": "#motor"
+        },
+        "west": {
+          "texture": "#motor"
+        },
+        "up": {
+          "texture": "#motor"
+        },
+        "down": {
+          "texture": "#motor"
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        8,
+        6.75
+      ],
+      "to": [
+        12,
+        11.5,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#chuck"
+        },
+        "south": {
+          "texture": "#chuck"
+        },
+        "east": {
+          "texture": "#chuck"
+        },
+        "west": {
+          "texture": "#chuck"
+        },
+        "up": {
+          "texture": "#chuck"
+        },
+        "down": {
+          "texture": "#chuck"
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        9.25,
+        7.5
+      ],
+      "to": [
+        17,
+        10.25,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bit"
+        },
+        "south": {
+          "texture": "#bit"
+        },
+        "east": {
+          "texture": "#bit"
+        },
+        "west": {
+          "texture": "#bit"
+        },
+        "up": {
+          "texture": "#bit"
+        },
+        "down": {
+          "texture": "#bit"
+        }
+      }
+    }
+  ]
+}

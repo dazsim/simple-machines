@@ -2,55 +2,41 @@
   "section": "tools",
   "sort": 0,
   "title": "Powered Tools",
-  "subtitle": "Electric Drill and Chainsaw",
-  "text": "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nThe Drill mines anything a pickaxe or a shovel does, the Chainsaw anything an axe does.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
+  "subtitle": "Built on a Tool Stand",
+  "text": "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Take the finished tool off with an empty hand.",
   "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
-  "caption": "Side views",
-  "right_title": "Recipes",
+  "caption": "Drill and chainsaw",
+  "right_title": "Order",
   "steps": [
     {
-      "kind": "craft_shaped",
-      "pattern": [
-        "SRS",
-        "SDS",
-        "SRS"
+      "kind": "sequence",
+      "title": "Parts in order",
+      "cells": [
+        "simplemachines:tool_stand",
+        "simplemachines:steel_tool_frame",
+        "simplemachines:drill_motor",
+        "simplemachines:control_board",
+        "simplemachines:battery_module",
+        "simplemachines:overclocker_circuit"
       ],
-      "key": {
-        "S": "#c:plates/copper",
-        "R": "simplemachines:redstone_copper_ingot",
-        "D": "minecraft:redstone_block"
-      },
-      "output": "simplemachines:power_cell"
+      "text": "Right click with the part, then the screwdriver."
+    },
+    {
+      "kind": "text",
+      "text": "Put a tool back on an empty stand to change it: sneak with the screwdriver to take the last part off. Parts drop back, and the battery module keeps its charge."
     },
     {
       "kind": "craft_shaped",
       "pattern": [
-        "SSS",
-        "RPR",
-        " B "
+        " R ",
+        " R ",
+        "SSS"
       ],
       "key": {
-        "S": "#c:plates/steel",
         "R": "#c:rods/steel",
-        "P": "simplemachines:power_cell",
-        "B": "simplemachines:control_board"
+        "S": "minecraft:smooth_stone_slab"
       },
-      "output": "simplemachines:electric_drill"
-    },
-    {
-      "kind": "craft_shaped",
-      "pattern": [
-        "SS ",
-        "SPR",
-        " BR"
-      ],
-      "key": {
-        "S": "#c:plates/steel",
-        "R": "#c:rods/steel",
-        "P": "simplemachines:power_cell",
-        "B": "simplemachines:control_board"
-      },
-      "output": "simplemachines:chainsaw"
+      "output": "simplemachines:tool_stand"
     }
   ]
 }

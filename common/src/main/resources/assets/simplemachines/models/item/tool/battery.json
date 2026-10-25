@@ -1,0 +1,41 @@
+{
+  "parent": "simplemachines:item/tool/base",
+  "textures": {
+    "b": "simplemachines:item/tool_battery",
+    "particle": "simplemachines:item/tool_battery"
+  },
+  "elements": [
+    {
+      "from": [
+        2.5,
+        -1,
+        6
+      ],
+      "to": [
+        7,
+        1,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#b"
+        },
+        "south": {
+          "texture": "#b"
+        },
+        "east": {
+          "texture": "#b"
+        },
+        "west": {
+          "texture": "#b"
+        },
+        "up": {
+          "texture": "#b"
+        },
+        "down": {
+          "texture": "#b"
+        }
+      }
+    }
+  ]
+}

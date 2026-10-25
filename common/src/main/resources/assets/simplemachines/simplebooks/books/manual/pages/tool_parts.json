@@ -1,0 +1,81 @@
+{
+  "section": "tools",
+  "sort": 1,
+  "title": "Tool Parts",
+  "subtitle": "Frames, cores and upgrades",
+  "text": "A tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nA steel frame digs 25% faster than iron. Each Overclocker adds half the speed and half the FE per block and shows a heat sink; each Energy Cell adds 50k FE and a bigger battery.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
+  "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
+  "caption": "Side views",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "II ",
+        "IRI",
+        " RI"
+      ],
+      "key": {
+        "I": "#c:ingots/iron",
+        "R": "#c:rods/iron"
+      },
+      "output": "simplemachines:iron_tool_frame"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SS ",
+        "SRS",
+        " RS"
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "R": "#c:rods/steel"
+      },
+      "output": "simplemachines:steel_tool_frame"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " C ",
+        "RMR",
+        " T "
+      ],
+      "key": {
+        "C": "simplemachines:redstone_copper_ingot",
+        "R": "#c:rods/copper",
+        "M": "minecraft:piston",
+        "T": "#c:rods/steel"
+      },
+      "output": "simplemachines:drill_motor"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "  T",
+        " TC",
+        "SR "
+      ],
+      "key": {
+        "T": "#c:plates/steel",
+        "C": "minecraft:iron_bars",
+        "S": "simplemachines:redstone_copper_ingot",
+        "R": "minecraft:piston"
+      },
+      "output": "simplemachines:chainsaw_bar"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CPC",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "C": "#c:ingots/copper",
+        "P": "simplemachines:power_cell"
+      },
+      "output": "simplemachines:battery_module"
+    }
+  ]
+}

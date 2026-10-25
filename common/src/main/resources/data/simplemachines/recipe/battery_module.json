@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:ingots/copper",
+    "P": "simplemachines:power_cell"
+  },
+  "pattern": [
+    "CPC"
+  ],
+  "result": {
+    "id": "simplemachines:battery_module"
+  }
+}

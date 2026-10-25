@@ -36,6 +36,7 @@ public class SimpleMachinesNeoForgeClient {
             for (Core core : SimpleMachines.NEW_CORES) renderer(e, SimpleMachines.MACHINE_ENTITIES.get(core));
             e.registerBlockEntityRenderer(SimpleMachines.chassisEntity, WorktopRenderer::new);
             e.registerBlockEntityRenderer(SimpleMachines.conduitEntity, com.workshopcraft.simplemachines.client.ConduitRenderer::new);
+            e.registerBlockEntityRenderer(SimpleMachines.toolStandEntity, com.workshopcraft.simplemachines.client.ToolStandRenderer::new);
             e.registerBlockEntityRenderer(SimpleMachines.generatorEntity, WorktopRenderer::new);
             e.registerBlockEntityRenderer(SimpleMachines.rollingMillEntity, WorktopRenderer::new);
             e.registerBlockEntityRenderer(SimpleMachines.electricFurnaceEntity, WorktopRenderer::new);

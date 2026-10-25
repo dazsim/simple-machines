@@ -1,0 +1,63 @@
+{
+  "section": "building",
+  "sort": 2,
+  "title": "Panels and Finishes",
+  "subtitle": "Wood, concrete and metal",
+  "text": "Panels close the sides and a worktop covers the top. Both come in the twelve woods, the sixteen concrete colours, and iron, copper and steel.\n\nWood panels take four slabs, concrete panels four concrete (makes two). Metal ones use sheets from the Rolling Mill. With Much More Storage its worktops are used instead.",
+  "drawing": "simplemachines:textures/simplebooks/manual/finishes.png",
+  "caption": "Panel finishes and a worktop",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SS ",
+        "SS ",
+        "   "
+      ],
+      "key": {
+        "S": "minecraft:oak_slab"
+      },
+      "output": "simplemachines:oak_panels"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CC ",
+        "CC ",
+        "   "
+      ],
+      "key": {
+        "C": "minecraft:white_concrete"
+      },
+      "output": {
+        "item": "simplemachines:white_concrete_panels",
+        "count": 2
+      }
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SS ",
+        "SS ",
+        "   "
+      ],
+      "key": {
+        "S": "#c:plates/iron"
+      },
+      "output": "simplemachines:iron_panels"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SSS",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "S": "minecraft:oak_slab"
+      },
+      "output": "simplemachines:oak_worktop"
+    }
+  ]
+}

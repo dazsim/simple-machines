@@ -1,0 +1,41 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "simplebooks"
+      ]
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "simplebooks"
+    }
+  ],
+  "type": "minecraft:advancement_reward",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simplebooks:guide",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "simplebooks:book": "simplemachines:manual",
+                "minecraft:custom_name": {
+                  "translate": "book.simplemachines.manual.title",
+                  "italic": false
+                },
+                "minecraft:item_model": "simplemachines:manual"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

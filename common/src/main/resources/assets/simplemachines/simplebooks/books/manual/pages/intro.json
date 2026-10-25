@@ -1,0 +1,53 @@
+{
+  "section": "start",
+  "sort": 0,
+  "title": "Simple Machines",
+  "subtitle": "Workshop manual",
+  "text": "Powered machines built by hand. Every machine starts as a chassis; you fit its parts one at a time and fix each with a screwdriver.\n\nStart with an Alloy Furnace and an Extruder, which burn fuel. They make the steel, redstone copper and rods everything else needs.",
+  "drawing": "simplemachines:textures/simplebooks/manual/intro.png",
+  "caption": "A finished machine",
+  "right_title": "First tools",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "C  ",
+        "S  ",
+        "   "
+      ],
+      "key": {
+        "C": "#c:ingots/copper",
+        "S": "minecraft:stick"
+      },
+      "output": "simplemachines:screwdriver"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "BBB",
+        "CFC",
+        "BBB"
+      ],
+      "key": {
+        "B": "minecraft:bricks",
+        "C": "#c:ingots/copper",
+        "F": "minecraft:furnace"
+      },
+      "output": "simplemachines:alloy_furnace"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "III",
+        "IPI",
+        "IFI"
+      ],
+      "key": {
+        "I": "#c:ingots/iron",
+        "P": "minecraft:piston",
+        "F": "minecraft:furnace"
+      },
+      "output": "simplemachines:extruder"
+    }
+  ]
+}

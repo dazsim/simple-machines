@@ -1,0 +1,50 @@
+{
+  "section": "machines",
+  "sort": 0,
+  "title": "Processing Machines",
+  "subtitle": "Built on a chassis",
+  "text": "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes.",
+  "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
+  "caption": "Three machines, one with an output port",
+  "right_title": "Assemblies",
+  "steps": [
+    {
+      "kind": "sequence",
+      "title": "Electric Furnace",
+      "cells": [
+        "simplemachines:furnace_assembly",
+        "simplemachines:electric_furnace"
+      ],
+      "text": "Smelts anything a furnace does."
+    },
+    {
+      "kind": "sequence",
+      "title": "Rolling Mill",
+      "cells": [
+        "simplemachines:rolling_assembly",
+        "simplemachines:rolling_mill"
+      ],
+      "text": "Rods or sheets."
+    },
+    {
+      "kind": "sequence",
+      "title": "Crusher",
+      "cells": [
+        "simplemachines:crusher_assembly",
+        "simplemachines:crusher"
+      ],
+      "text": "Steel has a 10% chance of a third dust."
+    },
+    {
+      "kind": "sequence",
+      "title": "Sawmill and Alloy Smelter",
+      "cells": [
+        "simplemachines:saw_assembly",
+        "simplemachines:sawmill",
+        "simplemachines:alloy_assembly",
+        "simplemachines:alloy_smelter"
+      ],
+      "text": ""
+    }
+  ]
+}

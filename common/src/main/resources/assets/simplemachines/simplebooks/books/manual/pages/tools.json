@@ -1,0 +1,41 @@
+{
+  "section": "tools",
+  "sort": 0,
+  "title": "Powered Tools",
+  "subtitle": "Drill, Chainsaw and Electric Shovel",
+  "text": "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
+  "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
+  "caption": "Side views",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SRS",
+        "SDS",
+        "SRS"
+      ],
+      "key": {
+        "S": "#c:plates/copper",
+        "R": "simplemachines:redstone_copper_ingot",
+        "D": "minecraft:redstone_block"
+      },
+      "output": "simplemachines:power_cell"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SSS",
+        "RPR",
+        " B "
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "R": "#c:rods/steel",
+        "P": "simplemachines:power_cell",
+        "B": "simplemachines:control_board"
+      },
+      "output": "simplemachines:electric_drill"
+    }
+  ]
+}

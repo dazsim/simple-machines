@@ -1,0 +1,55 @@
+{
+  "section": "building",
+  "sort": 1,
+  "title": "Building a Machine",
+  "subtitle": "Fit a part, then screw it in",
+  "text": "Place a chassis and right click it with each part in turn. A part sits loose until you use the screwdriver on it.\n\n0 Chassis  1 Assembly  2 Control board  3 Upgrades (optional, up to 2)  4 Panels  5 Worktop\n\nSneak with the screwdriver to take the last part off. Breaking a part-built chassis drops its parts.",
+  "drawing": "simplemachines:textures/simplebooks/manual/assembly.png",
+  "caption": "Exploded view, parts in order",
+  "right_title": "Order",
+  "steps": [
+    {
+      "kind": "sequence",
+      "title": "Parts in order",
+      "cells": [
+        "simplemachines:steel_chassis",
+        "simplemachines:crusher_assembly",
+        "simplemachines:control_board",
+        "simplemachines:overclocker_circuit",
+        "simplemachines:oak_panels",
+        "simplemachines:oak_worktop"
+      ],
+      "text": "Right click with the part, then the screwdriver. Skip the upgrades if you like."
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RDR",
+        "CCC",
+        "   "
+      ],
+      "key": {
+        "R": "simplemachines:redstone_copper_ingot",
+        "D": "#c:dusts/redstone",
+        "C": "#c:ingots/copper"
+      },
+      "output": "simplemachines:control_board"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IGI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "G": "minecraft:grindstone"
+      },
+      "output": "simplemachines:crusher_assembly",
+      "title": "Assembly (Crusher)"
+    }
+  ]
+}

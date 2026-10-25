@@ -160,5 +160,6 @@
   "message.simplemachines.upgrade_early": "Fix the control board before fitting upgrades",
   "message.simplemachines.upgrade_late": "Upgrades go in before the side panels",
   "message.simplemachines.upgrades_full": "Both upgrade slots are full",
-  "message.simplemachines.upgrade_fitted": "Upgrade fitted (%s/%s)"
+  "message.simplemachines.upgrade_fitted": "Upgrade fitted (%s/%s)",
+  "book.simplemachines.manual.title": "Simple Machines Manual"
 }

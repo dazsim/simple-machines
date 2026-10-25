@@ -1,0 +1,416 @@
+#!/usr/bin/env python3
+# blueprint manual for Simple Books: pages, template, drawings, recipe and advancement; run from repo root (gen_assets.py calls it)
+import json, math, os
+from PIL import Image, ImageDraw, ImageFont
+
+MOD = "simplemachines"
+ROOT = "common/src/main/resources"
+A, D = f"{ROOT}/assets/{MOD}", f"{ROOT}/data/{MOD}"
+BOOK = f"{A}/simplebooks/books/manual"
+TEX = f"{A}/textures/simplebooks/manual"
+T = f"{MOD}:textures/simplebooks/manual"
+W, H, SS = 640, 400, 3
+INK, SOFT, FILL = (255, 255, 255, 255), (200, 220, 240, 255), (29, 79, 140, 255)
+FONTS = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "DejaVuSans-Bold.ttf"]
+COND = {"fabric:load_conditions": [{"condition": "fabric:all_mods_loaded", "values": ["simplebooks"]}],
+        "neoforge:conditions": [{"type": "neoforge:mod_loaded", "modid": "simplebooks"}]}
+GUIDE = {"simplebooks:book": f"{MOD}:manual", "minecraft:custom_name": {"translate": "book.simplemachines.manual.title", "italic": False},
+         "minecraft:item_model": f"{MOD}:manual"}
+
+def jdump(obj, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        json.dump(obj, f, indent=2)
+        f.write("\n")
+
+def font(size):
+    for p in FONTS:
+        try: return ImageFont.truetype(p, size * SS)
+        except OSError: pass
+    return ImageFont.load_default(size * SS)
+
+class Sheet:
+    def __init__(self):
+        self.im = Image.new("RGBA", (W * SS, H * SS), (0, 0, 0, 0))
+        self.d = ImageDraw.Draw(self.im)
+
+    def s(self, pts): return [(x * SS, y * SS) for x, y in pts]
+
+    def line(self, a, b, w=2.0, c=INK):
+        self.d.line(self.s([a, b]), fill=c, width=round(w * SS))
+        for x, y in self.s([a, b]):
+            r = w * SS / 2
+            self.d.ellipse([x - r, y - r, x + r, y + r], fill=c)
+
+    def poly(self, pts, w=2.0, c=INK, fill=FILL):
+        if fill: self.d.polygon(self.s(pts), fill=fill)
+        for a, b in zip(pts, pts[1:] + pts[:1]): self.line(a, b, w, c)
+
+    def dash(self, a, b, w=1.4, c=SOFT, on=6, off=5):
+        L = math.dist(a, b); n = int(L // (on + off)) + 1
+        for i in range(n):
+            s0, s1 = i * (on + off) / L, min(1, (i * (on + off) + on) / L)
+            if s0 >= 1: break
+            self.line((a[0] + (b[0] - a[0]) * s0, a[1] + (b[1] - a[1]) * s0), (a[0] + (b[0] - a[0]) * s1, a[1] + (b[1] - a[1]) * s1), w, c)
+
+    def arrow(self, a, b, w=2.0, c=INK, head=9):
+        self.line(a, b, w, c)
+        ang = math.atan2(b[1] - a[1], b[0] - a[0])
+        p1 = (b[0] - head * math.cos(ang - 0.45), b[1] - head * math.sin(ang - 0.45))
+        p2 = (b[0] - head * math.cos(ang + 0.45), b[1] - head * math.sin(ang + 0.45))
+        self.d.polygon(self.s([b, p1, p2]), fill=c)
+
+    def text(self, xy, t, size=13, c=INK, anchor="mm"):
+        self.d.text((xy[0] * SS, xy[1] * SS), t, font=font(size), fill=c, anchor=anchor)
+
+    def tag(self, n, xy, r=11):
+        x, y = xy
+        self.d.ellipse([(x - r) * SS, (y - r) * SS, (x + r) * SS, (y + r) * SS], fill=FILL, outline=INK, width=2 * SS)
+        self.text(xy, str(n), 12)
+
+    def circle(self, xy, r, w=2.0, fill=FILL):
+        x, y = xy
+        self.d.ellipse([(x - r) * SS, (y - r) * SS, (x + r) * SS, (y + r) * SS], fill=fill, outline=INK, width=round(w * SS))
+
+    def save(self, name):
+        os.makedirs(TEX, exist_ok=True)
+        self.im.resize((W, H), Image.LANCZOS).save(f"{TEX}/{name}.png")
+
+# isometric: x runs right and down, z runs left and down, y up
+def iso(o, k=1.0):
+    ox, oy = o
+    c, s = math.cos(math.radians(30)) * k, math.sin(math.radians(30)) * k
+    return lambda x, y, z: (ox + (x - z) * c, oy + (x + z) * s - y * k)
+
+def box(sh, P, x, y, z, w, h, d, lw=2.0, fill=FILL):
+    top = [P(x, y + h, z), P(x + w, y + h, z), P(x + w, y + h, z + d), P(x, y + h, z + d)]
+    right = [P(x + w, y, z), P(x + w, y + h, z), P(x + w, y + h, z + d), P(x + w, y, z + d)]
+    left = [P(x, y, z + d), P(x + w, y, z + d), P(x + w, y + h, z + d), P(x, y + h, z + d)]
+    for f in (top, right, left): sh.poly(f, lw, fill=fill)
+
+def face_rect(sh, P, side, a0, b0, a1, b1, depth, lw=1.6):
+    # a rectangle drawn on the +z (left, a=x) or +x (right, a=z) face, b is height
+    if side == "z": pts = [P(a0, b0, depth), P(a1, b0, depth), P(a1, b1, depth), P(a0, b1, depth)]
+    else: pts = [P(depth, b0, a0), P(depth, b0, a1), P(depth, b1, a1), P(depth, b1, a0)]
+    sh.poly(pts, lw, fill=None)
+
+def machine(sh, P, s=1.0, x=0, z=0, port=None):
+    box(sh, P, x, 0, z, 100 * s, 82 * s, 100 * s)
+    box(sh, P, x - 4 * s, 82 * s, z - 4 * s, 108 * s, 10 * s, 108 * s)
+    face_rect(sh, P, "z", x + 22 * s, 18 * s, x + 78 * s, 62 * s, z + 100 * s)
+    for i in range(3):
+        a = P(x + 30 * s + i * 20 * s, 26 * s, z + 100 * s); b = P(x + 30 * s + i * 20 * s, 54 * s, z + 100 * s)
+        sh.line(a, b, 1.4, SOFT)
+    for zz in (z + 18 * s, z + 82 * s):
+        sh.line(P(x + 100 * s, 6 * s, zz), P(x + 100 * s, 76 * s, zz), 1.4, SOFT)
+    if port: face_rect(sh, P, "x", z + 36 * s, 28 * s, z + 64 * s, 54 * s, x + 100 * s, 2.0)
+
+def chest(sh, P, x, z, s=1.0):
+    box(sh, P, x, 0, z, 70 * s, 50 * s, 70 * s)
+    sh.line(P(x, 38 * s, z + 70 * s), P(x + 70 * s, 38 * s, z + 70 * s), 1.4)
+    sh.line(P(x + 70 * s, 38 * s, z), P(x + 70 * s, 38 * s, z + 70 * s), 1.4)
+
+def d_intro():
+    sh = Sheet(); P = iso((300, 250), 1.25)
+    machine(sh, P)
+    sh.text((300, 30), "STEEL CHASSIS MACHINE", 14)
+    sh.dash(P(-4, 92, 104), (130, 120)); sh.text((95, 112), "worktop", 12, SOFT)
+    sh.dash(P(50, 40, 100), (140, 300)); sh.text((100, 312), "front panel", 12, SOFT)
+    sh.dash(P(100, 40, 50), (520, 300)); sh.text((560, 312), "side panels", 12, SOFT)
+    sh.dash(P(100, 92, 0), (500, 90)); sh.text((540, 82), "chassis", 12, SOFT)
+    sh.save("intro")
+
+def d_metals():
+    sh = Sheet(); P = iso((300, 260), 1.15)
+    box(sh, P, 0, 0, 0, 100, 100, 100)
+    face_rect(sh, P, "z", 30, 14, 70, 44, 100)
+    for i in range(4): sh.line(P(4, 60 + i * 9, 100), P(96, 60 + i * 9, 100), 1.2, SOFT)
+    sh.arrow((120, 70), P(20, 104, 30)); sh.text((112, 58), "copper", 12)
+    sh.arrow((470, 60), P(80, 104, 20)); sh.text((480, 48), "redstone", 12)
+    sh.arrow(P(100, 20, 60), (540, 330)); sh.text((560, 345), "redstone copper", 12)
+    sh.text((300, 380), "Alloy Furnace: two inputs, fuel below", 12, SOFT)
+    sh.save("metals")
+
+def d_chassis():
+    sh = Sheet()
+    for n, (ox, label) in enumerate([(170, "IRON  x1"), (470, "STEEL  x1.5 speed, x2 energy")]):
+        P = iso((ox, 240), 1.0)
+        box(sh, P, 0, 0, 0, 100, 8, 100)
+        for xx, zz in [(0, 0), (88, 0), (0, 88), (88, 88)]:
+            box(sh, P, xx, 8, zz, 12, 92 if n else 80, 12)
+        sh.text((ox, 380), label, 12)
+    sh.text((320, 30), "CHASSIS TIERS", 14)
+    sh.save("chassis")
+
+def d_assembly():
+    sh = Sheet(); P = iso((230, 290), 0.7)
+    parts = [("chassis", 0, 8), ("assembly", 40, 34), ("control board", 110, 6), ("upgrades", 150, 4), ("panels", 190, 80), ("worktop", 300, 10)]
+    for i, (name, y, h) in enumerate(parts):
+        if i == 0:
+            box(sh, P, 0, 0, 0, 100, 8, 100)
+            for xx, zz in [(88, 0), (0, 88), (88, 88)]: box(sh, P, xx, 8, zz, 12, 22, 12)
+        elif name == "assembly": box(sh, P, 20, y, 20, 60, h, 60)
+        elif name == "control board": box(sh, P, 10, y, 30, 80, h, 40)
+        elif name == "upgrades":
+            box(sh, P, 22, y, 40, 22, 14, 4); box(sh, P, 56, y, 40, 22, 14, 4)
+        elif name == "panels":
+            box(sh, P, 100, y - 30, 0, 4, h, 100); box(sh, P, 0, y - 30, 100, 100, h, 4)
+        else: box(sh, P, -4, y, -4, 108, h, 108)
+        tx, ty = P(110, y + h / 2, 110)
+        sh.dash((tx, ty), (430, ty)); sh.tag(i, (444, ty)); sh.text((464, ty), name, 12, INK, "lm")
+    sh.dash(P(50, 10, 50), P(50, 300, 50), 1.2)
+    sh.save("assembly")
+
+def d_finishes():
+    sh = Sheet()
+    for i, kind in enumerate(["wood", "concrete", "metal"]):
+        P = iso((130 + i * 190, 250), 0.9)
+        box(sh, P, 0, 0, 0, 100, 100, 6)
+        for j in range(1, 6):
+            if kind == "wood": sh.line(P(0, j * 16, 6), P(100, j * 16 + (4 if j % 2 else -3), 6), 1.2, SOFT)
+            if kind == "metal":
+                for xx in (10, 90): sh.circle(P(xx, j * 16, 6), 2.0, 1.2)
+        if kind == "concrete": face_rect(sh, P, "z", 8, 8, 92, 92, 6, 1.2)
+        sh.text((130 + i * 190, 330), kind, 13)
+    P = iso((320, 110), 0.9); box(sh, P, 0, 0, 0, 120, 12, 120)
+    sh.text((320, 30), "PANELS AND WORKTOPS", 14)
+    sh.save("finishes")
+
+def d_machines():
+    sh = Sheet()
+    for i, (ox, oy) in enumerate([(150, 200), (330, 260), (510, 200)]):
+        machine(sh, iso((ox, oy), 0.75), port=(i == 1))
+    sh.text((320, 30), "THIRTEEN MACHINES, ONE CHASSIS", 14)
+    sh.save("machines")
+
+def d_power():
+    sh = Sheet(); P = iso((150, 170), 0.62)
+    box(sh, P, 0, 0, 0, 70, 70, 70); sh.circle(P(35, 35, 70), 14); sh.text(P(35, 130, 35), "generator", 12)
+    a, b = P(70, 10, 35), P(260, 10, 35)
+    for t in (-3, 3): sh.line((a[0], a[1] + t), (b[0], b[1] + t), 2.0)
+    box(sh, P, 260, 0, 0, 70, 70, 70); face_rect(sh, P, "z", 270, 10, 320, 60, 70); sh.text(P(295, 130, 35), "battery", 12)
+    a, b = P(330, 10, 35), P(480, 10, 35)
+    for t in (-3, 3): sh.line((a[0], a[1] + t), (b[0], b[1] + t), 2.0)
+    machine(sh, iso(P(480, 0, 0), 0.62), 0.8)
+    sh.arrow(P(120, 40, 35), P(220, 40, 35)); sh.text(P(170, 50, 35), "FE", 12, SOFT)
+    sh.arrow(P(370, 40, 35), P(450, 40, 35)); sh.text(P(410, 50, 35), "FE", 12, SOFT)
+    sh.text((320, 380), "Redstone Copper Cable: up to 1000 FE/t", 12, SOFT)
+    sh.save("power")
+
+def d_pipes():
+    sh = Sheet()
+    sh.line((60, 200), (580, 200), 2.0); sh.line((60, 224), (580, 224), 2.0)
+    for x, mode in [(140, "input"), (320, "output"), (500, "disconnected")]:
+        sh.poly([(x - 30, 252), (x + 30, 252), (x + 30, 330), (x - 30, 330)])
+        sh.text((x, 291), "inv", 12, SOFT)
+        if mode == "input": sh.arrow((x, 226), (x, 250))
+        elif mode == "output": sh.arrow((x, 250), (x, 226))
+        else:
+            sh.line((x - 8, 230), (x + 8, 246)); sh.line((x + 8, 230), (x - 8, 246))
+        sh.text((x, 350), mode, 13)
+    for x in range(80, 580, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
+    sh.text((320, 60), "PIPE ENDS: USE A SCREWDRIVER TO CYCLE", 14)
+    sh.text((320, 90), "input  >  output  >  disconnected  >  input", 12, SOFT)
+    sh.save("pipes")
+
+def d_output():
+    sh = Sheet(); P = iso((210, 200), 0.95)
+    machine(sh, P, port=True)
+    chest(sh, P, 150, 15)
+    sh.arrow(P(104, 40, 50), P(146, 40, 50), 2.4)
+    sh.text((320, 40), "AUTO-OUTPUT", 14)
+    sh.text((320, 370), "screwdriver on a side: outputs are pushed out of the port", 12, SOFT)
+    sh.save("output")
+
+def d_upgrades():
+    sh = Sheet()
+    sh.poly([(60, 110), (580, 110), (580, 300), (60, 300)])
+    for x in range(90, 560, 40): sh.line((x, 120), (x, 140), 1.2, SOFT)
+    sh.text((150, 270), "CONTROL BOARD", 12, SOFT)
+    for i, (label, sub) in enumerate([("OVERCLOCKER", "+50% speed, +50% FE/t"), ("ENERGY CELL", "+100% storage")]):
+        x = 260 + i * 160
+        sh.poly([(x, 150), (x + 120, 150), (x + 120, 250), (x, 250)])
+        sh.poly([(x + 35, 170), (x + 85, 170), (x + 85, 215), (x + 35, 215)], 1.4)
+        for k in range(6): sh.line((x + 10 + k * 20, 250), (x + 10 + k * 20, 240), 1.4)
+        sh.text((x + 60, 325), label, 12); sh.text((x + 60, 345), sub, 11, SOFT)
+        sh.tag(i + 1, (x + 60, 135))
+    sh.text((320, 50), "TWO UPGRADE SLOTS", 14)
+    sh.save("upgrades")
+
+def tool_body(sh, x, y):
+    sh.poly([(x, y), (x + 150, y), (x + 170, y + 20), (x + 170, y + 50), (x, y + 50)])
+    sh.poly([(x + 40, y + 50), (x + 80, y + 50), (x + 70, y + 120), (x + 30, y + 120)])
+    sh.poly([(x + 20, y + 12), (x + 70, y + 12), (x + 70, y + 30), (x + 20, y + 30)], 1.4)
+
+def d_tools():
+    sh = Sheet()
+    tool_body(sh, 30, 120); sh.poly([(200, 132), (250, 140), (250, 160), (200, 168)]); sh.text((120, 290), "drill", 13)
+    x = 250; tool_body(sh, x, 120)
+    sh.poly([(x + 170, 125), (x + 300 - 70, 125), (x + 250, 145), (x + 230, 165), (x + 170, 165)])
+    sh.text((x + 100, 290), "chainsaw", 13)
+    sh.poly([(520, 100), (600, 100), (600, 180), (560, 200), (520, 180)]); sh.line((560, 200), (560, 270), 3)
+    sh.text((560, 290), "shovel", 13)
+    sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "50k FE each, 50 FE a block, recharge in the Charger", 12, SOFT)
+    sh.save("tools")
+
+def textures():
+    g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
+    for i in range(0, 64, 16):
+        c = (156, 192, 228, 110 if i == 0 else 45)
+        d.line([(i, 0), (i, 63)], fill=c); d.line([(0, i), (63, i)], fill=c)
+    g.save(f"{TEX}/grid.png")
+    c = Image.new("RGBA", (16, 16), (22, 54, 94, 255)); ImageDraw.Draw(c).rectangle([0, 0, 15, 15], outline=(12, 30, 54, 255)); c.save(f"{TEX}/stand_cover.png")
+    p = Image.new("RGBA", (16, 16), (29, 79, 140, 255)); d = ImageDraw.Draw(p)
+    for i in (0, 8): d.line([(i, 0), (i, 15)], fill=(60, 110, 170, 255)); d.line([(0, i), (15, i)], fill=(60, 110, 170, 255))
+    p.save(f"{TEX}/stand_page.png")
+    it = Image.new("RGBA", (16, 16), (0, 0, 0, 0)); d = ImageDraw.Draw(it)
+    d.rectangle([2, 1, 13, 14], fill=(29, 79, 140, 255), outline=(12, 30, 54, 255))
+    d.rectangle([3, 13, 13, 14], fill=(230, 236, 244, 255)); d.line([(3, 1), (3, 13)], fill=(12, 30, 54, 255))
+    d.rectangle([6, 4, 11, 8], outline=(255, 255, 255, 255)); d.line([(7, 10), (11, 10)], fill=(200, 220, 240, 255))
+    d.point((8, 6), fill=(255, 230, 128, 255))
+    os.makedirs(f"{A}/textures/item", exist_ok=True); it.save(f"{A}/textures/item/manual.png")
+
+def recipe(name):
+    return json.load(open(f"{D}/recipe/{name}.json"))
+
+def out(r):
+    res = r["result"]; c = res.get("count", 1)
+    return {"item": res["id"], "count": c} if c > 1 else res["id"]
+
+def ing(x):
+    i = x["ingredient"]; c = x.get("count", 1)
+    return {"item": i, "count": c} if c > 1 else i
+
+def craft(name, title=None):
+    r = recipe(name)
+    pat = [row.ljust(3) for row in r["pattern"]] + ["   "] * (3 - len(r["pattern"]))
+    s = {"kind": "craft_shaped", "pattern": pat, "key": r["key"], "output": out(r)}
+    if title: s["title"] = title
+    return s
+
+def process(name, appliance, note=None):
+    r = recipe(name)
+    ins = [ing(r[k]) for k in ("first", "second", "input") if k in r]
+    s = {"kind": "process", "inputs": ins, "appliance": f"{MOD}:{appliance}", "output": out(r)}
+    if note: s["note"] = note
+    return s
+
+def text(t): return {"kind": "text", "text": t}
+
+def seq(title, cells, t): return {"kind": "sequence", "title": title, "cells": cells, "text": t}
+
+def page(name, section, sort, title, sub, body, drawing, caption, right_title, steps, **kw):
+    p = {"section": section, "sort": sort, "title": title, "subtitle": sub, "text": body,
+         "drawing": f"{T}/{drawing}.png", "caption": caption, "right_title": right_title, "steps": steps}
+    p.update(kw)
+    jdump(p, f"{BOOK}/pages/{name}.json")
+
+def pages():
+    M = MOD + ":"
+    page("intro", "start", 0, "Simple Machines", "Workshop manual",
+         "Powered machines built by hand. Every machine starts as a chassis; you fit its parts one at a time and fix each with a screwdriver.\n\nStart with an Alloy Furnace and an Extruder, which burn fuel. They make the steel, redstone copper and rods everything else needs.",
+         "intro", "A finished machine", "First tools",
+         [craft("screwdriver"), craft("alloy_furnace"), craft("extruder")])
+    page("metals", "start", 1, "Metals", "Steel, redstone copper, rods and sheets",
+         "The Alloy Furnace mixes two inputs. The Extruder turns one ingot into 2 rods. Once you have power, the Rolling Mill rolls ingots into rods or sheets; the button in its screen switches between them.\n\nSheets are tagged c:plates and make metal panels, pipes and tools.",
+         "metals", "Alloy Furnace, side view", "Recipes",
+         [process("alloying/steel_ingot", "alloy_furnace"), process("alloying/redstone_copper_ingot", "alloy_furnace"),
+          process("extruding/iron_rod", "extruder"), process("rolling/iron_sheet", "rolling_mill", "Sheet mode")])
+    page("chassis", "building", 0, "Chassis and Tiers", "Tier 1 iron, tier 2 steel",
+         "The chassis is the frame every powered machine is built on, and it sets the tier.\n\nIron is tier 1. Steel is tier 2: the machine runs 1.5x faster, holds twice the energy and some machines reach further, such as the 9x9 Crop Harvester.",
+         "chassis", "Iron and steel frames", "Recipes",
+         [craft("iron_chassis"), craft("steel_chassis")])
+    page("assembly", "building", 1, "Building a Machine", "Fit a part, then screw it in",
+         "Place a chassis and right click it with each part in turn. A part sits loose until you use the screwdriver on it.\n\n0 Chassis  1 Assembly  2 Control board  3 Upgrades (optional, up to 2)  4 Panels  5 Worktop\n\nSneak with the screwdriver to take the last part off. Breaking a part-built chassis drops its parts.",
+         "assembly", "Exploded view, parts in order", "Order",
+         [seq("Parts in order", [M + "steel_chassis", M + "crusher_assembly", M + "control_board", M + "overclocker_circuit", M + "oak_panels", M + "oak_worktop"],
+              "Right click with the part, then the screwdriver. Skip the upgrades if you like."),
+          craft("control_board"), craft("crusher_assembly", "Assembly (Crusher)")])
+    page("finishes", "building", 2, "Panels and Finishes", "Wood, concrete and metal",
+         "Panels close the sides and a worktop covers the top. Both come in the twelve woods, the sixteen concrete colours, and iron, copper and steel.\n\nWood panels take four slabs, concrete panels four concrete (makes two). Metal ones use sheets from the Rolling Mill. With Much More Storage its worktops are used instead.",
+         "finishes", "Panel finishes and a worktop", "Recipes",
+         [craft("oak_panels"), craft("white_concrete_panels"), craft("iron_panels"), craft("oak_worktop")])
+    page("machines", "machines", 0, "Processing Machines", "Built on a chassis",
+         "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes.",
+         "machines", "Three machines, one with an output port", "Assemblies",
+         [seq("Electric Furnace", [M + "furnace_assembly", M + "electric_furnace"], "Smelts anything a furnace does."),
+          seq("Rolling Mill", [M + "rolling_assembly", M + "rolling_mill"], "Rods or sheets."),
+          seq("Crusher", [M + "crusher_assembly", M + "crusher"], "Steel has a 10% chance of a third dust."),
+          seq("Sawmill and Alloy Smelter", [M + "saw_assembly", M + "sawmill", M + "alloy_assembly", M + "alloy_smelter"], "")])
+    page("farm", "machines", 1, "Farm and Generator Machines", "Working the world around them",
+         "Crop Harvester: harvests and replants grown crops in a 5x5 area in front (9x9 on steel), 400 FE a crop.\nShearer: shears sheep in the same area, 500 FE a sheep.\nStone Generator: cobblestone from water and lava, 10 FE/t.\nWater Generator: fills buckets beside 2 water sources, 10 FE/t.\nMechanical Hive: honeycomb and honey bottles, 20 FE/t.",
+         "machines", "Front views", "Assemblies",
+         [seq("Crop Harvester and Shearer", [M + "harvester_assembly", M + "crop_harvester", M + "shearer_assembly", M + "shearer"], ""),
+          seq("Stone and Water Generators", [M + "stone_assembly", M + "stone_generator", M + "water_assembly", M + "water_generator"], ""),
+          seq("Mechanical Hive", [M + "hive_assembly", M + "mechanical_hive"], "")])
+    page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",
+         "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. The Charger fills FE items.",
+         "power", "Generator, battery, machine", "Power",
+         [craft("redstone_copper_cable"),
+          seq("Generator, Battery and Charger", [M + "generator_assembly", M + "solid_fuel_generator", M + "battery_assembly", M + "battery", M + "charger"],
+              "Machines keep their energy when broken.")])
+    page("pipes", "items", 0, "Item Pipes", "Three kinds of pipe end",
+         "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
+         "pipes", "One pipe, three ends", "Pipe",
+         [craft("item_pipe"), text("Machines only accept items they have a recipe for, and only give up their outputs.")])
+    page("output", "items", 1, "Auto-output", "Push outputs into the next block",
+         "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
+         "output", "Machine pushing into a chest", "Sides",
+         [seq("Set an output side", [M + "screwdriver", "minecraft:chest"], "Use the screwdriver on the side facing the chest."),
+          text("Hoppers and other mods see the same sides: inputs can be filled, outputs emptied.")])
+    page("upgrades", "upgrades", 0, "Upgrades", "Optional step after the control board",
+         "With the control board fixed, right click with an upgrade and screw it in. There are two slots and any mix fits.\n\nEach Overclocker adds half the base speed; FE use and intake rise with it. Each Energy Cell adds the base storage again. Two Overclockers run at double speed; two Cells hold triple.\n\nUpgrades stay with the machine and drop back when it is taken apart.",
+         "upgrades", "Upgrade cards on the control board", "Recipes",
+         [craft("overclocker_circuit"), craft("energy_cell"),
+          text("Fitted upgrades show on the machine's tooltip and in its screen.")])
+    page("tools", "tools", 0, "Powered Tools", "Drill, Chainsaw and Electric Shovel",
+         "Each tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nCharge them in the Charger (the arrow shows the tool's charge). FE on NeoForge, Team Reborn Energy on Fabric.",
+         "tools", "Side views", "Recipes",
+         [craft("power_cell"), craft("electric_drill")])
+    page("tools_more", "tools", 1, "More Tools", "Chainsaw and Electric Shovel",
+         "The Chainsaw mines anything an axe does and the Electric Shovel anything a shovel does.\n\nAll three are built from steel sheets and rods, a Power Cell and a control board.",
+         "tools", "Side views", "Recipes",
+         [craft("chainsaw"), craft("electric_shovel")])
+
+def main():
+    os.makedirs(TEX, exist_ok=True)
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_power, d_pipes, d_output, d_upgrades, d_tools]: f()
+    textures()
+    jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
+           "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},
+           "slots": {"left.body": {"box": [0, 100, 644, 330]},
+                     "left.drawing": {"type": "image_box", "box": [42, 440, 560, 350], "bind": "drawing", "frame": False, "optional": True},
+                     "left.caption": {"type": "subtitle", "box": [0, 800, 644, 18], "bind": "caption", "style": "subtitle", "optional": True}}},
+          f"{A}/simplebooks/templates/blueprint.json")
+    jdump({"title": "book.simplemachines.manual.title", "default_template": f"{MOD}:blueprint", "tabs": True,
+           "style": {"page": "#1d4f8c", "page_texture": f"{T}/grid.png", "page_tile": "128", "font": "minecraft:uniform",
+                     "ink": "#ffffff", "soft": "#c8dcf0", "head": "#ffffff", "link": "#ffe680", "rule": "#9cc0e4", "arrow": "#ffffff",
+                     "cover": "#16365e", "cover_edge": "#0c1e36", "edge": "#9cc0e4",
+                     "badge": "#ffffff", "badge_edge": "#9cc0e4", "badge_text": "#1d4f8c", "frame": "#ffffff", "frame_inner": "#1d4f8c",
+                     "placeholder": "#245a98", "placeholder_hatch": "#2a64a6", "slot": "#2a64a6", "slot_shadow": "#163e6e", "slot_light": "#9cc0e4",
+                     "mark": "#ffffff", "mark_hover": "#ffe680", "mark_line": "#1d4f8c", "tabs": "#ffffff,#d6e6f6,#aecdec",
+                     "tab_text": "#1d4f8c", "tab_edge": "#0c1e36", "button_tint": "#c8dcf0", "stand_ink": "#ffffff"},
+           "stand_cover": f"{MOD}:simplebooks/manual/stand_cover", "stand_page": f"{MOD}:simplebooks/manual/stand_page",
+           "sections": ["contents", {"id": "start", "title": "Getting Started", "icon": f"{MOD}:screwdriver"},
+                        {"id": "building", "title": "Building", "icon": f"{MOD}:steel_chassis"},
+                        {"id": "machines", "title": "Machines", "icon": f"{MOD}:crusher"},
+                        {"id": "power", "title": "Power", "icon": f"{MOD}:redstone_copper_cable"},
+                        {"id": "items", "title": "Items", "icon": f"{MOD}:item_pipe"},
+                        {"id": "upgrades", "title": "Upgrades", "icon": f"{MOD}:overclocker_circuit"},
+                        {"id": "tools", "title": "Tools", "icon": f"{MOD}:electric_drill"}]},
+          f"{A}/simplebooks/books/manual.json")
+    pages()
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/manual"}}, f"{A}/items/manual.json")
+    jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/manual"}}, f"{A}/models/item/manual.json")
+    jdump({**COND, "type": "minecraft:crafting_shapeless", "category": "misc", "ingredients": ["minecraft:book", f"{MOD}:screwdriver"],
+           "result": {"id": "simplebooks:guide", "components": GUIDE}}, f"{D}/recipe/manual.json")
+    jdump({**COND, "type": "minecraft:advancement_reward", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "simplebooks:guide",
+           "functions": [{"function": "minecraft:set_components", "components": GUIDE}]}]}]}, f"{D}/loot_table/manual.json")
+    jdump({**COND, "criteria": {"screwdriver": {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"items": f"{MOD}:screwdriver"}]}}},
+           "requirements": [["screwdriver"]], "rewards": {"loot": [f"{MOD}:manual"]}}, f"{D}/advancement/got_manual.json")
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    lang["book.simplemachines.manual.title"] = "Simple Machines Manual"
+    jdump(lang, f"{A}/lang/en_us.json")
+
+if __name__ == "__main__":
+    main()

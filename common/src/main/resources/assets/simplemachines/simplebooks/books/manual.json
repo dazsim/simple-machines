@@ -1,0 +1,78 @@
+{
+  "title": "book.simplemachines.manual.title",
+  "default_template": "simplemachines:blueprint",
+  "tabs": true,
+  "style": {
+    "page": "#1d4f8c",
+    "page_texture": "simplemachines:textures/simplebooks/manual/grid.png",
+    "page_tile": "128",
+    "font": "minecraft:uniform",
+    "ink": "#ffffff",
+    "soft": "#c8dcf0",
+    "head": "#ffffff",
+    "link": "#ffe680",
+    "rule": "#9cc0e4",
+    "arrow": "#ffffff",
+    "cover": "#16365e",
+    "cover_edge": "#0c1e36",
+    "edge": "#9cc0e4",
+    "badge": "#ffffff",
+    "badge_edge": "#9cc0e4",
+    "badge_text": "#1d4f8c",
+    "frame": "#ffffff",
+    "frame_inner": "#1d4f8c",
+    "placeholder": "#245a98",
+    "placeholder_hatch": "#2a64a6",
+    "slot": "#2a64a6",
+    "slot_shadow": "#163e6e",
+    "slot_light": "#9cc0e4",
+    "mark": "#ffffff",
+    "mark_hover": "#ffe680",
+    "mark_line": "#1d4f8c",
+    "tabs": "#ffffff,#d6e6f6,#aecdec",
+    "tab_text": "#1d4f8c",
+    "tab_edge": "#0c1e36",
+    "button_tint": "#c8dcf0",
+    "stand_ink": "#ffffff"
+  },
+  "stand_cover": "simplemachines:simplebooks/manual/stand_cover",
+  "stand_page": "simplemachines:simplebooks/manual/stand_page",
+  "sections": [
+    "contents",
+    {
+      "id": "start",
+      "title": "Getting Started",
+      "icon": "simplemachines:screwdriver"
+    },
+    {
+      "id": "building",
+      "title": "Building",
+      "icon": "simplemachines:steel_chassis"
+    },
+    {
+      "id": "machines",
+      "title": "Machines",
+      "icon": "simplemachines:crusher"
+    },
+    {
+      "id": "power",
+      "title": "Power",
+      "icon": "simplemachines:redstone_copper_cable"
+    },
+    {
+      "id": "items",
+      "title": "Items",
+      "icon": "simplemachines:item_pipe"
+    },
+    {
+      "id": "upgrades",
+      "title": "Upgrades",
+      "icon": "simplemachines:overclocker_circuit"
+    },
+    {
+      "id": "tools",
+      "title": "Tools",
+      "icon": "simplemachines:electric_drill"
+    }
+  ]
+}

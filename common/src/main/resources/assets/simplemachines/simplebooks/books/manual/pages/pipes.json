@@ -1,0 +1,32 @@
+{
+  "section": "items",
+  "sort": 0,
+  "title": "Item Pipes",
+  "subtitle": "Three kinds of pipe end",
+  "text": "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
+  "drawing": "simplemachines:textures/simplebooks/manual/pipes.png",
+  "caption": "One pipe, three ends",
+  "right_title": "Pipe",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SGS",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "S": "#c:plates/iron",
+        "G": "#c:glass_blocks"
+      },
+      "output": {
+        "item": "simplemachines:item_pipe",
+        "count": 8
+      }
+    },
+    {
+      "kind": "text",
+      "text": "Machines only accept items they have a recipe for, and only give up their outputs."
+    }
+  ]
+}

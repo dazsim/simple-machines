@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "simplebooks"
+      ]
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "simplebooks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "simplemachines:screwdriver"
+  ],
+  "result": {
+    "id": "simplebooks:guide",
+    "components": {
+      "simplebooks:book": "simplemachines:manual",
+      "minecraft:custom_name": {
+        "translate": "book.simplemachines.manual.title",
+        "italic": false
+      },
+      "minecraft:item_model": "simplemachines:manual"
+    }
+  }
+}

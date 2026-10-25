@@ -1,0 +1,38 @@
+{
+  "section": "building",
+  "sort": 0,
+  "title": "Chassis and Tiers",
+  "subtitle": "Tier 1 iron, tier 2 steel",
+  "text": "The chassis is the frame every powered machine is built on, and it sets the tier.\n\nIron is tier 1. Steel is tier 2: the machine runs 1.5x faster, holds twice the energy and some machines reach further, such as the 9x9 Crop Harvester.",
+  "drawing": "simplemachines:textures/simplebooks/manual/chassis.png",
+  "caption": "Iron and steel frames",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "IBI",
+        "B B",
+        "IBI"
+      ],
+      "key": {
+        "I": "#c:ingots/iron",
+        "B": "minecraft:iron_bars"
+      },
+      "output": "simplemachines:iron_chassis"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "IRI",
+        "RRR",
+        "IRI"
+      ],
+      "key": {
+        "I": "#c:ingots/steel",
+        "R": "#c:rods/steel"
+      },
+      "output": "simplemachines:steel_chassis"
+    }
+  ]
+}

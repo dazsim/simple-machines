@@ -1,0 +1,45 @@
+{
+  "section": "upgrades",
+  "sort": 0,
+  "title": "Upgrades",
+  "subtitle": "Optional step after the control board",
+  "text": "With the control board fixed, right click with an upgrade and screw it in. There are two slots and any mix fits.\n\nEach Overclocker adds half the base speed; FE use and intake rise with it. Each Energy Cell adds the base storage again. Two Overclockers run at double speed; two Cells hold triple.\n\nUpgrades stay with the machine and drop back when it is taken apart.",
+  "drawing": "simplemachines:textures/simplebooks/manual/upgrades.png",
+  "caption": "Upgrade cards on the control board",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RGR",
+        "QBQ",
+        "RGR"
+      ],
+      "key": {
+        "R": "simplemachines:redstone_copper_ingot",
+        "G": "#c:ingots/gold",
+        "Q": "#c:gems/quartz",
+        "B": "simplemachines:control_board"
+      },
+      "output": "simplemachines:overclocker_circuit"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " S ",
+        "PBP",
+        " S "
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "P": "simplemachines:power_cell",
+        "B": "simplemachines:control_board"
+      },
+      "output": "simplemachines:energy_cell"
+    },
+    {
+      "kind": "text",
+      "text": "Fitted upgrades show on the machine's tooltip and in its screen."
+    }
+  ]
+}

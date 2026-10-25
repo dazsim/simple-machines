@@ -25,6 +25,9 @@
         "team_reborn_energy": ">=5.0.0",
         "minecraft": "${fabric_minecraft_range}",
         "java": ">=${java_version}"
+    },
+    "suggests": {
+        "simplebooks": "*"
     }
 }
   

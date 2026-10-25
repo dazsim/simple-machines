@@ -5,6 +5,7 @@ from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 import icons
 import powered_icons
+import gen_manual
 
 R = "common/src/main/resources"
 A = R + "/assets/simplemachines"
@@ -1059,3 +1060,4 @@ def loot_self(b):
            "random_sequence": f"{MOD}:blocks/{b}"}, f"{D}/{MOD}/loot_table/blocks/{b}.json")
 
 main()
+gen_manual.main()

@@ -1,0 +1,25 @@
+{
+  "section": "items",
+  "sort": 1,
+  "title": "Auto-output",
+  "subtitle": "Push outputs into the next block",
+  "text": "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
+  "drawing": "simplemachines:textures/simplebooks/manual/output.png",
+  "caption": "Machine pushing into a chest",
+  "right_title": "Sides",
+  "steps": [
+    {
+      "kind": "sequence",
+      "title": "Set an output side",
+      "cells": [
+        "simplemachines:screwdriver",
+        "minecraft:chest"
+      ],
+      "text": "Use the screwdriver on the side facing the chest."
+    },
+    {
+      "kind": "text",
+      "text": "Hoppers and other mods see the same sides: inputs can be filled, outputs emptied."
+    }
+  ]
+}

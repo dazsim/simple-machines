@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "I": "#c:ingots/iron",
+    "A": "simplemachines:alloy_furnace"
+  },
+  "pattern": [
+    "RCR",
+    "IAI"
+  ],
+  "result": {
+    "id": "simplemachines:alloy_assembly"
+  }
+}

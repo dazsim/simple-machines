@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/silver"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/silver"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ores/silver",
+        "c:dusts/silver"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:ores/silver",
+  "result": "#c:dusts/silver",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

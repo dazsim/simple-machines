@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/lead"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/lead"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ingots/lead",
+        "c:dusts/lead"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:ingots/lead",
+  "result": "#c:dusts/lead",
+  "cooking_time": 100
+}

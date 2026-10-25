@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/aluminum"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/aluminum"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ores/aluminum",
+        "c:dusts/aluminum"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:ores/aluminum",
+  "result": "#c:dusts/aluminum",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

@@ -5,8 +5,19 @@
     "simplemachines:electric_furnace",
     "simplemachines:rolling_mill",
     "simplemachines:solid_fuel_generator",
+    "simplemachines:battery",
+    "simplemachines:crusher",
+    "simplemachines:crop_harvester",
+    "simplemachines:alloy_smelter",
+    "simplemachines:stone_generator",
+    "simplemachines:sawmill",
+    "simplemachines:water_generator",
+    "simplemachines:mechanical_hive",
+    "simplemachines:shearer",
+    "simplemachines:charger",
     "simplemachines:iron_chassis",
     "simplemachines:steel_chassis",
-    "simplemachines:redstone_copper_cable"
+    "simplemachines:redstone_copper_cable",
+    "simplemachines:item_pipe"
   ]
 }

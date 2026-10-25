@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:crushing",
+  "ingredient": "minecraft:cobblestone",
+  "result": "minecraft:gravel",
+  "cooking_time": 100
+}

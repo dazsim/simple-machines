@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:raw_materials/platinum"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/platinum"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:raw_materials/platinum",
+        "c:dusts/platinum"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:raw_materials/platinum",
+  "result": "#c:dusts/platinum",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

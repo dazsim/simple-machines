@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "I": "#c:ingots/iron",
+    "H": "minecraft:iron_hoe"
+  },
+  "pattern": [
+    "RCR",
+    "HIH"
+  ],
+  "result": {
+    "id": "simplemachines:harvester_assembly"
+  }
+}

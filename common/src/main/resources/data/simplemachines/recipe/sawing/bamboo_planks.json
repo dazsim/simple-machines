@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:bamboo_blocks",
+  "result": "minecraft:bamboo_planks",
+  "count": 3,
+  "cooking_time": 100
+}

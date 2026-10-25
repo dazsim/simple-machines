@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:crimson_stems",
+  "result": "minecraft:crimson_planks",
+  "count": 6,
+  "cooking_time": 100
+}

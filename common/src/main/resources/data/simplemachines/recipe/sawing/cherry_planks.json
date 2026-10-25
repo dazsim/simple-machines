@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:cherry_logs",
+  "result": "minecraft:cherry_planks",
+  "count": 6,
+  "cooking_time": 100
+}

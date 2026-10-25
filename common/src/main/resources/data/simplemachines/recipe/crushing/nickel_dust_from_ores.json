@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/nickel"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/nickel"
+      }
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ores/nickel",
+        "c:dusts/nickel"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:ores/nickel",
+  "result": "#c:dusts/nickel",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:spruce_logs",
+  "result": "minecraft:spruce_planks",
+  "count": 6,
+  "cooking_time": 100
+}

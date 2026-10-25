@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:jungle_logs",
+  "result": "minecraft:jungle_planks",
+  "count": 6,
+  "cooking_time": 100
+}

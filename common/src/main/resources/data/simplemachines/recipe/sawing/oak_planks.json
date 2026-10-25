@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:oak_logs",
+  "result": "minecraft:oak_planks",
+  "count": 6,
+  "cooking_time": 100
+}

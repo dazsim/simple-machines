@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:birch_logs",
+  "result": "minecraft:birch_planks",
+  "count": 6,
+  "cooking_time": 100
+}

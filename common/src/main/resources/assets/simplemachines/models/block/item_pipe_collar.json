@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "pipe": "simplemachines:block/item_pipe",
+    "link": "simplemachines:block/item_pipe_link",
+    "extract": "simplemachines:block/item_pipe_extract",
+    "particle": "simplemachines:block/item_pipe"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        6,
+        0
+      ],
+      "to": [
+        10,
+        10,
+        1.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#link"
+        },
+        "south": {
+          "texture": "#link"
+        },
+        "east": {
+          "texture": "#link"
+        },
+        "west": {
+          "texture": "#link"
+        },
+        "up": {
+          "texture": "#link"
+        },
+        "down": {
+          "texture": "#link"
+        }
+      }
+    }
+  ]
+}

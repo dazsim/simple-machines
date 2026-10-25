@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "I": "#c:ingots/iron",
+    "W": "minecraft:water_bucket",
+    "L": "minecraft:lava_bucket"
+  },
+  "pattern": [
+    "RCR",
+    "WIL"
+  ],
+  "result": {
+    "id": "simplemachines:stone_assembly"
+  }
+}

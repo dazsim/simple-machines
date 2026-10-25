@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:crushing",
+  "ingredient": "minecraft:gravel",
+  "result": "minecraft:sand",
+  "cooking_time": 100
+}

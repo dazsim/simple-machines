@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "#c:plates/iron",
+    "G": "#c:glass_blocks"
+  },
+  "pattern": [
+    "SGS"
+  ],
+  "result": {
+    "id": "simplemachines:item_pipe",
+    "count": 8
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": "#minecraft:planks",
+  "result": "minecraft:stick",
+  "count": 3,
+  "cooking_time": 50
+}

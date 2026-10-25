@@ -1,0 +1,8 @@
+{
+  "type": "simplemachines:crushing",
+  "ingredient": "#c:ores/iron",
+  "result": "#c:dusts/iron",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

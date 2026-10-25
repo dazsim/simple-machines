@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "I": "#c:ingots/iron",
+    "G": "minecraft:grindstone"
+  },
+  "pattern": [
+    "RCR",
+    "IGI"
+  ],
+  "result": {
+    "id": "simplemachines:crusher_assembly"
+  }
+}

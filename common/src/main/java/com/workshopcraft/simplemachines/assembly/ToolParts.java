@@ -31,6 +31,11 @@ public final class ToolParts {
         return Items.AIR;
     }
 
+    /** Diamond bit for a drill, diamond-tipped chain for a chainsaw. */
+    public static Item tipItem(@Nullable Item tool) {
+        return tool == SimpleMachines.TOOLS.get(1) ? SimpleMachines.diamondChain : SimpleMachines.diamondDrillBit;
+    }
+
     public static Item frameItem(String frame) {
         return "steel".equals(frame) ? SimpleMachines.steelToolFrame : SimpleMachines.ironToolFrame;
     }
@@ -51,7 +56,8 @@ public final class ToolParts {
         final Item core = cores().get(stack.getItem());
         final boolean board = stack.is(SimpleMachines.controlBoard);
         final boolean battery = stack.is(SimpleMachines.batteryModule);
-        if (!tool && !frame && core == null && !board && !battery && upgrade == null) return null;
+        final boolean tip = stack.is(SimpleMachines.diamondDrillBit) || stack.is(SimpleMachines.diamondChain);
+        if (!tool && !frame && core == null && !board && !battery && upgrade == null && !tip) return null;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         String msg = null;
@@ -60,6 +66,17 @@ public final class ToolParts {
                 be.mount(stack);
                 stack.consume(1, player);
             } else msg = "message.simplemachines.stand_busy";
+        } else if (be.tipLoose()) {
+            msg = "message.simplemachines.loose";
+        } else if (tip) {
+            if (step < 4) msg = "message.simplemachines.needs_tool_core";
+            else if (be.anyLoose()) msg = "message.simplemachines.loose";
+            else if (!stack.is(tipItem(be.tool()))) msg = "message.simplemachines.wrong_tip";
+            else if (!be.tip().isEmpty()) msg = "message.simplemachines.tip_fitted";
+            else {
+                be.setTipLoose();
+                stack.consume(1, player);
+            }
         } else if (upgrade != null) {
             if (step < ToolStandBlockEntity.DONE) msg = step % 2 == 1 ? "message.simplemachines.loose" : "message.simplemachines.tool_upgrade_early";
             else if (be.loose() != null) msg = "message.simplemachines.loose";
@@ -89,7 +106,7 @@ public final class ToolParts {
     }
 
     public static String hint(ToolStandBlockEntity be) {
-        if (be.loose() != null || be.step() % 2 == 1) return "message.simplemachines.loose";
+        if (be.anyLoose()) return "message.simplemachines.loose";
         return switch (be.step()) {
             case 0 -> "message.simplemachines.needs_tool_frame";
             case 2 -> "message.simplemachines.needs_tool_core";
@@ -122,11 +139,13 @@ public final class ToolParts {
             Block.popResource(level, pos.above(), part);
         } else {
             final boolean upgrade = be.loose() != null;
+            final boolean tip = be.tipLoose();
             if (!be.fix()) {
                 player.sendOverlayMessage(Component.translatable(hint(be)));
                 return;
             }
-            if (upgrade) player.sendOverlayMessage(Component.translatable("message.simplemachines.upgrade_fitted", be.upgrades().size(), Upgrade.SLOTS));
+            if (tip) player.sendOverlayMessage(Component.translatable("message.simplemachines.tip_screwed"));
+            else if (upgrade) player.sendOverlayMessage(Component.translatable("message.simplemachines.upgrade_fitted", be.upgrades().size(), Upgrade.SLOTS));
             else if (be.complete()) player.sendOverlayMessage(Component.translatable("message.simplemachines.tool_ready"));
         }
         level.playSound(null, pos, SoundEvents.TRIPWIRE_CLICK_ON, SoundSource.BLOCKS, 0.6F, 1.2F);

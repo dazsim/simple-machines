@@ -23,6 +23,9 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         com.workshopcraft.simplemachines.client.ToolRunning.registerDirect(SimpleMachines.id("tool_running"));
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(SimpleMachines.HOT_SPARK,
                 com.workshopcraft.simplemachines.client.HotSparkParticle::provider);
+        net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(SimpleMachines.WHITE_SPARK,
+                com.workshopcraft.simplemachines.client.HotSparkParticle::whiteProvider);
+        com.workshopcraft.simplemachines.client.ToolSpin.registerDirect(SimpleMachines.id("spin"));
         MenuScreens.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);

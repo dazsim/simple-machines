@@ -33,10 +33,12 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 /**
- * Drill or chainsaw running on FE kept in the energy component. Diamond-tier while charged; with too little
- * charge left for a block it digs like a bare hand and drops nothing that needs a tool. Never breaks.
- * Built on a Tool Stand: a steel frame digs a quarter faster, each Overclocker adds half the speed and half the FE per block,
- * each Energy Cell adds the base capacity again.
+ * Drill or chainsaw running on FE kept in the energy component; with too little charge it digs like a bare hand and drops nothing. Never breaks.
+ * The bit or chain sets the tier: standard mines up to iron-tool blocks (diamond ore and below), diamond also mines diamond and
+ * netherite level blocks (obsidian, ancient debris). An iron body runs those hard blocks at 40% speed, steel at full.
+ * Steel body digs a quarter faster. Each Overclocker adds 50% speed and FE per block, each Energy Cell adds the base capacity
+ * and 15% speed; the upgrade bonus is capped at +100%.
+ * Steel chainsaw with a diamond-tipped chain fells whole natural trees, 50 FE per log.
  */
 public class PoweredToolItem extends Item {
     public static final int CAPACITY = 50_000;
@@ -55,7 +57,7 @@ public class PoweredToolItem extends Item {
     private static Properties tool(Properties p, List<TagKey<Block>> mineable, float damage, float attackSpeed) {
         final HolderGetter<Block> blocks = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
         final List<Tool.Rule> rules = new ArrayList<>();
-        rules.add(Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)));
+        rules.add(Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)));
         for (TagKey<Block> tag : mineable) rules.add(Tool.Rule.minesAndDrops(blocks.getOrThrow(tag), SPEED));
         return p.stacksTo(1).enchantable(10)
                 .component(DataComponents.TOOL, new Tool(rules, 1.0F, 0, true))
@@ -86,8 +88,31 @@ public class PoweredToolItem extends Item {
         return PER_BLOCK * (2 + Upgrade.count(upgrades(stack), Upgrade.OVERCLOCKER)) / 2;
     }
 
+    public static final float MAX_UPGRADE_BONUS = 1.0F;
+    public static final float HARD_IRON_FACTOR = 0.4F;
+
+    public static boolean diamond(ItemStack stack) {
+        return "diamond".equals(stack.get(SimpleMachines.TOOL_TIP));
+    }
+
+    public static float upgradeBonus(ItemStack stack) {
+        final List<Upgrade> ups = upgrades(stack);
+        return Math.min(MAX_UPGRADE_BONUS, 0.5F * Upgrade.count(ups, Upgrade.OVERCLOCKER) + 0.15F * Upgrade.count(ups, Upgrade.ENERGY_CELL));
+    }
+
     public static float speedFactor(ItemStack stack) {
-        return (steel(stack) ? 1.25F : 1F) * (1F + 0.5F * Upgrade.count(upgrades(stack), Upgrade.OVERCLOCKER));
+        return (steel(stack) ? 1.25F : 1F) * (1F + upgradeBonus(stack));
+    }
+
+    /** Needs more than an iron tool: obsidian, ancient debris, netherite blocks. */
+    public static boolean hard(BlockState state) {
+        return state.is(BlockTags.INCORRECT_FOR_IRON_TOOL);
+    }
+
+    /** The tool works on this block but its bit or chain is not hard enough, so it only throws white sparks. */
+    public boolean refuses(ItemStack stack, BlockState state) {
+        if (super.getDestroySpeed(stack, state) <= 1.0F) return false;
+        return diamond(stack) ? state.is(BlockTags.INCORRECT_FOR_NETHERITE_TOOL) : hard(state);
     }
 
     public static ItemStack charged(Item item) {
@@ -109,20 +134,35 @@ public class PoweredToolItem extends Item {
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         if (!powered(stack)) return 1.0F;
+        if (refuses(stack, state)) return 0.0F;
         final float speed = super.getDestroySpeed(stack, state);
-        return speed > 1.0F ? speed * speedFactor(stack) : speed;
+        if (speed <= 1.0F) return speed;
+        return speed * speedFactor(stack) * (hard(state) && !steel(stack) ? HARD_IRON_FACTOR : 1F);
     }
 
     @Override
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
-        return powered(stack) && super.isCorrectToolForDrops(stack, state);
+        return powered(stack) && !refuses(stack, state) && super.isCorrectToolForDrops(stack, state);
     }
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity owner) {
         if (!level.isClientSide() && state.getDestroySpeed(level, pos) != 0.0F && powered(stack)
-                && super.getDestroySpeed(stack, state) > 1.0F) use(stack, perBlock(stack));
+                && super.getDestroySpeed(stack, state) > 1.0F) {
+            use(stack, perBlock(stack));
+            if (fells(stack, state) && owner instanceof net.minecraft.world.entity.player.Player player && !player.isShiftKeyDown()
+                    && level instanceof net.minecraft.server.level.ServerLevel server) {
+                for (BlockPos log : TreeFeller.logs(server, pos, state)) {
+                    if (!powered(stack)) break;
+                    if (server.destroyBlock(log, true, player)) use(stack, perBlock(stack));
+                }
+            }
+        }
         return true;
+    }
+
+    public static boolean fells(ItemStack stack, BlockState state) {
+        return stack.is(SimpleMachines.TOOLS.get(1)) && steel(stack) && diamond(stack) && state.is(BlockTags.LOGS);
     }
 
     @Override
@@ -150,6 +190,13 @@ public class PoweredToolItem extends Item {
         final NumberFormat f = NumberFormat.getIntegerInstance(Locale.ROOT);
         out.accept(Component.translatable("tooltip.simplemachines.charge", f.format(energy(stack)), f.format(capacity(stack))).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable(steel(stack) ? "tooltip.simplemachines.steel_frame" : "tooltip.simplemachines.iron_frame").withStyle(ChatFormatting.GRAY));
+        final boolean saw = stack.is(SimpleMachines.TOOLS.get(1));
+        out.accept(Component.translatable(diamond(stack) ? (saw ? "tooltip.simplemachines.diamond_chain" : "tooltip.simplemachines.diamond_bit")
+                : (saw ? "tooltip.simplemachines.standard_chain" : "tooltip.simplemachines.standard_bit")).withStyle(ChatFormatting.GRAY));
+        if (diamond(stack) && !steel(stack)) out.accept(Component.translatable("tooltip.simplemachines.hard_slow").withStyle(ChatFormatting.DARK_GRAY));
+        if (saw && steel(stack) && diamond(stack)) out.accept(Component.translatable("tooltip.simplemachines.fells_trees").withStyle(ChatFormatting.GOLD));
+        final float bonus = upgradeBonus(stack);
+        if (bonus > 0) out.accept(Component.translatable("tooltip.simplemachines.upgrade_speed", Math.round(bonus * 100)).withStyle(ChatFormatting.BLUE));
         final Component ups = Upgrade.summary(Upgrade.pack(upgrades(stack)), false);
         if (!ups.getString().isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", ups).withStyle(ChatFormatting.BLUE));
         if (!powered(stack)) out.accept(Component.translatable("tooltip.simplemachines.no_charge").withStyle(ChatFormatting.RED));

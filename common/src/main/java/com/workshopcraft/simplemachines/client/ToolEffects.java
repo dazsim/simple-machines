@@ -41,7 +41,8 @@ public final class ToolEffects {
         if (!(mc.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) return null;
         final ItemStack stack = mc.player.getMainHandItem();
         if (!(stack.getItem() instanceof PoweredToolItem tool) || !PoweredToolItem.powered(stack)) return null;
-        return tool.getDestroySpeed(stack, mc.level.getBlockState(hit.getBlockPos())) > 1.0F ? tool : null;
+        final BlockState state = mc.level.getBlockState(hit.getBlockPos());
+        return tool.getDestroySpeed(stack, state) > 1.0F || tool.refuses(stack, state) ? tool : null;
     }
 
     private static void particles(Minecraft mc, PoweredToolItem tool, BlockHitResult hit) {
@@ -50,13 +51,16 @@ public final class ToolEffects {
         final Direction face = hit.getDirection();
         final RandomSource r = mc.level.getRandom();
         final Vec3 at = hit.getLocation().add(face.getStepX() * 0.05, face.getStepY() * 0.05, face.getStepZ() * 0.05);
-        final boolean hard = state.is(BlockTags.MINEABLE_WITH_PICKAXE) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL);
-        final int n = hard ? 7 : 4;
+        final boolean refused = tool.refuses(mc.player.getMainHandItem(), state);
+        final boolean hard = refused || state.is(BlockTags.MINEABLE_WITH_PICKAXE) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL);
+        final int n = refused ? 22 : hard ? 16 : 4;
         for (int i = 0; i < n; i++) {
             final double sx = face.getStepX() * 0.15 + (r.nextDouble() - 0.5) * 0.25;
             final double sy = face.getStepY() * 0.15 + r.nextDouble() * 0.15;
             final double sz = face.getStepZ() * 0.15 + (r.nextDouble() - 0.5) * 0.25;
-            if (hard) mc.level.addParticle(SimpleMachines.HOT_SPARK, at.x, at.y, at.z, sx * 1.8, sy * 1.2 + 0.04, sz * 1.8);
+            final double boost = 1.6 + r.nextDouble() * 1.4;
+            if (hard) mc.level.addParticle(refused ? SimpleMachines.WHITE_SPARK : SimpleMachines.HOT_SPARK, at.x, at.y, at.z,
+                    sx * boost, sy * 1.3 + 0.05, sz * boost);
             else mc.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), at.x, at.y, at.z, sx, sy, sz);
         }
     }

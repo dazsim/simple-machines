@@ -102,11 +102,16 @@ public class SimpleMachines {
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     public static final DataComponentType<String> TOOL_FRAME = DataComponentType.<String>builder()
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    /** "diamond" for a diamond drill bit or diamond-tipped chain; absent for the standard one, "none" while the stand shows it loose. */
+    public static final DataComponentType<String> TOOL_TIP = DataComponentType.<String>builder()
+            .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     /** Which parts a tool model shows, as ToolStandRenderer bits; only set on the stacks the stand draws. */
     public static final DataComponentType<Integer> TOOL_PARTS = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final SoundEvent DRILL_SOUND = SoundEvent.createVariableRangeEvent(id("item.electric_drill.run"));
     public static final net.minecraft.core.particles.SimpleParticleType HOT_SPARK = new net.minecraft.core.particles.SimpleParticleType(false) {
+    };
+    public static final net.minecraft.core.particles.SimpleParticleType WHITE_SPARK = new net.minecraft.core.particles.SimpleParticleType(false) {
     };
     public static final SoundEvent CHAINSAW_SOUND = SoundEvent.createVariableRangeEvent(id("item.chainsaw.run"));
     public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
@@ -130,6 +135,8 @@ public class SimpleMachines {
     public static Item drillMotor;
     public static Item chainsawBar;
     public static Item batteryModule;
+    public static Item diamondDrillBit;
+    public static Item diamondChain;
     public static Block toolStand;
     public static BlockEntityType<com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity> toolStandEntity;
     public static Item powerCell;
@@ -261,6 +268,8 @@ public class SimpleMachines {
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
         drillMotor = add(r, "drill_motor", new Item(props("drill_motor")));
         chainsawBar = add(r, "chainsaw_bar", new Item(props("chainsaw_bar")));
+        diamondDrillBit = add(r, "diamond_drill_bit", new com.workshopcraft.simplemachines.item.ToolTipItem(props("diamond_drill_bit"), "tooltip.simplemachines.diamond_bit_part"));
+        diamondChain = add(r, "diamond_tipped_chain", new com.workshopcraft.simplemachines.item.ToolTipItem(props("diamond_tipped_chain"), "tooltip.simplemachines.diamond_chain_part"));
         batteryModule = add(r, "battery_module", new com.workshopcraft.simplemachines.item.BatteryModuleItem(props("battery_module").stacksTo(1)));
         TOOLS.add(add(r, "electric_drill", new PoweredToolItem(props("electric_drill"), DRILL_SOUND,
                 List.of(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL), 5.0F, -2.8F)));
@@ -284,6 +293,7 @@ public class SimpleMachines {
 
     public static void registerParticles(BiConsumer<Identifier, net.minecraft.core.particles.ParticleType<?>> r) {
         r.accept(id("hot_spark"), HOT_SPARK);
+        r.accept(id("white_spark"), WHITE_SPARK);
     }
 
     public static void registerComponents(BiConsumer<Identifier, DataComponentType<?>> r) {
@@ -292,6 +302,7 @@ public class SimpleMachines {
         r.accept(id("upgrades"), UPGRADES_FITTED);
         r.accept(id("tool_frame"), TOOL_FRAME);
         r.accept(id("tool_parts"), TOOL_PARTS);
+        r.accept(id("tool_tip"), TOOL_TIP);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {

@@ -27,7 +27,12 @@ public class SimpleMachinesNeoForgeClient {
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent e) ->
                 e.register(SimpleMachines.id("tool_running"), com.workshopcraft.simplemachines.client.ToolRunning.MAP_CODEC));
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent e) ->
-                e.registerSpriteSet(SimpleMachines.HOT_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::provider));
+        {
+            e.registerSpriteSet(SimpleMachines.HOT_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::provider);
+            e.registerSpriteSet(SimpleMachines.WHITE_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::whiteProvider);
+        });
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent e) ->
+                e.register(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.MAP_CODEC));
         modBus.addListener((RegisterMenuScreensEvent e) -> {
             for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) e.register(m, PoweredScreen::new);
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);

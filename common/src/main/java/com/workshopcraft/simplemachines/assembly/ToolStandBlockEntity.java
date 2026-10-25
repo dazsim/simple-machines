@@ -26,6 +26,7 @@ import java.util.List;
 /**
  * A tool being built or kept on a Tool Stand. Steps: 0 empty, 1 frame loose, 2 frame fixed, 3 core loose, 4 core fixed,
  * 5 control board loose, 6 board fixed, 7 battery loose, 8 battery fixed (upgrades fit here). At 8 with nothing loose the tool is done.
+ * A diamond bit or chain can be screwed on any time after the core is fixed; it comes off after the board.
  */
 public class ToolStandBlockEntity extends BlockEntity {
     public static final int DONE = 8;
@@ -35,6 +36,8 @@ public class ToolStandBlockEntity extends BlockEntity {
     private int energy;
     private List<Upgrade> upgrades = new ArrayList<>();
     private @Nullable Upgrade loose;
+    private String tip = "";
+    private boolean tipLoose;
 
     public ToolStandBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.toolStandEntity, pos, state);
@@ -64,8 +67,25 @@ public class ToolStandBlockEntity extends BlockEntity {
         return loose;
     }
 
+    public String tip() {
+        return tip;
+    }
+
+    public boolean tipLoose() {
+        return tipLoose;
+    }
+
+    public boolean anyLoose() {
+        return loose != null || tipLoose || step % 2 == 1;
+    }
+
+    public void setTipLoose() {
+        tipLoose = true;
+        changed();
+    }
+
     public boolean complete() {
-        return step == DONE && loose == null;
+        return step == DONE && loose == null && !tipLoose;
     }
 
     public void setFrame(String frame) {
@@ -101,6 +121,9 @@ public class ToolStandBlockEntity extends BlockEntity {
         if (loose != null) {
             upgrades.add(loose);
             loose = null;
+        } else if (tipLoose) {
+            tip = "diamond";
+            tipLoose = false;
         } else if (step % 2 == 1) {
             step++;
         } else {
@@ -113,7 +136,10 @@ public class ToolStandBlockEntity extends BlockEntity {
     /** Takes the outermost part off and returns it, or empty when the stand is bare. */
     public ItemStack strip() {
         final ItemStack part;
-        if (loose != null) {
+        if (tipLoose) {
+            part = new ItemStack(ToolParts.tipItem(tool));
+            tipLoose = false;
+        } else if (loose != null) {
             part = new ItemStack(loose.item());
             loose = null;
         } else if (step == DONE && !upgrades.isEmpty()) {
@@ -126,6 +152,9 @@ public class ToolStandBlockEntity extends BlockEntity {
         } else if (step >= 5) {
             part = new ItemStack(SimpleMachines.controlBoard);
             step = 4;
+        } else if (step == 4 && !tip.isEmpty()) {
+            part = new ItemStack(ToolParts.tipItem(tool));
+            tip = "";
         } else if (step >= 3) {
             part = new ItemStack(ToolParts.core(tool));
             tool = null;
@@ -149,6 +178,7 @@ public class ToolStandBlockEntity extends BlockEntity {
         final List<Upgrade> sorted = new ArrayList<>(upgrades);
         sorted.sort(Comparator.comparingInt(Enum::ordinal));
         if (!sorted.isEmpty()) stack.set(SimpleMachines.UPGRADES_FITTED, Upgrade.join(sorted));
+        if (!tip.isEmpty()) stack.set(SimpleMachines.TOOL_TIP, tip);
         if (energy > 0) stack.set(SimpleMachines.ENERGY, Math.min(energy, PoweredToolItem.capacity(stack)));
         return stack;
     }
@@ -166,6 +196,8 @@ public class ToolStandBlockEntity extends BlockEntity {
         frame = PoweredToolItem.steel(stack) ? "steel" : "iron";
         upgrades = new ArrayList<>(PoweredToolItem.upgrades(stack));
         energy = PoweredToolItem.energy(stack);
+        tip = PoweredToolItem.diamond(stack) ? "diamond" : "";
+        tipLoose = false;
         loose = null;
         step = DONE;
         changed();
@@ -178,6 +210,8 @@ public class ToolStandBlockEntity extends BlockEntity {
         energy = 0;
         upgrades = new ArrayList<>();
         loose = null;
+        tip = "";
+        tipLoose = false;
         changed();
     }
 
@@ -190,6 +224,7 @@ public class ToolStandBlockEntity extends BlockEntity {
         }
         if (step >= 1) out.add(new ItemStack(ToolParts.frameItem(frame)));
         if (step >= 3) out.add(new ItemStack(ToolParts.core(tool)));
+        if (!tip.isEmpty() || tipLoose) out.add(new ItemStack(ToolParts.tipItem(tool)));
         if (step >= 5) out.add(new ItemStack(SimpleMachines.controlBoard));
         if (step >= 7) out.add(ToolParts.battery(energy));
         for (Upgrade u : upgrades) out.add(new ItemStack(u.item()));
@@ -208,6 +243,8 @@ public class ToolStandBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         read(input.getIntOr("step", 0), input.getStringOr("frame", ""), input.getStringOr("tool", ""), input.getIntOr("energy", 0),
                 input.getStringOr("upgrades", ""), input.getStringOr("loose_upgrade", ""));
+        tip = input.getStringOr("tip", "");
+        tipLoose = input.getBooleanOr("tip_loose", false);
     }
 
     private void read(int step, String frame, String tool, int energy, String upgrades, String loose) {
@@ -230,6 +267,8 @@ public class ToolStandBlockEntity extends BlockEntity {
         output.putInt("energy", energy);
         output.putString("upgrades", Upgrade.join(upgrades));
         output.putString("loose_upgrade", loose == null ? "" : loose.id);
+        output.putString("tip", tip);
+        output.putBoolean("tip_loose", tipLoose);
     }
 
     @Override
@@ -241,6 +280,8 @@ public class ToolStandBlockEntity extends BlockEntity {
         tag.putInt("energy", energy);
         tag.putString("upgrades", Upgrade.join(upgrades));
         tag.putString("loose_upgrade", loose == null ? "" : loose.id);
+        tag.putString("tip", tip);
+        tag.putBoolean("tip_loose", tipLoose);
         return tag;
     }
 

@@ -106,6 +106,8 @@ public class SimpleMachines {
     public static final DataComponentType<Integer> TOOL_PARTS = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final SoundEvent DRILL_SOUND = SoundEvent.createVariableRangeEvent(id("item.electric_drill.run"));
+    public static final net.minecraft.core.particles.SimpleParticleType HOT_SPARK = new net.minecraft.core.particles.SimpleParticleType(false) {
+    };
     public static final SoundEvent CHAINSAW_SOUND = SoundEvent.createVariableRangeEvent(id("item.chainsaw.run"));
     public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
     public static final Map<Core, Item> ASSEMBLIES = new EnumMap<>(Core.class);
@@ -278,6 +280,10 @@ public class SimpleMachines {
     public static void registerSounds(BiConsumer<Identifier, SoundEvent> r) {
         r.accept(DRILL_SOUND.location(), DRILL_SOUND);
         r.accept(CHAINSAW_SOUND.location(), CHAINSAW_SOUND);
+    }
+
+    public static void registerParticles(BiConsumer<Identifier, net.minecraft.core.particles.ParticleType<?>> r) {
+        r.accept(id("hot_spark"), HOT_SPARK);
     }
 
     public static void registerComponents(BiConsumer<Identifier, DataComponentType<?>> r) {

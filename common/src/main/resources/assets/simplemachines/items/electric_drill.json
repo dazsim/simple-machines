@@ -80,8 +80,16 @@
           }
         ],
         "fallback": {
-          "type": "minecraft:model",
-          "model": "simplemachines:item/tool/drill_core"
+          "type": "minecraft:condition",
+          "property": "simplemachines:tool_running",
+          "on_true": {
+            "type": "minecraft:model",
+            "model": "simplemachines:item/tool/drill_core_running"
+          },
+          "on_false": {
+            "type": "minecraft:model",
+            "model": "simplemachines:item/tool/drill_core"
+          }
         }
       },
       {

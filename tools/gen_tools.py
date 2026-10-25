@@ -1,5 +1,5 @@
 # Tool Stand, tool parts and the 3D drill and chainsaw item models
-import json, random
+import json, os, random
 from PIL import Image
 import powered_icons
 
@@ -17,6 +17,13 @@ def tex(base, seed, k=6, f=None):
             c = c or base
             d = rnd.randint(-k, k)
             t.putpixel((x, y), tuple(max(0, min(255, v + d)) for v in c) + (255,))
+    return t
+
+def anim(base, seed, k, f, n):
+    """n stacked 16x16 frames of tex(); f gets the frame index too"""
+    t = Image.new("RGBA", (16, 16 * n))
+    for i in range(n):
+        t.paste(tex(base, seed, k, lambda x, y: f(x, y, i)), (0, 16 * i))
     return t
 
 def textures(save, A):
@@ -39,6 +46,24 @@ def textures(save, A):
         "tool_stand": tex((86, 90, 100), 13, 4, plate([(120, 124, 136), (86, 90, 100), (50, 52, 60)])),
         "tool_stand_top": tex((60, 56, 52), 14, 4, lambda x, y: (40, 38, 36) if y % 4 == 0 else None),
     }
+    # running variants: the bit's flutes turn and the chain runs round the bar
+    t["tool_bit_spin"] = anim((186, 190, 200), 7, 4, lambda x, y, i: (110, 114, 126) if (x + y + i) % 4 < 2 else (230, 232, 238) if (x + y + i) % 4 == 2 and y % 8 == 0 else None, 4)
+    def chain(x, y, i):
+        if y < 3: return (40, 40, 46) if (x + i) % 4 < 2 else (96, 96, 104)
+        if y > 12: return (40, 40, 46) if (x - i) % 4 < 2 else (96, 96, 104)
+        return (140, 144, 152) if y in (3, 12) else None
+    t["tool_bar_run"] = anim((180, 184, 192), 8, 4, chain, 4)
+    spark = Image.new("RGBA", (8, 8))
+    for y in range(8):
+        for x in range(8):
+            d = abs(x - 3.5) + abs(y - 3.5)
+            if d < 2.5: spark.putpixel((x, y), (255, 255, 255, 255))
+            elif d < 3.5: spark.putpixel((x, y), (235, 235, 235, 255))
+    save(spark, f"{A}/textures/particle/hot_spark.png")
+    os.makedirs(f"{A}/particles", exist_ok=True)
+    open(f"{A}/particles/hot_spark.json", "w").write(json.dumps({"textures": [f"{MOD}:hot_spark"]}, indent=2) + "\n")
+    for n in ("tool_bit_spin", "tool_bar_run"):
+        open(f"{A}/textures/item/{n}.png.mcmeta", "w").write(json.dumps({"animation": {"frametime": 1}}, indent=2) + "\n")
     for n, img in t.items():
         save(img, f"{A}/textures/item/{n}.png" if n != "tool_stand" and n != "tool_stand_top" else f"{A}/textures/block/{n}.png")
 
@@ -58,6 +83,13 @@ PARTS = {
                                box((5, 12.5, 7.25), (6, 15, 8.75), "engine"), box((5, 14, 7.25), (11, 15, 8.75), "grip"),
                                box((10, 12.5, 7.25), (11, 14, 8.75), "engine")],
                               {"engine": f"{MOD}:item/tool_engine", "bar": f"{MOD}:item/tool_bar", "grip": f"{MOD}:item/tool_grip"}),
+    "drill_core_running": lambda: ([box((1.5, 7.5, 6.5), (10, 12, 9.5), "motor"), box((10, 8, 6.75), (12, 11.5, 9.25), "chuck"),
+                                    box((12, 9.25, 7.5), (17, 10.25, 8.5), "bit")],
+                                   {"motor": f"{MOD}:item/tool_motor", "chuck": f"{MOD}:item/tool_chuck", "bit": f"{MOD}:item/tool_bit_spin"}),
+    "chainsaw_core_running": lambda: ([box((1.5, 7.5, 6.5), (10, 12.5, 9.5), "engine"), box((10, 8, 7.6), (22, 11, 8.4), "bar"),
+                                       box((5, 12.5, 7.25), (6, 15, 8.75), "engine"), box((5, 14, 7.25), (11, 15, 8.75), "grip"),
+                                       box((10, 12.5, 7.25), (11, 14, 8.75), "engine")],
+                                      {"engine": f"{MOD}:item/tool_engine", "bar": f"{MOD}:item/tool_bar_run", "grip": f"{MOD}:item/tool_grip"}),
     "board": lambda: ([box((6.5, 12, 6.75), (9.5, 12.5, 9.25), "c")], {"c": f"{MOD}:item/tool_circuit"}),
     "battery": lambda: ([box((2.5, -1, 6), (7, 1, 10), "b")], {"b": f"{MOD}:item/tool_battery"}),
     "cell": lambda n: ([box((2.5, -1 - 1.5 * n, 6.25), (7, -1, 9.75), "c")], {"c": f"{MOD}:item/tool_cell"}),
@@ -93,11 +125,15 @@ def by_upgrades(name, up):
     return {"type": "minecraft:select", "property": "minecraft:component", "component": f"{MOD}:upgrades",
             "cases": cases, "fallback": EMPTY}
 
+def running(core):
+    return {"type": "minecraft:condition", "property": f"{MOD}:tool_running",
+            "on_true": m(core + "_running"), "on_false": m(core)}
+
 def tool_model(core):
     frame = {"type": "minecraft:select", "property": "minecraft:component", "component": f"{MOD}:tool_frame",
              "cases": [{"when": "steel", "model": m("frame_steel")}], "fallback": m("frame_iron")}
     return {"model": {"type": "minecraft:composite", "models": [
-        gated(1, frame), gated(2, m(core)), gated(4, m("board")), gated(8, m("battery")),
+        gated(1, frame), gated(2, running(core)), gated(4, m("board")), gated(8, m("battery")),
         gated(16, by_upgrades("cell", UPS[1])), gated(16, by_upgrades("fins", UPS[0]))]}}
 
 LANG = {
@@ -134,6 +170,8 @@ def main(A, D, save, jdump, shaped, flat_item, loot_self):
     part("frame_steel", PARTS["frame"]("steel"))
     part("drill_core", PARTS["drill_core"]())
     part("chainsaw_core", PARTS["chainsaw_core"]())
+    part("drill_core_running", PARTS["drill_core_running"]())
+    part("chainsaw_core_running", PARTS["chainsaw_core_running"]())
     part("board", PARTS["board"]())
     part("battery", PARTS["battery"]())
     for n in (1, 2):

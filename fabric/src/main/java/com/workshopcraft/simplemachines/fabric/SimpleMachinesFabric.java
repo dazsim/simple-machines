@@ -36,6 +36,7 @@ public class SimpleMachinesFabric implements ModInitializer {
     public void onInitialize() {
         SimpleMachines.registerComponents(direct(BuiltInRegistries.DATA_COMPONENT_TYPE));
         SimpleMachines.registerSounds(direct(BuiltInRegistries.SOUND_EVENT));
+        SimpleMachines.registerParticles(direct(BuiltInRegistries.PARTICLE_TYPE));
         SimpleMachines.registerBlocks(direct(BuiltInRegistries.BLOCK));
         SimpleMachines.registerItems(direct(BuiltInRegistries.ITEM));
         SimpleMachines.registerTabs(direct(BuiltInRegistries.CREATIVE_MODE_TAB));

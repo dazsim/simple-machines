@@ -24,6 +24,10 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 public class SimpleMachinesNeoForgeClient {
     public SimpleMachinesNeoForgeClient(IEventBus modBus) {
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> ToolEffects.tick(Minecraft.getInstance()));
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent e) ->
+                e.register(SimpleMachines.id("tool_running"), com.workshopcraft.simplemachines.client.ToolRunning.MAP_CODEC));
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent e) ->
+                e.registerSpriteSet(SimpleMachines.HOT_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::provider));
         modBus.addListener((RegisterMenuScreensEvent e) -> {
             for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) e.register(m, PoweredScreen::new);
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);

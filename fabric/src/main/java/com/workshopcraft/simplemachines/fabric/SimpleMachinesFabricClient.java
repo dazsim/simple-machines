@@ -20,6 +20,9 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(ToolEffects::tick);
+        com.workshopcraft.simplemachines.client.ToolRunning.registerDirect(SimpleMachines.id("tool_running"));
+        net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(SimpleMachines.HOT_SPARK,
+                com.workshopcraft.simplemachines.client.HotSparkParticle::provider);
         MenuScreens.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);

@@ -48,6 +48,10 @@ Item pipes connect to each other and to anything with an inventory. Use any scre
 
 Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard. Sides that output or have a pipe on them show a port. All sides are off to start with. Hoppers and other mods see inputs and outputs the same way: inputs can be filled, outputs can be emptied.
 
+Use a screwdriver on a side of a Redstone Copper Cable to disconnect that side, or connect it again. It works on sides facing other cables and sides facing machines, so two runs laid next to each other stay separate networks.
+
+Right-click a placed cable or item pipe with any dye to colour it (survival uses one dye). Coloured cables and pipes only join others of the same colour or uncoloured ones, so parallel runs in different colours never mix. Colour has no effect on connections to machines and inventories. Colour lives in the world only: a broken cable or pipe drops as the plain item.
+
 ## Upgrades
 
 After the control board is screwed in, right click with an Overclocker Circuit or Energy Cell and screw it in. A machine has two upgrade slots and any mix fits; the step can be skipped. Each Overclocker adds half the base speed, and FE use and intake rise with it, so two run at double speed. Each Energy Cell adds the base storage again, so two hold triple. Upgrades stay in the machine when it is broken and carried, show in its tooltip and screen, and drop back when it is taken apart.
@@ -71,6 +75,8 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 - Drill and Chainsaw sounds and mining particles.
 - The Electric Shovel is merged into the Electric Drill, which now mines shovel blocks too. Old shovels vanish from worlds.
 - Worktop items are now the same 3D slab as Much More Storage's, so the two mods' tops look identical in inventories. With Much More Storage installed, a Simple Machines wood or concrete worktop crafts on its own into the matching Much More Storage one so they stack. Tops from either mod still fit either mod's cabinets and machines.
+- Screwdriver disconnects or reconnects a cable side.
+- Cables and item pipes can be dyed in the world; different colours stay apart.
 
 ## 0.1.0-alpha.7
 

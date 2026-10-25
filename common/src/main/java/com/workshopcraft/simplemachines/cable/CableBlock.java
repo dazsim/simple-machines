@@ -12,6 +12,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jspecify.annotations.Nullable;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -20,8 +28,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Redstone Copper power cable. Joins other cables of this mod and anything exposing FE, nothing else. */
-public class CableBlock extends Block {
+/** Redstone Copper power cable. Joins other cables of this mod and anything exposing FE, nothing else. Dyed cables only join blank or same colour cables. */
+public class CableBlock extends Block implements EntityBlock, Conduits.Recompute {
     public static final MapCodec<CableBlock> CODEC = simpleCodec(CableBlock::new);
     public static final int RATE = 1000;
     private static final VoxelShape[] SHAPES = new VoxelShape[64];
@@ -52,7 +60,8 @@ public class CableBlock extends Block {
     }
 
     private static boolean connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, boolean current) {
-        if (neighbour.getBlock() instanceof CableBlock) return true;
+        if (neighbour.getBlock() instanceof CableBlock) return ConduitBlockEntity.joins(level, pos, dir);
+        if (ConduitBlockEntity.blockedAt(level, pos, dir)) return false;
         if (neighbour.isAir()) return false;
         if (!(level instanceof Level real)) return current;
         return EnergyBuffer.lookup.has(real, pos.relative(dir), dir.getOpposite());
@@ -77,6 +86,31 @@ public class CableBlock extends Block {
         final BlockState next = state.setValue(p, connects(level, pos, dir, neighbour, state.getValue(p)));
         if (next != state && level instanceof ServerLevel server) CableNetwork.invalidate(server);
         return next;
+    }
+
+    @Override
+    public BlockState recompute(Level level, BlockPos pos, BlockState state) {
+        for (Direction d : Direction.values()) {
+            final BooleanProperty p = PipeBlock.PROPERTY_BY_DIRECTION.get(d);
+            state = state.setValue(p, connects(level, pos, d, level.getBlockState(pos.relative(d)), state.getValue(p)));
+        }
+        return state;
+    }
+
+    /** Whether energy may come in from this side; a side switched off with the screwdriver takes none. */
+    public static boolean open(BlockGetter level, BlockPos pos, @Nullable Direction side) {
+        return side == null || !ConduitBlockEntity.blockedAt(level, pos, side);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ConduitBlockEntity(pos, state);
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
+                                          InteractionHand hand, BlockHitResult hit) {
+        return Conduits.dye(held, state, level, pos, player);
     }
 
     @Override

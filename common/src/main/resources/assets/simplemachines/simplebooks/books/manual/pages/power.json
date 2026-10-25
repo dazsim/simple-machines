@@ -3,7 +3,7 @@
   "sort": 0,
   "title": "Power and Cables",
   "subtitle": "FE from fuel, stored and carried",
-  "text": "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. The Charger fills FE items.",
+  "text": "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. A screwdriver on a cable side disconnects or reconnects it. The Charger fills FE items.",
   "drawing": "simplemachines:textures/simplebooks/manual/power.png",
   "caption": "Generator, battery, machine",
   "right_title": "Power",

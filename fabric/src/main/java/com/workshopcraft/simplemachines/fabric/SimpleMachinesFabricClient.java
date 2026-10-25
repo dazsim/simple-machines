@@ -28,6 +28,7 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) MenuScreens.register(m, PoweredScreen::new);
         for (Core core : SimpleMachines.NEW_CORES) renderer(SimpleMachines.MACHINE_ENTITIES.get(core));
         BlockEntityRenderers.register(SimpleMachines.chassisEntity, WorktopRenderer::new);
+        BlockEntityRenderers.register(SimpleMachines.conduitEntity, com.workshopcraft.simplemachines.client.ConduitRenderer::new);
         BlockEntityRenderers.register(SimpleMachines.generatorEntity, WorktopRenderer::new);
         BlockEntityRenderers.register(SimpleMachines.rollingMillEntity, WorktopRenderer::new);
         BlockEntityRenderers.register(SimpleMachines.electricFurnaceEntity, WorktopRenderer::new);

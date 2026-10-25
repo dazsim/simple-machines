@@ -11,6 +11,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import com.workshopcraft.simplemachines.cable.ConduitBlockEntity;
+import com.workshopcraft.simplemachines.cable.Conduits;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -22,7 +31,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /** Item pipe. Ends next to an inventory deliver into it; the screwdriver cycles them to extract, then disconnected. */
-public class ItemPipeBlock extends Block {
+public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recompute {
     public static final MapCodec<ItemPipeBlock> CODEC = simpleCodec(ItemPipeBlock::new);
     public static final int INTERVAL = 10;
     public static final int BATCH = 8;
@@ -60,7 +69,7 @@ public class ItemPipeBlock extends Block {
     }
 
     private static Link connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, Link current) {
-        if (neighbour.getBlock() instanceof ItemPipeBlock) return Link.PIPE;
+        if (neighbour.getBlock() instanceof ItemPipeBlock) return ConduitBlockEntity.joins(level, pos, dir) ? Link.PIPE : Link.NONE;
         if (neighbour.isAir()) return Link.NONE;
         if (!(level instanceof Level real)) return current;
         if (!Transfer.lookup.has(real, pos.relative(dir), dir.getOpposite())) return Link.NONE;
@@ -85,6 +94,26 @@ public class ItemPipeBlock extends Block {
         final BlockState next = state.setValue(p, connects(level, pos, dir, neighbour, state.getValue(p)));
         if (next != state && level instanceof ServerLevel server) PipeNetwork.invalidate(server);
         return next;
+    }
+
+    @Override
+    public BlockState recompute(Level level, BlockPos pos, BlockState state) {
+        for (Direction d : Direction.values()) {
+            final EnumProperty<Link> p = LINKS.get(d);
+            state = state.setValue(p, connects(level, pos, d, level.getBlockState(pos.relative(d)), state.getValue(p)));
+        }
+        return state;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ConduitBlockEntity(pos, state);
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
+                                          InteractionHand hand, BlockHitResult hit) {
+        return Conduits.dye(held, state, level, pos, player);
     }
 
     public static boolean extracts(BlockState state) {

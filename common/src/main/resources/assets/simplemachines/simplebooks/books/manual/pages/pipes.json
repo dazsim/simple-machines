@@ -27,6 +27,10 @@
     {
       "kind": "text",
       "text": "Machines only accept items they have a recipe for, and only give up their outputs."
+    },
+    {
+      "kind": "text",
+      "text": "Use a dye on a placed pipe or cable to keep runs apart: two colours never join, plain joins any colour. They drop plain."
     }
   ]
 }

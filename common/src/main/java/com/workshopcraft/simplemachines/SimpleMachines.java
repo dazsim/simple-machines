@@ -126,6 +126,7 @@ public class SimpleMachines {
     public static BlockEntityType<RollingMillBlockEntity> rollingMillEntity;
     public static BlockEntityType<ElectricFurnaceBlockEntity> electricFurnaceEntity;
     public static BlockEntityType<ChassisBlockEntity> chassisEntity;
+    public static BlockEntityType<com.workshopcraft.simplemachines.cable.ConduitBlockEntity> conduitEntity;
     private static final List<Item> TAB = new ArrayList<>();
 
     public static Identifier id(String path) {
@@ -300,6 +301,8 @@ public class SimpleMachines {
         WORK_ENTITIES.add(electricFurnaceEntity);
         chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
         r.accept(id("chassis"), chassisEntity);
+        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe));
+        r.accept(id("conduit"), conduitEntity);
     }
 
     private static <T extends WorkBlockEntity> void entity(BiConsumer<Identifier, BlockEntityType<?>> r, Core core,

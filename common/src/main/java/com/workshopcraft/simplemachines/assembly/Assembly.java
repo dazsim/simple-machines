@@ -206,6 +206,7 @@ public final class Assembly {
             }
             return true;
         }
+        if (com.workshopcraft.simplemachines.cable.Conduits.screwdriver(level, pos, player, hit)) return true;
         return Pipes.screwdriver(level, pos, player, held, hit);
     }
 

@@ -1009,6 +1009,8 @@ def machines(shaped, rec):
     lang["message.simplemachines.pipe_extract"] = "Pipe end: output"
     lang["message.simplemachines.pipe_off"] = "Pipe end: disconnected"
     lang["message.simplemachines.pipe_no_inventory"] = "No inventory on that side"
+    lang["message.simplemachines.cable_on"] = "Cable side connected: %s"
+    lang["message.simplemachines.cable_off"] = "Cable side disconnected: %s"
     jdump(lang, f"{A}/lang/en_us.json")
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]

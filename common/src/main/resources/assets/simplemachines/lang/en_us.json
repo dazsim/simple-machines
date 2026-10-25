@@ -141,6 +141,8 @@
   "message.simplemachines.pipe_extract": "Pipe end: output",
   "message.simplemachines.pipe_off": "Pipe end: disconnected",
   "message.simplemachines.pipe_no_inventory": "No inventory on that side",
+  "message.simplemachines.cable_on": "Cable side connected: %s",
+  "message.simplemachines.cable_off": "Cable side disconnected: %s",
   "item.simplemachines.power_cell": "Power Cell",
   "item.simplemachines.electric_drill": "Electric Drill",
   "subtitles.simplemachines.electric_drill": "Electric Drill runs",

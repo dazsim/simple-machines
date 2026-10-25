@@ -30,6 +30,7 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
 
     @Override
     public long insert(long amount, TransactionContext tx) {
+        if (!CableBlock.open(level, pos, from)) return 0;
         net = CableNetwork.of(level, pos);
         long left = Math.min(amount, net.budget(level.getGameTime()));
         if (left <= 0 || net.ends.isEmpty()) return 0;

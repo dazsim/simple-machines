@@ -344,7 +344,7 @@ def pages():
           seq("Stone and Water Generators", [M + "stone_assembly", M + "stone_generator", M + "water_assembly", M + "water_generator"], ""),
           seq("Mechanical Hive", [M + "hive_assembly", M + "mechanical_hive"], "")])
     page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",
-         "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. The Charger fills FE items.",
+         "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. A screwdriver on a cable side disconnects or reconnects it. The Charger fills FE items.",
          "power", "Generator, battery, machine", "Power",
          [craft("redstone_copper_cable"),
           seq("Generator, Battery and Charger", [M + "generator_assembly", M + "solid_fuel_generator", M + "battery_assembly", M + "battery", M + "charger"],
@@ -352,7 +352,8 @@ def pages():
     page("pipes", "items", 0, "Item Pipes", "Three kinds of pipe end",
          "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
          "pipes", "One pipe, three ends", "Pipe",
-         [craft("item_pipe"), text("Machines only accept items they have a recipe for, and only give up their outputs.")])
+         [craft("item_pipe"), text("Machines only accept items they have a recipe for, and only give up their outputs."),
+          text("Use a dye on a placed pipe or cable to keep runs apart: two colours never join, plain joins any colour. They drop plain.")])
     page("output", "items", 1, "Auto-output", "Push outputs into the next block",
          "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
          "output", "Machine pushing into a chest", "Sides",

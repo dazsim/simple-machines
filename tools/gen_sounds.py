@@ -7,16 +7,14 @@ rng = np.random.default_rng(7)
 
 
 def lp(x, a):
-    y = np.empty_like(x); s = 0.0
-    for i, v in enumerate(x):
-        s += a * (v - s); y[i] = s
-    return y
+    # one-pole low pass applied circularly, so the last sample runs into the first
+    n = len(x); X = np.fft.rfft(x)
+    z = np.exp(-2j * np.pi * np.arange(len(X)) / n)
+    return np.fft.irfft(X * a / (1 - (1 - a) * z), n)
 
 
 def loop_noise(n, a):
-    # filter twice round so the start and end join
-    x = rng.standard_normal(n * 2)
-    return lp(x, a)[n:]
+    return lp(rng.standard_normal(n), a)
 
 
 def write(name, x, gain):

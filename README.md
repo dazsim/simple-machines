@@ -98,6 +98,10 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
 
+## 0.1.0-alpha.12
+
+- Hold attack and the drill or chainsaw spins up with a rising motor pitch, keeps spinning from block to block, and only winds down (pitch falling) about half a second after you stop mining.
+
 ## 0.1.0-alpha.11
 
 - Drill sparks are back at the crosshair, and the drill is held aimed forward in first person so the bit tip sits on the crosshair.

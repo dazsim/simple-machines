@@ -8,15 +8,14 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
-/** Item model range simplemachines:spin, a frame counter 0 to 5 driven by the client clock for turning bit cones. */
+/** Item model range simplemachines:spin, the bit frame 0 to 5 advancing with the holder's spin speed. */
 public record ToolSpin() implements RangeSelectItemModelProperty {
     public static final MapCodec<ToolSpin> MAP_CODEC = MapCodec.unit(new ToolSpin());
     public static final int FRAMES = 6;
 
     @Override
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
-        final ClientLevel l = level != null ? level : Minecraft.getInstance().level;
-        return l == null ? 0 : l.getGameTime() % FRAMES;
+        return ToolEffects.phase(owner == null ? null : owner.asLivingEntity(), Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false));
     }
 
     /** Fabric has no hook for numeric item model properties, so the vanilla id map is filled directly. */

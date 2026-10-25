@@ -523,6 +523,7 @@
               "model": {
                 "type": "minecraft:condition",
                 "property": "simplemachines:tool_running",
+                "above": 0.6,
                 "on_true": {
                   "type": "minecraft:model",
                   "model": "simplemachines:item/tool/drill_fins_1_hot"
@@ -540,6 +541,7 @@
               "model": {
                 "type": "minecraft:condition",
                 "property": "simplemachines:tool_running",
+                "above": 0.6,
                 "on_true": {
                   "type": "minecraft:model",
                   "model": "simplemachines:item/tool/drill_fins_2_hot"

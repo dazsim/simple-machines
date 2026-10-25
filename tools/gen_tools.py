@@ -205,7 +205,7 @@ def by_upgrades(name, up, hot=False):
     for n in (1, 2):
         w = [c for c in COMBOS if c.split(",").count(up) == n]
         inner = m(f"{name}_{n}")
-        if hot: inner = {"type": "minecraft:condition", "property": f"{MOD}:tool_running", "on_true": m(f"{name}_{n}_hot"), "on_false": inner}
+        if hot: inner = {"type": "minecraft:condition", "property": f"{MOD}:tool_running", "above": 0.6, "on_true": m(f"{name}_{n}_hot"), "on_false": inner}
         cases.append({"when": w, "model": inner})
     return {"type": "minecraft:select", "property": "minecraft:component", "component": f"{MOD}:upgrades",
             "cases": cases, "fallback": EMPTY}

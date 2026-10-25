@@ -1,6 +1,8 @@
 package com.workshopcraft.simplemachines.client;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
@@ -9,15 +11,15 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
-/** Item model condition simplemachines:tool_running, true while the local player's main-hand tool is digging. */
-public record ToolRunning() implements ConditionalItemModelProperty {
-    public static final MapCodec<ToolRunning> MAP_CODEC = MapCodec.unit(new ToolRunning());
+/** Item model condition simplemachines:tool_running, true while a player's main-hand tool spins faster than "above". */
+public record ToolRunning(float above) implements ConditionalItemModelProperty {
+    public static final MapCodec<ToolRunning> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+            Codec.FLOAT.optionalFieldOf("above", 0F).forGetter(ToolRunning::above)).apply(i, ToolRunning::new));
 
     @Override
     public boolean get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed, ItemDisplayContext context) {
-        final Minecraft mc = Minecraft.getInstance();
-        return entity != null && entity == mc.player && context != ItemDisplayContext.GUI && main(mc.player.getMainHandItem(), stack)
-                && ToolEffects.digging(mc) != null;
+        if (entity == null || context == ItemDisplayContext.GUI || !main(entity.getMainHandItem(), stack)) return false;
+        return ToolEffects.speed(entity, Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)) > above;
     }
 
     private static boolean main(ItemStack held, ItemStack stack) {

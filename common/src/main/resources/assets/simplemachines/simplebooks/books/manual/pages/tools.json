@@ -3,7 +3,7 @@
   "sort": 0,
   "title": "Powered Tools",
   "subtitle": "Built on a Tool Stand",
-  "text": "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Take the finished tool off with an empty hand.",
+  "text": "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Any time after the core, a Diamond Drill Bit or Diamond-Tipped Chain can be fitted and screwed on. Take the finished tool off with an empty hand.",
   "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
   "caption": "Drill and chainsaw",
   "right_title": "Order",

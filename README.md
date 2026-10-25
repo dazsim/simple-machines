@@ -66,11 +66,27 @@ The Electric Drill (pickaxe and shovel blocks) and Chainsaw (axe blocks) are bui
 4. Battery module
 5. Upgrades, optional, up to two: Overclocker Circuit or Energy Cell
 
+Any time after the core, a Diamond Drill Bit (drill) or Diamond-Tipped Chain (chainsaw) can be fitted and screwed on in place of the standard one.
+
 Take the finished tool off with an empty hand. To change one, put it back on an empty stand and sneak with the screwdriver: the last part comes off and drops, so you can strip it down and swap the core, frame or upgrades. The battery module keeps its charge. Breaking the stand drops it and whatever is on it.
 
-A tool holds 50k FE, uses 50 FE a block and mines at diamond tier. A steel frame digs 25% faster. Each Overclocker adds half the speed and half the FE per block; each Energy Cell adds 50k FE. The parts show on the tool: steel or iron frame, a heat sink per Overclocker, a bigger battery pack per Cell. When empty a tool is slow and drops nothing. Charge it in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.
+A tool holds 50k FE and uses 50 FE a block. When empty it is slow and drops nothing. Charge it in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.
 
-While digging, the drill bit spins and the chainsaw chain runs, a motor sound loops (with subtitles), hot orange steel sparks fly off stone and ore, and dirt, sand, gravel and wood throw bits of the block.
+Speed and tiers:
+
+| | Effect |
+|---|---|
+| Steel frame | x1.25 speed |
+| Overclocker | +50% speed and +50% FE per block each |
+| Energy Cell | +50k FE and +15% speed each, no extra FE |
+| Upgrades together | capped at +100% speed |
+| Standard bit | mines up to diamond ore; obsidian and netherite level blocks are refused with white-hot sparks |
+| Diamond Drill Bit | mines obsidian and netherite level blocks: full speed on a steel frame, 40% on an iron frame |
+| Diamond-Tipped Chain | on a steel frame, the chainsaw fells a whole natural tree, top down, 50 FE per log, logs drop in the world; sneak to cut one log |
+
+The parts show on the tool: a yellow drill with a tricone bit (standard or diamond), steel or iron frame, the control board behind a side panel, a heat sink per Overclocker, a bigger battery pack per Cell.
+
+While digging, the bit's three cones turn, the chainsaw chain runs, the Overclocker fins glow, a motor sound loops (with subtitles), long streaks of hot steel sparks fly off stone and ore, and dirt, sand, gravel and wood throw bits of the block.
 
 ## Manual (Simple Books)
 
@@ -81,6 +97,19 @@ With Simple Books installed, getting your first screwdriver gives you the Simple
 - Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.9
+
+- New drill bit: a chunky tricone roller-cone bit on a threaded shank. The cones turn while mining. The drill body is yellow.
+- Tool tiers. The standard bit mines up to diamond ore; obsidian and netherite level blocks throw white-hot sparks and do not break. The new Diamond Drill Bit mines them, at full speed on a steel frame and 40% on an iron frame.
+- Diamond-Tipped Chain: a steel chainsaw with it fells whole natural trees, 50 FE per log, logs drop in the world. Sneak to cut one log.
+- Energy Cells also add 15% speed each. Overclockers add 50% each; together capped at +100%. The tooltip shows the total.
+- Overclocker fins glow only while the tool is in use.
+- The control board sits on the side behind a panel.
+- Taller Tool Stand, about the size of an anvil. New recipe: smooth stone slabs, a steel rod and smooth stone.
+- Bigger, more numerous sparks with longer streaks.
+- No arm swing or recoil while mining.
+- Manual: new Tool Tiers page.
 
 ## 0.1.0-alpha.8
 

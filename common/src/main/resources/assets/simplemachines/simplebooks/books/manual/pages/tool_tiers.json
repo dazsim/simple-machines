@@ -1,0 +1,43 @@
+{
+  "section": "tools",
+  "sort": 2,
+  "title": "Tool Tiers",
+  "subtitle": "Bits, chains and frames",
+  "text": "The bit decides what a drill can mine, the frame how fast.\n\nThe standard bit mines up to diamond ore. Obsidian, crying obsidian, ancient debris and other netherite level blocks throw white-hot sparks and do not break.\n\nA Diamond Drill Bit mines them. With a steel frame at full speed; with an iron frame at 40%, against a steel frame's 125%.",
+  "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
+  "caption": "Drill and chainsaw",
+  "right_title": "Diamond tips",
+  "steps": [
+    {
+      "kind": "text",
+      "text": "A steel Chainsaw with a Diamond-Tipped Chain fells a whole natural tree, top down, using 50 FE per log. The logs drop where they stood. Sneak to cut one log; built log walls are left alone."
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " DS",
+        "DSD",
+        "TD "
+      ],
+      "key": {
+        "D": "minecraft:diamond",
+        "S": "#c:plates/steel",
+        "T": "#c:rods/steel"
+      },
+      "output": "simplemachines:diamond_drill_bit"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "DCD",
+        "C C",
+        "DCD"
+      ],
+      "key": {
+        "D": "minecraft:diamond",
+        "C": "minecraft:iron_chain"
+      },
+      "output": "simplemachines:diamond_tipped_chain"
+    }
+  ]
+}

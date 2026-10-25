@@ -245,7 +245,10 @@ def tool_body(sh, x, y):
 
 def d_tools():
     sh = Sheet()
-    tool_body(sh, 60, 120); sh.poly([(230, 132), (280, 140), (280, 160), (230, 168)]); sh.text((150, 290), "drill", 13)
+    tool_body(sh, 60, 120); sh.poly([(230, 136), (250, 140), (250, 160), (230, 164)])
+    for cy in (128, 150, 172):
+        sh.poly([(250, cy - 10), (282, cy - 4), (282, cy + 4), (250, cy + 10)])
+    sh.text((150, 290), "drill", 13)
     x = 330; tool_body(sh, x, 120)
     sh.poly([(x + 170, 125), (x + 300 - 70, 125), (x + 250, 145), (x + 230, 165), (x + 170, 165)])
     sh.text((x + 100, 290), "chainsaw", 13)
@@ -365,15 +368,20 @@ def pages():
          [craft("overclocker_circuit"), craft("energy_cell"),
           text("Fitted upgrades show on the machine's tooltip and in its screen.")])
     page("tools", "tools", 0, "Powered Tools", "Built on a Tool Stand",
-         "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Take the finished tool off with an empty hand.",
+         "Place a Tool Stand and fit the parts in order, using the screwdriver after each one:\n\n1 Frame  2 Core  3 Control board  4 Battery module  5 Upgrades (optional, up to 2)\n\nThe core decides the tool: a Drill Motor makes an Electric Drill (pickaxe and shovel blocks), a Chainsaw Bar a Chainsaw (axe blocks). Any time after the core, a Diamond Drill Bit or Diamond-Tipped Chain can be fitted and screwed on. Take the finished tool off with an empty hand.",
          "tools", "Drill and chainsaw", "Order",
          [seq("Parts in order", [M + "tool_stand", M + "steel_tool_frame", M + "drill_motor", M + "control_board", M + "battery_module", M + "overclocker_circuit"],
               "Right click with the part, then the screwdriver."),
           text("Put a tool back on an empty stand to change it: sneak with the screwdriver to take the last part off. Parts drop back, and the battery module keeps its charge."), craft("tool_stand")])
     page("tool_parts", "tools", 1, "Tool Parts", "Frames, cores and upgrades",
-         "A tool holds 50k FE and uses 50 FE a block, mining at diamond tier. When empty it is slow and drops nothing.\n\nA steel frame digs 25% faster than iron. Each Overclocker adds half the speed and half the FE per block and shows a heat sink; each Energy Cell adds 50k FE and a bigger battery.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
+         "A tool holds 50k FE and uses 50 FE a block. When empty it is slow and drops nothing.\n\nA steel frame digs 25% faster than iron. Each Overclocker adds 50% speed and half the FE per block; each Energy Cell adds 50k FE and 15% speed at no extra FE. Together they add at most +100%.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
          "tools", "Side views", "Recipes",
          [craft("iron_tool_frame"), craft("steel_tool_frame"), craft("drill_motor"), craft("chainsaw_bar"), craft("battery_module")])
+    page("tool_tiers", "tools", 2, "Tool Tiers", "Bits, chains and frames",
+         "The bit decides what a drill can mine, the frame how fast.\n\nThe standard bit mines up to diamond ore. Obsidian, crying obsidian, ancient debris and other netherite level blocks throw white-hot sparks and do not break.\n\nA Diamond Drill Bit mines them. With a steel frame at full speed; with an iron frame at 40%, against a steel frame's 125%.",
+         "tools", "Drill and chainsaw", "Diamond tips",
+         [text("A steel Chainsaw with a Diamond-Tipped Chain fells a whole natural tree, top down, using 50 FE per log. The logs drop where they stood. Sneak to cut one log; built log walls are left alone."),
+          craft("diamond_drill_bit"), craft("diamond_tipped_chain")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)

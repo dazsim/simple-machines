@@ -152,7 +152,7 @@ def drill_motor():
 
 def chainsaw_bar():
     t = blank()
-    _rect(t, 0, 6, 5, 11, RC[1]); _rect(t, 0, 6, 5, 6, RC[0])
+    _rect(t, 0, 6, 5, 11, YEL[1]); _rect(t, 0, 6, 5, 6, YEL[0]); _rect(t, 0, 11, 5, 11, YEL[2])
     _rect(t, 6, 7, 15, 10, IRON[1]); _rect(t, 6, 8, 15, 9, IRON[0])
     for x in range(6, 16, 2):
         t.putpixel((x, 6), (40, 40, 46, 255)); t.putpixel((x, 11), (40, 40, 46, 255))

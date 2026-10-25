@@ -9,35 +9,85 @@
   "right_title": "Assemblies",
   "steps": [
     {
-      "kind": "sequence",
-      "title": "Crop Harvester and Shearer",
-      "cells": [
-        "simplemachines:harvester_assembly",
-        "simplemachines:crop_harvester",
-        "simplemachines:shearer_assembly",
-        "simplemachines:shearer"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "HIH",
+        "   "
       ],
-      "text": ""
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "H": "minecraft:iron_hoe"
+      },
+      "output": "simplemachines:harvester_assembly",
+      "title": "Crop Harvester"
     },
     {
-      "kind": "sequence",
-      "title": "Stone and Water Generators",
-      "cells": [
-        "simplemachines:stone_assembly",
-        "simplemachines:stone_generator",
-        "simplemachines:water_assembly",
-        "simplemachines:water_generator"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "SIS",
+        "   "
       ],
-      "text": ""
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "S": "minecraft:shears"
+      },
+      "output": "simplemachines:shearer_assembly",
+      "title": "Shearer"
     },
     {
-      "kind": "sequence",
-      "title": "Mechanical Hive",
-      "cells": [
-        "simplemachines:hive_assembly",
-        "simplemachines:mechanical_hive"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "WIL",
+        "   "
       ],
-      "text": ""
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "W": "minecraft:water_bucket",
+        "L": "minecraft:lava_bucket"
+      },
+      "output": "simplemachines:stone_assembly",
+      "title": "Stone Generator"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "WIW",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "W": "minecraft:water_bucket"
+      },
+      "output": "simplemachines:water_assembly",
+      "title": "Water Generator"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IHI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "H": "minecraft:beehive"
+      },
+      "output": "simplemachines:hive_assembly",
+      "title": "Mechanical Hive"
     }
   ]
 }

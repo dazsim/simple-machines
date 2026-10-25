@@ -2,7 +2,7 @@
   "section": "items",
   "sort": 0,
   "title": "Item Pipes",
-  "subtitle": "Three kinds of pipe end",
+  "subtitle": "Three-way pipe ends",
   "text": "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
   "drawing": "simplemachines:textures/simplebooks/manual/pipes.png",
   "caption": "One pipe, three ends",
@@ -30,7 +30,7 @@
     },
     {
       "kind": "text",
-      "text": "Use a dye on a placed pipe or cable to keep runs apart: two colours never join, plain joins any colour. They drop plain."
+      "text": "Use any of the 16 dyes on a placed pipe or cable to keep runs apart: two colours never join, plain joins any colour. They drop plain."
     }
   ]
 }

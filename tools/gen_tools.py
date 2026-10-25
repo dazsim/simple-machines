@@ -38,7 +38,6 @@ def textures(save, A):
         "tool_motor": tex((232, 182, 40), 4, 6, lambda x, y: (70, 56, 24) if y in (5, 9) and 3 <= x <= 12 and x % 2 else (255, 224, 120) if y == 0 else (150, 110, 24) if y == 15 else None),
         "tool_bitsteel": tex((92, 96, 108), 15, 4, lambda x, y: (130, 136, 150) if y == 0 or x == 0 else (60, 62, 72) if y == 15 else None),
         "tool_panel": tex((44, 46, 54), 16, 3, lambda x, y: (90, 94, 106) if x in (0, 15) or y in (0, 15) else None),
-        "tool_engine": tex((200, 60, 52), 5, 6, lambda x, y: (244, 120, 92) if y in (0, 1) else (90, 30, 30) if y == 15 else None),
         "tool_chuck": tex((70, 72, 80), 6, 5, lambda x, y: (120, 124, 134) if x % 4 == 0 else None),
         "tool_bit": tex((186, 190, 200), 7, 4, lambda x, y: (110, 114, 126) if (x + y) % 4 < 2 else None),
         "tool_bar": tex((180, 184, 192), 8, 4, lambda x, y: ((40, 40, 46) if x % 2 == 0 else (90, 90, 96)) if y < 3 or y > 12 else (140, 144, 152) if y in (3, 12) else None),
@@ -153,7 +152,7 @@ def saw_core():
     return ([box((1.5, 7.5, 6.5), (10, 12.5, 9.5), "engine"),
              box((5, 12.5, 7.25), (6, 15, 8.75), "engine"), box((5, 14, 7.25), (11, 15, 8.75), "grip"),
              box((10, 12.5, 7.25), (11, 14, 8.75), "engine")],
-            {"engine": f"{MOD}:item/tool_engine", "grip": f"{MOD}:item/tool_grip"})
+            {"engine": f"{MOD}:item/tool_motor", "grip": f"{MOD}:item/tool_grip"})
 
 def saw_bar(tex_name):
     return [box((10, 8, 7.6), (22, 11, 8.4), "bar")], {"bar": f"{MOD}:item/{tex_name}"}

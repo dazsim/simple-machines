@@ -9,42 +9,83 @@
   "right_title": "Assemblies",
   "steps": [
     {
-      "kind": "sequence",
-      "title": "Electric Furnace",
-      "cells": [
-        "simplemachines:furnace_assembly",
-        "simplemachines:electric_furnace"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "RFR",
+        "   "
       ],
-      "text": "Smelts anything a furnace does."
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "F": "minecraft:furnace"
+      },
+      "output": "simplemachines:furnace_assembly",
+      "title": "Electric Furnace"
     },
     {
-      "kind": "sequence",
-      "title": "Rolling Mill",
-      "cells": [
-        "simplemachines:rolling_assembly",
-        "simplemachines:rolling_mill"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "PIP",
+        "   "
       ],
-      "text": "Rods or sheets."
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "P": "minecraft:piston",
+        "I": "#c:ingots/iron"
+      },
+      "output": "simplemachines:rolling_assembly",
+      "title": "Rolling Mill"
     },
     {
-      "kind": "sequence",
-      "title": "Crusher",
-      "cells": [
-        "simplemachines:crusher_assembly",
-        "simplemachines:crusher"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IGI",
+        "   "
       ],
-      "text": "Steel has a 10% chance of a third dust."
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "G": "minecraft:grindstone"
+      },
+      "output": "simplemachines:crusher_assembly",
+      "title": "Crusher"
     },
     {
-      "kind": "sequence",
-      "title": "Sawmill and Alloy Smelter",
-      "cells": [
-        "simplemachines:saw_assembly",
-        "simplemachines:sawmill",
-        "simplemachines:alloy_assembly",
-        "simplemachines:alloy_smelter"
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "ISI",
+        "   "
       ],
-      "text": ""
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "S": "minecraft:stonecutter"
+      },
+      "output": "simplemachines:saw_assembly",
+      "title": "Sawmill"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IAI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "A": "simplemachines:alloy_furnace"
+      },
+      "output": "simplemachines:alloy_assembly",
+      "title": "Alloy Smelter"
     }
   ]
 }

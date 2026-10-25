@@ -26,10 +26,6 @@
               "function": "minecraft:set_components",
               "components": {
                 "simplebooks:book": "simplemachines:manual",
-                "minecraft:custom_name": {
-                  "translate": "book.simplemachines.manual.title",
-                  "italic": false
-                },
                 "minecraft:item_model": "simplemachines:manual"
               }
             }

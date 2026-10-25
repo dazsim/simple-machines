@@ -6,6 +6,8 @@ import net.minecraft.world.item.Item;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import com.workshopcraft.simplemachines.assembly.Assembly;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
+import com.workshopcraft.simplemachines.recipe.KeepToolRecipe;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.world.InteractionResult;
 import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
@@ -44,6 +46,8 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerMenus(direct(BuiltInRegistries.MENU));
         SimpleMachines.registerRecipeTypes(direct(BuiltInRegistries.RECIPE_TYPE));
         SimpleMachines.registerRecipeSerializers(direct(BuiltInRegistries.RECIPE_SERIALIZER));
+        // Fabric only syncs opted-in serializers to the client; JEI and EMI need the manual recipe
+        RecipeSynchronization.synchronizeRecipeSerializer(KeepToolRecipe.SERIALIZER);
         for (BlockEntityType<? extends WorkBlockEntity> type : SimpleMachines.WORK_ENTITIES) work(type);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.alloyFurnaceEntity);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);

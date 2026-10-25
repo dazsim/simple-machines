@@ -90,13 +90,20 @@ While digging, the bit's three cones turn, the chainsaw chain runs, the Overcloc
 
 ## Manual (Simple Books)
 
-With Simple Books installed, getting your first screwdriver gives you the Simple Machines Manual, a blueprint style guide to every machine, the assembly steps with recipes, tiers, finishes, cables, pipes, auto-output, upgrades and tools. Another copy is crafted from a book and a screwdriver. Simple Books is optional; without it the manual, its recipe and advancement are simply not loaded.
+With Simple Books installed, getting your first screwdriver (from any mod) gives you the Simple Machines Manual, a blueprint style guide to every machine, the assembly steps with recipes, tiers, finishes, cables, pipes, auto-output, upgrades and tools. Another copy is crafted from a book, any screwdriver and a copper ingot; the screwdriver is given back. Simple Books is optional; without it the manual, its recipe and advancement are simply not loaded.
 
 ## Much More Storage and other mods
 
 - Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.13
+
+- The chainsaw now uses the drill's yellow housing and the same greys, and the manual covers spin-up, sparks, tool tiers, upgrades, tree felling, cables, dyes and pipe ends.
+- The manual is crafted from a book, any screwdriver and a copper ingot, and the screwdriver is given back. Any screwdriver now triggers the free first copy.
+- Every recipe unlocks in the recipe book once you hold one of its ingredients, and the `c:` tags have names in JEI and EMI.
+- The manual has cards for steel rods, the Charger and Power Cell, and all 11 assemblies.
 
 ## 0.1.0-alpha.12
 

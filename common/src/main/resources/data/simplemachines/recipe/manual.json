@@ -13,20 +13,18 @@
       "modid": "simplebooks"
     }
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "simplemachines:crafting_shapeless_keep_tool",
   "category": "misc",
   "ingredients": [
     "minecraft:book",
-    "simplemachines:screwdriver"
+    "#c:tools/screwdriver",
+    "#c:ingots/copper"
   ],
+  "keep": "#c:tools/screwdriver",
   "result": {
     "id": "simplebooks:guide",
     "components": {
       "simplebooks:book": "simplemachines:manual",
-      "minecraft:custom_name": {
-        "translate": "book.simplemachines.manual.title",
-        "italic": false
-      },
       "minecraft:item_model": "simplemachines:manual"
     }
   }

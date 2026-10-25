@@ -3,7 +3,7 @@
   "sort": 1,
   "title": "Metals",
   "subtitle": "Steel, redstone copper, rods and sheets",
-  "text": "The Alloy Furnace mixes two inputs. The Extruder turns one ingot into 2 rods. Once you have power, the Rolling Mill rolls ingots into rods or sheets; the button in its screen switches between them.\n\nSheets are tagged c:plates and make metal panels, pipes and tools.",
+  "text": "The Alloy Furnace mixes two inputs. The Extruder turns an iron or copper ingot into 2 rods. Once you have power, the Rolling Mill rolls ingots into rods or sheets; the button in its screen switches between them.\n\nSteel rods only come from the Rolling Mill. The Tool Stand and Diamond Drill Bit need them.\n\nCopper rods and sheets, and steel sheets, follow the iron cards. Sheets are tagged c:plates.",
   "drawing": "simplemachines:textures/simplebooks/manual/metals.png",
   "caption": "Alloy Furnace, side view",
   "right_title": "Recipes",
@@ -48,6 +48,18 @@
       "appliance": "simplemachines:rolling_mill",
       "output": "simplemachines:iron_sheet",
       "note": "Sheet mode"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        "#c:ingots/steel"
+      ],
+      "appliance": "simplemachines:rolling_mill",
+      "output": {
+        "item": "simplemachines:steel_rod",
+        "count": 2
+      },
+      "note": "Rod mode"
     }
   ]
 }

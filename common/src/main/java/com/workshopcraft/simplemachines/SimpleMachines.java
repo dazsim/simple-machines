@@ -28,6 +28,7 @@ import com.workshopcraft.simplemachines.machine.MachineMenu;
 import com.workshopcraft.simplemachines.recipe.AlloyingRecipe;
 import com.workshopcraft.simplemachines.recipe.ExtrudingRecipe;
 import com.workshopcraft.simplemachines.recipe.RollingRecipe;
+import com.workshopcraft.simplemachines.recipe.KeepToolRecipe;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -379,5 +380,6 @@ public class SimpleMachines {
         r.accept(id("rolling"), ROLLING_SERIALIZER);
         r.accept(id("crushing"), CRUSHING_SERIALIZER);
         r.accept(id("sawing"), SAWING_SERIALIZER);
+        r.accept(id("crafting_shapeless_keep_tool"), KeepToolRecipe.SERIALIZER);
     }
 }

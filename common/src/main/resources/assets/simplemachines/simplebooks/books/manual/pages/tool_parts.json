@@ -3,7 +3,7 @@
   "sort": 1,
   "title": "Tool Parts",
   "subtitle": "Frames, cores and upgrades",
-  "text": "A tool holds 50k FE and uses 50 FE a block. When empty it is slow and drops nothing.\n\nA steel frame digs 25% faster than iron. Each Overclocker adds 50% speed and half the FE per block; each Energy Cell adds 50k FE and 15% speed at no extra FE. Together they add at most +100%.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
+  "text": "A tool holds 50k FE and uses 50 FE a block. When empty it is slow and drops nothing.\n\nThe body sets the speed: a steel frame digs at 1.25x an iron one.\nOverclocker: +50% speed and +50% FE a block, so two give +100% speed at 2x FE.\nEnergy Cell: +15% speed and +50k FE, no extra FE a block.\nThe two together add at most +100% speed.\n\nCharge tools in the Charger. FE on NeoForge, Team Reborn Energy on Fabric.",
   "drawing": "simplemachines:textures/simplebooks/manual/tools.png",
   "caption": "Side views",
   "right_title": "Recipes",

@@ -1,0 +1,74 @@
+{
+  "section": "power",
+  "sort": 1,
+  "title": "Power Assemblies",
+  "subtitle": "Generator, battery and charger",
+  "text": "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
+  "drawing": "simplemachines:textures/simplebooks/manual/power.png",
+  "caption": "Generator, battery, machine",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IFI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "F": "minecraft:furnace"
+      },
+      "output": "simplemachines:generator_assembly",
+      "title": "Solid Fuel Generator"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "DID",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "D": "minecraft:redstone_block"
+      },
+      "output": "simplemachines:battery_assembly",
+      "title": "Battery"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "ILI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "L": "minecraft:lightning_rod"
+      },
+      "output": "simplemachines:charger_assembly",
+      "title": "Charger"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SRS",
+        "SDS",
+        "SRS"
+      ],
+      "key": {
+        "S": "#c:plates/copper",
+        "R": "simplemachines:redstone_copper_ingot",
+        "D": "minecraft:redstone_block"
+      },
+      "output": "simplemachines:power_cell"
+    }
+  ]
+}

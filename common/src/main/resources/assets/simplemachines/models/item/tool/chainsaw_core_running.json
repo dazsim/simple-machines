@@ -1,9 +1,9 @@
 {
   "parent": "simplemachines:item/tool/base",
   "textures": {
-    "engine": "simplemachines:item/tool_engine",
+    "engine": "simplemachines:item/tool_motor",
     "grip": "simplemachines:item/tool_grip",
-    "particle": "simplemachines:item/tool_engine"
+    "particle": "simplemachines:item/tool_motor"
   },
   "elements": [
     {

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Writes textures and the json resources. Run from the repo root: python3 tools/gen_assets.py
-import json, os, random, shutil, sys
+import glob, json, os, random, shutil, sys
 from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 import icons
@@ -800,6 +800,9 @@ def built(shaped, rec):
     for m in ["iron", "copper", "steel"]:
         lang[f"item.simplemachines.{m}_rod"] = f"{m.title()} Rod"
         lang[f"item.simplemachines.{m}_sheet"] = f"{m.title()} Sheet"
+        lang[f"tag.item.c.rods.{m}"] = f"{m.title()} Rods"
+        lang[f"tag.item.c.plates.{m}"] = f"{m.title()} Plates"
+    lang.update({"tag.item.c.ingots.steel": "Steel Ingots", "tag.item.c.tools.screwdriver": "Screwdrivers", "tag.item.c.worktops": "Worktops"})
     for f in FINISHES:
         name = f.replace("_", " ").title()
         lang[f"item.simplemachines.{f}_panels"] = f"{name} Panels"
@@ -1076,5 +1079,28 @@ def loot_self(b):
            "entries": [{"type": "minecraft:item", "name": f"{MOD}:{b}"}]}],
            "random_sequence": f"{MOD}:blocks/{b}"}, f"{D}/{MOD}/loot_table/blocks/{b}.json")
 
+def recipe_unlocks():
+    # recipe book unlock per recipe: holding any ingredient (or knowing the recipe) grants it
+    rec = f"{D}/{MOD}/recipe"
+    out = f"{D}/{MOD}/advancement/recipes"
+    shutil.rmtree(out, ignore_errors=True)
+    for f in sorted(glob.glob(f"{rec}/**/*.json", recursive=True)):
+        r = json.load(open(f))
+        name = os.path.relpath(f, rec)[:-5]
+        ings = list(r.get("key", {}).values()) + r.get("ingredients", []) + [r.get("ingredient")]
+        ings += [r.get(k, {}).get("ingredient") for k in ("first", "second", "input")]
+        seen = []
+        for i in ings:
+            if i and i not in seen:
+                seen.append(i)
+        crit = {"has_the_recipe": {"trigger": "minecraft:recipe_unlocked", "conditions": {"recipe": f"{MOD}:{name}"}}}
+        for n, i in enumerate(seen):
+            crit[f"has_{n}"] = {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"items": i}]}}
+        adv = {k: v for k, v in r.items() if k in ("neoforge:conditions", "fabric:load_conditions")}
+        adv.update({"parent": "minecraft:recipes/root", "criteria": crit, "requirements": [list(crit)],
+                    "rewards": {"recipes": [f"{MOD}:{name}"]}})
+        jdump(adv, f"{out}/{r.get('category', 'misc')}/{name}.json")
+
 main()
 gen_manual.main()
+recipe_unlocks()

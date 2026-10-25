@@ -1,0 +1,32 @@
+{
+  "section": "tools",
+  "sort": 3,
+  "title": "Using Tools",
+  "subtitle": "Spin up, dig, wind down",
+  "text": "Hold attack and the motor spins up, its pitch rising as it goes. Keep holding and it stays at full speed from block to block.\n\nLet go, or run out of blocks, and it keeps turning for a moment in case you carry on, then winds down with the pitch falling.\n\nSparks fly from the crosshair where the bit meets the block: orange on stone, white-hot on blocks the bit cannot mine.",
+  "drawing": "simplemachines:textures/simplebooks/manual/spin.png",
+  "caption": "Motor speed while attack is held",
+  "right_title": "Tools",
+  "steps": [
+    {
+      "kind": "sequence",
+      "title": "Electric Drill",
+      "cells": [
+        "simplemachines:electric_drill"
+      ],
+      "text": "Spins up, then digs at full speed."
+    },
+    {
+      "kind": "sequence",
+      "title": "Chainsaw",
+      "cells": [
+        "simplemachines:chainsaw"
+      ],
+      "text": "Spins up and winds down the same way."
+    },
+    {
+      "kind": "text",
+      "text": "With no charge left the motor stays still, digging is slow and nothing drops. Recharge the tool in the Charger."
+    }
+  ]
+}

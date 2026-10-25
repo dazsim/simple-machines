@@ -12,10 +12,9 @@
       "kind": "sequence",
       "title": "Set an output side",
       "cells": [
-        "simplemachines:screwdriver",
-        "minecraft:chest"
+        "simplemachines:screwdriver"
       ],
-      "text": "Use the screwdriver on the side facing the chest."
+      "text": "Use the screwdriver on the side facing the chest. Use it again to turn that side off."
     },
     {
       "kind": "text",

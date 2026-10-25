@@ -38,6 +38,26 @@
         "C": "minecraft:iron_chain"
       },
       "output": "simplemachines:diamond_tipped_chain"
+    },
+    {
+      "kind": "sequence",
+      "title": "Electric Drill",
+      "cells": [
+        "simplemachines:electric_drill"
+      ],
+      "text": "Pickaxe and shovel blocks."
+    },
+    {
+      "kind": "sequence",
+      "title": "Chainsaw",
+      "cells": [
+        "simplemachines:chainsaw"
+      ],
+      "text": "Axe blocks."
+    },
+    {
+      "kind": "text",
+      "text": "With no charge left the motor stays still, digging is slow and nothing drops. Recharge the tool in the Charger."
     }
   ]
 }

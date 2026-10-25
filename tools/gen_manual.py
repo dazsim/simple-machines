@@ -177,11 +177,30 @@ def d_finishes():
     sh.save("finishes")
 
 def d_machines():
-    sh = Sheet()
-    for i, (ox, oy) in enumerate([(150, 200), (330, 260), (510, 200)]):
-        machine(sh, iso((ox, oy), 0.75), port=(i == 1))
-    sh.text((320, 30), "THIRTEEN MACHINES, ONE CHASSIS", 14)
+    sh = Sheet(); P = iso((300, 215), 1.0)
+    a, b = P(-130, 20, 50), P(20, 20, 50)
+    for t in (-3, 3): sh.line((a[0], a[1] + t), (b[0], b[1] + t), 2.0)
+    sh.text((a[0] - 30, a[1] - 18), "FE in", 12, SOFT)
+    machine(sh, P, port=True)
+    chest(sh, P, 150, 15)
+    sh.arrow(P(104, 40, 50), P(146, 40, 50), 2.4)
+    sh.arrow(P(50, 170, 50), P(50, 100, 50), 2.4)
+    sh.text(P(50, 190, 50), "input", 12, SOFT)
+    sh.dash(P(100, 70, 40), (500, 150)); sh.text((550, 140), "output port", 12, SOFT)
+    sh.text((320, 30), "ONE MACHINE, ANY SIDE", 14)
     sh.save("machines")
+
+def d_farm():
+    sh = Sheet(); P = iso((400, 110), 0.55)
+    for i in range(5):
+        for j in range(5):
+            x0, z0 = -150 + i * 80, 130 + j * 80
+            sh.poly([P(x0, 0, z0), P(x0 + 76, 0, z0), P(x0 + 76, 0, z0 + 76), P(x0, 0, z0 + 76)], 1.4, SOFT)
+            for k in (-14, 0, 14): sh.line(P(x0 + 38 + k, 0, z0 + 38), P(x0 + 38 + k, 22, z0 + 38), 1.4)
+    machine(sh, P, s=1.0, x=0, z=0)
+    sh.text((320, 30), "CROP HARVESTER AND ITS AREA", 14)
+    sh.text((320, 375), "5x5 in front of the machine, 9x9 on a steel chassis", 12, SOFT)
+    sh.save("farm")
 
 def d_power():
     sh = Sheet(); P = iso((150, 170), 0.62)
@@ -254,24 +273,6 @@ def d_tools():
     sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "built on a Tool Stand, recharge in the Charger", 12, SOFT)
     sh.save("tools")
 
-def d_spin():
-    sh = Sheet()
-    x0, y0, x1, y1 = 70, 300, 590, 110
-    sh.line((x0, y0), (x1, y0), 2.0); sh.line((x0, y0), (x0, y1 - 10), 2.0)
-    sh.text((x0 - 8, y1), "full", 11, SOFT, "rm"); sh.text((x0 - 8, y0), "0", 11, SOFT, "rm")
-    pts = [(x0, y0), (140, y1), (430, y1), (470, y1), (560, y0)]
-    for a, b in zip(pts, pts[1:]): sh.line(a, b, 3.0)
-    for bx in range(150, 401, 50):
-        sh.poly([(bx, y0 - 26), (bx + 22, y0 - 26), (bx + 22, y0 - 4), (bx, y0 - 4)], 1.4)
-        sh.line((bx, y0 - 26), (bx + 22, y0 - 4), 1.2, SOFT)
-    sh.dash((430, y1), (430, y0), 1.2); sh.dash((470, y1), (470, y0), 1.2)
-    sh.text((105, 330), "spin up", 12); sh.text((290, 330), "blocks keep breaking", 12)
-    sh.text((450, 330), "grace", 12); sh.text((530, 330), "wind down", 12)
-    sh.text((105, 90), "pitch rises", 11, SOFT); sh.text((530, 90), "pitch falls", 11, SOFT)
-    sh.text((320, 40), "HOLD TO DIG: MOTOR SPEED", 14)
-    sh.text((320, 375), "time with attack held  >", 12, SOFT)
-    sh.save("spin")
-
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -316,6 +317,10 @@ def process(name, appliance, note=None):
 
 def text(t): return {"kind": "text", "text": t}
 
+def build(assembly, machine, title):
+    return {"kind": "process", "title": title, "inputs": [f"{MOD}:{assembly}"], "on": {"items": [f"{MOD}:iron_chassis", f"{MOD}:steel_chassis"], "name": "Chassis"},
+            "output": f"{MOD}:{machine}", "note": "Fit it to a chassis"}
+
 def seq(title, cells, t): return {"kind": "sequence", "title": title, "cells": cells, "text": t}
 
 def page(name, section, sort, title, sub, body, drawing, caption, right_title, steps, **kw):
@@ -352,25 +357,25 @@ def pages():
          "finishes", "Panel finishes and a worktop", "Recipes",
          [craft("oak_panels"), craft("white_concrete_panels"), craft("iron_panels"), craft("oak_worktop")])
     page("machines", "machines", 0, "Processing Machines", "Built on a chassis",
-         "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes.",
-         "machines", "Three machines, one with an output port", "Assemblies",
+         "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes. Feed FE in on any side. Use the screwdriver on a side to push outputs out of it, or pull them with a pipe; see Auto-output.",
+         "machines", "Any side can take FE, items or an output port", "Assemblies",
          [craft("furnace_assembly", "Electric Furnace"), craft("rolling_assembly", "Rolling Mill"), craft("crusher_assembly", "Crusher"),
           craft("saw_assembly", "Sawmill"), craft("alloy_assembly", "Alloy Smelter")])
     page("farm", "machines", 1, "Farm and Generator Machines", "Working the world around them",
          "Crop Harvester: harvests and replants grown crops in a 5x5 area in front (9x9 on steel), 400 FE a crop.\nShearer: shears sheep in the same area, 500 FE a sheep.\nStone Generator: cobblestone from water and lava, 10 FE/t.\nWater Generator: fills buckets beside 2 water sources, 10 FE/t.\nMechanical Hive: honeycomb and honey bottles, 20 FE/t.",
-         "machines", "Front views", "Assemblies",
+         "farm", "The work area sits in front of the machine", "Assemblies",
          [craft("harvester_assembly", "Crop Harvester"), craft("shearer_assembly", "Shearer"), craft("stone_assembly", "Stone Generator"),
           craft("water_assembly", "Water Generator"), craft("hive_assembly", "Mechanical Hive")])
     page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",
          "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. Use a screwdriver on a cable side to disconnect it and again to reconnect it. Any of the 16 dyes colours a cable. The Charger, built from a Charger Assembly, fills FE items.",
          "power", "Generator, battery, machine", "Power",
-         [craft("redstone_copper_cable"),
-          seq("Generator, Battery and Charger", [M + "generator_assembly", M + "solid_fuel_generator", M + "battery_assembly", M + "battery", M + "charger_assembly", M + "charger"],
-              "Machines keep their energy when broken.")])
-    page("power_parts", "power", 1, "Power Assemblies", "Generator, battery and charger",
-         "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
+         [craft("generator_assembly", "Generator Assembly"), build("generator_assembly", "solid_fuel_generator", "Solid Fuel Generator"),
+          dict(craft("battery_assembly", "Battery Assembly"), join=False), build("battery_assembly", "battery", "Battery"),
+          dict(craft("charger_assembly", "Charger Assembly"), join=False), build("charger_assembly", "charger", "Charger")])
+    page("power_parts", "power", 1, "Cables and Cells", "Carrying and storing FE",
+         "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
          "power", "Generator, battery, machine", "Recipes",
-         [craft("generator_assembly", "Solid Fuel Generator"), craft("battery_assembly", "Battery"), craft("charger_assembly", "Charger"), craft("power_cell")])
+         [craft("redstone_copper_cable"), craft("power_cell")])
     page("pipes", "items", 0, "Item Pipes", "Three-way pipe ends",
          "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
          "pipes", "One pipe, three ends", "Pipe",
@@ -379,7 +384,7 @@ def pages():
     page("output", "items", 1, "Auto-output", "Push outputs into the next block",
          "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
          "output", "Machine pushing into a chest", "Sides",
-         [seq("Set an output side", [M + "screwdriver", "minecraft:chest"], "Use the screwdriver on the side facing the chest."),
+         [seq("Set an output side", [M + "screwdriver"], "Use the screwdriver on the side facing the chest. Use it again to turn that side off."),
           text("Hoppers and other mods see the same sides: inputs can be filled, outputs emptied.")])
     page("upgrades", "upgrades", 0, "Upgrades", "Optional step after the control board",
          "With the control board fixed, right click with an upgrade and screw it in. There are two slots and any mix fits.\n\nEach Overclocker adds half the base speed; FE use and intake rise with it. Each Energy Cell adds the base storage again. Two Overclockers run at double speed; two Cells hold triple.\n\nUpgrades stay with the machine and drop back when it is taken apart.",
@@ -400,19 +405,13 @@ def pages():
          "The bit decides what a drill can mine. The body decides how fast.\n\nThe standard bit mines up to diamond ore. Obsidian, crying obsidian, ancient debris and other netherite level blocks throw white-hot sparks and do not break.\n\nA Diamond Drill Bit mines them. A steel body runs at 1.25x; an iron body manages only 40% on those blocks.",
          "tools", "Drill and chainsaw", "Diamond tips",
          [text("Tree felling: a Chainsaw with a steel body and a Diamond-Tipped Chain fells a whole natural tree, top down, for 50 FE per log. Sneak to cut a single log. Built log walls are left alone."),
-          craft("diamond_drill_bit"), craft("diamond_tipped_chain")])
-
-def tool_use_page():
-    M = MOD + ":"
-    page("tool_use", "tools", 3, "Using Tools", "Spin up, dig, wind down",
-         "Hold attack and the motor spins up, its pitch rising as it goes. Keep holding and it stays at full speed from block to block.\n\nLet go, or run out of blocks, and it keeps turning for a moment in case you carry on, then winds down with the pitch falling.\n\nSparks fly from the crosshair where the bit meets the block: orange on stone, white-hot on blocks the bit cannot mine.",
-         "spin", "Motor speed while attack is held", "Tools",
-         [seq("Electric Drill", [M + "electric_drill"], "Spins up, then digs at full speed."), seq("Chainsaw", [M + "chainsaw"], "Spins up and winds down the same way."),
+          craft("diamond_drill_bit"), craft("diamond_tipped_chain"),
+          seq("Electric Drill", [M + "electric_drill"], "Pickaxe and shovel blocks."), seq("Chainsaw", [M + "chainsaw"], "Axe blocks."),
           text("With no charge left the motor stays still, digging is slow and nothing drops. Recharge the tool in the Charger.")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_power, d_pipes, d_output, d_upgrades, d_tools, d_spin]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},
@@ -438,7 +437,6 @@ def main():
                         {"id": "tools", "title": "Tools", "icon": f"{MOD}:electric_drill"}]},
           f"{A}/simplebooks/books/manual.json")
     pages()
-    tool_use_page()
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/manual"}}, f"{A}/items/manual.json")
     jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/manual"}}, f"{A}/models/item/manual.json")
     jdump({**COND, "type": f"{MOD}:crafting_shapeless_keep_tool", "category": "misc", "ingredients": ["minecraft:book", "#c:tools/screwdriver", "#c:ingots/copper"],

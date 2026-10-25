@@ -1,9 +1,9 @@
 {
   "section": "power",
   "sort": 1,
-  "title": "Power Assemblies",
-  "subtitle": "Generator, battery and charger",
-  "text": "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
+  "title": "Cables and Cells",
+  "subtitle": "Carrying and storing FE",
+  "text": "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
   "drawing": "simplemachines:textures/simplebooks/manual/power.png",
   "caption": "Generator, battery, machine",
   "right_title": "Recipes",
@@ -11,50 +11,17 @@
     {
       "kind": "craft_shaped",
       "pattern": [
-        "RCR",
-        "IFI",
+        "RRR",
+        "   ",
         "   "
       ],
       "key": {
-        "R": "#c:rods/iron",
-        "C": "simplemachines:redstone_copper_ingot",
-        "I": "#c:ingots/iron",
-        "F": "minecraft:furnace"
+        "R": "simplemachines:redstone_copper_ingot"
       },
-      "output": "simplemachines:generator_assembly",
-      "title": "Solid Fuel Generator"
-    },
-    {
-      "kind": "craft_shaped",
-      "pattern": [
-        "RCR",
-        "DID",
-        "   "
-      ],
-      "key": {
-        "R": "#c:rods/iron",
-        "C": "simplemachines:redstone_copper_ingot",
-        "I": "#c:ingots/iron",
-        "D": "minecraft:redstone_block"
-      },
-      "output": "simplemachines:battery_assembly",
-      "title": "Battery"
-    },
-    {
-      "kind": "craft_shaped",
-      "pattern": [
-        "RCR",
-        "ILI",
-        "   "
-      ],
-      "key": {
-        "R": "#c:rods/iron",
-        "C": "simplemachines:redstone_copper_ingot",
-        "I": "#c:ingots/iron",
-        "L": "minecraft:lightning_rod"
-      },
-      "output": "simplemachines:charger_assembly",
-      "title": "Charger"
+      "output": {
+        "item": "simplemachines:redstone_copper_cable",
+        "count": 8
+      }
     },
     {
       "kind": "craft_shaped",

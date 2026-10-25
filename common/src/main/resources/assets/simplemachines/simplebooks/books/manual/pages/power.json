@@ -11,30 +11,100 @@
     {
       "kind": "craft_shaped",
       "pattern": [
-        "RRR",
-        "   ",
+        "RCR",
+        "IFI",
         "   "
       ],
       "key": {
-        "R": "simplemachines:redstone_copper_ingot"
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "F": "minecraft:furnace"
       },
-      "output": {
-        "item": "simplemachines:redstone_copper_cable",
-        "count": 8
-      }
+      "output": "simplemachines:generator_assembly",
+      "title": "Generator Assembly"
     },
     {
-      "kind": "sequence",
-      "title": "Generator, Battery and Charger",
-      "cells": [
-        "simplemachines:generator_assembly",
-        "simplemachines:solid_fuel_generator",
-        "simplemachines:battery_assembly",
-        "simplemachines:battery",
-        "simplemachines:charger_assembly",
-        "simplemachines:charger"
+      "kind": "process",
+      "title": "Solid Fuel Generator",
+      "inputs": [
+        "simplemachines:generator_assembly"
       ],
-      "text": "Machines keep their energy when broken."
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:solid_fuel_generator",
+      "note": "Fit it to a chassis"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "DID",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "D": "minecraft:redstone_block"
+      },
+      "output": "simplemachines:battery_assembly",
+      "title": "Battery Assembly",
+      "join": false
+    },
+    {
+      "kind": "process",
+      "title": "Battery",
+      "inputs": [
+        "simplemachines:battery_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:battery",
+      "note": "Fit it to a chassis"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "ILI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "L": "minecraft:lightning_rod"
+      },
+      "output": "simplemachines:charger_assembly",
+      "title": "Charger Assembly",
+      "join": false
+    },
+    {
+      "kind": "process",
+      "title": "Charger",
+      "inputs": [
+        "simplemachines:charger_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:charger",
+      "note": "Fit it to a chassis"
     }
   ]
 }

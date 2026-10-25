@@ -4,8 +4,8 @@
   "title": "Farm and Generator Machines",
   "subtitle": "Working the world around them",
   "text": "Crop Harvester: harvests and replants grown crops in a 5x5 area in front (9x9 on steel), 400 FE a crop.\nShearer: shears sheep in the same area, 500 FE a sheep.\nStone Generator: cobblestone from water and lava, 10 FE/t.\nWater Generator: fills buckets beside 2 water sources, 10 FE/t.\nMechanical Hive: honeycomb and honey bottles, 20 FE/t.",
-  "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
-  "caption": "Front views",
+  "drawing": "simplemachines:textures/simplebooks/manual/farm.png",
+  "caption": "The work area sits in front of the machine",
   "right_title": "Assemblies",
   "steps": [
     {

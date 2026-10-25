@@ -3,9 +3,9 @@
   "sort": 0,
   "title": "Processing Machines",
   "subtitle": "Built on a chassis",
-  "text": "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes.",
+  "text": "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes. Feed FE in on any side. Use the screwdriver on a side to push outputs out of it, or pull them with a pipe; see Auto-output.",
   "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
-  "caption": "Three machines, one with an output port",
+  "caption": "Any side can take FE, items or an output port",
   "right_title": "Assemblies",
   "steps": [
     {

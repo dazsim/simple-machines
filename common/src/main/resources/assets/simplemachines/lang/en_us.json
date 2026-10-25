@@ -137,7 +137,8 @@
   "direction.simplemachines.down": "Down",
   "message.simplemachines.output_on": "Auto-output on: %s",
   "message.simplemachines.output_off": "Auto-output off: %s",
-  "message.simplemachines.pipe_extract": "Pipe end set to extract",
-  "message.simplemachines.pipe_deliver": "Pipe end set to deliver",
+  "message.simplemachines.pipe_link": "Pipe end: input",
+  "message.simplemachines.pipe_extract": "Pipe end: output",
+  "message.simplemachines.pipe_off": "Pipe end: disconnected",
   "message.simplemachines.pipe_no_inventory": "No inventory on that side"
 }

@@ -41,7 +41,7 @@ Each part sits loose until it is screwed in. Wood panels come from four slabs, c
 
 ## Pipes and output sides
 
-Item pipes connect to each other and to anything with an inventory. Use any screwdriver on a pipe next to an inventory to switch that end to extract; it then pulls items out every half second and sends them round the network in turn to every other inventory on it. Machines only accept items they have a recipe for, and only give up their outputs.
+Item pipes connect to each other and to anything with an inventory. Use any screwdriver on a pipe end next to an inventory to cycle it through input (the default; the pipe delivers into it), output (the pipe pulls items out every half second and sends them round the network in turn to every other input on it) and disconnected (the pipe ignores that block, for example a cabinet sitting under a pipe meant for the machines either side). Machines only accept items they have a recipe for, and only give up their outputs.
 
 Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard. Sides that output or have a pipe on them show a port. All sides are off to start with. Hoppers and other mods see inputs and outputs the same way: inputs can be filled, outputs can be emptied.
 
@@ -50,6 +50,10 @@ Use a screwdriver (without sneaking) on a side of a built machine to make it pus
 - Worktops are tagged `c:worktops`. Any worktop in that tag fits a chassis, and Simple Machines worktops fit Much More Storage carcasses. Neither mod needs the other.
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
+
+## 0.1.0-alpha.6
+
+- Pipe ends cycle through input, output and disconnected with a screwdriver. Old extract ends load as output.
 
 ## 0.1.0-alpha.5
 

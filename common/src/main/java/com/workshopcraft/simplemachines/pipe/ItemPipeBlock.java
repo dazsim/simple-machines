@@ -21,7 +21,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.EnumMap;
 import java.util.Map;
 
-/** Item pipe. Arms next to an inventory deliver into it, or pull from it once set to extract with a screwdriver. */
+/** Item pipe. Ends next to an inventory deliver into it; the screwdriver cycles them to extract, then disconnected. */
 public class ItemPipeBlock extends Block {
     public static final MapCodec<ItemPipeBlock> CODEC = simpleCodec(ItemPipeBlock::new);
     public static final int INTERVAL = 10;
@@ -64,7 +64,7 @@ public class ItemPipeBlock extends Block {
         if (neighbour.isAir()) return Link.NONE;
         if (!(level instanceof Level real)) return current;
         if (!Transfer.lookup.has(real, pos.relative(dir), dir.getOpposite())) return Link.NONE;
-        return current == Link.EXTRACT ? Link.EXTRACT : Link.LINK;
+        return current.end() ? current : Link.LINK;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ItemPipeBlock extends Block {
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         int mask = 0;
         final Direction[] dirs = Direction.values();
-        for (int i = 0; i < 6; i++) if (state.getValue(LINKS.get(dirs[i])) != Link.NONE) mask |= 1 << i;
+        for (int i = 0; i < 6; i++) if (state.getValue(LINKS.get(dirs[i])).drawn()) mask |= 1 << i;
         return SHAPES[mask];
     }
 

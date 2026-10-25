@@ -19,7 +19,7 @@ public final class Pipes {
     private Pipes() {
     }
 
-    /** Screwdriver on a pipe: flips the inventory arm nearest the click between deliver and extract. */
+    /** Screwdriver on a pipe: cycles the inventory end nearest the click through input, output and disconnected. */
     public static boolean screwdriver(Level level, BlockPos pos, Player player, ItemStack held, BlockHitResult hit) {
         final BlockState state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof ItemPipeBlock)) return false;
@@ -30,15 +30,14 @@ public final class Pipes {
         }
         if (level instanceof ServerLevel server) {
             final EnumProperty<Link> p = ItemPipeBlock.LINKS.get(d);
-            final Link next = state.getValue(p) == Link.EXTRACT ? Link.LINK : Link.EXTRACT;
+            final Link next = state.getValue(p).cycle();
             final BlockState updated = state.setValue(p, next);
             server.setBlock(pos, updated, 3);
             PipeNetwork.invalidate(server);
             if (next == Link.EXTRACT && !server.getBlockTicks().hasScheduledTick(pos, updated.getBlock())) {
                 server.scheduleTick(pos, updated.getBlock(), ItemPipeBlock.INTERVAL);
             }
-            player.sendOverlayMessage(Component.translatable(next == Link.EXTRACT ? "message.simplemachines.pipe_extract" : "message.simplemachines.pipe_deliver",
-                    Component.translatable("direction.simplemachines." + d.getSerializedName())));
+            player.sendOverlayMessage(Component.translatable("message.simplemachines.pipe_" + next.getSerializedName()));
             server.playSound(null, pos, SoundEvents.TRIPWIRE_CLICK_ON, SoundSource.BLOCKS, 0.6F, 1.2F);
         }
         return true;
@@ -49,7 +48,7 @@ public final class Pipes {
         Direction best = null;
         double score = -1e9;
         for (Direction d : Direction.values()) {
-            if (!state.getValue(ItemPipeBlock.LINKS.get(d)).inventory()) continue;
+            if (!state.getValue(ItemPipeBlock.LINKS.get(d)).end()) continue;
             final double s = p.x * d.getStepX() + p.y * d.getStepY() + p.z * d.getStepZ();
             if (s > score) {
                 score = s;

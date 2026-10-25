@@ -987,8 +987,10 @@ def machines(shaped, rec):
         lang[f"direction.simplemachines.{d}"] = d.title()
     lang["message.simplemachines.output_on"] = "Auto-output on: %s"
     lang["message.simplemachines.output_off"] = "Auto-output off: %s"
-    lang["message.simplemachines.pipe_extract"] = "Pipe end set to extract"
-    lang["message.simplemachines.pipe_deliver"] = "Pipe end set to deliver"
+    lang.pop("message.simplemachines.pipe_deliver", None)
+    lang["message.simplemachines.pipe_link"] = "Pipe end: input"
+    lang["message.simplemachines.pipe_extract"] = "Pipe end: output"
+    lang["message.simplemachines.pipe_off"] = "Pipe end: disconnected"
     lang["message.simplemachines.pipe_no_inventory"] = "No inventory on that side"
     jdump(lang, f"{A}/lang/en_us.json")
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"

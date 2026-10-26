@@ -98,6 +98,10 @@ With Simple Books installed, getting your first screwdriver (from any mod) gives
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
 
+## 2.0.0-release.1
+
+First 26.1 release. Same content as 0.1.0-alpha.16.
+
 ## 0.1.0-alpha.14
 
 - Square metal plate icons.

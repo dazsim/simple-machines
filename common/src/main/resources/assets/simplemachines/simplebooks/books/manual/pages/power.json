@@ -22,6 +22,7 @@
         "F": "minecraft:furnace"
       },
       "output": "simplemachines:generator_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Furnace",
       "title": "Generator Assembly"
     },
     {
@@ -54,6 +55,7 @@
         "D": "minecraft:redstone_block"
       },
       "output": "simplemachines:battery_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Block of Redstone, 1x Iron Ingot",
       "title": "Battery Assembly",
       "join": false
     },
@@ -87,6 +89,7 @@
         "L": "minecraft:lightning_rod"
       },
       "output": "simplemachines:charger_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Lightning Rod",
       "title": "Charger Assembly",
       "join": false
     },

@@ -37,7 +37,8 @@
         "S": "minecraft:smooth_stone_slab",
         "B": "minecraft:smooth_stone"
       },
-      "output": "simplemachines:tool_stand"
+      "output": "simplemachines:tool_stand",
+      "note": "Crafting Table\n3x Smooth Stone Slab, 1x Steel Rod, 3x Smooth Stone"
     }
   ]
 }

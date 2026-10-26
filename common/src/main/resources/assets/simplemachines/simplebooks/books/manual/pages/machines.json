@@ -21,6 +21,7 @@
         "F": "minecraft:furnace"
       },
       "output": "simplemachines:furnace_assembly",
+      "note": "Crafting Table\n4x Iron Rod, 1x Redstone Copper Ingot, 1x Furnace",
       "title": "Electric Furnace"
     },
     {
@@ -37,6 +38,7 @@
         "I": "#c:ingots/iron"
       },
       "output": "simplemachines:rolling_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Piston, 1x Iron Ingot",
       "title": "Rolling Mill"
     },
     {
@@ -53,6 +55,7 @@
         "G": "minecraft:grindstone"
       },
       "output": "simplemachines:crusher_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Grindstone",
       "title": "Crusher"
     },
     {
@@ -69,6 +72,7 @@
         "S": "minecraft:stonecutter"
       },
       "output": "simplemachines:saw_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Stonecutter",
       "title": "Sawmill"
     },
     {
@@ -85,6 +89,7 @@
         "A": "simplemachines:alloy_furnace"
       },
       "output": "simplemachines:alloy_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Alloy Furnace",
       "title": "Alloy Smelter"
     }
   ]

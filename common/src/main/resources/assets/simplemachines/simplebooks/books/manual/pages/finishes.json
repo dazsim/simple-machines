@@ -18,7 +18,8 @@
       "key": {
         "S": "minecraft:oak_slab"
       },
-      "output": "simplemachines:oak_panels"
+      "output": "simplemachines:oak_panels",
+      "note": "Crafting Table\n4x Oak Slab"
     },
     {
       "kind": "craft_shaped",
@@ -33,7 +34,8 @@
       "output": {
         "item": "simplemachines:white_concrete_panels",
         "count": 2
-      }
+      },
+      "note": "Crafting Table\n4x White Concrete"
     },
     {
       "kind": "craft_shaped",
@@ -45,7 +47,8 @@
       "key": {
         "S": "#c:plates/iron"
       },
-      "output": "simplemachines:iron_panels"
+      "output": "simplemachines:iron_panels",
+      "note": "Crafting Table\n4x Iron Sheet"
     },
     {
       "kind": "craft_shaped",
@@ -57,7 +60,8 @@
       "key": {
         "S": "minecraft:oak_slab"
       },
-      "output": "simplemachines:oak_worktop"
+      "output": "simplemachines:oak_worktop",
+      "note": "Crafting Table\n3x Oak Slab"
     }
   ]
 }

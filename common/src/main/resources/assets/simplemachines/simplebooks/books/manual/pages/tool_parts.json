@@ -19,7 +19,8 @@
         "I": "#c:ingots/iron",
         "R": "#c:rods/iron"
       },
-      "output": "simplemachines:iron_tool_frame"
+      "output": "simplemachines:iron_tool_frame",
+      "note": "Crafting Table\n5x Iron Ingot, 2x Iron Rod"
     },
     {
       "kind": "craft_shaped",
@@ -32,7 +33,8 @@
         "S": "#c:plates/steel",
         "R": "#c:rods/steel"
       },
-      "output": "simplemachines:steel_tool_frame"
+      "output": "simplemachines:steel_tool_frame",
+      "note": "Crafting Table\n5x Steel Sheet, 2x Steel Rod"
     },
     {
       "kind": "craft_shaped",
@@ -47,7 +49,8 @@
         "M": "minecraft:piston",
         "T": "#c:rods/steel"
       },
-      "output": "simplemachines:drill_motor"
+      "output": "simplemachines:drill_motor",
+      "note": "Crafting Table\n1x Redstone Copper Ingot, 2x Copper Rod, 1x Piston, 1x Steel Rod"
     },
     {
       "kind": "craft_shaped",
@@ -62,7 +65,8 @@
         "S": "simplemachines:redstone_copper_ingot",
         "R": "minecraft:piston"
       },
-      "output": "simplemachines:chainsaw_bar"
+      "output": "simplemachines:chainsaw_bar",
+      "note": "Crafting Table\n2x Steel Sheet, 1x Iron Bars, 1x Redstone Copper Ingot, 1x Piston"
     },
     {
       "kind": "craft_shaped",
@@ -75,7 +79,8 @@
         "C": "#c:ingots/copper",
         "P": "simplemachines:power_cell"
       },
-      "output": "simplemachines:battery_module"
+      "output": "simplemachines:battery_module",
+      "note": "Crafting Table\n2x Copper Ingot, 1x Power Cell"
     }
   ]
 }

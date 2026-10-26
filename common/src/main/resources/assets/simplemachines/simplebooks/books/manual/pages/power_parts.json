@@ -21,7 +21,8 @@
       "output": {
         "item": "simplemachines:redstone_copper_cable",
         "count": 8
-      }
+      },
+      "note": "Crafting Table\n3x Redstone Copper Ingot"
     },
     {
       "kind": "craft_shaped",
@@ -35,7 +36,8 @@
         "R": "simplemachines:redstone_copper_ingot",
         "D": "minecraft:redstone_block"
       },
-      "output": "simplemachines:power_cell"
+      "output": "simplemachines:power_cell",
+      "note": "Crafting Table\n6x Copper Sheet, 2x Redstone Copper Ingot, 1x Block of Redstone"
     }
   ]
 }

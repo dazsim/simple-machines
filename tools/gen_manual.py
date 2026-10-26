@@ -301,10 +301,35 @@ def ing(x):
     i = x["ingredient"]; c = x.get("count", 1)
     return {"item": i, "count": c} if c > 1 else i
 
+# vanilla names that are not just the id in title case, and items standing in for common tags
+VANILLA = {"redstone_block": "Block of Redstone", "quartz": "Nether Quartz", "redstone": "Redstone Dust"}
+TAGS = {"c:dusts/redstone": "minecraft:redstone", "c:gems/quartz": "minecraft:quartz", "c:glass_blocks": "minecraft:glass",
+        "c:ingots/copper": "minecraft:copper_ingot", "c:ingots/gold": "minecraft:gold_ingot", "c:ingots/iron": "minecraft:iron_ingot"}
+
+def name_of(ref):
+    if ref.startswith("#"):
+        t = ref[1:]
+        if t in TAGS: ref = TAGS[t]
+        else:
+            ns, path = t.split(":", 1)
+            ref = json.load(open(f"{ROOT}/data/{ns}/tags/item/{path}.json"))["values"][0]
+    ns, i = ref.split(":", 1)
+    if ns == MOD:
+        lang = json.load(open(f"{A}/lang/en_us.json"))
+        return lang.get(f"item.{MOD}.{i}") or lang[f"block.{MOD}.{i}"]
+    return VANILLA.get(i, i.replace("_", " ").title())
+
+def named(pattern, key):
+    counts = {}
+    for row in pattern:
+        for ch in row:
+            if ch in key: counts[ch] = counts.get(ch, 0) + 1
+    return ", ".join(f"{n}x {name_of(key[ch])}" for ch, n in counts.items())
+
 def craft(name, title=None):
     r = recipe(name)
     pat = [row.ljust(3) for row in r["pattern"]] + ["   "] * (3 - len(r["pattern"]))
-    s = {"kind": "craft_shaped", "pattern": pat, "key": r["key"], "output": out(r)}
+    s = {"kind": "craft_shaped", "pattern": pat, "key": r["key"], "output": out(r), "note": "Crafting Table\n" + named(pat, r["key"])}
     if title: s["title"] = title
     return s
 

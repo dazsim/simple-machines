@@ -19,7 +19,8 @@
         "C": "#c:ingots/copper",
         "S": "minecraft:stick"
       },
-      "output": "simplemachines:screwdriver"
+      "output": "simplemachines:screwdriver",
+      "note": "Crafting Table\n1x Copper Ingot, 1x Stick"
     },
     {
       "kind": "craft_shaped",
@@ -33,7 +34,8 @@
         "C": "#c:ingots/copper",
         "F": "minecraft:furnace"
       },
-      "output": "simplemachines:alloy_furnace"
+      "output": "simplemachines:alloy_furnace",
+      "note": "Crafting Table\n6x Bricks, 2x Copper Ingot, 1x Furnace"
     },
     {
       "kind": "craft_shaped",
@@ -47,7 +49,8 @@
         "P": "minecraft:piston",
         "F": "minecraft:furnace"
       },
-      "output": "simplemachines:extruder"
+      "output": "simplemachines:extruder",
+      "note": "Crafting Table\n7x Iron Ingot, 1x Piston, 1x Furnace"
     }
   ]
 }

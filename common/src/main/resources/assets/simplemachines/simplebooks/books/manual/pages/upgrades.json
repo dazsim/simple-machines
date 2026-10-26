@@ -21,7 +21,8 @@
         "Q": "#c:gems/quartz",
         "B": "simplemachines:control_board"
       },
-      "output": "simplemachines:overclocker_circuit"
+      "output": "simplemachines:overclocker_circuit",
+      "note": "Crafting Table\n4x Redstone Copper Ingot, 2x Gold Ingot, 2x Nether Quartz, 1x Control Board"
     },
     {
       "kind": "craft_shaped",
@@ -35,7 +36,8 @@
         "P": "simplemachines:power_cell",
         "B": "simplemachines:control_board"
       },
-      "output": "simplemachines:energy_cell"
+      "output": "simplemachines:energy_cell",
+      "note": "Crafting Table\n2x Steel Sheet, 2x Power Cell, 1x Control Board"
     },
     {
       "kind": "text",

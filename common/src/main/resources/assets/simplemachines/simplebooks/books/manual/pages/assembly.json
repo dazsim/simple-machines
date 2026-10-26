@@ -33,7 +33,8 @@
         "D": "#c:dusts/redstone",
         "C": "#c:ingots/copper"
       },
-      "output": "simplemachines:control_board"
+      "output": "simplemachines:control_board",
+      "note": "Crafting Table\n2x Redstone Copper Ingot, 1x Redstone Dust, 3x Copper Ingot"
     },
     {
       "kind": "craft_shaped",
@@ -49,6 +50,7 @@
         "G": "minecraft:grindstone"
       },
       "output": "simplemachines:crusher_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Grindstone",
       "title": "Assembly (Crusher)"
     }
   ]

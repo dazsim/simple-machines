@@ -1093,6 +1093,9 @@ def recipe_unlocks():
         for i in ings:
             if i and i not in seen:
                 seen.append(i)
+        if name.endswith("_assembly"):
+            # a chassis in hand shows everything that can go on it
+            seen += [f"{MOD}:iron_chassis", f"{MOD}:steel_chassis"]
         crit = {"has_the_recipe": {"trigger": "minecraft:recipe_unlocked", "conditions": {"recipe": f"{MOD}:{name}"}}}
         for n, i in enumerate(seen):
             crit[f"has_{n}"] = {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"items": i}]}}

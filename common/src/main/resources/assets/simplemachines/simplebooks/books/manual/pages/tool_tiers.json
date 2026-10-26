@@ -24,7 +24,8 @@
         "S": "#c:plates/steel",
         "T": "#c:rods/steel"
       },
-      "output": "simplemachines:diamond_drill_bit"
+      "output": "simplemachines:diamond_drill_bit",
+      "note": "Crafting Table\n4x Diamond, 2x Steel Sheet, 1x Steel Rod"
     },
     {
       "kind": "craft_shaped",
@@ -37,7 +38,8 @@
         "D": "minecraft:diamond",
         "C": "minecraft:iron_chain"
       },
-      "output": "simplemachines:diamond_tipped_chain"
+      "output": "simplemachines:diamond_tipped_chain",
+      "note": "Crafting Table\n4x Diamond, 4x Iron Chain"
     },
     {
       "kind": "sequence",

@@ -36,6 +36,26 @@
           }
         ]
       }
+    },
+    "has_3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "simplemachines:iron_chassis"
+          }
+        ]
+      }
+    },
+    "has_4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "simplemachines:steel_chassis"
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -43,7 +63,9 @@
       "has_the_recipe",
       "has_0",
       "has_1",
-      "has_2"
+      "has_2",
+      "has_3",
+      "has_4"
     ]
   ],
   "rewards": {

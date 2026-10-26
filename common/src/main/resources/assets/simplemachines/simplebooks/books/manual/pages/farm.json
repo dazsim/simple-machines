@@ -22,6 +22,7 @@
         "H": "minecraft:iron_hoe"
       },
       "output": "simplemachines:harvester_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Hoe, 1x Iron Ingot",
       "title": "Crop Harvester"
     },
     {
@@ -38,6 +39,7 @@
         "S": "minecraft:shears"
       },
       "output": "simplemachines:shearer_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Shears, 1x Iron Ingot",
       "title": "Shearer"
     },
     {
@@ -55,6 +57,7 @@
         "L": "minecraft:lava_bucket"
       },
       "output": "simplemachines:stone_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 1x Water Bucket, 1x Iron Ingot, 1x Lava Bucket",
       "title": "Stone Generator"
     },
     {
@@ -71,6 +74,7 @@
         "W": "minecraft:water_bucket"
       },
       "output": "simplemachines:water_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Water Bucket, 1x Iron Ingot",
       "title": "Water Generator"
     },
     {
@@ -87,6 +91,7 @@
         "H": "minecraft:beehive"
       },
       "output": "simplemachines:hive_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Beehive",
       "title": "Mechanical Hive"
     }
   ]

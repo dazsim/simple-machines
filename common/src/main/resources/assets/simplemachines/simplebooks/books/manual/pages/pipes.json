@@ -22,7 +22,8 @@
       "output": {
         "item": "simplemachines:item_pipe",
         "count": 8
-      }
+      },
+      "note": "Crafting Table\n2x Iron Sheet, 1x Glass"
     },
     {
       "kind": "text",

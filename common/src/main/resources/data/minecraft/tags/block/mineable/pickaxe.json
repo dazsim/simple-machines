@@ -15,6 +15,7 @@
     "simplemachines:mechanical_hive",
     "simplemachines:shearer",
     "simplemachines:charger",
+    "simplemachines:auto_crafter",
     "simplemachines:iron_chassis",
     "simplemachines:steel_chassis",
     "simplemachines:redstone_copper_cable",

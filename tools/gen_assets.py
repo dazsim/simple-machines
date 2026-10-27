@@ -305,7 +305,7 @@ def main():
 
 NEW = {"battery": "battery", "crusher": "crusher", "harvester": "crop_harvester", "alloy": "alloy_smelter",
        "stone": "stone_generator", "saw": "sawmill", "water": "water_generator", "hive": "mechanical_hive",
-       "shearer": "shearer", "charger": "charger"}
+       "shearer": "shearer", "charger": "charger", "crafter": "auto_crafter"}
 BUILT = ["electric_furnace", "rolling_mill", "solid_fuel_generator"] + list(NEW.values())
 CHASSIS = ["iron_chassis", "steel_chassis"]
 CORES = {"furnace": "electric_furnace", "rolling": "rolling_mill", "generator": "solid_fuel_generator", **NEW}
@@ -324,13 +324,14 @@ PALETTES = {"iron": IRON, "copper": COPPER4, "steel": STEEL}
 FRONT_HOLE = {"furnace": (4, 4, 12, 11), "rolling": (3, 6, 13, 10), "generator": (5, 3, 11, 10),
               "battery": (5, 3, 11, 12), "crusher": (3, 5, 13, 11), "harvester": (3, 4, 13, 10), "alloy": (4, 4, 12, 11),
               "stone": (4, 4, 12, 11), "saw": (3, 6, 13, 10), "water": (5, 4, 11, 11), "hive": (4, 4, 12, 11),
-              "shearer": (3, 5, 13, 10), "charger": (5, 3, 11, 10)}
+              "shearer": (3, 5, 13, 10), "charger": (5, 3, 11, 10), "crafter": (3, 3, 13, 13)}
 TOP_HOLE = {"furnace": (5, 5, 11, 11), "rolling": (4, 6, 12, 10), "generator": None, "crusher": (4, 4, 12, 12),
-            "alloy": (5, 5, 11, 11), "water": (5, 5, 11, 11), "saw": (7, 3, 9, 13)}
+            "alloy": (5, 5, 11, 11), "water": (5, 5, 11, 11), "saw": (7, 3, 9, 13), "crafter": (3, 3, 13, 13)}
 WATER = [(96, 150, 230), (62, 110, 210), (40, 76, 170)]
 HONEY = [(255, 214, 96), (236, 168, 40), (176, 110, 22)]
 LAVA = [(255, 200, 70), (240, 120, 30), (180, 60, 20)]
 GREEN = [(110, 190, 60), (70, 140, 40)]
+PLANK = [(196, 158, 100), (160, 124, 76), (112, 84, 50)]
 
 def frame(pal, seed):
     rnd = random.Random(seed)
@@ -448,6 +449,13 @@ def new_front(t, core, lit, u0, v0, u1, v1):
             px(t, u0 + 1 + i, v0 + i, c(STEEL[0]))
             px(t, u1 - 1 - i, v0 + i, c(STEEL[1]))
         rect(t, u0, v1, u1, v1, c((236, 236, 236) if lit else (190, 190, 190)))
+    elif core == "crafter":
+        for i in range(3):
+            for j in range(3):
+                a, b = u0 + 1 + i * 3, v0 + 1 + j * 3
+                lit_cell = lit and (i + j) % 2 == 0
+                rect(t, a, b, a + 1, b + 1, c(PLANK[1] if not lit_cell else HONEY[0]))
+                px(t, a, b, c(PLANK[0] if not lit_cell else (255, 240, 170)))
     elif core == "charger":
         bolt = [(3, 0), (2, 1), (2, 2), (1, 3), (2, 3), (3, 3), (3, 4), (2, 5), (2, 6)]
         for (a, b) in bolt:
@@ -478,6 +486,12 @@ def core_top(core):
         elif core == "water":
             rect(t, x0, z0, x1 - 1, z1 - 1, WATER[2] + (255,))
             rect(t, x0 + 1, z0 + 1, x1 - 3, z0 + 1, WATER[0] + (255,))
+        elif core == "crafter":
+            for i in range(3):
+                for j in range(3):
+                    a, b = x0 + 1 + i * 3, z0 + 1 + j * 3
+                    rect(t, a, b, a + 1, b + 1, PLANK[1] + (255,))
+                    px(t, a, b, PLANK[0] + (255,))
         elif core == "rolling":
             rect(t, x0 + 1, z0 + 1, x1 - 2, z0 + 1, COPPER[0] + (255,))
             rect(t, x0 + 1, z1 - 2, x1 - 2, z1 - 2, COPPER[1] + (255,))
@@ -734,7 +748,8 @@ def built(shaped, rec):
                "conditions": [{"condition": "minecraft:survives_explosion"}],
                "entries": [{"type": "minecraft:item", "name": f"{MOD}:{block}", "functions": [
                    {"function": "minecraft:copy_state", "block": f"{MOD}:{block}", "properties": ["tier", "panel"]},
-                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]}]}]}],
+                   {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]
+                    + ([f"{MOD}:crafter_pattern"] if block == "auto_crafter" else [])}]}]}],
                "random_sequence": f"{MOD}:blocks/{block}"}, f"{D}/{MOD}/loot_table/blocks/{block}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{c}_core"}}, f"{A}/items/{c}_assembly.json")
 
@@ -912,6 +927,40 @@ def powered_gui(layout):
             rect(t, 95 + k, 35 + k, 95 + k, 48 - k, grey)
     return t
 
+def crafter_gui():
+    t = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
+    W, H = 176, 198
+    rect(t, 1, 1, W - 2, H - 2, (198, 198, 198, 255))
+    rect(t, 1, 0, W - 3, 0, (0, 0, 0, 255)); rect(t, 0, 1, 0, H - 3, (0, 0, 0, 255))
+    rect(t, 2, H - 1, W - 2, H - 1, (0, 0, 0, 255)); rect(t, W - 1, 2, W - 1, H - 2, (0, 0, 0, 255))
+    px(t, W - 2, 1, (0, 0, 0, 255)); px(t, 1, H - 2, (0, 0, 0, 255)); px(t, W - 2, H - 2, (0, 0, 0, 255))
+    rect(t, 1, 1, W - 3, 2, (255, 255, 255, 255)); rect(t, 1, 1, 2, H - 3, (255, 255, 255, 255))
+    rect(t, 3, H - 3, W - 2, H - 2, (85, 85, 85, 255)); rect(t, W - 3, 3, W - 2, H - 2, (85, 85, 85, 255))
+    px(t, W - 2, H - 2, (0, 0, 0, 0)); px(t, W - 3, H - 3, (85, 85, 85, 255))
+
+    def slot(x, y, s=18, fill=(139, 139, 139, 255)):
+        rect(t, x, y, x + s - 1, y + s - 1, fill)
+        rect(t, x, y, x + s - 2, y, (55, 55, 55, 255)); rect(t, x, y, x, y + s - 2, (55, 55, 55, 255))
+        rect(t, x + 1, y + s - 1, x + s - 1, y + s - 1, (255, 255, 255, 255)); rect(t, x + s - 1, y + 1, x + s - 1, y + s - 1, (255, 255, 255, 255))
+    for i in range(9):
+        slot(7 + i % 3 * 18, 16 + i // 3 * 18, fill=(118, 118, 118, 255))
+        slot(7 + i * 18, 83)
+        slot(7 + i * 18, 173)
+    for r in range(3):
+        for c in range(9):
+            slot(7 + c * 18, 115 + r * 18)
+    slot(68, 34, fill=(118, 118, 118, 255))
+    for i in range(4):
+        slot(115 + i % 2 * 18, 25 + i // 2 * 18)
+    grey = (139, 139, 139, 255)
+    rect(t, 90, 42, 105, 43, grey)
+    for k in range(8):
+        rect(t, 105 + k, 36 + k, 105 + k, 49 - k, grey)
+    rect(t, 152, 16, 168, 70, (255, 255, 255, 255))
+    rect(t, 152, 16, 167, 69, (55, 55, 55, 255))
+    rect(t, 153, 17, 166, 68, (40, 30, 28, 255))
+    return t
+
 def machines(shaped, rec):
     tb, ti = A + "/textures/block/", A + "/textures/item/"
     save(port_tex(), tb + "port.png")
@@ -920,6 +969,7 @@ def machines(shaped, rec):
     save(pipe_tex(COPPER, 85, COPPER[2]), tb + "item_pipe_extract.png")
     for layout in ["process", "alloy_smelter", "battery", "stone_generator", "mechanical_hive", "grid"]:
         save(powered_gui(layout), A + f"/textures/gui/{layout}.png")
+    save(crafter_gui(), A + "/textures/gui/auto_crafter.png")
     dusts = {"iron": icons.ramp_of(icons.MC + "item/iron_ingot.png"), "copper": icons.ramp_of(icons.MC + "item/copper_ingot.png"),
              "gold": icons.ramp_of(icons.MC + "item/gold_ingot.png")}
     for m, r in dusts.items():
@@ -967,6 +1017,7 @@ def machines(shaped, rec):
     shaped("hive_assembly", ["RCR", "IHI"], {"R": R, "C": C, "I": I, "H": "minecraft:beehive"})
     shaped("shearer_assembly", ["RCR", "SIS"], {"R": R, "C": C, "I": I, "S": "minecraft:shears"})
     shaped("charger_assembly", ["RCR", "ILI"], {"R": R, "C": C, "I": I, "L": "minecraft:lightning_rod"})
+    shaped("crafter_assembly", ["RCR", "IKI"], {"R": R, "C": C, "I": I, "K": "minecraft:crafter"})
 
     def proc(kind_, name, ingredient, result, count=1, bonus=0.0, time=200, tags=()):
         r = {}
@@ -997,7 +1048,7 @@ def machines(shaped, rec):
     lang = json.load(open(f"{A}/lang/en_us.json"))
     names = {"battery": "Battery", "crusher": "Crusher", "crop_harvester": "Crop Harvester", "alloy_smelter": "Alloy Smelter",
              "stone_generator": "Stone Generator", "sawmill": "Sawmill", "water_generator": "Water Generator",
-             "mechanical_hive": "Mechanical Hive", "shearer": "Shearer", "charger": "Charger"}
+             "mechanical_hive": "Mechanical Hive", "shearer": "Shearer", "charger": "Charger", "auto_crafter": "Auto Crafter"}
     for core, block in NEW.items():
         lang[f"block.simplemachines.{block}"] = names[block]
         lang[f"container.simplemachines.{block}"] = names[block]
@@ -1006,6 +1057,23 @@ def machines(shaped, rec):
     lang["item.simplemachines.stone_assembly"] = "Stone Assembly"
     lang["item.simplemachines.water_assembly"] = "Water Assembly"
     lang["item.simplemachines.saw_assembly"] = "Saw Assembly"
+    lang["item.simplemachines.crafter_assembly"] = "Crafter Assembly"
+    lang.update({
+        "gui.simplemachines.ingredients": "Ingredients",
+        "gui.simplemachines.crafter_clear": "Clear pattern",
+        "gui.simplemachines.redstone": "Redstone mode",
+        "gui.simplemachines.redstone_always": "Always on",
+        "gui.simplemachines.redstone_with_signal": "Run with signal",
+        "gui.simplemachines.redstone_without_signal": "Stop with signal",
+        "gui.simplemachines.redstone_click": "Click to change",
+        "gui.simplemachines.crafter_idle": "Set a pattern",
+        "gui.simplemachines.crafter_no_recipe": "No recipe matches this pattern",
+        "gui.simplemachines.crafter_working": "Crafting",
+        "gui.simplemachines.crafter_missing": "Waiting for ingredients",
+        "gui.simplemachines.crafter_full": "Outputs full",
+        "gui.simplemachines.crafter_no_power": "No power",
+        "gui.simplemachines.crafter_off": "Stopped by redstone",
+    })
     lang["block.simplemachines.item_pipe"] = "Item Pipe"
     for m in dusts:
         lang[f"item.simplemachines.{m}_dust"] = f"{m.title()} Dust"

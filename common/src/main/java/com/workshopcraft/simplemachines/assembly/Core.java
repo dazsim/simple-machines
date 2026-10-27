@@ -21,7 +21,8 @@ public enum Core implements StringRepresentable {
     WATER("water", "water_generator"),
     HIVE("hive", "mechanical_hive"),
     SHEARER("shearer", "shearer"),
-    CHARGER("charger", "charger");
+    CHARGER("charger", "charger"),
+    CRAFTER("crafter", "auto_crafter");
 
     private final String name;
     public final String block;

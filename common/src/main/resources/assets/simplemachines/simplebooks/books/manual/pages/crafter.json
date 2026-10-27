@@ -1,0 +1,45 @@
+{
+  "section": "machines",
+  "sort": 2,
+  "title": "Auto Crafter",
+  "subtitle": "Any crafting recipe, on power",
+  "text": "Click items into the 3x3 pattern; nothing is used up. Right click a slot with an empty hand to clear it, or press x to clear the lot. JEI's + button fills the pattern too.\n\nThe Ingredients row holds one stack per ingredient; tools and other unstackables get one slot each. Pipes and hoppers can only put matching items in.\n\nResults and leftovers such as empty buckets or used tools land in the 4 outputs. It waits when they are full. 20 FE/t for 5 seconds a craft, faster on steel. The redstone button picks always on, run with a signal or stop with one.",
+  "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
+  "caption": "Any side can take FE, items or an output port",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "IKI",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "K": "minecraft:crafter"
+      },
+      "output": "simplemachines:crafter_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Iron Ingot, 1x Crafter",
+      "title": "Crafter Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Auto Crafter",
+      "inputs": [
+        "simplemachines:crafter_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:auto_crafter",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

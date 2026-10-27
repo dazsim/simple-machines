@@ -486,6 +486,10 @@ def pages():
          "farm", "The work area sits in front of the machine", "Assemblies",
          [craft("harvester_assembly", "Crop Harvester"), craft("shearer_assembly", "Shearer"), craft("stone_assembly", "Stone Generator"),
           craft("water_assembly", "Water Generator"), craft("hive_assembly", "Mechanical Hive")])
+    page("crafter", "machines", 2, "Auto Crafter", "Any crafting recipe, on power",
+         "Click items into the 3x3 pattern; nothing is used up. Right click a slot with an empty hand to clear it, or press x to clear the lot. JEI's + button fills the pattern too.\n\nThe Ingredients row holds one stack per ingredient; tools and other unstackables get one slot each. Pipes and hoppers can only put matching items in.\n\nResults and leftovers such as empty buckets or used tools land in the 4 outputs. It waits when they are full. 20 FE/t for 5 seconds a craft, faster on steel. The redstone button picks always on, run with a signal or stop with one.",
+         "machines", "Any side can take FE, items or an output port", "Assembly",
+         [craft("crafter_assembly", "Crafter Assembly"), build("crafter_assembly", "auto_crafter", "Auto Crafter")])
     page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",
          "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. Use a screwdriver on a cable side to disconnect it and again to reconnect it. Any of the 16 dyes colours a cable. The Charger, built from a Charger Assembly, fills FE items.",
          "power", "Generator, battery, machine", "Power",

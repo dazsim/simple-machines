@@ -6,9 +6,11 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.resources.Identifier;
 
 import java.util.List;
@@ -54,5 +56,16 @@ public class SimpleMachinesJei implements IModPlugin {
         r.addCraftingStation(GeneratorCategory.TYPE, SimpleMachines.generator);
         for (Core c : SOURCES) r.addCraftingStation(SourceCategory.type(c), SimpleMachines.MACHINES.get(c));
         r.addCraftingStation(RecipeTypes.SMELTING, SimpleMachines.electricFurnace);
+        r.addCraftingStation(RecipeTypes.CRAFTING, SimpleMachines.MACHINES.get(Core.CRAFTER));
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration r) {
+        r.addRecipeTransferHandler(new AutoCrafterTransfer(), RecipeTypes.CRAFTING);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration r) {
+        r.addGhostIngredientHandler(com.workshopcraft.simplemachines.client.AutoCrafterScreen.class, new AutoCrafterTransfer.Ghosts());
     }
 }

@@ -42,6 +42,7 @@ public class SimpleMachinesNeoForgeClient {
             for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) e.register(m, PoweredScreen::new);
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
             e.register(SimpleMachines.FILTER_MENU, com.workshopcraft.simplemachines.client.FilterScreen::new);
+            e.register(SimpleMachines.CRAFTER_MENU, com.workshopcraft.simplemachines.client.AutoCrafterScreen::new);
             e.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
             e.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
             e.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);

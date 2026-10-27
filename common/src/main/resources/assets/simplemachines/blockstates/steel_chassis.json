@@ -9133,6 +9133,708 @@
     },
     {
       "apply": {
+        "model": "simplemachines:block/crafter_core_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_core"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel_loose"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel"
+      },
+      "when": {
+        "facing": "north",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
         "model": "simplemachines:block/control_board_loose"
       },
       "when": {
@@ -19729,6 +20431,772 @@
     },
     {
       "apply": {
+        "model": "simplemachines:block/crafter_core_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_core",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel_loose",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
         "model": "simplemachines:block/control_board_loose",
         "y": 90
       },
@@ -30389,6 +31857,772 @@
     },
     {
       "apply": {
+        "model": "simplemachines:block/crafter_core_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_core",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel_loose",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
         "model": "simplemachines:block/control_board_loose",
         "y": 180
       },
@@ -41043,6 +43277,772 @@
       "when": {
         "facing": "west",
         "core": "charger",
+        "panel": "steel",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_core_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_core",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "step": "2|3|4|5|6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_oak_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_spruce_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "spruce",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_birch_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "birch",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_jungle_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "jungle",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_acacia_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "acacia",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_dark_oak_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "dark_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_mangrove_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "mangrove",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cherry_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "cherry",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pale_oak_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "pale_oak",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_bamboo_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "bamboo",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_crimson_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "crimson",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_warped_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "warped",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_white_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "white_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_orange_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "orange_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_magenta_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "magenta_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_blue_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "light_blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_yellow_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "yellow_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_lime_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "lime_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_pink_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "pink_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_gray_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_light_gray_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "light_gray_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_cyan_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "cyan_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_purple_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "purple_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_blue_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "blue_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_brown_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "brown_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_green_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "green_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_red_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "red_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_black_concrete_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "black_concrete",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_iron_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "iron",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_copper_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "copper",
+        "step": "6|7"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel_loose",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
+        "panel": "steel",
+        "step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "simplemachines:block/crafter_steel_front_panel",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "core": "crafter",
         "panel": "steel",
         "step": "6|7"
       }

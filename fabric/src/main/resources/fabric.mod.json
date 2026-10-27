@@ -17,6 +17,9 @@
         ],
         "main": [
             "com.workshopcraft.simplemachines.fabric.SimpleMachinesFabric"
+        ],
+        "jei_mod_plugin": [
+            "com.workshopcraft.simplemachines.compat.jei.SimpleMachinesJei"
         ]
     },
     "depends": {
@@ -27,7 +30,8 @@
         "java": ">=${java_version}"
     },
     "suggests": {
-        "simplebooks": "*"
+        "simplebooks": "*",
+        "jei": "*"
     }
 }
   

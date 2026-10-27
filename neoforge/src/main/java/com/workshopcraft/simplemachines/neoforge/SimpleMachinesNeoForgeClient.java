@@ -22,8 +22,13 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @Mod(value = SimpleMachines.MODID, dist = Dist.CLIENT)
 public class SimpleMachinesNeoForgeClient {
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public SimpleMachinesNeoForgeClient(IEventBus modBus) {
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> ToolEffects.tick(Minecraft.getInstance()));
+        NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, (net.neoforged.neoforge.client.event.RecipesReceivedEvent e) -> {
+            final var map = e.getRecipeMap();
+            com.workshopcraft.simplemachines.compat.jei.ViewerRecipes.source = t -> map.byType((net.minecraft.world.item.crafting.RecipeType) t);
+        });
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterConditionalItemModelPropertyEvent e) ->
                 e.register(SimpleMachines.id("tool_running"), com.workshopcraft.simplemachines.client.ToolRunning.MAP_CODEC));
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent e) ->

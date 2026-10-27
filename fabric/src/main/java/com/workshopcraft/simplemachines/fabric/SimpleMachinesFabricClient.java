@@ -20,6 +20,7 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(ToolEffects::tick);
+        com.workshopcraft.simplemachines.compat.jei.ViewerRecipes.source = SimpleMachinesFabricClient::synced;
         com.workshopcraft.simplemachines.client.ToolRunning.registerDirect(SimpleMachines.id("tool_running"));
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(SimpleMachines.HOT_SPARK,
                 com.workshopcraft.simplemachines.client.HotSparkParticle::provider);
@@ -46,5 +47,12 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
     @SuppressWarnings("unchecked")
     private static <T extends WorkBlockEntity> void renderer(BlockEntityType<?> type) {
         BlockEntityRenderers.register((BlockEntityType<T>) type, WorktopRenderer::new);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static java.util.Collection<? extends net.minecraft.world.item.crafting.RecipeHolder<?>> synced(net.minecraft.world.item.crafting.RecipeType<?> type) {
+        final var level = net.minecraft.client.Minecraft.getInstance().level;
+        if (level == null) return java.util.List.of();
+        return level.recipeAccess().getSynchronizedRecipes().getAllOfType((net.minecraft.world.item.crafting.RecipeType) type);
     }
 }

@@ -3,6 +3,23 @@ plugins {
     id 'maven-publish'
 }
 
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'BlameJared'
+                url = 'https://maven.blamejared.com'
+            }
+        }
+        filter { includeGroup('mezz.jei') }
+    }
+}
+
+dependencies {
+    // recipe viewer API, optional at runtime
+    compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+}
+
 base {
     archivesName = "${mod_id}-${project.name}-${minecraft_version}"
 }

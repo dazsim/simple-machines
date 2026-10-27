@@ -41,6 +41,8 @@ public class SimpleMachinesNeoForge {
         modBus.addListener(SimpleMachinesNeoForge::onRegister);
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent e) -> e.sendRecipes(SimpleMachines.ALLOYING,
+                SimpleMachines.EXTRUDING, SimpleMachines.ROLLING, SimpleMachines.CRUSHING, SimpleMachines.SAWING));
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {
             if (e.getEntity() instanceof ServerPlayer p) RecipeUnlocks.onLogin(p);
         });

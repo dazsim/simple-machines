@@ -12,7 +12,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/copper"
+            "items": "#simplemachines:ingots_or_dusts/copper"
           }
         ]
       }

@@ -50,6 +50,10 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerRecipeSerializers(direct(BuiltInRegistries.RECIPE_SERIALIZER));
         // Fabric only syncs opted-in serializers to the client; JEI and EMI need the manual recipe
         RecipeSynchronization.synchronizeRecipeSerializer(KeepToolRecipe.SERIALIZER);
+        for (var serializer : java.util.List.of(SimpleMachines.ALLOYING_SERIALIZER, SimpleMachines.EXTRUDING_SERIALIZER,
+                SimpleMachines.ROLLING_SERIALIZER, SimpleMachines.CRUSHING_SERIALIZER, SimpleMachines.SAWING_SERIALIZER)) {
+            RecipeSynchronization.synchronizeRecipeSerializer(serializer);
+        }
         for (BlockEntityType<? extends WorkBlockEntity> type : SimpleMachines.WORK_ENTITIES) work(type);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.alloyFurnaceEntity);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);

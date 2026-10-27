@@ -12,7 +12,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/iron"
+            "items": "#simplemachines:ingots_or_dusts/iron"
           }
         ]
       }

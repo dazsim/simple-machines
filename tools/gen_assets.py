@@ -267,9 +267,12 @@ def main():
         jdump({"values": [f"{MOD}:{m}_rod"]}, f"{D}/c/tags/item/rods/{m}.json")
 
     rec = f"{D}/{MOD}/recipe/"
-    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": "#c:ingots/copper"}, "second": {"ingredient": "#c:dusts/redstone"},
+    # alloys take the metal as an ingot or as dust, from any mod
+    for m in ["iron", "copper"]:
+        jdump({"values": [f"#c:ingots/{m}", f"#c:dusts/{m}"]}, f"{D}/{MOD}/tags/item/ingots_or_dusts/{m}.json")
+    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": f"#{MOD}:ingots_or_dusts/copper"}, "second": {"ingredient": "#c:dusts/redstone"},
            "result": {"id": f"{MOD}:redstone_copper_ingot"}, "cooking_time": 200}, rec + "alloying/redstone_copper_ingot.json")
-    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": "#c:ingots/iron"}, "second": {"ingredient": "#minecraft:coals", "count": 2},
+    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": f"#{MOD}:ingots_or_dusts/iron"}, "second": {"ingredient": "#minecraft:coals", "count": 2},
            "result": {"id": f"{MOD}:steel_ingot"}, "cooking_time": 400}, rec + "alloying/steel_ingot.json")
     for m in ["iron", "copper"]:
         jdump({"type": f"{MOD}:extruding", "input": {"ingredient": f"#c:ingots/{m}"},
@@ -1070,6 +1073,24 @@ def upgrades(shaped):
     lang["message.simplemachines.upgrade_late"] = "Upgrades go in before the side panels"
     lang["message.simplemachines.upgrades_full"] = "Both upgrade slots are full"
     lang["message.simplemachines.upgrade_fitted"] = "Upgrade fitted (%s/%s)"
+    # recipe viewer pages
+    for k, v in {
+        "alloying": "Alloying", "rolling": "Rolling", "extruding": "Extruding", "crushing": "Crushing",
+        "sawing": "Sawing", "generator": "Generator Fuel", "stone_generator": "Stone Generator",
+        "water_generator": "Water Generator", "mechanical_hive": "Mechanical Hive",
+        "line": "%s: %s", "powered": "%s s, %s FE", "per_tick": "%s FE per tick",
+        "steel_time": "Steel chassis: %s s, %s FE", "fuel_time": "%s s, burns fuel",
+        "mode_rods": "Set the mill to Rods", "mode_sheets": "Set the mill to Sheets",
+        "mode_tip": "Click the mode button in the rolling mill screen",
+        "bonus": "Steel chassis: %s%% chance of +1", "bonus_tip": "Only on a steel chassis",
+        "burns": "Burns %s s", "iron_chassis": "Iron", "steel_chassis": "Steel",
+        "makes": "%s chassis: %s FE", "generator_note": "Pauses while its buffer is full",
+        "beside": "Next to the machine, not inside it",
+        "stone_note": "Water and lava beside it",
+        "water_note": "2 water sources beside it",
+        "hive_note": "Honey only if given bottles",
+    }.items():
+        lang[f"jei.simplemachines.{k}"] = v
     jdump(lang, f"{A}/lang/en_us.json")
     B = f"{MOD}:control_board"
     shaped("overclocker_circuit", ["RGR", "QBQ", "RGR"], {"R": f"{MOD}:redstone_copper_ingot", "G": "#c:ingots/gold", "Q": "#c:gems/quartz", "B": B})

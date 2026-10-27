@@ -1,7 +1,7 @@
 {
   "type": "simplemachines:alloying",
   "first": {
-    "ingredient": "#c:ingots/copper"
+    "ingredient": "#simplemachines:ingots_or_dusts/copper"
   },
   "second": {
     "ingredient": "#c:dusts/redstone"

@@ -11,7 +11,7 @@
     {
       "kind": "process",
       "inputs": [
-        "#c:ingots/iron",
+        "#simplemachines:ingots_or_dusts/iron",
         {
           "item": "#minecraft:coals",
           "count": 2
@@ -23,7 +23,7 @@
     {
       "kind": "process",
       "inputs": [
-        "#c:ingots/copper",
+        "#simplemachines:ingots_or_dusts/copper",
         "#c:dusts/redstone"
       ],
       "appliance": "simplemachines:alloy_furnace",

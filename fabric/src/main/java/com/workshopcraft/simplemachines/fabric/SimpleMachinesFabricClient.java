@@ -27,6 +27,7 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
                 com.workshopcraft.simplemachines.client.HotSparkParticle::whiteProvider);
         com.workshopcraft.simplemachines.client.ToolSpin.registerDirect(SimpleMachines.id("spin"));
         MenuScreens.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
+        MenuScreens.register(SimpleMachines.FILTER_MENU, com.workshopcraft.simplemachines.client.FilterScreen::new);
         MenuScreens.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
         MenuScreens.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);

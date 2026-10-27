@@ -95,6 +95,12 @@ public class SimpleMachines {
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> ROLLING_MILL_MENU = new MenuType<>(EnergyMenu::rollingMill, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> ELECTRIC_FURNACE_MENU = new MenuType<>(EnergyMenu::electricFurnace, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.pipe.FilterMenu> FILTER_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.pipe.FilterMenu::client, FeatureFlags.VANILLA_SET);
+    public static final DataComponentType<com.workshopcraft.simplemachines.pipe.PipeFilter> FILTER =
+            DataComponentType.<com.workshopcraft.simplemachines.pipe.PipeFilter>builder()
+                    .persistent(com.workshopcraft.simplemachines.pipe.PipeFilter.CODEC)
+                    .networkSynchronized(com.workshopcraft.simplemachines.pipe.PipeFilter.STREAM_CODEC).build();
     public static final DataComponentType<Integer> ENERGY = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
@@ -129,6 +135,8 @@ public class SimpleMachines {
     public static Block steelChassis;
     public static Block cable;
     public static Block itemPipe;
+    public static Block fluidPipe;
+    public static Item pipeFilter;
     public static Item screwdriver;
     public static Item controlBoard;
     public static Item ironToolFrame;
@@ -218,6 +226,10 @@ public class SimpleMachines {
         itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
+        fluidPipe = new com.workshopcraft.simplemachines.pipe.FluidPipeBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("fluid_pipe"))).mapColor(MapColor.COLOR_ORANGE).strength(0.5F)
+                .sound(SoundType.COPPER).noOcclusion());
+        r.accept(id("fluid_pipe"), fluidPipe);
         toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("tool_stand"))).mapColor(MapColor.METAL).strength(2.0F)
                 .sound(SoundType.METAL).noOcclusion());
@@ -261,6 +273,8 @@ public class SimpleMachines {
         add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
         for (Core core : NEW_CORES) add(r, core.block, new MachineItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
+        add(r, "fluid_pipe", new BlockItem(fluidPipe, props("fluid_pipe").useBlockDescriptionPrefix()));
+        pipeFilter = add(r, "pipe_filter", new com.workshopcraft.simplemachines.pipe.PipeFilterItem(props("pipe_filter")));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
@@ -304,6 +318,7 @@ public class SimpleMachines {
         r.accept(id("tool_frame"), TOOL_FRAME);
         r.accept(id("tool_parts"), TOOL_PARTS);
         r.accept(id("tool_tip"), TOOL_TIP);
+        r.accept(id("filter"), FILTER);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -343,7 +358,7 @@ public class SimpleMachines {
         WORK_ENTITIES.add(electricFurnaceEntity);
         chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
         r.accept(id("chassis"), chassisEntity);
-        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe));
+        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe, fluidPipe));
         r.accept(id("conduit"), conduitEntity);
         toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));
         r.accept(id("tool_stand"), toolStandEntity);
@@ -364,6 +379,7 @@ public class SimpleMachines {
         r.accept(id("solid_fuel_generator"), GENERATOR_MENU);
         r.accept(id("rolling_mill"), ROLLING_MILL_MENU);
         r.accept(id("electric_furnace"), ELECTRIC_FURNACE_MENU);
+        r.accept(id("pipe_filter"), FILTER_MENU);
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> r) {

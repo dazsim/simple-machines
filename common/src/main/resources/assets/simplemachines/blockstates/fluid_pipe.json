@@ -1,0 +1,168 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe"
+      }
+    },
+    {
+      "when": {
+        "north": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm"
+      }
+    },
+    {
+      "when": {
+        "north": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar"
+      }
+    },
+    {
+      "when": {
+        "north": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab"
+      }
+    },
+    {
+      "when": {
+        "east": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "up": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "up": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "pipe|link|extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_arm",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "link"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_collar",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "extract"
+      },
+      "apply": {
+        "model": "simplemachines:block/fluid_pipe_grab",
+        "x": 90
+      }
+    }
+  ]
+}

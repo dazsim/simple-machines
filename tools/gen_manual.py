@@ -232,6 +232,34 @@ def d_pipes():
     sh.text((320, 90), "input  >  output  >  disconnected  >  input", 12, SOFT)
     sh.save("pipes")
 
+def d_filters():
+    sh = Sheet()
+    sh.line((60, 200), (580, 200), 2.0); sh.line((60, 224), (580, 224), 2.0)
+    for x, label, sub in [(140, "allow: iron", "gets iron first"), (320, "deny: iron", "anything else"), (500, "no filter", "overflow")]:
+        sh.poly([(x - 30, 252), (x + 30, 252), (x + 30, 330), (x - 30, 330)])
+        sh.text((x, 291), "inv", 12, SOFT)
+        sh.poly([(x - 16, 226), (x + 16, 226), (x + 16, 236), (x - 16, 236)], 1.6)
+        if x == 500: sh.poly([(x - 16, 226), (x + 16, 226), (x + 16, 236), (x - 16, 236)], 1.0, SOFT)
+        sh.arrow((x, 236), (x, 250))
+        sh.text((x, 350), label, 13); sh.text((x, 370), sub, 11, SOFT)
+    for x in range(80, 580, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
+    sh.text((320, 60), "FILTERS ON INPUT ENDS", 14)
+    sh.text((320, 90), "matching filters first, then the rest", 12, SOFT)
+    sh.save("filters")
+
+def d_fluids():
+    sh = Sheet()
+    sh.poly([(60, 150), (160, 150), (160, 290), (60, 290)]); sh.text((110, 310), "tank", 12)
+    sh.line((160, 200), (480, 200), 2.0); sh.line((160, 224), (480, 224), 2.0)
+    for x in range(180, 470, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
+    sh.poly([(300, 204), (340, 204), (340, 220), (300, 220)], 1.2, SOFT)
+    sh.text((320, 250), "glass window", 11, SOFT)
+    sh.poly([(480, 150), (580, 150), (580, 290), (480, 290)]); sh.text((530, 310), "machine", 12)
+    sh.text((320, 60), "FLUID PIPE", 14)
+    sh.text((320, 90), "same ends and filters as item pipes", 12, SOFT)
+    sh.text((320, 370), "the window shows what is flowing", 12, SOFT)
+    sh.save("fluids")
+
 def d_output():
     sh = Sheet(); P = iso((210, 200), 0.95)
     machine(sh, P, port=True)
@@ -406,6 +434,15 @@ def pages():
          "pipes", "One pipe, three ends", "Pipe",
          [craft("item_pipe"), text("Machines only accept items they have a recipe for, and only give up their outputs."),
           text("Use any of the 16 dyes on a placed pipe or cable to keep runs apart: two colours never join, plain joins any colour. They drop plain.")])
+    page("filters", "items", 2, "Pipe Filters", "Sort what goes where",
+         "Use a Pipe Filter on an input end of an item or fluid pipe to fit it. Right click the filter with an empty hand to set it up: put items in the 9 slots as a pattern.\n\nAllow: the end takes only what is listed, and gets it first.\nDeny: the end takes anything not listed.\nTags: match by item tag instead of the exact item.\nData: also match names, enchantments and other data.",
+         "filters", "Allow ends first, then the rest", "Filter",
+         [craft("pipe_filter"), text("Items go to matching Allow ends in turn. Only when none of them can take more do they go to plain ends and Deny ends that do not list them."),
+          text("Breaking the pipe or changing the end with the screwdriver drops the filter with its settings kept.")])
+    page("fluids", "items", 3, "Fluid Pipes", "Copper pipes with a window",
+         "Fluid pipes work like item pipes but move fluids, 250 mB every half second from each output end. They connect to tanks and machines from other mods, and to cauldrons.\n\nThe glass window shows the fluid while it moves. Filters work the same way: put a bucket of the fluid, or anything holding it, in a slot.",
+         "fluids", "Tank to machine", "Pipe",
+         [craft("fluid_pipe"), text("Fluid and item pipes never join each other. Dyes keep fluid runs apart in the same way.")])
     page("output", "items", 1, "Auto-output", "Push outputs into the next block",
          "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
          "output", "Machine pushing into a chest", "Sides",
@@ -436,7 +473,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_filters, d_fluids, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

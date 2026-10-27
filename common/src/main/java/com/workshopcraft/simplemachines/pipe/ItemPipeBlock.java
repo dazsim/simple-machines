@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import com.workshopcraft.simplemachines.cable.ConduitBlockEntity;
 import com.workshopcraft.simplemachines.cable.Conduits;
+import com.workshopcraft.simplemachines.SimpleMachines;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -37,6 +38,8 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
     public static final int BATCH = 8;
     public static final Map<Direction, EnumProperty<Link>> LINKS = new EnumMap<>(Direction.class);
     private static final VoxelShape[] SHAPES = new VoxelShape[64];
+    private static final VoxelShape[] FILTERED = new VoxelShape[64 * 64];
+    private static final VoxelShape[] FILTER_BOXES = new VoxelShape[6];
 
     static {
         for (Direction d : Direction.values()) LINKS.put(d, EnumProperty.create(d.getSerializedName(), Link.class));
@@ -50,6 +53,20 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
             for (int i = 0; i < 6; i++) if ((mask & 1 << i) != 0) shape = Shapes.or(shape, arms[i]);
             SHAPES[mask] = shape;
         }
+        for (Direction d : Direction.values()) {
+            FILTER_BOXES[d.get3DDataValue()] = Shapes.or(face(d, 4.5, 11.5, 0, 1), face(d, 5.5, 10.5, 1, 4));
+        }
+    }
+
+    /** A box square across the face toward d, from depth a to b in from that face. */
+    private static VoxelShape face(Direction d, double lo, double hi, double a, double b) {
+        final double n0 = d.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 16 - b : a;
+        final double n1 = d.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 16 - a : b;
+        return switch (d.getAxis()) {
+            case X -> Block.box(n0, lo, lo, n1, hi, hi);
+            case Y -> Block.box(lo, n0, lo, hi, n1, hi);
+            case Z -> Block.box(lo, lo, n0, hi, hi, n1);
+        };
     }
 
     public ItemPipeBlock(Properties properties) {
@@ -60,7 +77,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
     }
 
     @Override
-    protected MapCodec<ItemPipeBlock> codec() {
+    protected MapCodec<? extends ItemPipeBlock> codec() {
         return CODEC;
     }
 
@@ -68,11 +85,22 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         return state.getBlock() instanceof ItemPipeBlock ? state.getValue(LINKS.get(d)) : Link.NONE;
     }
 
-    private static Link connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, Link current) {
-        if (neighbour.getBlock() instanceof ItemPipeBlock) return ConduitBlockEntity.joins(level, pos, dir) ? Link.PIPE : Link.NONE;
+    protected Transfer.Lookup lookup() {
+        return Transfer.lookup;
+    }
+
+    /** Moves one batch out of the block at from into the network. */
+    protected void pull(PipeNetwork net, ServerLevel level, BlockPos from, Direction side) {
+        net.pull(level, from, side);
+    }
+
+    private Link connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, Link current) {
+        if (neighbour.getBlock() instanceof ItemPipeBlock other) {
+            return other.getClass() == getClass() && ConduitBlockEntity.joins(level, pos, dir) ? Link.PIPE : Link.NONE;
+        }
         if (neighbour.isAir()) return Link.NONE;
         if (!(level instanceof Level real)) return current;
-        if (!Transfer.lookup.has(real, pos.relative(dir), dir.getOpposite())) return Link.NONE;
+        if (!lookup().has(real, pos.relative(dir), dir.getOpposite())) return Link.NONE;
         return current.end() ? current : Link.LINK;
     }
 
@@ -92,16 +120,21 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
                                      Direction dir, BlockPos neighbourPos, BlockState neighbour, RandomSource random) {
         final EnumProperty<Link> p = LINKS.get(dir);
         final BlockState next = state.setValue(p, connects(level, pos, dir, neighbour, state.getValue(p)));
-        if (next != state && level instanceof ServerLevel server) PipeNetwork.invalidate(server);
+        if (next != state && level instanceof ServerLevel server) {
+            PipeNetwork.invalidate(server);
+            Pipes.dropLostFilters(server, pos, state, next);
+        }
         return next;
     }
 
     @Override
     public BlockState recompute(Level level, BlockPos pos, BlockState state) {
+        final BlockState old = state;
         for (Direction d : Direction.values()) {
             final EnumProperty<Link> p = LINKS.get(d);
             state = state.setValue(p, connects(level, pos, d, level.getBlockState(pos.relative(d)), state.getValue(p)));
         }
+        if (level instanceof ServerLevel server) Pipes.dropLostFilters(server, pos, old, state);
         return state;
     }
 
@@ -113,7 +146,13 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
     @Override
     protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
                                           InteractionHand hand, BlockHitResult hit) {
+        if (held.is(SimpleMachines.pipeFilter)) return Pipes.fitFilter(held, state, level, pos, player, hit);
         return Conduits.dye(held, state, level, pos, player);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return Pipes.openFilter(state, level, pos, player, hit);
     }
 
     public static boolean extracts(BlockState state) {
@@ -134,7 +173,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         final PipeNetwork net = PipeNetwork.of(level, pos);
         for (Direction d : Direction.values()) {
             if (state.getValue(LINKS.get(d)) != Link.EXTRACT) continue;
-            net.pull(level, pos.relative(d), d.getOpposite());
+            pull(net, level, pos.relative(d), d.getOpposite());
         }
         level.scheduleTick(pos, this, INTERVAL);
     }
@@ -149,7 +188,16 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         int mask = 0;
         final Direction[] dirs = Direction.values();
         for (int i = 0; i < 6; i++) if (state.getValue(LINKS.get(dirs[i])).drawn()) mask |= 1 << i;
-        return SHAPES[mask];
+        final int filters = level.getBlockEntity(pos) instanceof ConduitBlockEntity be ? be.filterMask() & mask : 0;
+        if (filters == 0) return SHAPES[mask];
+        final int key = mask | filters << 6;
+        VoxelShape shape = FILTERED[key];
+        if (shape == null) {
+            shape = SHAPES[mask];
+            for (Direction d : dirs) if ((filters & 1 << d.get3DDataValue()) != 0) shape = Shapes.or(shape, FILTER_BOXES[d.get3DDataValue()]);
+            FILTERED[key] = shape;
+        }
+        return shape;
     }
 
     @Override

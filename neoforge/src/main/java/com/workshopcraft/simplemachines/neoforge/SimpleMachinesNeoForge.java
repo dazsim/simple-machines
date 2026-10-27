@@ -47,14 +47,7 @@ public class SimpleMachinesNeoForge {
                 return n;
             }
         };
-        Transfer.lookup = (level, pos, side) -> level.getCapability(Capabilities.Item.BLOCK, pos, side) != null;
-        Transfer.mover = (level, from, fromSide, to, toSide, max) -> {
-            final ResourceHandler<ItemResource> source = level.getCapability(Capabilities.Item.BLOCK, from, fromSide);
-            final ResourceHandler<ItemResource> target = level.getCapability(Capabilities.Item.BLOCK, to, toSide);
-            if (source == null || target == null) return 0;
-            return ResourceHandlerUtil.moveStacking(source, target, r -> true, max, null);
-        };
-        Transfer.invalidator = (level, pos) -> level.invalidateCapabilities(pos);
+        NeoTransfer.install();
         ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
             @Override
             public boolean chargeable(ItemStack stack) {

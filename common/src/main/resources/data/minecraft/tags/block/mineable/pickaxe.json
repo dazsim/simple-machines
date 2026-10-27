@@ -19,6 +19,7 @@
     "simplemachines:steel_chassis",
     "simplemachines:redstone_copper_cable",
     "simplemachines:item_pipe",
-    "simplemachines:tool_stand"
+    "simplemachines:tool_stand",
+    "simplemachines:fluid_pipe"
   ]
 }

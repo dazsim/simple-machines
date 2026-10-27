@@ -7,6 +7,7 @@ import icons
 import powered_icons
 import gen_manual
 import gen_tools
+import gen_pipes
 
 R = "common/src/main/resources"
 A = R + "/assets/simplemachines"
@@ -295,6 +296,7 @@ def main():
     machines(shaped, rec)
     powered(shaped)
     upgrades(shaped)
+    gen_pipes.main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, pipe_tex)
 
 # ---- assembled machines, chassis, parts and cable ----
 

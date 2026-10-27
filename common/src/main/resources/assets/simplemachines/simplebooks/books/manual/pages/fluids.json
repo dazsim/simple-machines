@@ -1,0 +1,33 @@
+{
+  "section": "items",
+  "sort": 3,
+  "title": "Fluid Pipes",
+  "subtitle": "Copper pipes with a window",
+  "text": "Fluid pipes work like item pipes but move fluids, 250 mB every half second from each output end. They connect to tanks and machines from other mods, and to cauldrons.\n\nThe glass window shows the fluid while it moves. Filters work the same way: put a bucket of the fluid, or anything holding it, in a slot.",
+  "drawing": "simplemachines:textures/simplebooks/manual/fluids.png",
+  "caption": "Tank to machine",
+  "right_title": "Pipe",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CGC",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "C": "#c:plates/copper",
+        "G": "#c:glass_blocks"
+      },
+      "output": {
+        "item": "simplemachines:fluid_pipe",
+        "count": 8
+      },
+      "note": "Crafting Table\n2x Copper Sheet, 1x Glass"
+    },
+    {
+      "kind": "text",
+      "text": "Fluid and item pipes never join each other. Dyes keep fluid runs apart in the same way."
+    }
+  ]
+}

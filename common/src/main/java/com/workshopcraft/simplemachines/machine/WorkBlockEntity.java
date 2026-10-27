@@ -196,7 +196,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         if (!any) return;
         for (Direction d : Direction.values()) {
             if ((outputs & Ported.bit(d)) == 0) continue;
-            Transfer.mover.move(level, pos, d, pos.relative(d), d.getOpposite(), PUSH_COUNT);
+            Transfer.mover.move(level, pos, d, pos.relative(d), d.getOpposite(), PUSH_COUNT, s -> true, s -> {});
         }
     }
 

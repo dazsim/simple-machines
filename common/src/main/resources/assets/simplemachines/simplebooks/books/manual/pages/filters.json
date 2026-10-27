@@ -1,0 +1,35 @@
+{
+  "section": "items",
+  "sort": 2,
+  "title": "Pipe Filters",
+  "subtitle": "Sort what goes where",
+  "text": "Use a Pipe Filter on an input end of an item or fluid pipe to fit it. Right click the filter with an empty hand to set it up: put items in the 9 slots as a pattern.\n\nAllow: the end takes only what is listed, and gets it first.\nDeny: the end takes anything not listed.\nTags: match by item tag instead of the exact item.\nData: also match names, enchantments and other data.",
+  "drawing": "simplemachines:textures/simplebooks/manual/filters.png",
+  "caption": "Allow ends first, then the rest",
+  "right_title": "Filter",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " S ",
+        "BCB",
+        " S "
+      ],
+      "key": {
+        "S": "#c:plates/iron",
+        "B": "minecraft:iron_bars",
+        "C": "simplemachines:control_board"
+      },
+      "output": "simplemachines:pipe_filter",
+      "note": "Crafting Table\n2x Iron Sheet, 2x Iron Bars, 1x Control Board"
+    },
+    {
+      "kind": "text",
+      "text": "Items go to matching Allow ends in turn. Only when none of them can take more do they go to plain ends and Deny ends that do not list them."
+    },
+    {
+      "kind": "text",
+      "text": "Breaking the pipe or changing the end with the screwdriver drops the filter with its settings kept."
+    }
+  ]
+}

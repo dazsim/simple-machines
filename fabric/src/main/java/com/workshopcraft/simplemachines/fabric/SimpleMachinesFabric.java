@@ -55,13 +55,7 @@ public class SimpleMachinesFabric implements ModInitializer {
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
                 Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        Transfer.lookup = (level, pos, side) -> ItemStorage.SIDED.find(level, pos, side) != null;
-        Transfer.mover = (level, from, fromSide, to, toSide, max) -> {
-            final Storage<ItemVariant> source = ItemStorage.SIDED.find(level, from, fromSide);
-            final Storage<ItemVariant> target = ItemStorage.SIDED.find(level, to, toSide);
-            if (source == null || target == null) return 0;
-            return (int) StorageUtil.move(source, target, v -> true, max, null);
-        };
+        FabricTransfer.install();
         ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
             @Override
             public boolean chargeable(ItemStack stack) {

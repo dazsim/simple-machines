@@ -145,7 +145,7 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
     shaped("fluid_pipe", ["CGC"], {"C": "#c:plates/copper", "G": "#c:glass_blocks"}, 8)
     shaped("pipe_filter", [" S ", "BCB", " S "], {"S": "#c:plates/iron", "B": "minecraft:iron_bars", "C": f"{MOD}:control_board"})
 
-    tank(A, D, jdump, shaped, model, el, tex, noisy)
+    tank(A, D, jdump, shaped, model, el, tex, noisy, save)
 
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]
@@ -182,54 +182,147 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
     jdump(lang, f"{A}/lang/en_us.json")
 
 
-def tank(A, D, jdump, shaped, model, el, tex, noisy):
+def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
+    # a cuboctahedron: square faces turned 45 degrees on each block face, triangles across the corners
+    import math
     T = (0, 0, 0, 0)
+    rnd = random.Random(11)
+
+    def mul(c, k):
+        return tuple(max(0, min(255, round(v * k))) for v in c[:3]) + (255,)
+
+    def bolt(dx, dy, r=1.0):
+        d = (dx * dx + dy * dy) ** 0.5
+        if d > r: return None
+        if dx + dy < -0.35 * r: return STEEL[0]
+        if dx + dy > 0.45 * r: return STEEL[3]
+        return STEEL[1] if d < 0.55 * r else STEEL[2]
 
     def frame(x, y):
+        d = min(x, y, 15 - x, 15 - y)
         cx, cy = min(x, 15 - x), min(y, 15 - y)
-        if cx <= 2 and cy <= 2:
-            if cx == 0 or cy == 0: return CU_DK
-            if (cx, cy) == (1, 1): return CU_HI
-            if cx == 2 or cy == 2: return CU_LO
-            return noisy(CU, 2)
-        if cx == 0 or cy == 0: return DARK
-        if cx == 1 or cy == 1: return LINKHI if (x < 8 and cx == 1) or (y < 8 and cy == 1) else LINK
+        if (cx, cy) == (1, 1): return STEEL[0] if (x < 8) == (y < 8) else STEEL[1]
+        if (cx, cy) in ((1, 2), (2, 1)): return STEEL[1]
+        if (cx, cy) == (2, 2): return STEEL[3]
+        if d == 0: return CU_DK
+        if d == 1: return CU_HI if x < 8 and x <= y or y < 8 and y < x else CU_MID
+        if d == 2: return CU_LO
         return None
 
-    def side(x, y):
-        f = frame(x, y)
+    def ring(x, y, hole, w):
+        r = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+        if r < hole: return MESH_HOLE
+        if r < hole + 0.9: return CU_DK if x + y < 15 else CU_HI
+        if r < hole + w: return noisy(CU_MID, 2)
+        if r < hole + w + 1.0: return CU_DK
+        return None
+
+    def window(x, y):
+        f = frame(x, y) or ring(x, y, 0.8, 1.6)
         if f: return f
-        if (x, y) in ((3, 6), (4, 5), (5, 4), (6, 3), (4, 7), (7, 4), (11, 12), (12, 11)): return GLASS_TOP
+        if (x, y) in ((4, 6), (5, 5), (6, 4), (3, 6), (6, 3), (11, 12), (12, 11)): return GLASS_TOP
         return T
 
-    def top(x, y):
-        f = frame(x, y)
+    def port(x, y):
+        if (x, y) in ((7, 3), (3, 7), (12, 8), (8, 12)): return STEEL[0]
+        if (x, y) in ((8, 3), (3, 8), (12, 7), (7, 12)): return STEEL[2]
+        f = frame(x, y) or ring(x, y, 1.6, 1.9)
         if f: return f
-        r = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
-        if r < 2.2: return MESH_HOLE
-        if r < 2.9: return CU_DK if x + y > 15 else CU_MID
-        if r < 3.8: return noisy(CU, 2)
-        if r < 4.4: return CU_DK
-        if (x, y) in ((3, 3), (12, 3), (3, 12), (12, 12)): return PIPE_GREY
-        if x == 2 or y == 2: return LINKHI
-        if x == 13 or y == 13: return FL
-        return noisy(LINK, 2)
+        return noisy(CU, 2)
+    port_full = port
 
-    tex("fluid_tank_side", side)
-    tex("fluid_tank_top", top)
-    t = {"side": f"{MOD}:block/fluid_tank_side", "top": f"{MOD}:block/fluid_tank_top", "particle": f"{MOD}:block/fluid_tank_side"}
-    outer = {d: {"texture": "#top" if d in ("up", "down") else "#side", "cullface": d}
-             for d in ("north", "south", "east", "west", "up", "down")}
-    e, f = 0.02, 15.98
-    inner = [
-        el((0, 0, e), (16, 16, e), {"south": {"texture": "#side"}}),
-        el((0, 0, f), (16, 16, f), {"north": {"texture": "#side"}}),
-        el((e, 0, 0), (e, 16, 16), {"east": {"texture": "#side"}}),
-        el((f, 0, 0), (f, 16, 16), {"west": {"texture": "#side"}}),
-        el((0, e, 0), (16, e, 16), {"up": {"texture": "#top"}}),
-        el((0, f, 0), (16, f, 16), {"down": {"texture": "#top"}}),
-    ]
-    model("fluid_tank", [el((0, 0, 0), (16, 16, 16), outer)] + inner, t)
+    tex("fluid_tank_window", window)
+    tex("fluid_tank_port", port_full)
+    tex("fluid_tank_inner", lambda x, y: mul(noisy(CU_LO, 4), 0.55))
+
+    # corner triangles, finer so the slanted edges stay clean
+    s = 8 * math.sqrt(2)
+    hgt = s * math.sqrt(3) / 2
+    N = 64
+    edges = []
+    for (ax, ay), (bx, by) in (((s / 2, 0), (0, hgt)), ((0, hgt), (s, hgt)), ((s, hgt), (s / 2, 0))):
+        nx, ny = by - ay, ax - bx
+        l = math.hypot(nx, ny)
+        edges.append((ax, ay, nx / l, ny / l))
+    cen = (s / 2, hgt * 2 / 3)
+
+    def tri(k, inner=False):
+        im = Image.new("RGBA", (N, N))
+        cell = {}
+        for y in range(N):
+            for x in range(N):
+                px, py = (x + 0.5) / N * s, (y + 0.5) / N * hgt
+                ds = [(px - ax) * nx + (py - ay) * ny for ax, ay, nx, ny in edges]
+                d = min(ds)
+                if d < -0.15: im.putpixel((x, y), T); continue
+                key = (x // 4, y // 4)
+                if key not in cell: cell[key] = noisy(CU, 3)
+                if inner: c = mul(cell[key], 0.55 / k)
+                elif d < 0.25: c = DARK
+                elif d < 0.85: c = STEEL[1] if d < 0.55 else STEEL[2]
+                elif d < 1.1: c = CU_DK
+                else:
+                    c = cell[key]
+                    r = math.hypot(px - cen[0], py - cen[1])
+                    if 1.5 < r < 2.0: c = CU_LO
+                    elif r <= 1.5: c = noisy(CU_MID, 2)
+                    for vx, vy in ((s / 2, 0), (0, hgt), (s, hgt)):
+                        bx, by = vx + (cen[0] - vx) * 0.5, vy + (cen[1] - vy) * 0.5
+                        b = bolt((px - bx) / 0.6, (py - by) / 0.6)
+                        if b: c = b
+                    if c == cell[key] and d < 1.5: c = CU_LO
+                im.putpixel((x, y), mul(c, k))
+        return im
+    tb = A + "/textures/block/"
+    save(tri(0.9), tb + "fluid_tank_corner.png")
+    save(tri(0.66), tb + "fluid_tank_corner_low.png")
+    save(tri(1.0, True), tb + "fluid_tank_corner_inner.png")
+
+    t = {"window": f"{MOD}:block/fluid_tank_window", "port": f"{MOD}:block/fluid_tank_port",
+         "inner": f"{MOD}:block/fluid_tank_inner", "corner": f"{MOD}:block/fluid_tank_corner",
+         "corner_low": f"{MOD}:block/fluid_tank_corner_low", "corner_inner": f"{MOD}:block/fluid_tank_corner_inner",
+         "particle": f"{MOD}:block/fluid_tank_port"}
+    uv = [0, 0, 16, 16]
+    a, b = 8 - s / 2, 8 + s / 2
+    sq = []
+    for axis, lo, hi, out, inn, tx in (("y", "down", "up", None, None, "#port"), ("z", "north", "south", None, None, "#window"),
+                                       ("x", "west", "east", None, None, "#window")):
+        for at, face, back in ((0, lo, hi), (16, hi, lo)):
+            f = {face: {"texture": tx, "uv": uv, "cullface": face}, back: {"texture": "#inner" if tx == "#port" else tx, "uv": uv}}
+            if axis == "y": fr, to, o = (a, at, a), (b, at, b), [8, at, 8]
+            elif axis == "z": fr, to, o = (a, a, at), (b, b, at), [8, 8, at]
+            else: fr, to, o = (at, a, a), (at, b, b), [at, 8, 8]
+            sq.append(el(fr, to, f, {"origin": o, "axis": axis, "angle": 45}))
+    tris = []
+    for cx in (0, 16):
+        for cy in (0, 16):
+            for cz in (0, 16):
+                c = (cx, cy, cz)
+                mids = [tuple(8 if i == j else c[i] for i in range(3)) for j in range(3)]
+                n = [(v - 8) / 8 / math.sqrt(3) for v in c]
+                g = [sum(m[i] for m in mids) / 3 for i in range(3)]
+                A0, B0, C0 = mids
+                bd = [B0[i] - A0[i] for i in range(3)]
+                if sum(x * x for x in bd) == 0: continue
+                l = math.sqrt(sum(x * x for x in bd)); bd = [x / l for x in bd]
+                mid = [(A0[i] + B0[i]) / 2 for i in range(3)]
+                ad = [C0[i] - mid[i] for i in range(3)]; l = math.sqrt(sum(x * x for x in ad)); ad = [x / l for x in ad]
+                cr = [bd[1] * ad[2] - bd[2] * ad[1], bd[2] * ad[0] - bd[0] * ad[2], bd[0] * ad[1] - bd[1] * ad[0]]
+                if sum(cr[i] * n[i] for i in range(3)) < 0: bd = [-x for x in bd]; cr = [-x for x in cr]
+                R = [[bd[i], ad[i], cr[i]] for i in range(3)]
+                be = math.asin(max(-1, min(1, -R[2][0])))
+                al = math.atan2(R[2][1], R[2][2])
+                ga = math.atan2(R[1][0], R[0][0])
+                fr = (g[0] - s / 2, g[1] - hgt / 3, g[2])
+                to = (g[0] + s / 2, g[1] + hgt * 2 / 3, g[2])
+                tx = "#corner" if cy else "#corner_low"
+                faces = {"south": {"texture": tx, "uv": uv}, "north": {"texture": "#corner_inner", "uv": uv}}
+                e = el(tuple(round(v, 4) for v in fr), tuple(round(v, 4) for v in to), faces,
+                       {"origin": [round(v, 4) for v in g], "x": round(math.degrees(al), 4),
+                        "y": round(math.degrees(be), 4), "z": round(math.degrees(ga), 4)})
+                e["shade"] = False
+                tris.append(e)
+    model("fluid_tank", sq + tris, t)
     jdump({"variants": {"": {"model": f"{MOD}:block/fluid_tank"}}}, f"{A}/blockstates/fluid_tank.json")
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}}, f"{A}/items/fluid_tank.json")
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,

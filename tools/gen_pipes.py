@@ -182,10 +182,15 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
     jdump(lang, f"{A}/lang/en_us.json")
 
 
+TANK_E, TANK_K = 0, 4  # edge bevel and corner cut, in pixels
+
+
 def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
-    # a cuboctahedron: square faces turned 45 degrees on each block face, triangles across the corners
+    # a cube with clipped corners, optionally bevelled edges
     import math
     T = (0, 0, 0, 0)
+    E, K, H = TANK_E, TANK_K, 8
+    r2, r3 = math.sqrt(2), math.sqrt(3)
     rnd = random.Random(11)
 
     def mul(c, k):
@@ -198,131 +203,206 @@ def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
         if dx + dy > 0.45 * r: return STEEL[3]
         return STEEL[1] if d < 0.55 * r else STEEL[2]
 
-    def frame(x, y):
-        d = min(x, y, 15 - x, 15 - y)
-        cx, cy = min(x, 15 - x), min(y, 15 - y)
-        if (cx, cy) == (1, 1): return STEEL[0] if (x < 8) == (y < 8) else STEEL[1]
-        if (cx, cy) in ((1, 2), (2, 1)): return STEEL[1]
-        if (cx, cy) == (2, 2): return STEEL[3]
-        if d == 0: return CU_DK
-        if d == 1: return CU_HI if x < 8 and x <= y or y < 8 and y < x else CU_MID
-        if d == 2: return CU_LO
-        return None
+    planes = []
+    for a in range(3):
+        for sg in (-1, 1):
+            n = [0, 0, 0]; n[a] = sg
+            planes.append((n, H, "face"))
+    if E:
+        for a, b in ((0, 1), (0, 2), (1, 2)):
+            for sa in (-1, 1):
+                for sb in (-1, 1):
+                    n = [0, 0, 0]; n[a] = sa / r2; n[b] = sb / r2
+                    planes.append((n, (2 * H - E) / r2, "edge"))
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            for sz in (-1, 1):
+                planes.append(([sx / r3, sy / r3, sz / r3], (3 * H - K) / r3, "corner"))
 
-    def ring(x, y, hole, w):
-        r = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
-        if r < hole: return MESH_HOLE
-        if r < hole + 0.9: return CU_DK if x + y < 15 else CU_HI
-        if r < hole + w: return noisy(CU_MID, 2)
-        if r < hole + w + 1.0: return CU_DK
-        return None
+    dot = lambda a, b: sum(x * y for x, y in zip(a, b))
+    sub = lambda a, b: [x - y for x, y in zip(a, b)]
+    cross = lambda a, b: [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+    unit = lambda a: [x / math.sqrt(dot(a, a)) for x in a]
 
-    def window(x, y):
-        f = frame(x, y) or ring(x, y, 0.8, 1.6)
-        if f: return f
-        if (x, y) in ((4, 6), (5, 5), (6, 4), (3, 6), (6, 3), (11, 12), (12, 11)): return GLASS_TOP
-        return T
+    def poly(i):
+        n, d, _ = planes[i]
+        u = unit(cross([0, 1, 0], n)) if abs(n[1]) < 0.9 else unit(cross([1, 0, 0], n))
+        v = cross(n, u)
+        c = [x * d for x in n]
+        pts = [[c[k] + (u[k] * a + v[k] * b) * 40 for k in range(3)] for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+        for j, (m, e, _) in enumerate(planes):
+            if j == i or len(pts) < 3: continue
+            nxt = []
+            for k in range(len(pts)):
+                a, b = pts[k], pts[(k + 1) % len(pts)]
+                da, db = dot(a, m) - e, dot(b, m) - e
+                if da <= 1e-6: nxt.append(a)
+                if (da <= 1e-6) != (db <= 1e-6):
+                    t = da / (da - db)
+                    nxt.append([a[q] + (b[q] - a[q]) * t for q in range(3)])
+            pts = nxt
+        out = []
+        for p in pts:
+            if not out or math.dist(p, out[-1]) > 1e-4: out.append(p)
+        if len(out) > 1 and math.dist(out[0], out[-1]) < 1e-4: out.pop()
+        return out
 
-    def port(x, y):
-        if (x, y) in ((7, 3), (3, 7), (12, 8), (8, 12)): return STEEL[0]
-        if (x, y) in ((8, 3), (3, 8), (12, 7), (7, 12)): return STEEL[2]
-        f = frame(x, y) or ring(x, y, 1.6, 1.9)
-        if f: return f
-        return noisy(CU, 2)
-    port_full = port
+    def light(n):
+        return n[0] ** 2 * 0.6 + n[2] ** 2 * 0.8 + n[1] ** 2 * (1.0 if n[1] > 0 else 0.5)
 
-    tex("fluid_tank_window", window)
-    tex("fluid_tank_port", port_full)
-    tex("fluid_tank_inner", lambda x, y: mul(noisy(CU_LO, 4), 0.55))
+    def inside(pts2, x, y):
+        # signed distance to a convex ccw polygon, positive inside
+        d = 1e9
+        for k in range(len(pts2)):
+            (ax, ay), (bx, by) = pts2[k], pts2[(k + 1) % len(pts2)]
+            l = math.hypot(bx - ax, by - ay)
+            d = min(d, ((bx - ax) * (y - ay) - (by - ay) * (x - ax)) / l)
+        return d
 
-    # corner triangles, finer so the slanted edges stay clean
-    s = 8 * math.sqrt(2)
-    hgt = s * math.sqrt(3) / 2
+    # square faces, drawn in face pixels on a 64px texture
+    fpoly = poly(1)
+    f2 = [(8 + p[2], 8 - p[1]) for p in fpoly]
+    if inside(f2, 8, 8) < 0: f2 = f2[::-1]
+    lo = min(x for x, _ in f2)
     N = 64
-    edges = []
-    for (ax, ay), (bx, by) in (((s / 2, 0), (0, hgt)), ((0, hgt), (s, hgt)), ((s, hgt), (s / 2, 0))):
-        nx, ny = by - ay, ax - bx
-        l = math.hypot(nx, ny)
-        edges.append((ax, ay, nx / l, ny / l))
-    cen = (s / 2, hgt * 2 / 3)
 
-    def tri(k, inner=False):
+    def face_tex(kind):
         im = Image.new("RGBA", (N, N))
-        cell = {}
+        cells = {}
         for y in range(N):
             for x in range(N):
-                px, py = (x + 0.5) / N * s, (y + 0.5) / N * hgt
-                ds = [(px - ax) * nx + (py - ay) * ny for ax, ay, nx, ny in edges]
-                d = min(ds)
-                if d < -0.15: im.putpixel((x, y), T); continue
-                key = (x // 4, y // 4)
-                if key not in cell: cell[key] = noisy(CU, 3)
-                if inner: c = mul(cell[key], 0.55 / k)
-                elif d < 0.25: c = DARK
-                elif d < 0.85: c = STEEL[1] if d < 0.55 else STEEL[2]
-                elif d < 1.1: c = CU_DK
-                else:
-                    c = cell[key]
-                    r = math.hypot(px - cen[0], py - cen[1])
-                    if 1.5 < r < 2.0: c = CU_LO
-                    elif r <= 1.5: c = noisy(CU_MID, 2)
-                    for vx, vy in ((s / 2, 0), (0, hgt), (s, hgt)):
-                        bx, by = vx + (cen[0] - vx) * 0.5, vy + (cen[1] - vy) * 0.5
-                        b = bolt((px - bx) / 0.6, (py - by) / 0.6)
-                        if b: c = b
-                    if c == cell[key] and d < 1.5: c = CU_LO
-                im.putpixel((x, y), mul(c, k))
+                fx, fy = (x + 0.5) / 4, (y + 0.5) / 4
+                d = inside(f2, fx, fy)
+                if d < 0: continue
+                cx, cy = x // 4, y // 4
+                if (cx, cy) not in cells:
+                    dc = inside(f2, cx + 0.5, cy + 0.5)
+                    lit = cx + cy < 15
+                    c = None
+                    if kind == "bottom":
+                        r = math.hypot(cx - 7.5, cy - 7.5)
+                        if r < 1.6: c = MESH_HOLE
+                        elif r < 2.6: c = STEEL[1] if lit else STEEL[2]
+                        elif dc < 1: c = CU_MID if lit else CU_LO
+                        elif (min(cx, 15 - cx), min(cy, 15 - cy)) == (3, 3): c = STEEL[0] if lit else STEEL[1]
+                        elif dc < 2: c = noisy(CU_LO, 2)
+                        else: c = noisy(CU, 3)
+                    else:
+                        fw = 1 if E else 2
+                        along = max(min(cx, 15 - cx), min(cy, 15 - cy))
+                        if dc < fw:
+                            c = (CU_HI if lit else CU_MID) if dc < 1 else noisy(CU, 3)
+                            if fw - 1 <= dc and along in (4, 5) if kind == "top" else False: c = STEEL[0]
+                        elif dc < fw + 1:
+                            c = STEEL[1] if lit else STEEL[2]
+                            if kind == "top" and along == 5: c = STEEL[0]
+                        else:
+                            c = "glass"
+                    cells[(cx, cy)] = c
+                c = cells[(cx, cy)]
+                if c == "glass":
+                    c = T
+                    if abs(fx + fy - 9.5) < 0.2 and 4.5 < fx < 6 or abs(fx + fy - 11) < 0.2 and 4.5 < fx < 7.5: c = GLASS_TOP
+                if kind == "inner": c = mul(noisy(CU_LO, 4), 0.55)
+                if d < 0.3: c = CU_DK
+                im.putpixel((x, y), c)
         return im
     tb = A + "/textures/block/"
-    save(tri(0.9), tb + "fluid_tank_corner.png")
-    save(tri(0.66), tb + "fluid_tank_corner_low.png")
-    save(tri(1.0, True), tb + "fluid_tank_corner_inner.png")
+    for kind in ("side", "top", "bottom", "inner"):
+        save(face_tex(kind), tb + f"fluid_tank_{kind}.png")
 
-    t = {"window": f"{MOD}:block/fluid_tank_window", "port": f"{MOD}:block/fluid_tank_port",
-         "inner": f"{MOD}:block/fluid_tank_inner", "corner": f"{MOD}:block/fluid_tank_corner",
-         "corner_low": f"{MOD}:block/fluid_tank_corner_low", "corner_inner": f"{MOD}:block/fluid_tank_corner_inner",
-         "particle": f"{MOD}:block/fluid_tank_port"}
-    uv = [0, 0, 16, 16]
-    a, b = 8 - s / 2, 8 + s / 2
-    sq = []
-    for axis, lo, hi, out, inn, tx in (("y", "down", "up", None, None, "#port"), ("z", "north", "south", None, None, "#window"),
-                                       ("x", "west", "east", None, None, "#window")):
-        for at, face, back in ((0, lo, hi), (16, hi, lo)):
-            f = {face: {"texture": tx, "uv": uv, "cullface": face}, back: {"texture": "#inner" if tx == "#port" else tx, "uv": uv}}
-            if axis == "y": fr, to, o = (a, at, a), (b, at, b), [8, at, 8]
-            elif axis == "z": fr, to, o = (a, a, at), (b, b, at), [8, 8, at]
-            else: fr, to, o = (at, a, a), (at, b, b), [at, 8, 8]
-            sq.append(el(fr, to, f, {"origin": o, "axis": axis, "angle": 45}))
-    tris = []
-    for cx in (0, 16):
-        for cy in (0, 16):
-            for cz in (0, 16):
-                c = (cx, cy, cz)
-                mids = [tuple(8 if i == j else c[i] for i in range(3)) for j in range(3)]
-                n = [(v - 8) / 8 / math.sqrt(3) for v in c]
-                g = [sum(m[i] for m in mids) / 3 for i in range(3)]
-                A0, B0, C0 = mids
-                bd = [B0[i] - A0[i] for i in range(3)]
-                if sum(x * x for x in bd) == 0: continue
-                l = math.sqrt(sum(x * x for x in bd)); bd = [x / l for x in bd]
-                mid = [(A0[i] + B0[i]) / 2 for i in range(3)]
-                ad = [C0[i] - mid[i] for i in range(3)]; l = math.sqrt(sum(x * x for x in ad)); ad = [x / l for x in ad]
-                cr = [bd[1] * ad[2] - bd[2] * ad[1], bd[2] * ad[0] - bd[0] * ad[2], bd[0] * ad[1] - bd[1] * ad[0]]
-                if sum(cr[i] * n[i] for i in range(3)) < 0: bd = [-x for x in bd]; cr = [-x for x in cr]
-                R = [[bd[i], ad[i], cr[i]] for i in range(3)]
-                be = math.asin(max(-1, min(1, -R[2][0])))
-                al = math.atan2(R[2][1], R[2][2])
-                ga = math.atan2(R[1][0], R[0][0])
-                fr = (g[0] - s / 2, g[1] - hgt / 3, g[2])
-                to = (g[0] + s / 2, g[1] + hgt * 2 / 3, g[2])
-                tx = "#corner" if cy else "#corner_low"
-                faces = {"south": {"texture": tx, "uv": uv}, "north": {"texture": "#corner_inner", "uv": uv}}
-                e = el(tuple(round(v, 4) for v in fr), tuple(round(v, 4) for v in to), faces,
-                       {"origin": [round(v, 4) for v in g], "x": round(math.degrees(al), 4),
-                        "y": round(math.degrees(be), 4), "z": round(math.degrees(ga), 4)})
-                e["shade"] = False
-                tris.append(e)
-    model("fluid_tank", sq + tris, t)
+    # facets on the bevels and corners, each with one shared shape in its own plane
+    def frame_of(i):
+        n = planes[i][0]
+        pts = poly(i)
+        ls = [math.dist(pts[k], pts[(k + 1) % len(pts)]) for k in range(len(pts))]
+        k0 = max(range(len(pts)), key=lambda k: round(ls[k], 3) * 1000 - k)
+        u = unit(sub(pts[(k0 + 1) % len(pts)], pts[k0]))
+        v = cross(n, u)
+        o = [sum(p[q] for p in pts) / len(pts) for q in range(3)]
+        loc = [(dot(sub(p, o), u), dot(sub(p, o), v)) for p in pts]
+        return n, u, v, o, loc
+
+    def facet_tex(kind, loc, k, W, Hh):
+        xs, ys = [x for x, _ in loc], [y for _, y in loc]
+        x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+        im = Image.new("RGBA", (W, Hh))
+        cen = (sum(xs) / len(xs), sum(ys) / len(ys))
+        inr = inside(loc, *cen)
+        cells = {}
+        for y in range(Hh):
+            for x in range(W):
+                lx = x0 + (x + 0.5) / W * (x1 - x0)
+                ly = y1 - (y + 0.5) / Hh * (y1 - y0)
+                d = inside(loc, lx, ly)
+                if d < -0.1: continue
+                key = (int(lx * 1.2 + 50), int(ly * 1.2 + 50))
+                if key not in cells: cells[key] = noisy(CU, 3)
+                c = cells[key]
+                if kind == "inner": c = mul(c, 0.5)
+                elif d < 0.22: c = DARK
+                elif kind == "corner":
+                    if d < 0.6: c = STEEL[1] if d < 0.42 else STEEL[2]
+                    elif inr > 1.2:
+                        b = bolt((lx - cen[0]) / 0.6, (ly - cen[1]) / 0.6)
+                        if b: c = b
+                else:
+                    if d < 0.45: c = CU_HI if ly > cen[1] else CU_LO
+                    else:
+                        for bx in (-3.0, 0.0, 3.0):
+                            b = bolt((lx - bx) / 0.5, (ly - cen[1]) / 0.5)
+                            if b: c = b
+                im.putpixel((x, y), mul(c, k) if kind != "inner" else c)
+        return im
+
+    t = {"side": f"{MOD}:block/fluid_tank_side", "top": f"{MOD}:block/fluid_tank_top", "bottom": f"{MOD}:block/fluid_tank_bottom",
+         "inner": f"{MOD}:block/fluid_tank_inner", "particle": f"{MOD}:block/fluid_tank_bottom"}
+    dirs = {(0, -1): "west", (0, 1): "east", (1, -1): "down", (1, 1): "up", (2, -1): "north", (2, 1): "south"}
+    opp = {"west": "east", "east": "west", "down": "up", "up": "down", "north": "south", "south": "north"}
+    elems = []
+    made = {}
+    hi = 16 - lo
+    uvf = [round(lo, 4), round(lo, 4), round(hi, 4), round(hi, 4)]
+    for i, (n, d, kind) in enumerate(planes):
+        if kind == "face":
+            a = [q for q in range(3) if n[q]][0]
+            sg = int(n[a])
+            out = dirs[(a, sg)]
+            tx = "#top" if out == "up" else "#bottom" if out == "down" else "#side"
+            back = "#inner" if tx == "#bottom" else tx
+            fr = [lo] * 3; to = [hi] * 3; fr[a], to[a] = (15.98, 16) if sg > 0 else (0, 0.02)
+            elems.append(el(tuple(round(x, 4) for x in fr), tuple(round(x, 4) for x in to),
+                            {out: {"texture": tx, "uv": uvf, "cullface": out}, opp[out]: {"texture": back, "uv": uvf}}))
+            continue
+        n, u, v, o, loc = frame_of(i)
+        W, Hh = (64, 16) if kind == "edge" else ((32, 32) if K - E > 3 else (16, 16))
+        b = round(light(n) * 100)
+        name = f"fluid_tank_{kind}_{b}"
+        if name not in made:
+            made[name] = 1
+            save(facet_tex(kind, loc, b / 100, W, Hh), tb + name + ".png")
+            t[f"{kind}_{b}"] = f"{MOD}:block/{name}"
+        if f"{kind}_inner" not in made:
+            made[f"{kind}_inner"] = 1
+            save(facet_tex("inner", loc, 1, W, Hh), tb + f"fluid_tank_{kind}_inner.png")
+            t[f"{kind}_inner"] = f"{MOD}:block/fluid_tank_{kind}_inner"
+        R = [[u[q], v[q], n[q]] for q in range(3)]
+        be = math.asin(max(-1, min(1, -R[2][0])))
+        al = math.atan2(R[2][1], R[2][2])
+        ga = math.atan2(R[1][0], R[0][0])
+        if abs(R[2][0]) > 0.999: al, ga = math.atan2(-R[1][2], R[1][1]), 0
+        g = [x + 8 for x in o]
+        xs, ys = [x for x, _ in loc], [y for _, y in loc]
+        fr = (g[0] + min(xs), g[1] + min(ys), g[2])
+        to = (g[0] + max(xs), g[1] + max(ys), g[2])
+        uv = [0, 0, 16, 16]
+        e = el(tuple(round(x, 4) for x in fr), tuple(round(x, 4) for x in to),
+               {"south": {"texture": f"#{kind}_{b}", "uv": uv}, "north": {"texture": f"#{kind}_inner", "uv": uv}},
+               {"origin": [round(x, 4) for x in g], "x": round(math.degrees(al), 4),
+                "y": round(math.degrees(be), 4), "z": round(math.degrees(ga), 4)})
+        e["shade"] = False
+        elems.append(e)
+    model("fluid_tank", elems, t)
     jdump({"variants": {"": {"model": f"{MOD}:block/fluid_tank"}}}, f"{A}/blockstates/fluid_tank.json")
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}}, f"{A}/items/fluid_tank.json")
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,

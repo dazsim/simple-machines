@@ -22,8 +22,10 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
 
-/** The fluid inside the tank, the cuboctahedron shell cut off at the fluid level. */
+/** The fluid inside the tank, the clipped cube shell cut off at the fluid level. */
 public class TankRenderer implements BlockEntityRenderer<TankBlockEntity, TankRenderer.State> {
+    // edge bevel and corner cut in pixels, matching the block model
+    private static final float E = 0F, K = 4F;
     private static final float INSET = 0.3F, LO = INSET, HI = 16 - INSET;
     private static final float[][] SHELL = shell();
 
@@ -49,9 +51,20 @@ public class TankRenderer implements BlockEntityRenderer<TankBlockEntity, TankRe
                 out.add(p);
             }
         }
+        final float r = 1F / (float) Math.sqrt(2);
+        if (E > 0)
+            for (int a = 0; a < 3; a++)
+                for (int sa = -1; sa <= 1; sa += 2)
+                    for (int sb = -1; sb <= 1; sb += 2) {
+                        final float[] p = new float[4];
+                        p[a] = sa * r;
+                        p[(a + 1) % 3] = sb * r;
+                        p[3] = (16 - E) * r - INSET;
+                        out.add(p);
+                    }
         for (int x = -1; x <= 1; x += 2)
             for (int y = -1; y <= 1; y += 2)
-                for (int z = -1; z <= 1; z += 2) out.add(new float[]{x * k, y * k, z * k, 16 * k - INSET});
+                for (int z = -1; z <= 1; z += 2) out.add(new float[]{x * k, y * k, z * k, (24 - K) * k - INSET});
         return out.toArray(new float[0][]);
     }
 

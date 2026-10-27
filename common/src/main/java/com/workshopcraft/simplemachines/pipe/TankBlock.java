@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 
 /** A full block tank, so a pipe can reach it from any side. */
@@ -55,9 +56,11 @@ public class TankBlock extends Block implements EntityBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        if (held.getItem() instanceof BucketItem) {
-            final Fluid f = Transfer.itemFluid.fluid(held);
-            if (f == null || tank.room(f) < TankBlockEntity.BUCKET) return InteractionResult.TRY_WITH_EMPTY_HAND;
+        if (held.getItem() instanceof BucketItem bucket) {
+            final Fluid f = bucket.getContent();
+            if (f == Fluids.EMPTY) return InteractionResult.TRY_WITH_EMPTY_HAND;
+            // full or a different fluid: do not spill it beside the tank
+            if (tank.room(f) < TankBlockEntity.BUCKET) return InteractionResult.CONSUME;
             if (!level.isClientSide()) {
                 tank.insert(f, TankBlockEntity.BUCKET, false);
                 if (!player.getAbilities().instabuild) player.setItemInHand(hand, new ItemStack(Items.BUCKET));

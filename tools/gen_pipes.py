@@ -349,14 +349,23 @@ def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
                 else:
                     if d < 0.45: c = CU_HI if ly > cen[1] else CU_LO
                     else:
-                        for bx in (-3.0, 0.0, 3.0):
-                            b = bolt((lx - bx) / 0.5, (ly - cen[1]) / 0.5)
-                            if b: c = b
+                        for bx in STUDS:
+                            if max(abs(lx - bx), abs(ly - cen[1])) < STUD / 2 + 0.2: c = mul(c, 0.7)
                 im.putpixel((x, y), mul(c, k) if kind != "inner" else c)
         return im
 
+    STUDS, STUD, STUD_H = (-3.5, 0.0, 3.5), 0.9, 0.5
+    if E:
+        def stud_tex(x, y):
+            r = max(abs(x - 7.5), abs(y - 7.5))
+            if r > 6.5: return STEEL[2]
+            if x + y < 9: return STEEL[0]
+            return STEEL[1] if r > 3.5 or x + y > 20 else STEEL[0]
+        tex("fluid_tank_stud", stud_tex)
+        tex("fluid_tank_stud_side", lambda x, y: STEEL[3] if min(x, y, 15 - x, 15 - y) < 2 else STEEL[2])
     t = {"side": f"{MOD}:block/fluid_tank_side", "top": f"{MOD}:block/fluid_tank_top", "bottom": f"{MOD}:block/fluid_tank_bottom",
          "inner": f"{MOD}:block/fluid_tank_inner", "particle": f"{MOD}:block/fluid_tank_bottom"}
+    if E: t.update(stud=f"{MOD}:block/fluid_tank_stud", stud_side=f"{MOD}:block/fluid_tank_stud_side")
     dirs = {(0, -1): "west", (0, 1): "east", (1, -1): "down", (1, 1): "up", (2, -1): "north", (2, 1): "south"}
     opp = {"west": "east", "east": "west", "down": "up", "up": "down", "north": "south", "south": "north"}
     elems = []
@@ -402,6 +411,13 @@ def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
                 "y": round(math.degrees(be), 4), "z": round(math.degrees(ga), 4)})
         e["shade"] = False
         elems.append(e)
+        if kind == "edge":
+            for bx in STUDS:
+                sf = {f: {"texture": "#stud_side", "uv": [0, 0, 16, 16]} for f in ("east", "west", "up", "down")}
+                sf["south"] = {"texture": "#stud", "uv": [0, 0, 16, 16]}
+                fr = (g[0] + bx - STUD / 2, g[1] - STUD / 2, g[2])
+                to = (g[0] + bx + STUD / 2, g[1] + STUD / 2, g[2] + STUD_H)
+                elems.append(el(tuple(round(x, 4) for x in fr), tuple(round(x, 4) for x in to), sf, e["rotation"]))
     model("fluid_tank", elems, t)
     jdump({"variants": {"": {"model": f"{MOD}:block/fluid_tank"}}}, f"{A}/blockstates/fluid_tank.json")
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}}, f"{A}/items/fluid_tank.json")

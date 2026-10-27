@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "simplemachines:block/mv_hv_transformer"
+    },
+    "facing=south": {
+      "model": "simplemachines:block/mv_hv_transformer",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "simplemachines:block/mv_hv_transformer",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "simplemachines:block/mv_hv_transformer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "simplemachines:block/mv_hv_transformer",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "simplemachines:block/mv_hv_transformer",
+      "x": 90
+    }
+  }
+}

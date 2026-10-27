@@ -30,10 +30,10 @@ import com.workshopcraft.simplemachines.assembly.Worktops;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Redstone Copper power cable. Joins other cables of this mod and anything exposing FE, nothing else. Dyed cables only join blank or same colour cables. */
+/** Power cable of one voltage tier. Joins cables of the same tier and anything exposing FE, nothing else. Dyed cables only join blank or same colour cables. */
 public class CableBlock extends Block implements EntityBlock, Conduits.Recompute {
-    public static final MapCodec<CableBlock> CODEC = simpleCodec(CableBlock::new);
-    public static final int RATE = 1000;
+    public static final MapCodec<CableBlock> CODEC = simpleCodec(p -> new CableBlock(p, Voltage.LV));
+    public final int tier;
     private static final VoxelShape[] SHAPES = new VoxelShape[64];
 
     static {
@@ -49,8 +49,9 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         }
     }
 
-    public CableBlock(Properties properties) {
+    public CableBlock(Properties properties, int tier) {
         super(properties);
+        this.tier = tier;
         BlockState state = stateDefinition.any();
         for (BooleanProperty p : PipeBlock.PROPERTY_BY_DIRECTION.values()) state = state.setValue(p, false);
         registerDefaultState(state);
@@ -61,8 +62,12 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         return CODEC;
     }
 
-    private static boolean connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, boolean current) {
-        if (neighbour.getBlock() instanceof CableBlock) return ConduitBlockEntity.joins(level, pos, dir);
+    public int rate() {
+        return Voltage.RATE[tier];
+    }
+
+    private boolean connects(LevelReader level, BlockPos pos, Direction dir, BlockState neighbour, boolean current) {
+        if (neighbour.getBlock() instanceof CableBlock other) return other.tier == tier && ConduitBlockEntity.joins(level, pos, dir);
         if (ConduitBlockEntity.blockedAt(level, pos, dir)) return false;
         if (neighbour.isAir()) return false;
         if (!(level instanceof Level real)) return current;

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": "simplemachines:gold_cable",
+    "D": "#c:gems/diamond",
+    "E": "#c:ender_pearls"
+  },
+  "pattern": [
+    "TTT",
+    "DED",
+    "TTT"
+  ],
+  "result": {
+    "id": "simplemachines:diamond_cable",
+    "count": 6
+  }
+}

@@ -64,7 +64,9 @@ public class SimpleMachinesFabric implements ModInitializer {
                 SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA));
         net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, context) -> builder.add(SimpleMachines.biofuelItem, 2400));
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
-                level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
+                level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.input(side), true, false), SimpleMachines.transformerEntity);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(com.workshopcraft.simplemachines.cable.Voltage::terrainDamage);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
                 Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> RecipeUnlocks.onLogin(handler.player));

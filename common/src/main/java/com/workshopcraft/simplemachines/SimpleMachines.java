@@ -147,6 +147,12 @@ public class SimpleMachines {
     public static Block ironChassis;
     public static Block steelChassis;
     public static Block cable;
+    public static Block goldCable;
+    public static Block diamondCable;
+    public static Block lvMvTransformer;
+    public static Block mvHvTransformer;
+    public static final List<Block> CABLES = new ArrayList<>();
+    public static BlockEntityType<com.workshopcraft.simplemachines.cable.TransformerBlockEntity> transformerEntity;
     public static Block itemPipe;
     public static Block fluidPipe;
     public static Item pipeFilter;
@@ -237,9 +243,11 @@ public class SimpleMachines {
         r.accept(id("iron_chassis"), ironChassis);
         steelChassis = new ChassisBlock(Tier.STEEL, chassis("steel_chassis"));
         r.accept(id("steel_chassis"), steelChassis);
-        cable = new CableBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("redstone_copper_cable")))
-                .mapColor(MapColor.COLOR_RED).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
-        r.accept(id("redstone_copper_cable"), cable);
+        cable = cable(r, "redstone_copper_cable", MapColor.COLOR_RED, com.workshopcraft.simplemachines.cable.Voltage.LV);
+        goldCable = cable(r, "gold_cable", MapColor.COLOR_YELLOW, com.workshopcraft.simplemachines.cable.Voltage.MV);
+        diamondCable = cable(r, "diamond_cable", MapColor.COLOR_LIGHT_BLUE, com.workshopcraft.simplemachines.cable.Voltage.HV);
+        lvMvTransformer = transformer(r, "lv_mv_transformer", com.workshopcraft.simplemachines.cable.Voltage.MV);
+        mvHvTransformer = transformer(r, "mv_hv_transformer", com.workshopcraft.simplemachines.cable.Voltage.HV);
         itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
@@ -270,6 +278,22 @@ public class SimpleMachines {
         }
     }
 
+    private static Block cable(BiConsumer<Identifier, Block> r, String name, MapColor colour, int tier) {
+        final Block b = new CableBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
+                .mapColor(colour).strength(0.5F).sound(SoundType.COPPER).noOcclusion(), tier);
+        r.accept(id(name), b);
+        CABLES.add(b);
+        return b;
+    }
+
+    private static Block transformer(BiConsumer<Identifier, Block> r, String name, int high) {
+        final Block b = new com.workshopcraft.simplemachines.cable.TransformerBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id(name))).mapColor(MapColor.METAL).strength(3.0F)
+                .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion(), high);
+        r.accept(id(name), b);
+        return b;
+    }
+
     public static void registerItems(BiConsumer<Identifier, Item> r) {
         for (String name : List.of("steel_ingot", "redstone_copper_ingot", "iron_rod", "copper_rod", "steel_rod",
                 "iron_sheet", "copper_sheet", "steel_sheet", "gold_sheet", "iron_casing", "copper_casing", "silicon_wafer")) {
@@ -294,6 +318,10 @@ public class SimpleMachines {
             WORKTOPS.put(finish, add(r, worktop, new Item(props(worktop))));
         }
         add(r, "redstone_copper_cable", new BlockItem(cable, props("redstone_copper_cable").useBlockDescriptionPrefix()));
+        add(r, "gold_cable", new BlockItem(goldCable, props("gold_cable").useBlockDescriptionPrefix()));
+        add(r, "diamond_cable", new BlockItem(diamondCable, props("diamond_cable").useBlockDescriptionPrefix()));
+        add(r, "lv_mv_transformer", new BlockItem(lvMvTransformer, props("lv_mv_transformer").useBlockDescriptionPrefix()));
+        add(r, "mv_hv_transformer", new BlockItem(mvHvTransformer, props("mv_hv_transformer").useBlockDescriptionPrefix()));
         add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
         add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
         add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
@@ -392,8 +420,10 @@ public class SimpleMachines {
         WORK_ENTITIES.add(electricFurnaceEntity);
         chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
         r.accept(id("chassis"), chassisEntity);
-        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe, fluidPipe));
+        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, goldCable, diamondCable, itemPipe, fluidPipe));
         r.accept(id("conduit"), conduitEntity);
+        transformerEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.TransformerBlockEntity::new, Set.of(lvMvTransformer, mvHvTransformer));
+        r.accept(id("transformer"), transformerEntity);
         tankEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.pipe.TankBlockEntity::new, Set.of(tank));
         r.accept(id("fluid_tank"), tankEntity);
         toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "#c:plates/steel",
+    "R": "simplemachines:redstone_copper_ingot",
+    "L": "simplemachines:redstone_copper_cable",
+    "I": "#c:storage_blocks/iron",
+    "M": "simplemachines:gold_cable"
+  },
+  "pattern": [
+    "SRS",
+    "LIM",
+    "SSS"
+  ],
+  "result": {
+    "id": "simplemachines:lv_mv_transformer"
+  }
+}

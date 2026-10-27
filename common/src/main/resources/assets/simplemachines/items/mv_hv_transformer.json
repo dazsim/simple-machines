@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "simplemachines:block/mv_hv_transformer"
+  }
+}

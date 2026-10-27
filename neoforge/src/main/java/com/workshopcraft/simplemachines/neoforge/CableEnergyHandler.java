@@ -2,6 +2,7 @@ package com.workshopcraft.simplemachines.neoforge;
 
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.cable.CableNetwork;
+import com.workshopcraft.simplemachines.cable.Voltage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -11,12 +12,16 @@ import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jspecify.annotations.Nullable;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 /** Passes energy offered to a cable on to the machines at the ends of its network. */
 public class CableEnergyHandler extends SnapshotJournal<Integer> implements EnergyHandler {
     private final ServerLevel level;
     private final BlockPos pos;
     private final @Nullable Direction from;
     private CableNetwork net;
+    private final Set<BlockPos> blow = new LinkedHashSet<>();
 
     public CableEnergyHandler(ServerLevel level, BlockPos pos, @Nullable Direction from) {
         this.level = level;
@@ -31,7 +36,7 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
 
     @Override
     public long getCapacityAsLong() {
-        return CableBlock.RATE;
+        return level.getBlockState(pos).getBlock() instanceof CableBlock c ? c.rate() : 0;
     }
 
     @Override
@@ -46,6 +51,11 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
         for (int i = 0; i < size && left > 0; i++) {
             final CableNetwork.End end = net.ends.get((net.next + i) % size);
             if (end.pos().equals(source)) continue;
+            if (Voltage.overloads(level, end.pos(), end.side(), net.tier)) {
+                updateSnapshots(tx);
+                blow.add(end.pos());
+                continue;
+            }
             final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, end.pos(), end.side());
             if (h == null) continue;
             final int n = h.insert(left, tx);
@@ -73,5 +83,12 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
     @Override
     protected void revertToSnapshot(Integer snapshot) {
         net.moved = snapshot;
+        blow.clear();
+    }
+
+    @Override
+    protected void onRootCommit(Integer original) {
+        for (BlockPos p : blow) Voltage.blow(level, p);
+        blow.clear();
     }
 }

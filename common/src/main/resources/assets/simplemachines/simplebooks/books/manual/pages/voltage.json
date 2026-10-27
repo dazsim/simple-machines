@@ -1,0 +1,83 @@
+{
+  "section": "power",
+  "sort": 3,
+  "title": "Voltage and Transformers",
+  "subtitle": "LV, MV and HV",
+  "text": "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
+  "drawing": "simplemachines:textures/simplebooks/manual/voltage.png",
+  "caption": "Step up, carry, step down",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "TTT",
+        "SGS",
+        "TTT"
+      ],
+      "key": {
+        "T": "simplemachines:redstone_copper_cable",
+        "S": "#c:plates/steel",
+        "G": "#c:ingots/gold"
+      },
+      "output": {
+        "item": "simplemachines:gold_cable",
+        "count": 6
+      },
+      "note": "Crafting Table\n6x Redstone Copper Cable, 2x Steel Plate, 1x Gold Ingot"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "TTT",
+        "DED",
+        "TTT"
+      ],
+      "key": {
+        "T": "simplemachines:gold_cable",
+        "D": "#c:gems/diamond",
+        "E": "#c:ender_pearls"
+      },
+      "output": {
+        "item": "simplemachines:diamond_cable",
+        "count": 6
+      },
+      "note": "Crafting Table\n6x Gold Cable, 2x Diamond, 1x Ender Pearl"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SRS",
+        "LIM",
+        "SSS"
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "R": "simplemachines:redstone_copper_ingot",
+        "L": "simplemachines:redstone_copper_cable",
+        "I": "#c:storage_blocks/iron",
+        "M": "simplemachines:gold_cable"
+      },
+      "output": "simplemachines:lv_mv_transformer",
+      "note": "Crafting Table\n5x Steel Plate, 1x Redstone Copper Ingot, 1x Redstone Copper Cable, 1x Block of Iron, 1x Gold Cable",
+      "join": false
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SDS",
+        "MGH",
+        "SSS"
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "D": "#c:gems/diamond",
+        "M": "simplemachines:gold_cable",
+        "G": "#c:storage_blocks/gold",
+        "H": "simplemachines:diamond_cable"
+      },
+      "output": "simplemachines:mv_hv_transformer",
+      "note": "Crafting Table\n5x Steel Plate, 1x Diamond, 1x Gold Cable, 1x Block of Gold, 1x Diamond Cable"
+    }
+  ]
+}

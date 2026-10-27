@@ -216,6 +216,20 @@ def d_power():
     sh.text((320, 380), "Redstone Copper Cable: up to 1000 FE/t", 12, SOFT)
     sh.save("power")
 
+def d_voltage():
+    sh = Sheet(); P = iso((110, 190), 0.55)
+    box(sh, P, 0, 0, 0, 70, 70, 70); sh.circle(P(35, 35, 70), 14); sh.text(P(35, 130, 35), "generator", 12)
+    a, b = P(70, 10, 35), P(220, 10, 35)
+    for t in (-3, 3): sh.line((a[0], a[1] + t), (b[0], b[1] + t), 2.0)
+    sh.text(P(145, 50, 35), "LV", 12, SOFT)
+    box(sh, P, 220, 0, 0, 70, 70, 70); face_rect(sh, P, "x", 15, 15, 55, 55, 290); sh.text(P(255, 130, 35), "LV/MV", 12)
+    a, b = P(290, 10, 35), P(450, 10, 35)
+    for t in (-4, 0, 4): sh.line((a[0], a[1] + t), (b[0], b[1] + t), 2.0)
+    sh.text(P(370, 50, 35), "MV", 12, SOFT)
+    box(sh, P, 450, 0, 0, 70, 70, 70); face_rect(sh, P, "x", 15, 15, 55, 55, 450); sh.text(P(485, 130, 35), "MV/LV", 12)
+    sh.text((320, 380), "front = high side, other faces = low side, 5% loss", 12, SOFT)
+    sh.save("voltage")
+
 def d_pipes():
     sh = Sheet()
     sh.line((60, 200), (580, 200), 2.0); sh.line((60, 224), (580, 224), 2.0)
@@ -397,9 +411,12 @@ def ing(x):
     return {"item": i, "count": c} if c > 1 else i
 
 # vanilla names that are not just the id in title case, and items standing in for common tags
-VANILLA = {"redstone_block": "Block of Redstone", "quartz": "Nether Quartz", "redstone": "Redstone Dust"}
+VANILLA = {"redstone_block": "Block of Redstone", "quartz": "Nether Quartz", "redstone": "Redstone Dust",
+           "iron_block": "Block of Iron", "gold_block": "Block of Gold"}
 TAGS = {"c:dusts/redstone": "minecraft:redstone", "c:gems/quartz": "minecraft:quartz", "c:glass_blocks": "minecraft:glass",
-        "c:ingots/copper": "minecraft:copper_ingot", "c:ingots/gold": "minecraft:gold_ingot", "c:ingots/iron": "minecraft:iron_ingot"}
+        "c:ingots/copper": "minecraft:copper_ingot", "c:ingots/gold": "minecraft:gold_ingot", "c:ingots/iron": "minecraft:iron_ingot",
+        "c:gems/diamond": "minecraft:diamond", "c:ender_pearls": "minecraft:ender_pearl",
+        "c:storage_blocks/iron": "minecraft:iron_block", "c:storage_blocks/gold": "minecraft:gold_block"}
 
 def name_of(ref):
     if ref.startswith("#"):
@@ -521,6 +538,10 @@ def pages():
          "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
          "power", "Generator, battery, machine", "Recipes",
          [craft("redstone_copper_cable"), craft("power_cell")])
+    page("voltage", "power", 3, "Voltage and Transformers", "LV, MV and HV",
+         "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
+         "voltage", "Step up, carry, step down", "Recipes",
+         [craft("gold_cable"), craft("diamond_cable"), dict(craft("lv_mv_transformer"), join=False), craft("mv_hv_transformer")])
     page("pipes", "items", 0, "Item Pipes", "Three-way pipe ends",
          "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
          "pipes", "One pipe, three ends", "Pipe",
@@ -569,7 +590,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

@@ -17,7 +17,7 @@ import java.util.WeakHashMap;
 
 /**
  * A connected run of cables. Energy offered to any cable goes straight to the machines on the ends,
- * at most {@link CableBlock#RATE} FE per tick for the whole run.
+ * at most the cable tier's rate in FE per tick for the whole run.
  */
 public final class CableNetwork {
     private static final int MAX_SIZE = 4096;
@@ -31,6 +31,8 @@ public final class CableNetwork {
     public int next;
     public long tick = -1;
     public int moved;
+    public int tier;
+    public int rate;
 
     public static void invalidate(ServerLevel level) {
         CACHE.remove(level);
@@ -41,6 +43,10 @@ public final class CableNetwork {
         final CableNetwork known = map.get(start);
         if (known != null) return known;
         final CableNetwork net = new CableNetwork();
+        if (level.getBlockState(start).getBlock() instanceof CableBlock c) {
+            net.tier = c.tier;
+            net.rate = c.rate();
+        }
         final ArrayDeque<BlockPos> queue = new ArrayDeque<>();
         queue.add(start.immutable());
         net.cables.add(start.immutable());
@@ -68,7 +74,7 @@ public final class CableNetwork {
             tick = gameTime;
             moved = 0;
         }
-        return CableBlock.RATE - moved;
+        return rate - moved;
     }
 
     public boolean isCable(BlockPos pos) {

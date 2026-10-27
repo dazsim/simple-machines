@@ -2,12 +2,16 @@ package com.workshopcraft.simplemachines.fabric;
 
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.cable.CableNetwork;
+import com.workshopcraft.simplemachines.cable.Voltage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import org.jspecify.annotations.Nullable;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 import team.reborn.energy.api.EnergyStorage;
 
 /** Passes energy offered to a cable on to the machines at the ends of its network. */
@@ -16,6 +20,7 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
     private final BlockPos pos;
     private final @Nullable Direction from;
     private CableNetwork net;
+    private final Set<BlockPos> blow = new LinkedHashSet<>();
 
     public CableEnergyStorage(ServerLevel level, BlockPos pos, @Nullable Direction from) {
         this.level = level;
@@ -40,6 +45,11 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
         for (int i = 0; i < size && left > 0; i++) {
             final CableNetwork.End end = net.ends.get((net.next + i) % size);
             if (end.pos().equals(source)) continue;
+            if (Voltage.overloads(level, end.pos(), end.side(), net.tier)) {
+                updateSnapshots(tx);
+                blow.add(end.pos());
+                continue;
+            }
             final EnergyStorage s = EnergyStorage.SIDED.find(level, end.pos(), end.side());
             if (s == null || !s.supportsInsertion()) continue;
             final long n = s.insert(left, tx);
@@ -66,7 +76,7 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
 
     @Override
     public long getCapacity() {
-        return CableBlock.RATE;
+        return level.getBlockState(pos).getBlock() instanceof CableBlock c ? c.rate() : 0;
     }
 
     @Override
@@ -77,5 +87,12 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
     @Override
     protected void readSnapshot(Integer snapshot) {
         net.moved = snapshot;
+        blow.clear();
+    }
+
+    @Override
+    protected void onFinalCommit() {
+        for (BlockPos p : blow) Voltage.blow(level, p);
+        blow.clear();
     }
 }

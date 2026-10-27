@@ -784,23 +784,24 @@ def built(shaped, rec):
                "random_sequence": f"{MOD}:blocks/{block}"}, f"{D}/{MOD}/loot_table/blocks/{block}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{c}_core"}}, f"{A}/items/{c}_assembly.json")
 
-    # cable
-    ct = {"cable": f"{MOD}:block/redstone_copper_cable", "particle": f"{MOD}:block/redstone_copper_cable"}
-    core = el((6, 6, 6), (10, 10, 10), all_faces("cable"))
-    arms = {"north": el((6, 6, 0), (10, 10, 6), all_faces("cable", ("south",))),
-            "south": el((6, 6, 10), (10, 10, 16), all_faces("cable", ("north",))),
-            "west": el((0, 6, 6), (6, 10, 10), all_faces("cable", ("east",))),
-            "east": el((10, 6, 6), (16, 10, 10), all_faces("cable", ("west",))),
-            "down": el((6, 0, 6), (10, 6, 10), all_faces("cable", ("up",))),
-            "up": el((6, 10, 6), (10, 16, 10), all_faces("cable", ("down",)))}
-    model("redstone_copper_cable", [core], ct)
-    parts = [{"apply": {"model": f"{MOD}:block/redstone_copper_cable"}}]
-    for d, e in arms.items():
-        parts.append({"when": {d: "true"}, "apply": {"model": model(f"redstone_copper_cable_{d}", [e], ct)}})
-    jdump({"multipart": parts}, f"{A}/blockstates/redstone_copper_cable.json")
-    cable_item = model("redstone_copper_cable_item", [arms["west"], core, arms["east"]], ct)
-    jdump({"model": {"type": "minecraft:model", "model": cable_item}}, f"{A}/items/redstone_copper_cable.json")
-    loot_self("redstone_copper_cable")
+    # cables
+    for cname in ["redstone_copper_cable", "gold_cable", "diamond_cable"]:
+        ct = {"cable": f"{MOD}:block/{cname}", "particle": f"{MOD}:block/{cname}"}
+        core = el((6, 6, 6), (10, 10, 10), all_faces("cable"))
+        arms = {"north": el((6, 6, 0), (10, 10, 6), all_faces("cable", ("south",))),
+                "south": el((6, 6, 10), (10, 10, 16), all_faces("cable", ("north",))),
+                "west": el((0, 6, 6), (6, 10, 10), all_faces("cable", ("east",))),
+                "east": el((10, 6, 6), (16, 10, 10), all_faces("cable", ("west",))),
+                "down": el((6, 0, 6), (10, 6, 10), all_faces("cable", ("up",))),
+                "up": el((6, 10, 6), (10, 16, 10), all_faces("cable", ("down",)))}
+        model(cname, [core], ct)
+        parts = [{"apply": {"model": f"{MOD}:block/{cname}"}}]
+        for d, e in arms.items():
+            parts.append({"when": {d: "true"}, "apply": {"model": model(f"{cname}_{d}", [e], ct)}})
+        jdump({"multipart": parts}, f"{A}/blockstates/{cname}.json")
+        cable_item = model(f"{cname}_item", [arms["west"], core, arms["east"]], ct)
+        jdump({"model": {"type": "minecraft:model", "model": cable_item}}, f"{A}/items/{cname}.json")
+        loot_self(cname)
 
     flat = ["iron_sheet", "copper_sheet", "steel_sheet", "control_board"] + \
            [f"{f}_panels" for f in FINISHES]
@@ -1087,6 +1088,7 @@ def machines(shaped, rec):
     proc("sawing", "bamboo_planks", "#minecraft:bamboo_blocks", "minecraft:bamboo_planks", 3, time=100)
     proc("sawing", "sticks", "#minecraft:planks", "minecraft:stick", 3, time=50)
     alpha6(shaped, rec, proc)
+    milestone2(shaped)
 
     lang = json.load(open(f"{A}/lang/en_us.json"))
     names = {"battery": "Battery", "crusher": "Crusher", "crop_harvester": "Crop Harvester", "alloy_smelter": "Alloy Smelter",
@@ -1222,6 +1224,96 @@ def alpha6(shaped, rec, proc):
         "item.simplemachines.silicon_wafer": "Silicon Wafer", "block.simplemachines.biofuel_block": "Biofuel Block",
         "tag.item.simplemachines.compostables": "Compostables",
         "gui.simplemachines.lava_tank": "%s / %s mB Lava",
+    })
+    jdump(lang, f"{A}/lang/en_us.json")
+
+# ---- 2.1 milestone 2: MV and HV cables, transformers, overvoltage ----
+
+LV_RING = [(255, 120, 100), (214, 44, 36), (130, 20, 20)]
+MV_RING = [(255, 244, 150), (246, 204, 40), (168, 118, 10)]
+HV_RING = [(214, 248, 255), (96, 212, 242), (30, 120, 160)]
+
+def tier_cable_tex(seed, jacket, stripe, band):
+    t = Image.new("RGBA", (16, 16))
+    rnd = random.Random(seed)
+    for y in range(16):
+        for x in range(16):
+            t.putpixel((x, y), jitter(jacket[1], rnd, 4))
+    for i in range(16):
+        px(t, i, 6, jacket[0] + (255,)); px(t, i, 9, jacket[2] + (255,))
+        px(t, i, 7, stripe[0] + (255,)); px(t, i, 8, stripe[1] + (255,))
+        px(t, 6, i, jacket[0] + (255,)); px(t, 9, i, jacket[2] + (255,))
+    for x in (3, 12):
+        rect(t, x, 0, x, 15, band[1] + (255,)); px(t, x, 6, band[0] + (255,)); px(t, x, 9, band[2] + (255,))
+    return t
+
+def ring_tex(ring, seed):
+    t = plate(STEEL, seed)
+    for y in range(16):
+        for x in range(16):
+            d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+            if d <= 6.2:
+                if d > 4.6:
+                    k = 0 if (x + y) < 13 else (2 if (x + y) > 17 else 1)
+                    px(t, x, y, ring[k] + (255,))
+                elif d > 3.6:
+                    px(t, x, y, DARK + (255,))
+                elif d > 1.6:
+                    px(t, x, y, (COPPER[1] if int(d * 2) % 2 else COPPER[2]) + (255,))
+                else:
+                    px(t, x, y, (40, 40, 46, 255))
+    return t
+
+def transformer_assets(name, front, low):
+    els = []
+    for x in (0, 14):
+        for z in (0, 14):
+            els.append(el((x, 0, z), (x + 2, 16, z + 2), all_faces("frame")))
+    for y in (0, 14):
+        for z in (0, 14):
+            els.append(el((2, y, z), (14, y + 2, z + 2), all_faces("frame", ("east", "west"))))
+        for x in (0, 14):
+            els.append(el((x, y, 2), (x + 2, y + 2, 14), all_faces("frame", ("north", "south"))))
+    els.append(el((1, 1, 1), (15, 15, 15), {d: {"texture": "#front" if d == "north" else "#low", "uv": [1, 1, 15, 15]}
+                                            for d in ("north", "south", "east", "west", "up", "down")}))
+    m = model(name, els, {"frame": f"{MOD}:block/steel_chassis", "particle": f"{MOD}:block/steel_chassis",
+                          "front": f"{MOD}:block/ring_{front}", "low": f"{MOD}:block/ring_{low}"})
+    rot = {"north": {}, "south": {"y": 180}, "east": {"y": 90}, "west": {"y": 270}, "up": {"x": 270}, "down": {"x": 90}}
+    jdump({"variants": {f"facing={f}": {"model": m, **r} for f, r in rot.items()}}, f"{A}/blockstates/{name}.json")
+    jdump({"model": {"type": "minecraft:model", "model": m}}, f"{A}/items/{name}.json")
+    loot_self(name)
+
+def milestone2(shaped):
+    tb = A + "/textures/block/"
+    gold = [(255, 236, 120), (232, 190, 40), (160, 116, 16)]
+    diam = [(224, 252, 255), (150, 228, 240), (74, 182, 212)]
+    save(tier_cable_tex(72, [(176, 180, 190), (130, 134, 146), (80, 82, 92)], MV_RING, gold), tb + "gold_cable.png")
+    save(tier_cable_tex(73, [(150, 156, 170), (96, 100, 114), (56, 58, 68)], HV_RING, diam), tb + "diamond_cable.png")
+    for n, r in (("lv", LV_RING), ("mv", MV_RING), ("hv", HV_RING)):
+        save(ring_tex(r, 100 + len(n) + ord(n[0])), tb + f"ring_{n}.png")
+    transformer_assets("lv_mv_transformer", "mv", "lv")
+    transformer_assets("mv_hv_transformer", "hv", "mv")
+    tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
+    vals = json.load(open(tag))["values"]
+    jdump({"values": vals + [f"{MOD}:{b}" for b in ("gold_cable", "diamond_cable", "lv_mv_transformer", "mv_hv_transformer")]}, tag)
+    S = "#c:plates/steel"
+    shaped("gold_cable", ["TTT", "SGS", "TTT"], {"T": f"{MOD}:redstone_copper_cable", "S": S, "G": "#c:ingots/gold"}, 6)
+    shaped("diamond_cable", ["TTT", "DED", "TTT"], {"T": f"{MOD}:gold_cable", "D": "#c:gems/diamond", "E": "#c:ender_pearls"}, 6)
+    shaped("lv_mv_transformer", ["SRS", "LIM", "SSS"], {"S": S, "R": f"{MOD}:redstone_copper_ingot", "L": f"{MOD}:redstone_copper_cable",
+                                                         "I": "#c:storage_blocks/iron", "M": f"{MOD}:gold_cable"})
+    shaped("mv_hv_transformer", ["SDS", "MGH", "SSS"], {"S": S, "D": "#c:gems/diamond", "M": f"{MOD}:gold_cable",
+                                                         "G": "#c:storage_blocks/gold", "H": f"{MOD}:diamond_cable"})
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    lang.update({
+        "block.simplemachines.gold_cable": "Gold Cable", "block.simplemachines.diamond_cable": "Diamond Cable",
+        "block.simplemachines.lv_mv_transformer": "LV/MV Transformer", "block.simplemachines.mv_hv_transformer": "MV/HV Transformer",
+        "message.simplemachines.transformer": "Front %1$s, other faces %2$s. Waiting: %3$s FE up, %4$s FE down (of %5$s)",
+        "jei.simplemachines.info.redstone_copper_cable": "LV cable, red. Carries up to 1,000 FE per tick for a whole connected run. Joins only other LV cables.",
+        "jei.simplemachines.info.gold_cable": "MV cable, yellow. Carries up to 8,000 FE per tick. Joins only other MV cables.",
+        "jei.simplemachines.info.diamond_cable": "HV cable, light blue. Carries up to 64,000 FE per tick. Joins only other HV cables.",
+        "jei.simplemachines.info.lv_mv_transformer": "The front (yellow ring) is MV and faces you when placed. The other faces (red rings) are LV. Power goes both ways, up to 1,000 FE per tick each way, losing 5%.",
+        "jei.simplemachines.info.mv_hv_transformer": "The front (light blue ring) is HV and faces you when placed. The other faces (yellow rings) are MV. Power goes both ways, up to 8,000 FE per tick each way, losing 5%.",
+        "jei.simplemachines.info.overvoltage": "Every machine and battery is LV. Feeding a higher voltage into a lower rated block makes it explode.",
     })
     jdump(lang, f"{A}/lang/en_us.json")
 

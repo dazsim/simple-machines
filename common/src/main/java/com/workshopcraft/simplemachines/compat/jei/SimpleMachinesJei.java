@@ -49,6 +49,11 @@ public class SimpleMachinesJei implements IModPlugin {
         r.addRecipes(GeneratorCategory.TYPE, GeneratorCategory.fuels());
         r.addRecipes(LavaCategory.TYPE, List.of(LavaCategory.Burn.IRON, LavaCategory.Burn.STEEL));
         for (Core c : SOURCES) r.addRecipes(SourceCategory.type(c), List.of(SourceCategory.make(c)));
+        for (String name : List.of("redstone_copper_cable", "gold_cable", "diamond_cable", "lv_mv_transformer", "mv_hv_transformer")) {
+            r.addItemStackInfo(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(SimpleMachines.id(name))),
+                    net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name),
+                    net.minecraft.network.chat.Component.translatable("jei.simplemachines.info.overvoltage"));
+        }
     }
 
     @Override

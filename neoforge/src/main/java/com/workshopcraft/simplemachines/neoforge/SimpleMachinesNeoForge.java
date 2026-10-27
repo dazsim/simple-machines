@@ -41,6 +41,8 @@ public class SimpleMachinesNeoForge {
         modBus.addListener(SimpleMachinesNeoForge::onRegister);
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartedEvent e) ->
+                com.workshopcraft.simplemachines.cable.Voltage.terrainDamage(e.getServer()));
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent e) -> e.sendRecipes(SimpleMachines.ALLOYING,
                 SimpleMachines.EXTRUDING, SimpleMachines.ROLLING, SimpleMachines.CRUSHING, SimpleMachines.SAWING, SimpleMachines.COMPRESSING));
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {
@@ -120,7 +122,8 @@ public class SimpleMachinesNeoForge {
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, SimpleMachines.tankEntity, (be, side) -> new NeoTank(be));
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, lavaEntity(), (be, side) -> new NeoTank(be));
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
-                level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.cable);
+                level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.transformerEntity, (be, side) -> new BufferEnergyHandler(be.input(side), true, false));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE), SimpleMachines.MACHINES.get(Core.BATTERY));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,

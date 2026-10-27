@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "#c:plates/steel",
+    "D": "#c:gems/diamond",
+    "M": "simplemachines:gold_cable",
+    "G": "#c:storage_blocks/gold",
+    "H": "simplemachines:diamond_cable"
+  },
+  "pattern": [
+    "SDS",
+    "MGH",
+    "SSS"
+  ],
+  "result": {
+    "id": "simplemachines:mv_hv_transformer"
+  }
+}

@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import com.workshopcraft.simplemachines.assembly.Worktops;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -128,6 +130,11 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         int mask = 0;
         final Direction[] dirs = Direction.values();
         for (int i = 0; i < 6; i++) if (state.getValue(PipeBlock.PROPERTY_BY_DIRECTION.get(dirs[i]))) mask |= 1 << i;
+        // Holding a screwdriver, switched-off sides keep their arm outline so they can be clicked back on.
+        if (context instanceof EntityCollisionContext ec && ec.getEntity() instanceof Player player
+                && (player.getMainHandItem().is(Worktops.SCREWDRIVERS) || player.getOffhandItem().is(Worktops.SCREWDRIVERS))) {
+            for (int i = 0; i < 6; i++) if (ConduitBlockEntity.blockedAt(level, pos, dirs[i])) mask |= 1 << i;
+        }
         return SHAPES[mask];
     }
 

@@ -25,6 +25,7 @@ public class EnergyBuffer {
     public int maxIn;
     public int maxOut;
     public int energy;
+    private int firstSide;
     private final Runnable onChange;
 
     public EnergyBuffer(int capacity, int maxIn, int maxOut, Runnable onChange) {
@@ -47,9 +48,19 @@ public class EnergyBuffer {
 
     public void pushToNeighbours(ServerLevel level, BlockPos pos) {
         int left = Math.min(energy, maxOut);
-        for (Direction d : Direction.values()) {
+        if (left <= 0) return;
+        final Direction[] dirs = Direction.values();
+        final int start = firstSide;
+        boolean moved = false;
+        for (int i = 0; i < dirs.length; i++) {
             if (left <= 0) break;
+            final int k = (start + i) % dirs.length;
+            final Direction d = dirs[k];
             final int n = pusher.push(level, pos.relative(d), d.getOpposite(), left);
+            if (n > 0 && !moved) {
+                firstSide = (k + 1) % dirs.length;
+                moved = true;
+            }
             left -= n;
             energy -= n;
         }

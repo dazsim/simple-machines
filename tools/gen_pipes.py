@@ -420,7 +420,9 @@ def tank(A, D, jdump, shaped, model, el, tex, noisy, save):
                 elems.append(el(tuple(round(x, 4) for x in fr), tuple(round(x, 4) for x in to), sf, e["rotation"]))
     model("fluid_tank", elems, t)
     jdump({"variants": {"": {"model": f"{MOD}:block/fluid_tank"}}}, f"{A}/blockstates/fluid_tank.json")
-    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}}, f"{A}/items/fluid_tank.json")
+    jdump({"model": {"type": "minecraft:composite", "models": [
+        {"type": "minecraft:special", "base": f"{MOD}:block/fluid_tank", "model": {"type": f"{MOD}:tank_fluid"}},
+        {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}]}}, f"{A}/items/fluid_tank.json")
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
            "conditions": [{"condition": "minecraft:survives_explosion"}],
            "entries": [{"type": "minecraft:item", "name": f"{MOD}:fluid_tank", "functions": [

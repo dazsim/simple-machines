@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "front": "simplemachines:block/battery_core_front_5",
+    "side": "simplemachines:block/core_side",
+    "top": "simplemachines:block/battery_core_top",
+    "bottom": "simplemachines:block/core_bottom",
+    "particle": "simplemachines:block/core_side"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        2,
+        3
+      ],
+      "to": [
+        13,
+        12,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#bottom"
+        }
+      }
+    }
+  ]
+}

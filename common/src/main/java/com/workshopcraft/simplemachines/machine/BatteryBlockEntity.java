@@ -77,6 +77,10 @@ public class BatteryBlockEntity extends WorkBlockEntity {
             lastSignal = signal;
             level.updateNeighbourForOutputSignal(pos, state.getBlock());
         }
+        final int gauge = energy.capacity <= 0 ? 0 : (int) Math.min(5, 5L * energy.energy / energy.capacity);
+        final BlockState now = getBlockState();
+        if (now.hasProperty(BatteryBlock.LEVEL) && now.getValue(BatteryBlock.LEVEL) != gauge)
+            level.setBlock(pos, now.setValue(BatteryBlock.LEVEL, gauge), 2);
         if (left != energy.maxOut) setChanged();
     }
 

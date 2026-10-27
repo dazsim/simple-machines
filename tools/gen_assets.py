@@ -357,7 +357,7 @@ def core_base(seed):
             t.putpixel((x, y), (r * 3 // 4, g * 3 // 4, b * 4 // 5, 255))
     return t
 
-def core_front(core, lit):
+def core_front(core, lit, level=None):
     t = core_base(51)
     x0, y0, x1, y1 = FRONT_HOLE[core]
     u0, u1, v0, v1 = x0, x1 - 1, 16 - y1, 15 - y0
@@ -374,7 +374,7 @@ def core_front(core, lit):
         if lit:
             rect(t, u0 + 1, v0 + 2, u1 - 1, v0 + 2, FIRE[1] + (255,))
     elif core in NEW:
-        new_front(t, core, lit, u0, v0, u1, v1)
+        new_front(t, core, lit, u0, v0, u1, v1, level)
     else:
         if lit:
             rnd = random.Random(19)
@@ -387,15 +387,16 @@ def core_front(core, lit):
     px(t, 12, 3, (RED[0] if lit else RED[2]) + (255,))
     return t
 
-def new_front(t, core, lit, u0, v0, u1, v1):
+def new_front(t, core, lit, u0, v0, u1, v1, level=None):
     c = lambda col: col + (255,)
     if core == "battery":
-        n = 3
-        for i in range(n):
-            a = v0 + 1 + i * 3
-            rect(t, u0 + 1, a, u1 - 1, a + 1, c(RED[0] if lit or i else RED[2]))
-            rect(t, u0 + 1, a + 1, u1 - 1, a + 1, c(RED[1] if lit or i else RED[2]))
-            px(t, u1 - 1, a, c(COPPER[0]))
+        # charge gauge, five bars lit from the bottom
+        n = (5 if lit else 0) if level is None else level
+        for i in range(5):
+            v = v1 - i * 2
+            rect(t, u0 + 1, v, u1 - 1, v, c(RED[0] if i < n else RED[2]))
+            if i < n:
+                px(t, u1 - 1, v, c(COPPER[0]))
     elif core == "crusher":
         for v in (v0 + 1, v1 - 1):
             for u in range(u0 + 1, u1):
@@ -660,6 +661,8 @@ def built(shaped, rec):
         save(core_front(core, False), tb + f"{core}_core_front.png")
         save(core_front(core, True), tb + f"{core}_core_front_on.png")
         save(core_top(core), tb + f"{core}_core_top.png")
+    for n in range(6):
+        save(core_front("battery", False, n), tb + f"battery_core_front_{n}.png")
     save(core_side(), tb + "core_side.png")
     save(core_base(63), tb + "core_bottom.png")
     save(board_tex(), tb + "control_board.png")
@@ -691,6 +694,8 @@ def built(shaped, rec):
         model(f"{c}_core", core_elements(False), core_tex(c, ""))
         model(f"{c}_core_on", core_elements(False), core_tex(c, "_on"))
         model(f"{c}_core_loose", core_elements(True), core_tex(c, ""))
+    for n in range(6):
+        model(f"battery_core_{n}", core_elements(False), core_tex("battery", f"_{n}"))
     board_t = {"board": f"{MOD}:block/control_board", "particle": f"{MOD}:block/control_board"}
     model("control_board", board_elements(False), board_t)
     model("control_board_loose", board_elements(True), board_t)
@@ -734,8 +739,12 @@ def built(shaped, rec):
         for tier in ["iron", "steel"]:
             parts.append({"when": {"tier": tier}, "apply": {"model": frames[tier]}})
         for f, y in FACINGS:
-            parts.append(part(f"{c}_core", {"facing": f, "lit": "false"}, y))
-            parts.append(part(f"{c}_core_on", {"facing": f, "lit": "true"}, y))
+            if c == "battery":
+                for n in range(6):
+                    parts.append(part(f"battery_core_{n}", {"facing": f, "level": str(n)}, y))
+            else:
+                parts.append(part(f"{c}_core", {"facing": f, "lit": "false"}, y))
+                parts.append(part(f"{c}_core_on", {"facing": f, "lit": "true"}, y))
             for fin in FINISHES:
                 parts.append(part(f"{c}_{fin}_front_panel", {"facing": f, "panel": fin}, y))
                 parts.append(part(f"{fin}_side_panels", {"facing": f, "panel": fin}, y))

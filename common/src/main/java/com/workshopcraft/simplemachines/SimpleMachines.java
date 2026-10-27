@@ -255,7 +255,8 @@ public class SimpleMachines {
         MACHINES.put(Core.ROLLING, rollingMill);
         MACHINES.put(Core.GENERATOR, generator);
         for (Core core : NEW_CORES) {
-            final Block b = new WorkMachineBlock(core == Core.BATTERY ? built(core.block).lightLevel(st -> 0) : built(core.block), core);
+            final Block b = core == Core.BATTERY ? new com.workshopcraft.simplemachines.machine.BatteryBlock(built(core.block).lightLevel(st -> 0))
+                    : new WorkMachineBlock(built(core.block), core);
             r.accept(id(core.block), b);
             MACHINES.put(core, b);
         }

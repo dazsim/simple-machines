@@ -38,6 +38,8 @@ public class SimpleMachinesNeoForgeClient {
         });
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent e) ->
                 e.register(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.MAP_CODEC));
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent e) ->
+                e.register(SimpleMachines.id("tank_fluid"), com.workshopcraft.simplemachines.client.TankItemRenderer.Unbaked.MAP_CODEC));
         modBus.addListener((RegisterMenuScreensEvent e) -> {
             for (MenuType<PoweredMenu> m : SimpleMachines.MENUS.values()) e.register(m, PoweredScreen::new);
             e.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);

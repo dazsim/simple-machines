@@ -81,22 +81,29 @@ public class TankRenderer implements BlockEntityRenderer<TankBlockEntity, TankRe
         final Fluid f = be.fluid();
         s.sprite = ConduitRenderer.fluidSprite(f);
         s.tint = Minecraft.getInstance().level == null ? 0xFFFFFFFF : ConduitRenderer.fluidTint(f, Minecraft.getInstance().level, be.getBlockPos());
-        s.top = LO + Math.max(0.25F, (HI - LO) * be.amount() / (float) TankBlockEntity.CAPACITY);
+        s.top = top(be.amount());
         s.glow = f.defaultFluidState().createLegacyBlock().getLightEmission() > 0;
     }
 
     @Override
     public void submit(State s, PoseStack pose, SubmitNodeCollector out, CameraRenderState camera) {
         if (s.sprite == null) return;
-        final TextureAtlasSprite sp = s.sprite;
-        final int light = s.glow ? LightCoordsUtil.FULL_BRIGHT : s.lightCoords;
+        submitFluid(pose, out, s.sprite, s.tint, s.top, s.glow ? LightCoordsUtil.FULL_BRIGHT : s.lightCoords);
+    }
+
+    /** Fill height in pixels for an amount in droplets. */
+    public static float top(long amount) {
+        return LO + Math.max(0.25F, (HI - LO) * amount / (float) TankBlockEntity.CAPACITY);
+    }
+
+    public static void submitFluid(PoseStack pose, SubmitNodeCollector out, TextureAtlasSprite sp, int tint, float top, int light) {
         final float[][] planes = new float[SHELL.length + 1][];
         System.arraycopy(SHELL, 0, planes, 0, SHELL.length);
-        planes[SHELL.length] = new float[]{0, 1, 0, s.top - 8};
+        planes[SHELL.length] = new float[]{0, 1, 0, top - 8};
         out.submitCustomGeometry(pose, Sheets.translucentBlockSheet(), (p, vc) -> {
             for (int i = 0; i < planes.length; i++) {
                 final List<float[]> poly = face(planes, i);
-                if (poly.size() >= 3) emit(p, vc, planes[i], poly, sp, s.tint, light);
+                if (poly.size() >= 3) emit(p, vc, planes[i], poly, sp, tint, light);
             }
         });
     }

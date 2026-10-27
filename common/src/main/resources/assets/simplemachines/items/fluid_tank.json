@@ -1,6 +1,18 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "simplemachines:block/fluid_tank"
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:special",
+        "base": "simplemachines:block/fluid_tank",
+        "model": {
+          "type": "simplemachines:tank_fluid"
+        }
+      },
+      {
+        "type": "minecraft:model",
+        "model": "simplemachines:block/fluid_tank"
+      }
+    ]
   }
 }

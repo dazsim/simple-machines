@@ -3,7 +3,7 @@
   "sort": 5,
   "title": "Solar Parts",
   "subtitle": "Cells, blend and cores",
-  "text": "PV Cells go into every panel up to Gold. Make them from glass, lapis, a Silicon Wafer and a Redstone Copper Ingot.\n\nThe Diamond panel uses Silicon-Lapis Blend instead, alloyed from a wafer and 3 lapis.\n\nEach tier has its own core: a centre of Redstone Copper Ingot with 4 iron, copper or gold plates, or a diamond with 4 steel plates.",
+  "text": "PV Cells go into every panel up to Gold. Make them from glass, lapis, a Silicon Wafer and a Redstone Copper Ingot.\n\nThe Diamond panel uses Silicon-Lapis Blend instead, alloyed from a wafer and 3 lapis.\n\nEach tier has its own core: a centre of Redstone Copper Ingot with 4 iron, copper or gold plates, or a diamond with 4 steel plates (the Diamond Core is on the panel page).",
   "drawing": "simplemachines:textures/simplebooks/manual/solar.png",
   "caption": "Iron, Copper, Gold and Diamond",
   "right_title": "Recipes",
@@ -80,20 +80,6 @@
       },
       "output": "simplemachines:gold_core",
       "note": "Crafting Table\n4x Gold Plate, 1x Redstone Copper Ingot"
-    },
-    {
-      "kind": "craft_shaped",
-      "pattern": [
-        " P ",
-        "PDP",
-        " P "
-      ],
-      "key": {
-        "P": "#c:plates/steel",
-        "D": "#c:gems/diamond"
-      },
-      "output": "simplemachines:diamond_core",
-      "note": "Crafting Table\n4x Steel Plate, 1x Diamond"
     }
   ]
 }

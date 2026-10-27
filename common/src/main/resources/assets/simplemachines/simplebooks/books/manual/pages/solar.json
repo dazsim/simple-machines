@@ -57,6 +57,20 @@
     {
       "kind": "craft_shaped",
       "pattern": [
+        " P ",
+        "PDP",
+        " P "
+      ],
+      "key": {
+        "P": "#c:plates/steel",
+        "D": "#c:gems/diamond"
+      },
+      "output": "simplemachines:diamond_core",
+      "note": "Crafting Table\n4x Steel Plate, 1x Diamond"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
         "SBS",
         "BCB",
         "SBS"

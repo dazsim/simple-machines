@@ -579,12 +579,12 @@ def pages():
     page("solar", "power", 4, "Solar Panels", "Four tiers, free power from the sky",
          "A solar panel needs open sky right above it. It makes FE in daylight and gives it out of its sides and bottom.\n\nIron: 4 FE/t, stores 2k.\nCopper: 20 FE/t, stores 10k.\nGold: 100 FE/t, stores 50k.\nDiamond: 1,000 FE/t by day and 500 at night, stores 500k.\n\nEach tier takes four panels of the tier below. The Diamond panel gives MV: use Gold Cable or an LV/MV Transformer front, or LV blocks next to it explode. Right click a panel to read it.",
          "solar", "Iron, Copper, Gold and Diamond", "Recipes",
-         [craft("iron_solar_panel"), craft("copper_solar_panel"), craft("gold_solar_panel"), craft("diamond_solar_panel")])
+         [craft("iron_solar_panel"), craft("copper_solar_panel"), craft("gold_solar_panel"), craft("diamond_core"), craft("diamond_solar_panel")])
     page("solar_parts", "power", 5, "Solar Parts", "Cells, blend and cores",
-         "PV Cells go into every panel up to Gold. Make them from glass, lapis, a Silicon Wafer and a Redstone Copper Ingot.\n\nThe Diamond panel uses Silicon-Lapis Blend instead, alloyed from a wafer and 3 lapis.\n\nEach tier has its own core: a centre of Redstone Copper Ingot with 4 iron, copper or gold plates, or a diamond with 4 steel plates.",
+         "PV Cells go into every panel up to Gold. Make them from glass, lapis, a Silicon Wafer and a Redstone Copper Ingot.\n\nThe Diamond panel uses Silicon-Lapis Blend instead, alloyed from a wafer and 3 lapis.\n\nEach tier has its own core: a centre of Redstone Copper Ingot with 4 iron, copper or gold plates, or a diamond with 4 steel plates (the Diamond Core is on the panel page).",
          "solar", "Iron, Copper, Gold and Diamond", "Recipes",
          [craft("pv_cell"), process("alloying/silicon_lapis_blend", "alloy_smelter"), craft("iron_core"), craft("copper_core"),
-          craft("gold_core"), craft("diamond_core")])
+          craft("gold_core")])
     page("wind", "power", 6, "Helical Wind Turbine", "Two blocks tall, best up high",
          "The turbine needs a free block above where you place it. Breaking either half takes the whole turbine.\n\nOutput is up to 50 FE/t: 50 x height x open air x weather. Height counts from Y 64 (nothing) to Y 160 (full). Open air is the share of air in the 9x9x9 space around the rotor, checked every 5 seconds. Rain gives x1.25 and thunder x1.5.\n\nIt stores 20k FE and gives LV out of the base. Right click it to read it.",
          "wind", "Rotor on top, base below", "Recipe",

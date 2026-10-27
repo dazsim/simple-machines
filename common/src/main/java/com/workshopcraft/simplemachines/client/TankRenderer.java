@@ -25,7 +25,7 @@ import org.jspecify.annotations.Nullable;
 /** The fluid inside the tank, the clipped cube shell cut off at the fluid level. */
 public class TankRenderer implements BlockEntityRenderer<TankBlockEntity, TankRenderer.State> {
     // edge bevel and corner cut in pixels, matching the block model
-    private static final float E = 0F, K = 4F;
+    private static final float E = 2F, K = 4F;
     private static final float INSET = 0.3F, LO = INSET, HI = 16 - INSET;
     private static final float[][] SHELL = shell();
 

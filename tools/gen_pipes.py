@@ -182,7 +182,7 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
     jdump(lang, f"{A}/lang/en_us.json")
 
 
-TANK_E, TANK_K = 0, 4  # edge bevel and corner cut, in pixels
+TANK_E, TANK_K = 2, 4  # edge bevel and corner cut, in pixels
 
 
 def tank(A, D, jdump, shaped, model, el, tex, noisy, save):

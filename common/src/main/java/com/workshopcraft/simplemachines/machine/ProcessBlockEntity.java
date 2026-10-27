@@ -12,17 +12,24 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
-/** Crusher and sawmill: one input, one output from a {@link ProcessRecipe}; a steel crusher can roll a bonus item. */
+/** Crusher, sawmill and compressor: one input, one output from a {@link ProcessRecipe}; a steel crusher can roll a bonus item. */
 public class ProcessBlockEntity extends PoweredBlockEntity {
     public static final int CAPACITY = 10_000;
     public static final int PER_TICK = 20;
     public static final int MAX_IN = 200;
+    public static final int COMPRESSOR_CAPACITY = 20_000;
+    public static final int COMPRESSOR_PER_TICK = 30;
 
     private final RecipeType<ProcessRecipe> type;
     private final String name;
 
     public ProcessBlockEntity(BlockEntityType<?> be, BlockPos pos, BlockState state, RecipeType<ProcessRecipe> type, String name) {
-        super(be, pos, state, CAPACITY, MAX_IN, PER_TICK);
+        this(be, pos, state, type, name, CAPACITY, MAX_IN, PER_TICK);
+    }
+
+    public ProcessBlockEntity(BlockEntityType<?> be, BlockPos pos, BlockState state, RecipeType<ProcessRecipe> type, String name,
+                              int capacity, int maxIn, int perTick) {
+        super(be, pos, state, capacity, maxIn, perTick);
         this.type = type;
         this.name = name;
     }
@@ -34,7 +41,7 @@ public class ProcessBlockEntity extends PoweredBlockEntity {
                 final ItemStack out = r.output();
                 if (out.isEmpty()) continue;
                 final float chance = tier() == Tier.STEEL ? r.bonus() : 0;
-                return new Job(out, new int[]{1}, r.cookTime(), chance > 0 ? out.copyWithCount(1) : ItemStack.EMPTY, chance);
+                return new Job(out, new int[]{r.inputCount()}, r.cookTime(), chance > 0 ? out.copyWithCount(1) : ItemStack.EMPTY, chance);
             }
         }
         return null;

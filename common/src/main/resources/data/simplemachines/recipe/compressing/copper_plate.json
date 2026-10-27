@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": "#c:ingots/copper",
+  "result": "simplemachines:copper_sheet",
+  "cooking_time": 100
+}

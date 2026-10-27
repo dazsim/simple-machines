@@ -1,5 +1,6 @@
 package com.workshopcraft.simplemachines.neoforge;
 
+import com.workshopcraft.simplemachines.pipe.FluidStore;
 import com.workshopcraft.simplemachines.pipe.TankBlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -14,9 +15,9 @@ final class NeoTank extends SnapshotJournal<NeoTank.Snap> implements ResourceHan
     }
 
     private static final long MB = TankBlockEntity.MB;
-    private final TankBlockEntity tank;
+    private final FluidStore tank;
 
-    NeoTank(TankBlockEntity tank) {
+    NeoTank(FluidStore tank) {
         this.tank = tank;
     }
 
@@ -37,7 +38,7 @@ final class NeoTank extends SnapshotJournal<NeoTank.Snap> implements ResourceHan
 
     @Override
     public long getCapacityAsLong(int index, FluidResource resource) {
-        return index == 0 ? TankBlockEntity.CAPACITY / MB : 0;
+        return index == 0 ? tank.capacity() / MB : 0;
     }
 
     @Override
@@ -58,7 +59,7 @@ final class NeoTank extends SnapshotJournal<NeoTank.Snap> implements ResourceHan
     @Override
     public int extract(int index, FluidResource resource, int amount, TransactionContext transaction) {
         if (amount <= 0 || index != 0 || resource.isEmpty() || !resource.isComponentsPatchEmpty()) return 0;
-        if (tank.amount() == 0 || TankBlockEntity.still(resource.getFluid()) != tank.fluid()) return 0;
+        if (!tank.drainable() || tank.amount() == 0 || TankBlockEntity.still(resource.getFluid()) != tank.fluid()) return 0;
         final int n = (int) Math.min(amount, tank.amount() / MB);
         if (n <= 0) return 0;
         updateSnapshots(transaction);

@@ -37,7 +37,7 @@
         "D": "minecraft:redstone_block"
       },
       "output": "simplemachines:power_cell",
-      "note": "Crafting Table\n6x Copper Sheet, 2x Redstone Copper Ingot, 1x Block of Redstone"
+      "note": "Crafting Table\n6x Copper Plate, 2x Redstone Copper Ingot, 1x Block of Redstone"
     }
   ]
 }

@@ -305,7 +305,8 @@ def main():
 
 NEW = {"battery": "battery", "crusher": "crusher", "harvester": "crop_harvester", "alloy": "alloy_smelter",
        "stone": "stone_generator", "saw": "sawmill", "water": "water_generator", "hive": "mechanical_hive",
-       "shearer": "shearer", "charger": "charger", "crafter": "auto_crafter"}
+       "shearer": "shearer", "charger": "charger", "crafter": "auto_crafter",
+       "compressor": "compressor", "lava": "lava_generator"}
 BUILT = ["electric_furnace", "rolling_mill", "solid_fuel_generator"] + list(NEW.values())
 CHASSIS = ["iron_chassis", "steel_chassis"]
 CORES = {"furnace": "electric_furnace", "rolling": "rolling_mill", "generator": "solid_fuel_generator", **NEW}
@@ -324,9 +325,11 @@ PALETTES = {"iron": IRON, "copper": COPPER4, "steel": STEEL}
 FRONT_HOLE = {"furnace": (4, 4, 12, 11), "rolling": (3, 6, 13, 10), "generator": (5, 3, 11, 10),
               "battery": (5, 3, 11, 12), "crusher": (3, 5, 13, 11), "harvester": (3, 4, 13, 10), "alloy": (4, 4, 12, 11),
               "stone": (4, 4, 12, 11), "saw": (3, 6, 13, 10), "water": (5, 4, 11, 11), "hive": (4, 4, 12, 11),
-              "shearer": (3, 5, 13, 10), "charger": (5, 3, 11, 10), "crafter": (3, 3, 13, 13)}
+              "shearer": (3, 5, 13, 10), "charger": (5, 3, 11, 10), "crafter": (3, 3, 13, 13),
+              "compressor": (3, 3, 13, 12), "lava": (4, 3, 12, 12)}
 TOP_HOLE = {"furnace": (5, 5, 11, 11), "rolling": (4, 6, 12, 10), "generator": None, "crusher": (4, 4, 12, 12),
-            "alloy": (5, 5, 11, 11), "water": (5, 5, 11, 11), "saw": (7, 3, 9, 13), "crafter": (3, 3, 13, 13)}
+            "alloy": (5, 5, 11, 11), "water": (5, 5, 11, 11), "saw": (7, 3, 9, 13), "crafter": (3, 3, 13, 13),
+            "lava": (5, 5, 11, 11)}
 WATER = [(96, 150, 230), (62, 110, 210), (40, 76, 170)]
 HONEY = [(255, 214, 96), (236, 168, 40), (176, 110, 22)]
 LAVA = [(255, 200, 70), (240, 120, 30), (180, 60, 20)]
@@ -457,6 +460,23 @@ def new_front(t, core, lit, u0, v0, u1, v1, level=None):
                 lit_cell = lit and (i + j) % 2 == 0
                 rect(t, a, b, a + 1, b + 1, c(PLANK[1] if not lit_cell else HONEY[0]))
                 px(t, a, b, c(PLANK[0] if not lit_cell else (255, 240, 170)))
+    elif core == "compressor":
+        rect(t, u0 + 1, v0, u1 - 1, v0 + 1, c(STEEL[1])); rect(t, u0 + 1, v0 + 1, u1 - 1, v0 + 1, c(STEEL[2]))
+        rect(t, u0 + 2, v0 + 2, u1 - 2, v0 + 2, c(STEEL[0]))
+        rect(t, (u0 + u1) // 2 - 2, v1 - 3, (u0 + u1) // 2 + 1, v1 - 1, c((60, 60, 64)))
+        px(t, (u0 + u1) // 2 - 1, v1 - 3, c((120, 120, 128)))
+        rect(t, u0, v1, u1, v1, c(STEEL[3])); rect(t, u0 + 1, v1, u1 - 1, v1, c(IRON[2]))
+        if lit:
+            rect(t, u0 + 1, v0 + 3, u1 - 1, v0 + 3, c(RED[0]))
+    elif core == "lava":
+        rect(t, u0, v0, u1, v1, c((150, 170, 180)))
+        rect(t, u0 + 1, v0 + 1, u1 - 1, v1 - 1, c(DARK))
+        top = v0 + 3
+        for v in range(top, v1):
+            for u in range(u0 + 1, u1):
+                k = 0 if (u + v * 3) % 7 == 0 else (1 if v < top + 2 else 2)
+                px(t, u, v, c(LAVA[k] if lit or k else LAVA[1]))
+        px(t, u0 + 1, v0 + 1, c((230, 240, 245))); px(t, u0 + 2, v0 + 2, c((200, 214, 222)))
     elif core == "charger":
         bolt = [(3, 0), (2, 1), (2, 2), (1, 3), (2, 3), (3, 3), (3, 4), (2, 5), (2, 6)]
         for (a, b) in bolt:
@@ -493,6 +513,8 @@ def core_top(core):
                     a, b = x0 + 1 + i * 3, z0 + 1 + j * 3
                     rect(t, a, b, a + 1, b + 1, PLANK[1] + (255,))
                     px(t, a, b, PLANK[0] + (255,))
+        elif core == "lava":
+            rect(t, 5, 5, 10, 10, COPPER[1] + (255,)); rect(t, 6, 6, 9, 9, DARK + (255,)); rect(t, 7, 7, 8, 8, LAVA[1] + (255,))
         elif core == "rolling":
             rect(t, x0 + 1, z0 + 1, x1 - 2, z0 + 1, COPPER[0] + (255,))
             rect(t, x0 + 1, z1 - 2, x1 - 2, z1 - 2, COPPER[1] + (255,))
@@ -820,6 +842,9 @@ def built(shaped, rec):
         "container.simplemachines.electric_furnace": "Electric Furnace",
         "gui.simplemachines.rods": "Rods",
         "gui.simplemachines.sheets": "Sheets",
+        "gui.simplemachines.casings": "Casings",
+        "gui.simplemachines.sheet_removed": "Sheet mode removed",
+        "gui.simplemachines.mill_unlock": "Empty the slots to unlock",
         "message.simplemachines.needs_assembly": "Fit a mechanical assembly first",
         "message.simplemachines.needs_board": "Needs a control board",
         "message.simplemachines.needs_panels": "Needs side panels (or fit an upgrade first)",
@@ -828,7 +853,7 @@ def built(shaped, rec):
     }
     for m in ["iron", "copper", "steel"]:
         lang[f"item.simplemachines.{m}_rod"] = f"{m.title()} Rod"
-        lang[f"item.simplemachines.{m}_sheet"] = f"{m.title()} Sheet"
+        lang[f"item.simplemachines.{m}_sheet"] = f"{m.title()} Plate"
         lang[f"tag.item.c.rods.{m}"] = f"{m.title()} Rods"
         lang[f"tag.item.c.plates.{m}"] = f"{m.title()} Plates"
     lang.update({"tag.item.c.ingots.steel": "Steel Ingots", "tag.item.c.tools.screwdriver": "Screwdrivers", "tag.item.c.worktops": "Worktops"})
@@ -839,8 +864,8 @@ def built(shaped, rec):
     jdump(lang, f"{A}/lang/en_us.json")
 
     for m in ["iron", "copper", "steel"]:
-        jdump({"type": f"{MOD}:rolling", "input": {"ingredient": f"#c:ingots/{m}"}, "result": {"id": f"{MOD}:{m}_sheet"},
-               "cooking_time": 100, "sheet": True}, rec + f"rolling/{m}_sheet.json")
+        if os.path.exists(rec + f"rolling/{m}_sheet.json"):
+            os.remove(rec + f"rolling/{m}_sheet.json")
         jdump({"values": [f"{MOD}:{m}_sheet"]}, f"{D}/c/tags/item/plates/{m}.json")
         shaped(f"{m}_panels", ["SS", "SS"], {"S": f"#c:plates/{m}"})
         shaped(f"{m}_worktop", ["SSS"], {"S": f"#c:plates/{m}"})
@@ -920,7 +945,7 @@ def powered_gui(layout):
         rect(t, x, y, x + s - 1, y + s - 1, (139, 139, 139, 255))
         rect(t, x, y, x + s - 2, y, (55, 55, 55, 255)); rect(t, x, y, x, y + s - 2, (55, 55, 55, 255))
         rect(t, x + 1, y + s - 1, x + s - 1, y + s - 1, (255, 255, 255, 255)); rect(t, x + s - 1, y + 1, x + s - 1, y + s - 1, (255, 255, 255, 255))
-    slots = {"process": [(56, 35), (116, 35)], "alloy_smelter": [(38, 35), (56, 35), (116, 35)], "battery": [],
+    slots = {"process": [(56, 35), (116, 35)], "lava_generator": [(44, 35), (128, 35)], "alloy_smelter": [(38, 35), (56, 35), (116, 35)], "battery": [],
              "stone_generator": [(116, 35)], "mechanical_hive": [(56, 35), (112, 35), (130, 35)],
              "grid": [(62 + i % 3 * 18, 17 + i // 3 * 18) for i in range(9)]}[layout]
     big = {"process": 1, "alloy_smelter": 2, "stone_generator": 0}.get(layout, -1)
@@ -929,7 +954,11 @@ def powered_gui(layout):
             slot(x - 5, y - 5, 26)
         else:
             slot(x - 1, y - 1)
-    if layout not in ("battery", "grid"):
+    if layout == "lava_generator":
+        rect(t, 71, 16, 104, 69, (55, 55, 55, 255))
+        rect(t, 72, 17, 104, 69, (255, 255, 255, 255))
+        rect(t, 72, 17, 103, 68, (40, 30, 28, 255))
+    elif layout not in ("battery", "grid"):
         for i in range(16):
             rect(t, 80, 41, 80 + min(i, 15), 42, grey)
         for k in range(8):
@@ -976,7 +1005,7 @@ def machines(shaped, rec):
     save(pipe_tex(STEEL, 81), tb + "item_pipe.png")
     save(pipe_tex(STEEL[1:], 83, STEEL[3]), tb + "item_pipe_link.png")
     save(pipe_tex(COPPER, 85, COPPER[2]), tb + "item_pipe_extract.png")
-    for layout in ["process", "alloy_smelter", "battery", "stone_generator", "mechanical_hive", "grid"]:
+    for layout in ["process", "alloy_smelter", "battery", "stone_generator", "mechanical_hive", "grid", "lava_generator"]:
         save(powered_gui(layout), A + f"/textures/gui/{layout}.png")
     save(crafter_gui(), A + "/textures/gui/auto_crafter.png")
     dusts = {"iron": icons.ramp_of(icons.MC + "item/iron_ingot.png"), "copper": icons.ramp_of(icons.MC + "item/copper_ingot.png"),
@@ -1027,8 +1056,10 @@ def machines(shaped, rec):
     shaped("shearer_assembly", ["RCR", "SIS"], {"R": R, "C": C, "I": I, "S": "minecraft:shears"})
     shaped("charger_assembly", ["RCR", "ILI"], {"R": R, "C": C, "I": I, "L": "minecraft:lightning_rod"})
     shaped("crafter_assembly", ["RCR", "IKI"], {"R": R, "C": C, "I": I, "K": "minecraft:crafter"})
+    shaped("compressor_assembly", ["RCR", "PIP"], {"R": R, "C": C, "I": I, "P": "minecraft:piston"})
+    shaped("lava_assembly", ["RCR", "MTM"], {"R": R, "C": C, "M": "minecraft:magma_block", "T": f"{MOD}:fluid_tank"})
 
-    def proc(kind_, name, ingredient, result, count=1, bonus=0.0, time=200, tags=()):
+    def proc(kind_, name, ingredient, result, count=1, bonus=0.0, time=200, tags=(), inputs=1):
         r = {}
         if tags:
             r["neoforge:conditions"] = [{"type": "neoforge:not", "value": {"type": "neoforge:tag_empty", "tag": t}} for t in tags]
@@ -1038,6 +1069,8 @@ def machines(shaped, rec):
             r["count"] = count
         if bonus:
             r["bonus"] = bonus
+        if inputs > 1:
+            r["input_count"] = inputs
         r["cooking_time"] = time
         jdump(r, rec + f"{kind_}/{name}.json")
     for m in ["iron", "copper", "gold", "tin", "lead", "silver", "nickel", "zinc", "aluminum", "osmium", "uranium", "platinum"]:
@@ -1053,11 +1086,13 @@ def machines(shaped, rec):
         proc("sawing", f"{w}_planks", f"#minecraft:{w}_stems", f"minecraft:{w}_planks", 6, time=100)
     proc("sawing", "bamboo_planks", "#minecraft:bamboo_blocks", "minecraft:bamboo_planks", 3, time=100)
     proc("sawing", "sticks", "#minecraft:planks", "minecraft:stick", 3, time=50)
+    alpha6(shaped, rec, proc)
 
     lang = json.load(open(f"{A}/lang/en_us.json"))
     names = {"battery": "Battery", "crusher": "Crusher", "crop_harvester": "Crop Harvester", "alloy_smelter": "Alloy Smelter",
              "stone_generator": "Stone Generator", "sawmill": "Sawmill", "water_generator": "Water Generator",
-             "mechanical_hive": "Mechanical Hive", "shearer": "Shearer", "charger": "Charger", "auto_crafter": "Auto Crafter"}
+             "mechanical_hive": "Mechanical Hive", "shearer": "Shearer", "charger": "Charger", "auto_crafter": "Auto Crafter",
+             "compressor": "Compressor", "lava_generator": "Lava Generator"}
     for core, block in NEW.items():
         lang[f"block.simplemachines.{block}"] = names[block]
         lang[f"container.simplemachines.{block}"] = names[block]
@@ -1067,6 +1102,7 @@ def machines(shaped, rec):
     lang["item.simplemachines.water_assembly"] = "Water Assembly"
     lang["item.simplemachines.saw_assembly"] = "Saw Assembly"
     lang["item.simplemachines.crafter_assembly"] = "Crafter Assembly"
+    lang["item.simplemachines.lava_assembly"] = "Lava Assembly"
     lang.update({
         "gui.simplemachines.ingredients": "Ingredients",
         "gui.simplemachines.crafter_clear": "Clear pattern",
@@ -1101,6 +1137,93 @@ def machines(shaped, rec):
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]
     jdump({"values": vals + [f"{MOD}:item_pipe"]}, tag)
+
+# ---- 2.1 milestone 1: compressor, lava generator, casings, plates, wafer, biofuel ----
+
+COMPOSTER = "/tmp/mcsrc/net/minecraft/world/level/block/ComposterBlock.java"
+
+def casing_tex(r):
+    t = icons.blank()
+    for y in range(3, 13):
+        rect(t, 4, y, 11, y, r[3] + (255,))
+        px(t, 4, y, r[5] + (255,)); px(t, 11, y, r[5] + (255,)); px(t, 5, y, r[1] + (255,))
+    rect(t, 4, 2, 11, 2, r[1] + (255,)); rect(t, 5, 3, 10, 3, (40, 36, 34, 255))
+    rect(t, 4, 13, 11, 13, r[6] + (255,))
+    for y in (6, 10):
+        rect(t, 4, y, 11, y, r[5] + (255,))
+    return t
+
+def wafer_tex():
+    t = icons.blank()
+    for y in range(16):
+        for x in range(16):
+            d = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+            if d < 6.6:
+                k = (x + y) % 5 == 0
+                t.putpixel((x, y), ((96, 110, 150) if k else (52, 60, 92)) + (255,))
+            elif d < 7.4:
+                t.putpixel((x, y), (150, 160, 180, 255))
+    rect(t, 6, 1, 9, 1, (0, 0, 0, 0))
+    px(t, 5, 4, (200, 210, 240, 255)); px(t, 4, 5, (170, 180, 220, 255))
+    return t
+
+def biofuel_tex():
+    t = Image.new("RGBA", (16, 16))
+    rnd = random.Random(77)
+    pal = [(118, 140, 52), (92, 112, 40), (70, 84, 32), (110, 84, 44)]
+    for y in range(16):
+        for x in range(16):
+            t.putpixel((x, y), jitter(pal[rnd.choice((0, 1, 1, 2, 3))], rnd, 6))
+    for i in range(16):
+        px(t, i, 0, (60, 70, 28, 255)); px(t, i, 15, (52, 60, 24, 255))
+        px(t, 0, i, (60, 70, 28, 255)); px(t, 15, i, (52, 60, 24, 255))
+    for y in (5, 10):
+        rect(t, 1, y, 14, y, (64, 76, 30, 255))
+    return t
+
+def alpha6(shaped, rec, proc):
+    tb, ti = A + "/textures/block/", A + "/textures/item/"
+    gold, iron, copper = (icons.ramp_of(icons.MC + f"item/{m}_ingot.png") for m in ("gold", "iron", "copper"))
+    flat_item("gold_sheet", icons.sheet(gold))
+    flat_item("iron_casing", casing_tex(iron))
+    flat_item("copper_casing", casing_tex(copper))
+    flat_item("silicon_wafer", wafer_tex())
+    jdump({"values": [f"{MOD}:gold_sheet"]}, f"{D}/c/tags/item/plates/gold.json")
+    save(biofuel_tex(), tb + "biofuel_block.png")
+    jdump({"parent": "minecraft:block/cube_all", "textures": {"all": f"{MOD}:block/biofuel_block"}}, f"{A}/models/block/biofuel_block.json")
+    jdump({"variants": {"": {"model": f"{MOD}:block/biofuel_block"}}}, f"{A}/blockstates/biofuel_block.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/biofuel_block"}}, f"{A}/items/biofuel_block.json")
+    loot_self("biofuel_block")
+    jdump({"values": {f"{MOD}:biofuel_block": {"burn_time": 2400}}}, f"{D}/neoforge/data_maps/item/furnace_fuels.json")
+    jdump({"values": [f"{MOD}:biofuel_block"]}, f"{D}/minecraft/tags/block/mineable/hoe.json")
+    # every vanilla compostable, read from the composter source when it is around
+    if os.path.exists(COMPOSTER):
+        import re
+        ids = sorted(set(m.lower() for m in re.findall(r"add\([0-9.]+F, Items\.([A-Z0-9_]+)\)", open(COMPOSTER).read())))
+        jdump({"values": [{"id": f"minecraft:{i}", "required": False} for i in ids]}, f"{D}/{MOD}/tags/item/compostables.json")
+    for m in ["iron", "copper", "steel", "gold"]:
+        proc("compressing", f"{m}_plate", f"#c:ingots/{m}", f"{MOD}:{m}_sheet", time=100)
+    proc("compressing", "diamond", "minecraft:coal", "minecraft:diamond", time=2400, inputs=64)
+    proc("compressing", "biofuel_block", f"#{MOD}:compostables", f"{MOD}:biofuel_block", time=160, inputs=32)
+    proc("compressing", "silicon_wafer", "#c:sands", f"{MOD}:silicon_wafer", time=200, inputs=4)
+    for m in ["iron", "copper"]:
+        jdump({"type": f"{MOD}:rolling", "input": {"ingredient": f"#c:plates/{m}"}, "result": {"id": f"{MOD}:{m}_casing", "count": 2},
+               "cooking_time": 100, "mode": "casings"}, rec + f"rolling/{m}_casing.json")
+    shaped("item_pipe_from_casing", ["CGC"], {"C": f"{MOD}:iron_casing", "G": "#c:glass_blocks"}, 8)
+    shaped("fluid_pipe_from_casing", ["CGC"], {"C": f"{MOD}:copper_casing", "G": "#c:glass_blocks"}, 8)
+    for f in ("item_pipe_from_casing", "fluid_pipe_from_casing"):
+        r = json.load(open(rec + f + ".json"))
+        r["result"]["id"] = f"{MOD}:" + f.replace("_from_casing", "")
+        jdump(r, rec + f + ".json")
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    lang.update({
+        "item.simplemachines.gold_sheet": "Gold Plate", "tag.item.c.plates.gold": "Gold Plates",
+        "item.simplemachines.iron_casing": "Iron Casing", "item.simplemachines.copper_casing": "Copper Casing",
+        "item.simplemachines.silicon_wafer": "Silicon Wafer", "block.simplemachines.biofuel_block": "Biofuel Block",
+        "tag.item.simplemachines.compostables": "Compostables",
+        "gui.simplemachines.lava_tank": "%s / %s mB Lava",
+    })
+    jdump(lang, f"{A}/lang/en_us.json")
 
 # ---- powered tools ----
 
@@ -1157,7 +1280,9 @@ def upgrades(shaped):
         "water_generator": "Water Generator", "mechanical_hive": "Mechanical Hive",
         "line": "%s: %s", "powered": "%s s, %s FE", "per_tick": "%s FE per tick",
         "steel_time": "Steel chassis: %s s, %s FE", "fuel_time": "%s s, burns fuel",
-        "mode_rods": "Set the mill to Rods", "mode_sheets": "Set the mill to Sheets",
+        "mode_rods": "Set the mill to Rods", "mode_casings": "Set the mill to Casings",
+        "compressing": "Compressing", "lava_generator": "Lava Generator",
+        "lava_note": "1 mB per 10 ticks, a bucket lasts %s s",
         "mode_tip": "Click the mode button in the rolling mill screen",
         "bonus": "Steel chassis: %s%% chance of +1", "bonus_tip": "Only on a steel chassis",
         "burns": "Burns %s s", "iron_chassis": "Iron", "steel_chassis": "Steel",

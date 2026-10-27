@@ -1,0 +1,45 @@
+{
+  "section": "power",
+  "sort": 2,
+  "title": "Lava Generator",
+  "subtitle": "Burns lava, no ash",
+  "text": "The Lava Generator holds 4000 mB of lava. Fill it with lava buckets in its left slot, which come back empty on the right, or pipe lava into any side.\n\nIt burns 1 mB every 10 ticks, so a bucket runs 500 s. 80 FE/t on iron, 120 FE/t on steel. It stores 80k FE and gives out up to 400 FE/t to every side.\n\nThe lava stays in the tank only while the machine stands; breaking it loses the lava.",
+  "drawing": "simplemachines:textures/simplebooks/manual/power.png",
+  "caption": "Generator, battery, machine",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "MTM",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "M": "minecraft:magma_block",
+        "T": "simplemachines:fluid_tank"
+      },
+      "output": "simplemachines:lava_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Magma Block, 1x Fluid Tank",
+      "title": "Lava Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Lava Generator",
+      "inputs": [
+        "simplemachines:lava_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:lava_generator",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

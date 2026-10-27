@@ -22,7 +22,9 @@ public enum Core implements StringRepresentable {
     HIVE("hive", "mechanical_hive"),
     SHEARER("shearer", "shearer"),
     CHARGER("charger", "charger"),
-    CRAFTER("crafter", "auto_crafter");
+    CRAFTER("crafter", "auto_crafter"),
+    COMPRESSOR("compressor", "compressor"),
+    LAVA("lava", "lava_generator");
 
     private final String name;
     public final String block;

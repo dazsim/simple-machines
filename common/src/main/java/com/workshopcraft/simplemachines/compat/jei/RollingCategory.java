@@ -29,7 +29,7 @@ class RollingCategory extends Base<RecipeHolder<RollingRecipe>> {
         final RollingRecipe r = holder.value();
         final int pt = RollingMillBlockEntity.PER_TICK;
         arrow(b, 28, r.cookTime());
-        line(b, 0, Component.translatable(r.sheet() ? "jei.simplemachines.mode_sheets" : "jei.simplemachines.mode_rods"),
+        line(b, 0, Component.translatable(RollingRecipe.CASINGS.equals(r.mode()) ? "jei.simplemachines.mode_casings" : "jei.simplemachines.mode_rods"),
                 Component.translatable("jei.simplemachines.mode_tip"));
         line(b, 1, JeiText.powered(SimpleMachines.rollingMill.getName(), r.cookTime(), pt), JeiText.perTick(pt), JeiText.steel(r.cookTime(), pt));
     }

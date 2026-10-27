@@ -85,4 +85,8 @@ public class PoweredMenu extends AbstractContainerMenu {
         final int b = data.get(1);
         return b == 0 || a == 0 ? 0 : Mth.clamp((float) a / b, 0, 1);
     }
+
+    public int value(int id) {
+        return data.get(id);
+    }
 }

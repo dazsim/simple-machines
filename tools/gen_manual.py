@@ -435,6 +435,14 @@ def process(name, appliance, note=None):
     if note: s["note"] = note
     return s
 
+def compress(name, appliance="compressor", note=None):
+    r = recipe(name)
+    n = r.get("input_count", 1); c = r.get("count", 1)
+    s = {"kind": "process", "inputs": [{"item": r["ingredient"], "count": n} if n > 1 else r["ingredient"]],
+         "appliance": f"{MOD}:{appliance}", "output": {"item": r["result"], "count": c} if c > 1 else r["result"]}
+    if note: s["note"] = note
+    return s
+
 def text(t): return {"kind": "text", "text": t}
 
 def build(assembly, machine, title):
@@ -456,11 +464,11 @@ def pages():
          "Powered machines built by hand. Every machine starts as a chassis; you fit its parts one at a time and fix each with a screwdriver.\n\nStart with an Alloy Furnace and an Extruder, which burn fuel. They make the steel, redstone copper and rods everything else needs.",
          "intro", "A finished machine", "First tools",
          [craft("screwdriver"), craft("alloy_furnace"), craft("extruder")])
-    page("metals", "start", 1, "Metals", "Steel, redstone copper, rods and sheets",
-         "The Alloy Furnace mixes two inputs. The Extruder turns an iron or copper ingot into 2 rods. Once you have power, the Rolling Mill rolls ingots into rods or sheets; the button in its screen switches between them.\n\nSteel rods only come from the Rolling Mill. The Tool Stand and Diamond Drill Bit need them.\n\nCopper rods and sheets, and steel sheets, follow the iron cards. Sheets are tagged c:plates.",
+    page("metals", "start", 1, "Metals", "Steel, redstone copper, rods and plates",
+         "The Alloy Furnace mixes two inputs. The Extruder turns an iron or copper ingot into 2 rods. Once you have power, the Rolling Mill rolls ingots into rods, or plates into casings; the button in its screen switches between them.\n\nPlates come from the Compressor, one ingot each. Steel rods only come from the Rolling Mill. The Tool Stand and Diamond Drill Bit need them.\n\nCopper, steel and gold follow the iron cards. Plates are tagged c:plates.",
          "metals", "Alloy Furnace, side view", "Recipes",
          [process("alloying/steel_ingot", "alloy_furnace"), process("alloying/redstone_copper_ingot", "alloy_furnace"),
-          process("extruding/iron_rod", "extruder"), process("rolling/iron_sheet", "rolling_mill", "Sheet mode"),
+          process("extruding/iron_rod", "extruder"), compress("compressing/iron_plate"),
           process("rolling/steel_rod", "rolling_mill", "Rod mode")])
     page("chassis", "building", 0, "Chassis and Tiers", "Tier 1 iron, tier 2 steel",
          "The chassis is the frame every powered machine is built on, and it sets the tier.\n\nIron is tier 1. Steel is tier 2: the machine runs 1.5x faster, holds twice the energy and some machines reach further, such as the 9x9 Crop Harvester.",
@@ -473,14 +481,23 @@ def pages():
               "Right click with the part, then the screwdriver. Skip the upgrades if you like."),
           craft("control_board"), craft("crusher_assembly", "Assembly (Crusher)")])
     page("finishes", "building", 2, "Panels and Finishes", "Wood, concrete and metal",
-         "Panels close the sides and a worktop covers the top. Both come in the twelve woods, the sixteen concrete colours, and iron, copper and steel.\n\nWood panels take four slabs, concrete panels four concrete (makes two). Metal ones use sheets from the Rolling Mill; copper and steel follow the iron card. With Much More Storage its worktops are used instead.",
+         "Panels close the sides and a worktop covers the top. Both come in the twelve woods, the sixteen concrete colours, and iron, copper and steel.\n\nWood panels take four slabs, concrete panels four concrete (makes two). Metal ones use plates from the Compressor; copper and steel follow the iron card. With Much More Storage its worktops are used instead.",
          "finishes", "Panel finishes and a worktop", "Recipes",
          [craft("oak_panels"), craft("white_concrete_panels"), craft("iron_panels"), craft("oak_worktop")])
     page("machines", "machines", 0, "Processing Machines", "Built on a chassis",
-         "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or sheets.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes. Feed FE in on any side. Use the screwdriver on a side to push outputs out of it, or pull them with a pipe; see Auto-output.",
+         "Electric Furnace: 20 FE/t, normal smelting.\nRolling Mill: 20 FE/t, rods or casings.\nCrusher: 20 FE/t, ores give 2 dusts.\nSawmill: 20 FE/t, a log gives 6 planks.\nAlloy Smelter: 30 FE/t, Alloy Furnace recipes in half the time.\n\nEach machine has its own assembly; the assembly decides what the chassis becomes. Feed FE in on any side. Use the screwdriver on a side to push outputs out of it, or pull them with a pipe; see Auto-output.",
          "machines", "Any side can take FE, items or an output port", "Assemblies",
          [craft("furnace_assembly", "Electric Furnace"), craft("rolling_assembly", "Rolling Mill"), craft("crusher_assembly", "Crusher"),
           craft("saw_assembly", "Sawmill"), craft("alloy_assembly", "Alloy Smelter")])
+    page("compressor", "machines", 3, "Compressor", "Plates, diamonds, biofuel and wafers",
+         "The Compressor squeezes a stack of one item into something denser. 30 FE/t, faster on steel.\n\n1 ingot: a plate (iron, copper, steel, gold), 5 s.\n64 coal: 1 diamond, 2 minutes.\n32 compostables: a Biofuel Block, 8 s. It burns for 120 s in any furnace or generator.\n4 sand: a Silicon Wafer, 10 s.\n\nThe input slot waits until it holds the full count.",
+         "machines", "Any side can take FE, items or an output port", "Recipes",
+         [craft("compressor_assembly", "Compressor Assembly"), build("compressor_assembly", "compressor", "Compressor"),
+          compress("compressing/iron_plate"), compress("compressing/diamond"), compress("compressing/biofuel_block"), compress("compressing/silicon_wafer")])
+    page("casings", "machines", 4, "Casings", "The Rolling Mill's second mode",
+         "Switch the Rolling Mill to Casings and feed it plates: one plate rolls into 2 casings. Two casings and a glass block make 8 pipes, the cheap way.\n\nSheet mode has been removed. A mill saved in sheet mode shows a warning and stops; press the mode button and empty both slots to unlock it.",
+         "machines", "Any side can take FE, items or an output port", "Recipes",
+         [process("rolling/iron_casing", "rolling_mill", "Casing mode"), craft("item_pipe_from_casing", "Item Pipe"), craft("fluid_pipe_from_casing", "Fluid Pipe")])
     page("farm", "machines", 1, "Farm and Generator Machines", "Working the world around them",
          "Crop Harvester: harvests and replants grown crops in a 5x5 area in front (9x9 on steel), 400 FE a crop.\nShearer: shears sheep in the same area, 500 FE a sheep.\nStone Generator: cobblestone from water and lava, 10 FE/t.\nWater Generator: fills buckets beside 2 water sources, 10 FE/t.\nMechanical Hive: honeycomb and honey bottles, 20 FE/t.",
          "farm", "The work area sits in front of the machine", "Assemblies",
@@ -496,6 +513,10 @@ def pages():
          [craft("generator_assembly", "Generator Assembly"), build("generator_assembly", "solid_fuel_generator", "Solid Fuel Generator"),
           dict(craft("battery_assembly", "Battery Assembly"), join=False), build("battery_assembly", "battery", "Battery"),
           dict(craft("charger_assembly", "Charger Assembly"), join=False), build("charger_assembly", "charger", "Charger")])
+    page("lava_generator", "power", 2, "Lava Generator", "Burns lava, no ash",
+         "The Lava Generator holds 4000 mB of lava. Fill it with lava buckets in its left slot, which come back empty on the right, or pipe lava into any side.\n\nIt burns 1 mB every 10 ticks, so a bucket runs 500 s. 80 FE/t on iron, 120 FE/t on steel. It stores 80k FE and gives out up to 400 FE/t to every side.\n\nThe lava stays in the tank only while the machine stands; breaking it loses the lava.",
+         "power", "Generator, battery, machine", "Assembly",
+         [craft("lava_assembly", "Lava Assembly"), build("lava_assembly", "lava_generator", "Lava Generator")])
     page("power_parts", "power", 1, "Cables and Cells", "Carrying and storing FE",
          "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
          "power", "Generator, battery, machine", "Recipes",

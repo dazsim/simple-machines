@@ -51,13 +51,18 @@ public class SimpleMachinesFabric implements ModInitializer {
         // Fabric only syncs opted-in serializers to the client; JEI and EMI need the manual recipe
         RecipeSynchronization.synchronizeRecipeSerializer(KeepToolRecipe.SERIALIZER);
         for (var serializer : java.util.List.of(SimpleMachines.ALLOYING_SERIALIZER, SimpleMachines.EXTRUDING_SERIALIZER,
-                SimpleMachines.ROLLING_SERIALIZER, SimpleMachines.CRUSHING_SERIALIZER, SimpleMachines.SAWING_SERIALIZER)) {
+                SimpleMachines.ROLLING_SERIALIZER, SimpleMachines.CRUSHING_SERIALIZER, SimpleMachines.SAWING_SERIALIZER,
+                SimpleMachines.COMPRESSING_SERIALIZER)) {
             RecipeSynchronization.synchronizeRecipeSerializer(serializer);
         }
         for (BlockEntityType<? extends WorkBlockEntity> type : SimpleMachines.WORK_ENTITIES) work(type);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.alloyFurnaceEntity);
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity((be, side) -> new FabricTank(be), SimpleMachines.tankEntity);
+        net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntities((be, side) ->
+                be instanceof com.workshopcraft.simplemachines.pipe.FluidStore store ? new FabricTank(store) : null,
+                SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA));
+        net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, context) -> builder.add(SimpleMachines.biofuelItem, 2400));
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->

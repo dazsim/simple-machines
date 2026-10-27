@@ -16,6 +16,8 @@
     "simplemachines:shearer",
     "simplemachines:charger",
     "simplemachines:auto_crafter",
+    "simplemachines:compressor",
+    "simplemachines:lava_generator",
     "simplemachines:iron_chassis",
     "simplemachines:steel_chassis",
     "simplemachines:redstone_copper_cable",

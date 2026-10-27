@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": "#c:ingots/steel",
+  "result": "simplemachines:steel_sheet",
+  "cooking_time": 100
+}

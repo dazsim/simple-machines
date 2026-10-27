@@ -34,7 +34,7 @@
         "R": "#c:rods/steel"
       },
       "output": "simplemachines:steel_tool_frame",
-      "note": "Crafting Table\n5x Steel Sheet, 2x Steel Rod"
+      "note": "Crafting Table\n5x Steel Plate, 2x Steel Rod"
     },
     {
       "kind": "craft_shaped",
@@ -66,7 +66,7 @@
         "R": "minecraft:piston"
       },
       "output": "simplemachines:chainsaw_bar",
-      "note": "Crafting Table\n2x Steel Sheet, 1x Iron Bars, 1x Redstone Copper Ingot, 1x Piston"
+      "note": "Crafting Table\n2x Steel Plate, 1x Iron Bars, 1x Redstone Copper Ingot, 1x Piston"
     },
     {
       "kind": "craft_shaped",

@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": "#c:ingots/iron",
+  "result": "simplemachines:iron_sheet",
+  "cooking_time": 100
+}

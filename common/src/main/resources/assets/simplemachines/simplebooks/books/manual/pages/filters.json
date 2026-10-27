@@ -21,7 +21,7 @@
         "C": "simplemachines:control_board"
       },
       "output": "simplemachines:pipe_filter",
-      "note": "Crafting Table\n2x Iron Sheet, 2x Iron Bars, 1x Control Board"
+      "note": "Crafting Table\n2x Iron Plate, 2x Iron Bars, 1x Control Board"
     },
     {
       "kind": "text",

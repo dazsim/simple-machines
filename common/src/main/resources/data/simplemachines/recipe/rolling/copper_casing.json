@@ -1,0 +1,12 @@
+{
+  "type": "simplemachines:rolling",
+  "input": {
+    "ingredient": "#c:plates/copper"
+  },
+  "result": {
+    "id": "simplemachines:copper_casing",
+    "count": 2
+  },
+  "cooking_time": 100,
+  "mode": "casings"
+}

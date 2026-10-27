@@ -37,7 +37,11 @@ public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
     }
 
     private Component modeLabel() {
-        return Component.translatable(menu.sheets() ? "gui.simplemachines.sheets" : "gui.simplemachines.rods");
+        return Component.translatable(switch (menu.millMode()) {
+            case com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.CASINGS -> "gui.simplemachines.casings";
+            case com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.SHEETS -> "gui.simplemachines.sheets";
+            default -> "gui.simplemachines.rods";
+        });
     }
 
     @Override
@@ -60,6 +64,11 @@ public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
         } else {
             final int w = Mth.ceil(menu.progress() * 24);
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN, 24, 16, 0, 0, x + 79, y + 34, w, 16);
+        }
+        if (menu.mill && menu.millLocked()) {
+            final Component warn = Component.translatable(menu.millMode() == com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.SHEETS
+                    ? "gui.simplemachines.sheet_removed" : "gui.simplemachines.mill_unlock");
+            graphics.text(font, warn, x + 8, y + 60, 0xFFB02020, false);
         }
         if (menu.upgrades() != 0) {
             final Component ups = Upgrade.summary(menu.upgrades(), true);

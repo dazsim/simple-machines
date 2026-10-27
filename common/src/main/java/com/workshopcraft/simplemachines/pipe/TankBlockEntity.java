@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /** Sixteen buckets of one fluid. Amounts are droplets, 81 to the mB, so both loaders map onto it exactly. */
-public class TankBlockEntity extends BlockEntity {
+public class TankBlockEntity extends BlockEntity implements FluidStore {
     public static final long MB = 81, BUCKET = 1000 * MB, CAPACITY = 16 * BUCKET;
 
     private Fluid fluid = Fluids.EMPTY;
@@ -36,6 +36,11 @@ public class TankBlockEntity extends BlockEntity {
 
     public long amount() {
         return amount;
+    }
+
+    @Override
+    public long capacity() {
+        return CAPACITY;
     }
 
     public static Fluid still(Fluid f) {

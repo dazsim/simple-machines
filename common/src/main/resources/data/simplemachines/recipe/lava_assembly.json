@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "M": "minecraft:magma_block",
+    "T": "simplemachines:fluid_tank"
+  },
+  "pattern": [
+    "RCR",
+    "MTM"
+  ],
+  "result": {
+    "id": "simplemachines:lava_assembly"
+  }
+}

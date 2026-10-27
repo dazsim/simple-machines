@@ -1,0 +1,86 @@
+{
+  "section": "machines",
+  "sort": 3,
+  "title": "Compressor",
+  "subtitle": "Plates, diamonds, biofuel and wafers",
+  "text": "The Compressor squeezes a stack of one item into something denser. 30 FE/t, faster on steel.\n\n1 ingot: a plate (iron, copper, steel, gold), 5 s.\n64 coal: 1 diamond, 2 minutes.\n32 compostables: a Biofuel Block, 8 s. It burns for 120 s in any furnace or generator.\n4 sand: a Silicon Wafer, 10 s.\n\nThe input slot waits until it holds the full count.",
+  "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
+  "caption": "Any side can take FE, items or an output port",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "PIP",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "I": "#c:ingots/iron",
+        "P": "minecraft:piston"
+      },
+      "output": "simplemachines:compressor_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Piston, 1x Iron Ingot",
+      "title": "Compressor Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Compressor",
+      "inputs": [
+        "simplemachines:compressor_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:compressor",
+      "note": "Fit it to a chassis"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        "#c:ingots/iron"
+      ],
+      "appliance": "simplemachines:compressor",
+      "output": "simplemachines:iron_sheet"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        {
+          "item": "minecraft:coal",
+          "count": 64
+        }
+      ],
+      "appliance": "simplemachines:compressor",
+      "output": "minecraft:diamond"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        {
+          "item": "#simplemachines:compostables",
+          "count": 32
+        }
+      ],
+      "appliance": "simplemachines:compressor",
+      "output": "simplemachines:biofuel_block"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        {
+          "item": "#c:sands",
+          "count": 4
+        }
+      ],
+      "appliance": "simplemachines:compressor",
+      "output": "simplemachines:silicon_wafer"
+    }
+  ]
+}

@@ -80,7 +80,10 @@ public class SimpleMachines {
             ProcessRecipe.mapCodec(ProcessRecipe.Kind.CRUSHING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.CRUSHING));
     public static final RecipeSerializer<ProcessRecipe> SAWING_SERIALIZER = new RecipeSerializer<>(
             ProcessRecipe.mapCodec(ProcessRecipe.Kind.SAWING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.SAWING));
-    public static final List<Layout> LAYOUTS = List.of(Layout.PROCESS, Layout.ALLOY, Layout.BATTERY, Layout.STONE, Layout.HIVE, Layout.GRID);
+    public static final RecipeType<ProcessRecipe> COMPRESSING = type("compressing");
+    public static final RecipeSerializer<ProcessRecipe> COMPRESSING_SERIALIZER = new RecipeSerializer<>(
+            ProcessRecipe.mapCodec(ProcessRecipe.Kind.COMPRESSING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.COMPRESSING));
+    public static final List<Layout> LAYOUTS = List.of(Layout.PROCESS, Layout.ALLOY, Layout.BATTERY, Layout.STONE, Layout.HIVE, Layout.GRID, Layout.LAVA);
     public static final Map<Layout, MenuType<PoweredMenu>> MENUS = new HashMap<>();
     /** Machines the chassis can become, by core. */
     public static final Map<Core, Block> MACHINES = new EnumMap<>(Core.class);
@@ -89,7 +92,7 @@ public class SimpleMachines {
     public static final List<BlockEntityType<? extends WorkBlockEntity>> WORK_ENTITIES = new ArrayList<>();
     /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
     public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
-            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER);
+            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -148,6 +151,8 @@ public class SimpleMachines {
     public static Block fluidPipe;
     public static Item pipeFilter;
     public static Block tank;
+    public static Block biofuelBlock;
+    public static Item biofuelItem;
     public static Item screwdriver;
     public static Item controlBoard;
     public static Item ironToolFrame;
@@ -251,6 +256,9 @@ public class SimpleMachines {
                 .setId(ResourceKey.create(Registries.BLOCK, id("tool_stand"))).mapColor(MapColor.METAL).strength(2.0F)
                 .sound(SoundType.METAL).noOcclusion());
         r.accept(id("tool_stand"), toolStand);
+        biofuelBlock = new Block(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("biofuel_block")))
+                .mapColor(MapColor.COLOR_GREEN).strength(1.0F).sound(SoundType.GRASS));
+        r.accept(id("biofuel_block"), biofuelBlock);
         MACHINES.put(Core.FURNACE, electricFurnace);
         MACHINES.put(Core.ROLLING, rollingMill);
         MACHINES.put(Core.GENERATOR, generator);
@@ -264,7 +272,7 @@ public class SimpleMachines {
 
     public static void registerItems(BiConsumer<Identifier, Item> r) {
         for (String name : List.of("steel_ingot", "redstone_copper_ingot", "iron_rod", "copper_rod", "steel_rod",
-                "iron_sheet", "copper_sheet", "steel_sheet")) {
+                "iron_sheet", "copper_sheet", "steel_sheet", "gold_sheet", "iron_casing", "copper_casing", "silicon_wafer")) {
             add(r, name, new Item(props(name)));
         }
         screwdriver = add(r, "screwdriver", new Item(props("screwdriver").stacksTo(1)));
@@ -293,6 +301,7 @@ public class SimpleMachines {
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
         add(r, "fluid_pipe", new BlockItem(fluidPipe, props("fluid_pipe").useBlockDescriptionPrefix()));
         add(r, "fluid_tank", new com.workshopcraft.simplemachines.pipe.TankItem(tank, props("fluid_tank").useBlockDescriptionPrefix()));
+        biofuelItem = add(r, "biofuel_block", new BlockItem(biofuelBlock, props("biofuel_block").useBlockDescriptionPrefix()));
         pipeFilter = add(r, "pipe_filter", new com.workshopcraft.simplemachines.pipe.PipeFilterItem(props("pipe_filter")));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
@@ -367,6 +376,9 @@ public class SimpleMachines {
         entity(r, Core.BATTERY, BatteryBlockEntity::new);
         entity(r, Core.CRUSHER, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.CRUSHER), p, st, CRUSHING, "crusher"));
         entity(r, Core.SAW, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.SAW), p, st, SAWING, "sawmill"));
+        entity(r, Core.COMPRESSOR, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.COMPRESSOR), p, st, COMPRESSING, "compressor",
+                ProcessBlockEntity.COMPRESSOR_CAPACITY, ProcessBlockEntity.MAX_IN, ProcessBlockEntity.COMPRESSOR_PER_TICK));
+        entity(r, Core.LAVA, LavaGeneratorBlockEntity::new);
         entity(r, Core.HARVESTER, HarvesterBlockEntity::new);
         entity(r, Core.ALLOY, AlloySmelterBlockEntity::new);
         entity(r, Core.STONE, (p, st) -> new SourceBlockEntity(p, st, SourceBlockEntity.Kind.STONE));
@@ -413,6 +425,7 @@ public class SimpleMachines {
         r.accept(id("rolling"), ROLLING);
         r.accept(id("crushing"), CRUSHING);
         r.accept(id("sawing"), SAWING);
+        r.accept(id("compressing"), COMPRESSING);
     }
 
     public static void registerRecipeSerializers(BiConsumer<Identifier, RecipeSerializer<?>> r) {
@@ -421,6 +434,7 @@ public class SimpleMachines {
         r.accept(id("rolling"), ROLLING_SERIALIZER);
         r.accept(id("crushing"), CRUSHING_SERIALIZER);
         r.accept(id("sawing"), SAWING_SERIALIZER);
+        r.accept(id("compressing"), COMPRESSING_SERIALIZER);
         r.accept(id("crafting_shapeless_keep_tool"), KeepToolRecipe.SERIALIZER);
     }
 }

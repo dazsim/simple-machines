@@ -1,0 +1,6 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": "#c:ingots/gold",
+  "result": "simplemachines:gold_sheet",
+  "cooking_time": 100
+}

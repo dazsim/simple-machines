@@ -13,21 +13,28 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
-/** Crusher and sawmill: one input, one output and a chance of one more on a steel chassis. */
+/** Crusher, sawmill and compressor: one input, one output and a chance of one more on a steel chassis. */
 class ProcessCategory extends Base<RecipeHolder<ProcessRecipe>> {
     static final IRecipeHolderType<ProcessRecipe> CRUSHING = IRecipeHolderType.create(SimpleMachines.id("crushing"));
     static final IRecipeHolderType<ProcessRecipe> SAWING = IRecipeHolderType.create(SimpleMachines.id("sawing"));
+    static final IRecipeHolderType<ProcessRecipe> COMPRESSING = IRecipeHolderType.create(SimpleMachines.id("compressing"));
     private final Core core;
+    private final int perTick;
 
     ProcessCategory(IGuiHelper gui, IRecipeHolderType<ProcessRecipe> type, String key, Core core) {
+        this(gui, type, key, core, ProcessBlockEntity.PER_TICK);
+    }
+
+    ProcessCategory(IGuiHelper gui, IRecipeHolderType<ProcessRecipe> type, String key, Core core, int perTick) {
         super(type, key, SimpleMachines.MACHINES.get(core), gui, 176, 2);
         this.core = core;
+        this.perTick = perTick;
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder b, RecipeHolder<ProcessRecipe> holder, IFocusGroup focuses) {
         final ProcessRecipe r = holder.value();
-        b.addInputSlot(1, ROW).setStandardSlotBackground().add(r.ingredient());
+        input(b, 1, r.ingredients().getFirst());
         final ItemStack out = r.output();
         output(b, 66).add(out);
         if (r.bonus() > 0 && !out.isEmpty()) {
@@ -48,7 +55,7 @@ class ProcessCategory extends Base<RecipeHolder<ProcessRecipe>> {
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder b, RecipeHolder<ProcessRecipe> holder, IFocusGroup focuses) {
         final ProcessRecipe r = holder.value();
-        final int pt = ProcessBlockEntity.PER_TICK;
+        final int pt = perTick;
         arrow(b, 28, r.cookTime());
         if (r.bonus() > 0) {
             b.addText(Component.literal(percent(r.bonus()) + "%"), 28, 10).setColor(TEXT).setPosition(121, ROW + 4)

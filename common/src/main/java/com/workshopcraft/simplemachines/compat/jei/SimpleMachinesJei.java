@@ -31,18 +31,23 @@ public class SimpleMachinesJei implements IModPlugin {
         r.addRecipeCategories(new AlloyingCategory(gui), new RollingCategory(gui), new ExtrudingCategory(gui),
                 new ProcessCategory(gui, ProcessCategory.CRUSHING, "crushing", Core.CRUSHER),
                 new ProcessCategory(gui, ProcessCategory.SAWING, "sawing", Core.SAW),
-                new GeneratorCategory(gui));
+                new ProcessCategory(gui, ProcessCategory.COMPRESSING, "compressing", Core.COMPRESSOR,
+                        com.workshopcraft.simplemachines.machine.ProcessBlockEntity.COMPRESSOR_PER_TICK),
+                new GeneratorCategory(gui), new LavaCategory(gui));
         for (Core c : SOURCES) r.addRecipeCategories(new SourceCategory(gui, SourceCategory.type(c), c));
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration r) {
         r.addRecipes(AlloyingCategory.TYPE, ViewerRecipes.get(SimpleMachines.ALLOYING));
-        r.addRecipes(RollingCategory.TYPE, ViewerRecipes.get(SimpleMachines.ROLLING));
+        r.addRecipes(RollingCategory.TYPE, ViewerRecipes.get(SimpleMachines.ROLLING).stream()
+                .filter(h -> !com.workshopcraft.simplemachines.recipe.RollingRecipe.SHEETS.equals(h.value().mode())).toList());
         r.addRecipes(ExtrudingCategory.TYPE, ViewerRecipes.get(SimpleMachines.EXTRUDING));
         r.addRecipes(ProcessCategory.CRUSHING, ViewerRecipes.get(SimpleMachines.CRUSHING).stream().filter(h -> !h.value().output().isEmpty()).toList());
         r.addRecipes(ProcessCategory.SAWING, ViewerRecipes.get(SimpleMachines.SAWING).stream().filter(h -> !h.value().output().isEmpty()).toList());
+        r.addRecipes(ProcessCategory.COMPRESSING, ViewerRecipes.get(SimpleMachines.COMPRESSING).stream().filter(h -> !h.value().output().isEmpty()).toList());
         r.addRecipes(GeneratorCategory.TYPE, GeneratorCategory.fuels());
+        r.addRecipes(LavaCategory.TYPE, List.of(LavaCategory.Burn.IRON, LavaCategory.Burn.STEEL));
         for (Core c : SOURCES) r.addRecipes(SourceCategory.type(c), List.of(SourceCategory.make(c)));
     }
 
@@ -53,7 +58,9 @@ public class SimpleMachinesJei implements IModPlugin {
         r.addCraftingStation(ExtrudingCategory.TYPE, SimpleMachines.extruder);
         r.addCraftingStation(ProcessCategory.CRUSHING, SimpleMachines.MACHINES.get(Core.CRUSHER));
         r.addCraftingStation(ProcessCategory.SAWING, SimpleMachines.MACHINES.get(Core.SAW));
+        r.addCraftingStation(ProcessCategory.COMPRESSING, SimpleMachines.MACHINES.get(Core.COMPRESSOR));
         r.addCraftingStation(GeneratorCategory.TYPE, SimpleMachines.generator);
+        r.addCraftingStation(LavaCategory.TYPE, SimpleMachines.MACHINES.get(Core.LAVA));
         for (Core c : SOURCES) r.addCraftingStation(SourceCategory.type(c), SimpleMachines.MACHINES.get(c));
         r.addCraftingStation(RecipeTypes.SMELTING, SimpleMachines.electricFurnace);
         r.addCraftingStation(RecipeTypes.CRAFTING, SimpleMachines.MACHINES.get(Core.CRAFTER));

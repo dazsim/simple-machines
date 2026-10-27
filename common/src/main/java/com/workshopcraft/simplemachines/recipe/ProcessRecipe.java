@@ -25,9 +25,9 @@ import java.util.List;
  * One input, one output by item id or by "#tag" (the first item in the tag, so other mods' dusts are used).
  * A recipe whose tag is empty does nothing. bonus is the chance of one extra on a steel chassis.
  */
-public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int count, float bonus, int cookTime) implements MachineRecipe {
+public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int count, float bonus, int cookTime, int inputCount) implements MachineRecipe {
     public enum Kind {
-        CRUSHING, SAWING
+        CRUSHING, SAWING, COMPRESSING
     }
 
     public static MapCodec<ProcessRecipe> mapCodec(Kind kind) {
@@ -36,8 +36,9 @@ public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int
                 Codec.STRING.fieldOf("result").forGetter(ProcessRecipe::result),
                 Codec.intRange(1, 64).optionalFieldOf("count", 1).forGetter(ProcessRecipe::count),
                 Codec.floatRange(0, 1).optionalFieldOf("bonus", 0F).forGetter(ProcessRecipe::bonus),
-                Codec.intRange(1, 72000).optionalFieldOf("cooking_time", 200).forGetter(ProcessRecipe::cookTime)
-        ).apply(i, (a, b, c, d, e) -> new ProcessRecipe(kind, a, b, c, d, e)));
+                Codec.intRange(1, 72000).optionalFieldOf("cooking_time", 200).forGetter(ProcessRecipe::cookTime),
+                Codec.intRange(1, 64).optionalFieldOf("input_count", 1).forGetter(ProcessRecipe::inputCount)
+        ).apply(i, (a, b, c, d, e, f) -> new ProcessRecipe(kind, a, b, c, d, e, f)));
     }
 
     public static StreamCodec<RegistryFriendlyByteBuf, ProcessRecipe> streamCodec(Kind kind) {
@@ -47,7 +48,8 @@ public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int
                 ByteBufCodecs.VAR_INT, ProcessRecipe::count,
                 ByteBufCodecs.FLOAT, ProcessRecipe::bonus,
                 ByteBufCodecs.VAR_INT, ProcessRecipe::cookTime,
-                (a, b, c, d, e) -> new ProcessRecipe(kind, a, b, c, d, e));
+                ByteBufCodecs.VAR_INT, ProcessRecipe::inputCount,
+                (a, b, c, d, e, f) -> new ProcessRecipe(kind, a, b, c, d, e, f));
     }
 
     /** The result stack, or empty when the id is unknown or the tag has no items. */
@@ -62,12 +64,12 @@ public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int
 
     @Override
     public List<CountedIngredient> matched(MachineInput in) {
-        return ingredient.test(in.getItem(0)) ? List.of(new CountedIngredient(ingredient, 1)) : List.of();
+        return ingredient.test(in.getItem(0)) ? List.of(new CountedIngredient(ingredient, inputCount)) : List.of();
     }
 
     @Override
     public List<CountedIngredient> ingredients() {
-        return List.of(new CountedIngredient(ingredient, 1));
+        return List.of(new CountedIngredient(ingredient, inputCount));
     }
 
     @Override
@@ -87,11 +89,19 @@ public record ProcessRecipe(Kind kind, Ingredient ingredient, String result, int
 
     @Override
     public RecipeSerializer<ProcessRecipe> getSerializer() {
-        return kind == Kind.CRUSHING ? SimpleMachines.CRUSHING_SERIALIZER : SimpleMachines.SAWING_SERIALIZER;
+        return switch (kind) {
+            case CRUSHING -> SimpleMachines.CRUSHING_SERIALIZER;
+            case SAWING -> SimpleMachines.SAWING_SERIALIZER;
+            case COMPRESSING -> SimpleMachines.COMPRESSING_SERIALIZER;
+        };
     }
 
     @Override
     public RecipeType<ProcessRecipe> getType() {
-        return kind == Kind.CRUSHING ? SimpleMachines.CRUSHING : SimpleMachines.SAWING;
+        return switch (kind) {
+            case CRUSHING -> SimpleMachines.CRUSHING;
+            case SAWING -> SimpleMachines.SAWING;
+            case COMPRESSING -> SimpleMachines.COMPRESSING;
+        };
     }
 }

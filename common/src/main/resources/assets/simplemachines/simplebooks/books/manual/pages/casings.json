@@ -1,0 +1,60 @@
+{
+  "section": "machines",
+  "sort": 4,
+  "title": "Casings",
+  "subtitle": "The Rolling Mill's second mode",
+  "text": "Switch the Rolling Mill to Casings and feed it plates: one plate rolls into 2 casings. Two casings and a glass block make 8 pipes, the cheap way.\n\nSheet mode has been removed. A mill saved in sheet mode shows a warning and stops; press the mode button and empty both slots to unlock it.",
+  "drawing": "simplemachines:textures/simplebooks/manual/machines.png",
+  "caption": "Any side can take FE, items or an output port",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "process",
+      "inputs": [
+        "#c:plates/iron"
+      ],
+      "appliance": "simplemachines:rolling_mill",
+      "output": {
+        "item": "simplemachines:iron_casing",
+        "count": 2
+      },
+      "note": "Casing mode"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CGC",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "C": "simplemachines:iron_casing",
+        "G": "#c:glass_blocks"
+      },
+      "output": {
+        "item": "simplemachines:item_pipe",
+        "count": 8
+      },
+      "note": "Crafting Table\n2x Iron Casing, 1x Glass",
+      "title": "Item Pipe"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CGC",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "C": "simplemachines:copper_casing",
+        "G": "#c:glass_blocks"
+      },
+      "output": {
+        "item": "simplemachines:fluid_pipe",
+        "count": 8
+      },
+      "note": "Crafting Table\n2x Copper Casing, 1x Glass",
+      "title": "Fluid Pipe"
+    }
+  ]
+}

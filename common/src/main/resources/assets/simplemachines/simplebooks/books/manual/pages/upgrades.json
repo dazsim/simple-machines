@@ -37,7 +37,7 @@
         "B": "simplemachines:control_board"
       },
       "output": "simplemachines:energy_cell",
-      "note": "Crafting Table\n2x Steel Sheet, 2x Power Cell, 1x Control Board"
+      "note": "Crafting Table\n2x Steel Plate, 2x Power Cell, 1x Control Board"
     },
     {
       "kind": "text",

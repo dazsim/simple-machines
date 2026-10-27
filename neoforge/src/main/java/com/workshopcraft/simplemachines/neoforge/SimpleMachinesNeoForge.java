@@ -42,7 +42,7 @@ public class SimpleMachinesNeoForge {
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent e) -> e.sendRecipes(SimpleMachines.ALLOYING,
-                SimpleMachines.EXTRUDING, SimpleMachines.ROLLING, SimpleMachines.CRUSHING, SimpleMachines.SAWING));
+                SimpleMachines.EXTRUDING, SimpleMachines.ROLLING, SimpleMachines.CRUSHING, SimpleMachines.SAWING, SimpleMachines.COMPRESSING));
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {
             if (e.getEntity() instanceof ServerPlayer p) RecipeUnlocks.onLogin(p);
         });
@@ -118,6 +118,7 @@ public class SimpleMachinesNeoForge {
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.alloyFurnaceEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.extruderEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, SimpleMachines.tankEntity, (be, side) -> new NeoTank(be));
+        e.registerBlockEntity(Capabilities.Fluid.BLOCK, lavaEntity(), (be, side) -> new NeoTank(be));
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.cable);
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
@@ -134,5 +135,11 @@ public class SimpleMachinesNeoForge {
     private static EnergyHandler item(Container container, int slot) {
         final ItemStack stack = container.getItem(slot);
         return stack.isEmpty() ? null : ItemAccess.forStack(stack).getCapability(Capabilities.Energy.ITEM);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static net.minecraft.world.level.block.entity.BlockEntityType<com.workshopcraft.simplemachines.machine.LavaGeneratorBlockEntity> lavaEntity() {
+        return (net.minecraft.world.level.block.entity.BlockEntityType<com.workshopcraft.simplemachines.machine.LavaGeneratorBlockEntity>)
+                SimpleMachines.MACHINE_ENTITIES.get(com.workshopcraft.simplemachines.assembly.Core.LAVA);
     }
 }

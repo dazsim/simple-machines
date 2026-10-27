@@ -105,8 +105,13 @@ public class EnergyMenu extends AbstractContainerMenu {
         return Math.max(1, data.get(4)) * 1000;
     }
 
-    public boolean sheets() {
-        return data.get(5) == 1;
+    /** RollingMillBlockEntity.RODS, CASINGS or SHEETS. */
+    public int millMode() {
+        return data.get(5) & 3;
+    }
+
+    public boolean millLocked() {
+        return (data.get(5) & RollingMillBlockEntity.LOCKED) != 0;
     }
 
     @Override

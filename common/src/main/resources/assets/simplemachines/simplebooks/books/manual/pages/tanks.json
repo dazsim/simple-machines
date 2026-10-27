@@ -22,7 +22,7 @@
         "B": "minecraft:bucket"
       },
       "output": "simplemachines:fluid_tank",
-      "note": "Crafting Table\n4x Copper Sheet, 2x Iron Sheet, 2x Glass, 1x Bucket"
+      "note": "Crafting Table\n4x Copper Plate, 2x Iron Plate, 2x Glass, 1x Bucket"
     },
     {
       "kind": "text",

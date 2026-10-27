@@ -1,0 +1,32 @@
+{
+  "section": "items",
+  "sort": 4,
+  "title": "Fluid Tank",
+  "subtitle": "Sixteen buckets of one fluid",
+  "text": "A Fluid Tank holds 16 buckets of a single fluid and shows its level through the glass. Pipes join it on any face.\n\nUse a bucket on it to pour in or fill up. Broken tanks keep what is inside.",
+  "drawing": "simplemachines:textures/simplebooks/manual/tanks.png",
+  "caption": "Pipes in, pipes out",
+  "right_title": "Tank",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "CSC",
+        "GBG",
+        "CSC"
+      ],
+      "key": {
+        "C": "#c:plates/copper",
+        "S": "#c:plates/iron",
+        "G": "#c:glass_blocks",
+        "B": "minecraft:bucket"
+      },
+      "output": "simplemachines:fluid_tank",
+      "note": "Crafting Table\n4x Copper Sheet, 2x Iron Sheet, 2x Glass, 1x Bucket"
+    },
+    {
+      "kind": "text",
+      "text": "Set the pipe end on the tank to output to drain it into the rest of the run."
+    }
+  ]
+}

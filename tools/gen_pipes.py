@@ -145,9 +145,11 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
     shaped("fluid_pipe", ["CGC"], {"C": "#c:plates/copper", "G": "#c:glass_blocks"}, 8)
     shaped("pipe_filter", [" S ", "BCB", " S "], {"S": "#c:plates/iron", "B": "minecraft:iron_bars", "C": f"{MOD}:control_board"})
 
+    tank(A, D, jdump, shaped, model, el, tex, noisy)
+
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]
-    jdump({"values": vals + [f"{MOD}:fluid_pipe"]}, tag)
+    jdump({"values": vals + [f"{MOD}:fluid_pipe", f"{MOD}:fluid_tank"]}, tag)
 
     lang = json.load(open(f"{A}/lang/en_us.json"))
     lang.update({
@@ -173,5 +175,67 @@ def main(A, D, save, jdump, shaped, loot_self, model, el, all_faces, gui, rect, 
         "message.simplemachines.filter_present": "That end already has a filter",
         "message.simplemachines.filter_fitted": "Filter fitted",
         "message.simplemachines.pipe_no_fluid": "No tank on that side",
+        "block.simplemachines.fluid_tank": "Fluid Tank",
+        "tooltip.simplemachines.tank": "%s: %s / %s mB",
+        "tooltip.simplemachines.tank_empty": "Empty, holds 16 buckets of one fluid",
     })
     jdump(lang, f"{A}/lang/en_us.json")
+
+
+def tank(A, D, jdump, shaped, model, el, tex, noisy):
+    T = (0, 0, 0, 0)
+
+    def frame(x, y):
+        cx, cy = min(x, 15 - x), min(y, 15 - y)
+        if cx <= 2 and cy <= 2:
+            if cx == 0 or cy == 0: return CU_DK
+            if (cx, cy) == (1, 1): return CU_HI
+            if cx == 2 or cy == 2: return CU_LO
+            return noisy(CU, 2)
+        if cx == 0 or cy == 0: return DARK
+        if cx == 1 or cy == 1: return LINKHI if (x < 8 and cx == 1) or (y < 8 and cy == 1) else LINK
+        return None
+
+    def side(x, y):
+        f = frame(x, y)
+        if f: return f
+        if (x, y) in ((3, 6), (4, 5), (5, 4), (6, 3), (4, 7), (7, 4), (11, 12), (12, 11)): return GLASS_TOP
+        return T
+
+    def top(x, y):
+        f = frame(x, y)
+        if f: return f
+        r = ((x - 7.5) ** 2 + (y - 7.5) ** 2) ** 0.5
+        if r < 2.2: return MESH_HOLE
+        if r < 2.9: return CU_DK if x + y > 15 else CU_MID
+        if r < 3.8: return noisy(CU, 2)
+        if r < 4.4: return CU_DK
+        if (x, y) in ((3, 3), (12, 3), (3, 12), (12, 12)): return PIPE_GREY
+        if x == 2 or y == 2: return LINKHI
+        if x == 13 or y == 13: return FL
+        return noisy(LINK, 2)
+
+    tex("fluid_tank_side", side)
+    tex("fluid_tank_top", top)
+    t = {"side": f"{MOD}:block/fluid_tank_side", "top": f"{MOD}:block/fluid_tank_top", "particle": f"{MOD}:block/fluid_tank_side"}
+    outer = {d: {"texture": "#top" if d in ("up", "down") else "#side", "cullface": d}
+             for d in ("north", "south", "east", "west", "up", "down")}
+    e, f = 0.02, 15.98
+    inner = [
+        el((0, 0, e), (16, 16, e), {"south": {"texture": "#side"}}),
+        el((0, 0, f), (16, 16, f), {"north": {"texture": "#side"}}),
+        el((e, 0, 0), (e, 16, 16), {"east": {"texture": "#side"}}),
+        el((f, 0, 0), (f, 16, 16), {"west": {"texture": "#side"}}),
+        el((0, e, 0), (16, e, 16), {"up": {"texture": "#top"}}),
+        el((0, f, 0), (16, f, 16), {"down": {"texture": "#top"}}),
+    ]
+    model("fluid_tank", [el((0, 0, 0), (16, 16, 16), outer)] + inner, t)
+    jdump({"variants": {"": {"model": f"{MOD}:block/fluid_tank"}}}, f"{A}/blockstates/fluid_tank.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/fluid_tank"}}, f"{A}/items/fluid_tank.json")
+    jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
+           "conditions": [{"condition": "minecraft:survives_explosion"}],
+           "entries": [{"type": "minecraft:item", "name": f"{MOD}:fluid_tank", "functions": [
+               {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:tank"]}]}]}],
+           "random_sequence": f"{MOD}:blocks/fluid_tank"}, f"{D}/{MOD}/loot_table/blocks/fluid_tank.json")
+    shaped("fluid_tank", ["CSC", "GBG", "CSC"], {"C": "#c:plates/copper", "S": "#c:plates/iron",
+                                                 "G": "#c:glass_blocks", "B": "minecraft:bucket"})

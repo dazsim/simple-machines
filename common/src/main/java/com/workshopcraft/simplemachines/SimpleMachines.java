@@ -101,6 +101,10 @@ public class SimpleMachines {
             DataComponentType.<com.workshopcraft.simplemachines.pipe.PipeFilter>builder()
                     .persistent(com.workshopcraft.simplemachines.pipe.PipeFilter.CODEC)
                     .networkSynchronized(com.workshopcraft.simplemachines.pipe.PipeFilter.STREAM_CODEC).build();
+    public static final DataComponentType<com.workshopcraft.simplemachines.pipe.TankContents> TANK =
+            DataComponentType.<com.workshopcraft.simplemachines.pipe.TankContents>builder()
+                    .persistent(com.workshopcraft.simplemachines.pipe.TankContents.CODEC)
+                    .networkSynchronized(com.workshopcraft.simplemachines.pipe.TankContents.STREAM_CODEC).build();
     public static final DataComponentType<Integer> ENERGY = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
@@ -137,6 +141,7 @@ public class SimpleMachines {
     public static Block itemPipe;
     public static Block fluidPipe;
     public static Item pipeFilter;
+    public static Block tank;
     public static Item screwdriver;
     public static Item controlBoard;
     public static Item ironToolFrame;
@@ -157,6 +162,7 @@ public class SimpleMachines {
     public static BlockEntityType<ElectricFurnaceBlockEntity> electricFurnaceEntity;
     public static BlockEntityType<ChassisBlockEntity> chassisEntity;
     public static BlockEntityType<com.workshopcraft.simplemachines.cable.ConduitBlockEntity> conduitEntity;
+    public static BlockEntityType<com.workshopcraft.simplemachines.pipe.TankBlockEntity> tankEntity;
     private static final List<Item> TAB = new ArrayList<>();
 
     public static Identifier id(String path) {
@@ -230,6 +236,11 @@ public class SimpleMachines {
                 .setId(ResourceKey.create(Registries.BLOCK, id("fluid_pipe"))).mapColor(MapColor.COLOR_ORANGE).strength(0.5F)
                 .sound(SoundType.COPPER).noOcclusion());
         r.accept(id("fluid_pipe"), fluidPipe);
+        tank = new com.workshopcraft.simplemachines.pipe.TankBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("fluid_tank"))).mapColor(MapColor.METAL).strength(1.5F)
+                .sound(SoundType.COPPER).noOcclusion().isViewBlocking((st, l, p) -> false).isRedstoneConductor((st, l, p) -> false)
+                .isSuffocating((st, l, p) -> false));
+        r.accept(id("fluid_tank"), tank);
         toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("tool_stand"))).mapColor(MapColor.METAL).strength(2.0F)
                 .sound(SoundType.METAL).noOcclusion());
@@ -274,6 +285,7 @@ public class SimpleMachines {
         for (Core core : NEW_CORES) add(r, core.block, new MachineItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
         add(r, "fluid_pipe", new BlockItem(fluidPipe, props("fluid_pipe").useBlockDescriptionPrefix()));
+        add(r, "fluid_tank", new com.workshopcraft.simplemachines.pipe.TankItem(tank, props("fluid_tank").useBlockDescriptionPrefix()));
         pipeFilter = add(r, "pipe_filter", new com.workshopcraft.simplemachines.pipe.PipeFilterItem(props("pipe_filter")));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
@@ -319,6 +331,7 @@ public class SimpleMachines {
         r.accept(id("tool_parts"), TOOL_PARTS);
         r.accept(id("tool_tip"), TOOL_TIP);
         r.accept(id("filter"), FILTER);
+        r.accept(id("tank"), TANK);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -360,6 +373,8 @@ public class SimpleMachines {
         r.accept(id("chassis"), chassisEntity);
         conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, itemPipe, fluidPipe));
         r.accept(id("conduit"), conduitEntity);
+        tankEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.pipe.TankBlockEntity::new, Set.of(tank));
+        r.accept(id("fluid_tank"), tankEntity);
         toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));
         r.accept(id("tool_stand"), toolStandEntity);
     }

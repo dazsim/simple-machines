@@ -260,6 +260,21 @@ def d_fluids():
     sh.text((320, 370), "the window shows what is flowing", 12, SOFT)
     sh.save("fluids")
 
+def d_tanks():
+    sh = Sheet()
+    sh.poly([(250, 130), (390, 130), (390, 290), (250, 290)])
+    sh.line((262, 220), (378, 220), 1.4, SOFT)
+    for y in range(232, 290, 14): sh.line((262, y), (378, y), 1.0, SOFT)
+    sh.text((320, 310), "16 buckets", 12)
+    sh.line((90, 200), (250, 200), 2.0); sh.line((90, 224), (250, 224), 2.0)
+    for x in range(100, 240, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
+    sh.line((308, 130), (308, 70), 2.0); sh.line((332, 130), (332, 70), 2.0)
+    sh.line((390, 200), (550, 200), 2.0); sh.line((390, 224), (550, 224), 2.0)
+    for x in range(400, 540, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
+    sh.text((320, 40), "FLUID TANK", 14)
+    sh.text((320, 370), "pipes join on any face", 12, SOFT)
+    sh.save("tanks")
+
 def d_output():
     sh = Sheet(); P = iso((210, 200), 0.95)
     machine(sh, P, port=True)
@@ -443,6 +458,10 @@ def pages():
          "Fluid pipes work like item pipes but move fluids, 250 mB every half second from each output end. They connect to tanks and machines from other mods, and to cauldrons.\n\nThe glass window shows the fluid while it moves. Filters work the same way: put a bucket of the fluid, or anything holding it, in a slot.",
          "fluids", "Tank to machine", "Pipe",
          [craft("fluid_pipe"), text("Fluid and item pipes never join each other. Dyes keep fluid runs apart in the same way.")])
+    page("tanks", "items", 4, "Fluid Tank", "Sixteen buckets of one fluid",
+         "A Fluid Tank holds 16 buckets of a single fluid and shows its level through the glass. Pipes join it on any face.\n\nUse a bucket on it to pour in or fill up. Broken tanks keep what is inside.",
+         "tanks", "Pipes in, pipes out", "Tank",
+         [craft("fluid_tank"), text("Set the pipe end on the tank to output to drain it into the rest of the run.")])
     page("output", "items", 1, "Auto-output", "Push outputs into the next block",
          "Use a screwdriver (without sneaking) on a side of a built machine to make it push its outputs into whatever is on that side, such as a chest or a cupboard.\n\nSides that output or have a pipe on them show a port. All sides are off to start with.",
          "output", "Machine pushing into a chest", "Sides",
@@ -473,7 +492,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_filters, d_fluids, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

@@ -226,5 +226,8 @@
   "message.simplemachines.filter_present": "That end already has a filter",
   "message.simplemachines.filter_fitted": "Filter fitted",
   "message.simplemachines.pipe_no_fluid": "No tank on that side",
+  "block.simplemachines.fluid_tank": "Fluid Tank",
+  "tooltip.simplemachines.tank": "%s: %s / %s mB",
+  "tooltip.simplemachines.tank_empty": "Empty, holds 16 buckets of one fluid",
   "book.simplemachines.manual.title": "Simple Machines Manual"
 }

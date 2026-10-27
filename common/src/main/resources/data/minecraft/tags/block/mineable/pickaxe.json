@@ -20,6 +20,7 @@
     "simplemachines:redstone_copper_cable",
     "simplemachines:item_pipe",
     "simplemachines:tool_stand",
-    "simplemachines:fluid_pipe"
+    "simplemachines:fluid_pipe",
+    "simplemachines:fluid_tank"
   ]
 }

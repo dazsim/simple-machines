@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#c:plates/copper",
+    "S": "#c:plates/iron",
+    "G": "#c:glass_blocks",
+    "B": "minecraft:bucket"
+  },
+  "pattern": [
+    "CSC",
+    "GBG",
+    "CSC"
+  ],
+  "result": {
+    "id": "simplemachines:fluid_tank"
+  }
+}

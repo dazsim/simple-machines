@@ -1,0 +1,73 @@
+{
+  "section": "power",
+  "sort": 4,
+  "title": "Solar Panels",
+  "subtitle": "Four tiers, free power from the sky",
+  "text": "A solar panel needs open sky right above it. It makes FE in daylight and gives it out of its sides and bottom.\n\nIron: 4 FE/t, stores 2k.\nCopper: 20 FE/t, stores 10k.\nGold: 100 FE/t, stores 50k.\nDiamond: 1,000 FE/t by day and 500 at night, stores 500k.\n\nEach tier takes four panels of the tier below. The Diamond panel gives MV: use Gold Cable or an LV/MV Transformer front, or LV blocks next to it explode. Right click a panel to read it.",
+  "drawing": "simplemachines:textures/simplebooks/manual/solar.png",
+  "caption": "Iron, Copper, Gold and Diamond",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "GGG",
+        "VVV",
+        "PCP"
+      ],
+      "key": {
+        "G": "#c:glass_blocks",
+        "V": "simplemachines:pv_cell",
+        "P": "#c:plates/iron",
+        "C": "simplemachines:iron_core"
+      },
+      "output": "simplemachines:iron_solar_panel",
+      "note": "Crafting Table\n3x Glass, 3x PV Cell, 2x Iron Plate, 1x Iron Core"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SVS",
+        "VCV",
+        "SVS"
+      ],
+      "key": {
+        "S": "simplemachines:iron_solar_panel",
+        "V": "simplemachines:pv_cell",
+        "C": "simplemachines:copper_core"
+      },
+      "output": "simplemachines:copper_solar_panel",
+      "note": "Crafting Table\n4x Iron Solar Panel, 4x PV Cell, 1x Copper Core"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SVS",
+        "VCV",
+        "SVS"
+      ],
+      "key": {
+        "S": "simplemachines:copper_solar_panel",
+        "V": "simplemachines:pv_cell",
+        "C": "simplemachines:gold_core"
+      },
+      "output": "simplemachines:gold_solar_panel",
+      "note": "Crafting Table\n4x Copper Solar Panel, 4x PV Cell, 1x Gold Core"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SBS",
+        "BCB",
+        "SBS"
+      ],
+      "key": {
+        "S": "simplemachines:gold_solar_panel",
+        "B": "simplemachines:silicon_lapis_blend",
+        "C": "simplemachines:diamond_core"
+      },
+      "output": "simplemachines:diamond_solar_panel",
+      "note": "Crafting Table\n4x Gold Solar Panel, 4x Silicon-Lapis Blend, 1x Diamond Core"
+    }
+  ]
+}

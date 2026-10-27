@@ -66,6 +66,8 @@ public class SimpleMachinesFabric implements ModInitializer {
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.input(side), true, false), SimpleMachines.transformerEntity);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy, false, true), SimpleMachines.solarEntity);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy, false, true), SimpleMachines.windEntity);
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(com.workshopcraft.simplemachines.cable.Voltage::terrainDamage);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
                 Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);

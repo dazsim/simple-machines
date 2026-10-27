@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "simplemachines:copper_solar_panel",
+    "V": "simplemachines:pv_cell",
+    "C": "simplemachines:gold_core"
+  },
+  "pattern": [
+    "SVS",
+    "VCV",
+    "SVS"
+  ],
+  "result": {
+    "id": "simplemachines:gold_solar_panel"
+  }
+}

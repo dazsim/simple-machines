@@ -1,0 +1,14 @@
+{
+  "type": "simplemachines:alloying",
+  "first": {
+    "ingredient": "simplemachines:silicon_wafer"
+  },
+  "second": {
+    "ingredient": "#c:gems/lapis",
+    "count": 3
+  },
+  "result": {
+    "id": "simplemachines:silicon_lapis_blend"
+  },
+  "cooking_time": 200
+}

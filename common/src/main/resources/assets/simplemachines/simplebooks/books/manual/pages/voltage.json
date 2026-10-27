@@ -3,7 +3,7 @@
   "sort": 3,
   "title": "Voltage and Transformers",
   "subtitle": "LV, MV and HV",
-  "text": "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
+  "text": "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV, except the Diamond Solar Panel, which gives MV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
   "drawing": "simplemachines:textures/simplebooks/manual/voltage.png",
   "caption": "Step up, carry, step down",
   "right_title": "Recipes",

@@ -230,6 +230,39 @@ def d_voltage():
     sh.text((320, 380), "front = high side, other faces = low side, 5% loss", 12, SOFT)
     sh.save("voltage")
 
+def d_solar():
+    sh = Sheet(); P = iso((120, 230), 0.62)
+    for i in range(4):
+        x = i * 130
+        box(sh, P, x, 0, 0, 100, 50, 100)
+        n = (2, 3, 4, 4)[i]; st = 90 / n
+        for k in range(1, n):
+            sh.line(P(x + 5 + k * st, 50, 5), P(x + 5 + k * st, 50, 95), 1.2, SOFT)
+            sh.line(P(x + 5, 50, 5 + k * st), P(x + 95, 50, 5 + k * st), 1.2, SOFT)
+        face_rect(sh, P, "z", x + 20, 12, x + 80, 38, 100)
+        sh.text(P(x + 50, -40, 100), ("Iron", "Copper", "Gold", "Diamond")[i], 12)
+    for i in range(6):
+        sh.line((300 + i * 30 - 60, 40), (300 + i * 30 - 75, 75), 1.4, SOFT)
+    sh.circle((560, 50), 18)
+    sh.text((320, 380), "Open sky above, daylight. Diamond also works at night", 12, SOFT)
+    sh.save("solar")
+
+def d_wind():
+    sh = Sheet(); P = iso((300, 330), 0.9)
+    box(sh, P, 0, 0, 0, 100, 8, 100)
+    box(sh, P, 40, 8, 40, 20, 50, 20)
+    for k in range(14):
+        y = 60 + k * 10
+        import math as _m
+        a = _m.radians(k * 25)
+        dx, dz = 48 * _m.cos(a), 48 * _m.sin(a)
+        sh.line(P(50 - dx, y, 50 - dz), P(50 + dx, y, 50 + dz), 2.0)
+    sh.line(P(50, 58, 50), P(50, 200, 50), 2.6)
+    sh.dash((150, 70), (150, 330)); sh.text((150, 60), "2 blocks", 12, SOFT)
+    sh.text((480, 120), "higher = more", 12); sh.text((480, 145), "open air = more", 12); sh.text((480, 170), "rain, thunder = more", 12)
+    sh.text((320, 380), "Up to 50 FE/t at Y 160 and above, LV out of the base", 12, SOFT)
+    sh.save("wind")
+
 def d_pipes():
     sh = Sheet()
     sh.line((60, 200), (580, 200), 2.0); sh.line((60, 224), (580, 224), 2.0)
@@ -412,11 +445,12 @@ def ing(x):
 
 # vanilla names that are not just the id in title case, and items standing in for common tags
 VANILLA = {"redstone_block": "Block of Redstone", "quartz": "Nether Quartz", "redstone": "Redstone Dust",
-           "iron_block": "Block of Iron", "gold_block": "Block of Gold"}
+           "iron_block": "Block of Iron", "gold_block": "Block of Gold", "lapis_lazuli": "Lapis Lazuli"}
 TAGS = {"c:dusts/redstone": "minecraft:redstone", "c:gems/quartz": "minecraft:quartz", "c:glass_blocks": "minecraft:glass",
         "c:ingots/copper": "minecraft:copper_ingot", "c:ingots/gold": "minecraft:gold_ingot", "c:ingots/iron": "minecraft:iron_ingot",
         "c:gems/diamond": "minecraft:diamond", "c:ender_pearls": "minecraft:ender_pearl",
-        "c:storage_blocks/iron": "minecraft:iron_block", "c:storage_blocks/gold": "minecraft:gold_block"}
+        "c:storage_blocks/iron": "minecraft:iron_block", "c:storage_blocks/gold": "minecraft:gold_block",
+        "c:gems/lapis": "minecraft:lapis_lazuli"}
 
 def name_of(ref):
     if ref.startswith("#"):
@@ -539,9 +573,22 @@ def pages():
          "power", "Generator, battery, machine", "Recipes",
          [craft("redstone_copper_cable"), craft("power_cell")])
     page("voltage", "power", 3, "Voltage and Transformers", "LV, MV and HV",
-         "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
+         "Cables come in three voltages and only join their own kind.\n\nLV, Redstone Copper Cable (red): 1,000 FE/t.\nMV, Gold Cable (yellow): 8,000 FE/t.\nHV, Diamond Cable (light blue): 64,000 FE/t.\n\nEvery machine, generator and battery is LV, except the Diamond Solar Panel, which gives MV. A Transformer links two voltages: the front, the side facing you when you place it, is the higher one and every other face the lower. FE goes both ways, losing 5%. The LV/MV one moves up to 1,000 FE/t each way, the MV/HV one 8,000.\n\nOvervoltage: feed MV or HV into a lower rated cable end, machine or transformer face and it explodes. Server owners can turn off the terrain damage in config/simplemachines-server.properties.",
          "voltage", "Step up, carry, step down", "Recipes",
          [craft("gold_cable"), craft("diamond_cable"), dict(craft("lv_mv_transformer"), join=False), craft("mv_hv_transformer")])
+    page("solar", "power", 4, "Solar Panels", "Four tiers, free power from the sky",
+         "A solar panel needs open sky right above it. It makes FE in daylight and gives it out of its sides and bottom.\n\nIron: 4 FE/t, stores 2k.\nCopper: 20 FE/t, stores 10k.\nGold: 100 FE/t, stores 50k.\nDiamond: 1,000 FE/t by day and 500 at night, stores 500k.\n\nEach tier takes four panels of the tier below. The Diamond panel gives MV: use Gold Cable or an LV/MV Transformer front, or LV blocks next to it explode. Right click a panel to read it.",
+         "solar", "Iron, Copper, Gold and Diamond", "Recipes",
+         [craft("iron_solar_panel"), craft("copper_solar_panel"), craft("gold_solar_panel"), craft("diamond_solar_panel")])
+    page("solar_parts", "power", 5, "Solar Parts", "Cells, blend and cores",
+         "PV Cells go into every panel up to Gold. Make them from glass, lapis, a Silicon Wafer and a Redstone Copper Ingot.\n\nThe Diamond panel uses Silicon-Lapis Blend instead, alloyed from a wafer and 3 lapis.\n\nEach tier has its own core: a centre of Redstone Copper Ingot with 4 iron, copper or gold plates, or a diamond with 4 steel plates.",
+         "solar", "Iron, Copper, Gold and Diamond", "Recipes",
+         [craft("pv_cell"), process("alloying/silicon_lapis_blend", "alloy_smelter"), craft("iron_core"), craft("copper_core"),
+          craft("gold_core"), craft("diamond_core")])
+    page("wind", "power", 6, "Helical Wind Turbine", "Two blocks tall, best up high",
+         "The turbine needs a free block above where you place it. Breaking either half takes the whole turbine.\n\nOutput is up to 50 FE/t: 50 x height x open air x weather. Height counts from Y 64 (nothing) to Y 160 (full). Open air is the share of air in the 9x9x9 space around the rotor, checked every 5 seconds. Rain gives x1.25 and thunder x1.5.\n\nIt stores 20k FE and gives LV out of the base. Right click it to read it.",
+         "wind", "Rotor on top, base below", "Recipe",
+         [craft("wind_turbine")])
     page("pipes", "items", 0, "Item Pipes", "Three-way pipe ends",
          "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
          "pipes", "One pipe, three ends", "Pipe",
@@ -590,7 +637,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

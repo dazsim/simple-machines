@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "simplemachines:block/wind_turbine"
+    },
+    "half=upper": {
+      "model": "simplemachines:block/wind_turbine_top"
+    }
+  }
+}

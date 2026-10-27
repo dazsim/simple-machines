@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks",
+    "V": "simplemachines:pv_cell",
+    "P": "#c:plates/iron",
+    "C": "simplemachines:iron_core"
+  },
+  "pattern": [
+    "GGG",
+    "VVV",
+    "PCP"
+  ],
+  "result": {
+    "id": "simplemachines:iron_solar_panel"
+  }
+}

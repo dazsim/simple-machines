@@ -1089,6 +1089,7 @@ def machines(shaped, rec):
     proc("sawing", "sticks", "#minecraft:planks", "minecraft:stick", 3, time=50)
     alpha6(shaped, rec, proc)
     milestone2(shaped)
+    milestone3(shaped, rec)
 
     lang = json.load(open(f"{A}/lang/en_us.json"))
     names = {"battery": "Battery", "crusher": "Crusher", "crop_harvester": "Crop Harvester", "alloy_smelter": "Alloy Smelter",
@@ -1313,7 +1314,231 @@ def milestone2(shaped):
         "jei.simplemachines.info.diamond_cable": "HV cable, light blue. Carries up to 64,000 FE per tick. Joins only other HV cables.",
         "jei.simplemachines.info.lv_mv_transformer": "The front (yellow ring) is MV and faces you when placed. The other faces (red rings) are LV. Power goes both ways, up to 1,000 FE per tick each way, losing 5%.",
         "jei.simplemachines.info.mv_hv_transformer": "The front (light blue ring) is HV and faces you when placed. The other faces (yellow rings) are MV. Power goes both ways, up to 8,000 FE per tick each way, losing 5%.",
-        "jei.simplemachines.info.overvoltage": "Every machine and battery is LV. Feeding a higher voltage into a lower rated block makes it explode.",
+        "jei.simplemachines.info.overvoltage": "Every machine and battery is LV, the Diamond Solar Panel MV. Feeding a higher voltage into a lower rated block makes it explode.",
+    })
+    jdump(lang, f"{A}/lang/en_us.json")
+
+GOLD4 = [(255, 236, 110), (232, 190, 50), (170, 120, 20), (110, 70, 10)]
+COP4 = [(236, 146, 104), (196, 108, 76), (150, 80, 56), (110, 54, 40)]
+DIAM4 = [(224, 252, 255), (150, 228, 240), (74, 182, 212), (34, 110, 140)]
+SOLAR_PAL = {1: IRON, 2: COP4, 3: GOLD4, 4: DIAM4}
+SOLAR_CELLS = {1: [(90, 130, 220), (44, 70, 150), (28, 44, 100)], 2: [(80, 110, 210), (36, 56, 130), (22, 34, 86)],
+               3: [(110, 90, 210), (40, 36, 110), (24, 20, 70)], 4: [(150, 250, 255), (24, 74, 104), (12, 40, 64)]}
+SOLAR_LED = {1: LV_RING, 2: MV_RING, 3: MV_RING, 4: HV_RING}
+SOLAR_NAMES = {1: "iron", 2: "copper", 3: "gold", 4: "diamond"}
+
+def solid_tex(col, seed, amt=4):
+    t = Image.new("RGBA", (16, 16)); rnd = random.Random(seed)
+    for y in range(16):
+        for x in range(16):
+            t.putpixel((x, y), jitter(col, rnd, amt))
+    return t
+
+def solar_cell_tex(tier, n):
+    pal, cell = SOLAR_PAL[tier], SOLAR_CELLS[tier]
+    t = solid_tex(pal[2], 30 + tier, 3); rnd = random.Random(40 + tier)
+    for i in range(16):
+        px(t, i, 0, pal[0] + (255,)); px(t, 0, i, pal[0] + (255,)); px(t, i, 15, pal[3] + (255,)); px(t, 15, i, pal[3] + (255,))
+    s = 14 // n
+    for gy in range(n):
+        for gx in range(n):
+            x0, y0 = 1 + gx * s + (14 - s * n) // 2, 1 + gy * s + (14 - s * n) // 2
+            for y in range(y0, y0 + s - 1):
+                for x in range(x0, x0 + s - 1):
+                    t.putpixel((x, y), jitter(cell[1], rnd, 4))
+            px(t, x0, y0, cell[0] + (255,)); px(t, x0 + s - 2, y0 + s - 2, cell[2] + (255,))
+            if tier == 4:
+                px(t, x0 + 1, y0, cell[0] + (255,))
+    return t
+
+def solar_assets(tier):
+    pal, name = SOLAR_PAL[tier], f"{SOLAR_NAMES[tier]}_solar_panel"
+    tb = A + "/textures/block/"
+    save(solar_cell_tex(tier, (2, 3, 4, 4)[tier - 1]), tb + f"{name}_top.png")
+    f = plate(STEEL, 80 + tier, rivets=False)
+    rect(f, 3, 3, 12, 6, DARK + (255,))
+    for i in range(4):
+        rect(f, 4 + i * 2, 4, 4 + i * 2, 5, (SOLAR_LED[tier][1] if i < tier else (50, 50, 56)) + (255,))
+    rect(f, 3, 9, 12, 12, pal[1] + (255,)); rect(f, 3, 9, 12, 9, pal[0] + (255,)); rect(f, 3, 12, 12, 12, pal[3] + (255,))
+    save(f, tb + f"{name}_front.png")
+    els = []
+    for x in (0, 14):
+        for z in (0, 14):
+            els.append(el((x, 0, z), (x + 2, 8, z + 2), all_faces("frame")))
+    for z in (0, 14):
+        els.append(el((2, 0, z), (14, 2, z + 2), all_faces("frame", ("east", "west"))))
+        els.append(el((2, 6, z), (14, 8, z + 2), all_faces("frame", ("east", "west"))))
+    for x in (0, 14):
+        els.append(el((x, 0, 2), (x + 2, 2, 14), all_faces("frame", ("north", "south"))))
+        els.append(el((x, 6, 2), (x + 2, 8, 14), all_faces("frame", ("north", "south"))))
+    els.append(el((1, 2, 1), (15, 7, 15), {"north": {"texture": "#front", "uv": [1, 5, 15, 10]}, "south": {"texture": "#body", "uv": [1, 9, 15, 14]},
+                                          "east": {"texture": "#body", "uv": [1, 9, 15, 14]}, "west": {"texture": "#body", "uv": [1, 9, 15, 14]},
+                                          "down": {"texture": "#body"}}))
+    els.append(el((2, 7, 2), (14, 7.5, 14), {"up": {"texture": "#top", "uv": [2, 2, 14, 14]}}))
+    if tier == 4:
+        for (x, z) in ((0, 0), (14, 0), (0, 14), (14, 14)):
+            els.append(el((x, 8, z), (x + 2, 9, z + 2), all_faces("gem")))
+    fr = f"{MOD}:block/{'steel' if tier >= 3 else 'iron'}_chassis"
+    m = model(name, els, {"frame": fr, "front": f"{MOD}:block/{name}_front", "body": f"{MOD}:block/core_side",
+                          "top": f"{MOD}:block/{name}_top", "gem": "minecraft:block/diamond_block", "particle": fr})
+    rot = {"north": {}, "south": {"y": 180}, "east": {"y": 90}, "west": {"y": 270}}
+    jdump({"variants": {f"facing={k}": {"model": m, **r} for k, r in rot.items()}}, f"{A}/blockstates/{name}.json")
+    jdump({"model": {"type": "minecraft:model", "model": m}}, f"{A}/items/{name}.json")
+    loot_self(name)
+
+def helix_assets():
+    tb = A + "/textures/block/"
+    b = solid_tex((226, 230, 236), 91, 3)
+    for x in range(16):
+        px(b, x, 0, COPPER[1] + (255,)); px(b, x, 15, COPPER[2] + (255,))
+    save(b, tb + "wind_turbine_blade.png")
+    save(plate(IRON, 92), tb + "wind_turbine_base.png")
+    post = solid_tex(STEEL[1], 93, 3)
+    for y in range(16):
+        px(post, 0, y, STEEL[0] + (255,)); px(post, 15, y, STEEL[3] + (255,))
+    save(post, tb + "wind_turbine_post.png")
+    def box(e):
+        (x0, y0, z0), (x1, y1, z1) = e["from"], e["to"]
+        size = {"north": (x1 - x0, y1 - y0), "south": (x1 - x0, y1 - y0), "east": (z1 - z0, y1 - y0),
+                "west": (z1 - z0, y1 - y0), "up": (x1 - x0, z1 - z0), "down": (x1 - x0, z1 - z0)}
+        for d, f in e["faces"].items():
+            if "uv" not in f:
+                w, h = (min(16, v) for v in size[d])
+                f["uv"] = [0, 0, w, h]
+        return e
+    els = [el((1, 0, 1), (15, 1, 15), all_faces("base"))]
+    for (x, z) in ((2, 2), (13, 2), (2, 13), (13, 13)):
+        els.append(el((x, 1, z), (x + 1, 1.5, z + 1), all_faces("bolt")))
+    els += [el((5.5, 1, 5.5), (10.5, 2, 10.5), all_faces("bolt")),
+            el((6.5, 2, 6.5), (9.5, 8, 9.5), all_faces("post")),
+            el((5.5, 7, 5.5), (10.5, 8.5, 10.5), all_faces("bolt")),
+            el((7.5, 8.5, 7.5), (8.5, 30.5, 8.5), all_faces("post"))]
+    steps = [(0, 0), (0, 22.5), (0, 45), (1, -22.5), (1, 0), (1, 22.5), (1, 45), (0, -22.5)]
+    n = 21
+    for i in range(n):
+        y = 9 + i
+        axis, ang = steps[min(7, i * 8 // n)]
+        a, b2 = (0.5, 15.5), (7, 9)
+        x0, x1, z0, z1 = (a[0], a[1], b2[0], b2[1]) if axis == 0 else (b2[0], b2[1], a[0], a[1])
+        rot = {"origin": [8, y, 8], "axis": "y", "angle": ang} if ang else None
+        e = box(el((x0, y, z0), (x1, y + 1, z1), {d: {"texture": "#blade"} for d in ("north", "south", "east", "west", "up", "down")}, rot))
+        for d in ("north", "south", "east", "west"):
+            v = 0 if i == n - 1 else (15 if i == 0 else 4)
+            e["faces"][d]["uv"] = [0, v, e["faces"][d]["uv"][2], v + 1]
+        els.append(e)
+    els += [el((5.5, 8.5, 5.5), (10.5, 9, 10.5), all_faces("bolt")), el((5.5, 30, 5.5), (10.5, 30.5, 10.5), all_faces("bolt")),
+            el((7, 30.5, 7), (9, 31.5, 9), all_faces("bolt"))]
+    jdump({"parent": "minecraft:block/block", "ambientocclusion": False,
+           "textures": {"base": f"{MOD}:block/wind_turbine_base", "bolt": "minecraft:block/copper_block", "post": f"{MOD}:block/wind_turbine_post",
+                        "blade": f"{MOD}:block/wind_turbine_blade", "particle": f"{MOD}:block/wind_turbine_base"},
+           "elements": [box(e) for e in els],
+           "display": {"gui": {"rotation": [30, 225, 0], "translation": [0, -4, 0], "scale": [0.42, 0.42, 0.42]},
+                       "ground": {"rotation": [0, 0, 0], "translation": [0, 1, 0], "scale": [0.2, 0.2, 0.2]},
+                       "fixed": {"rotation": [0, 0, 0], "translation": [0, -4, 0], "scale": [0.42, 0.42, 0.42]},
+                       "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 0, 0], "scale": [0.25, 0.25, 0.25]},
+                       "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, -2, 0], "scale": [0.3, 0.3, 0.3]}}},
+          f"{A}/models/block/wind_turbine.json")
+    jdump({"textures": {"particle": f"{MOD}:block/wind_turbine_base"}}, f"{A}/models/block/wind_turbine_top.json")
+    jdump({"variants": {"half=lower": {"model": f"{MOD}:block/wind_turbine"}, "half=upper": {"model": f"{MOD}:block/wind_turbine_top"}}},
+          f"{A}/blockstates/wind_turbine.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/wind_turbine"}}, f"{A}/items/wind_turbine.json")
+    jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
+           "conditions": [{"condition": "minecraft:survives_explosion"},
+                          {"condition": "minecraft:block_state_property", "block": f"{MOD}:wind_turbine", "properties": {"half": "lower"}}],
+           "entries": [{"type": "minecraft:item", "name": f"{MOD}:wind_turbine"}]}],
+           "random_sequence": f"{MOD}:blocks/wind_turbine"}, f"{D}/{MOD}/loot_table/blocks/wind_turbine.json")
+
+def core_icon(arm, centre):
+    t = Image.new("RGBA", (16, 16)); rnd = random.Random(sum(arm[0]) + sum(centre[0]))
+    for (x0, y0, x1, y1) in ((5, 0, 10, 4), (5, 11, 10, 15), (0, 5, 4, 10), (11, 5, 15, 10)):
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                t.putpixel((x, y), jitter(arm[1], rnd, 4))
+        rect(t, x0, y0, x1, y0, arm[0] + (255,)); rect(t, x0, y1, x1, y1, arm[-1] + (255,))
+        rect(t, x0, y0, x0, y1, arm[0] + (255,)); rect(t, x1, y0, x1, y1, arm[-1] + (255,))
+    for y in range(4, 12):
+        for x in range(4, 12):
+            t.putpixel((x, y), jitter(centre[1], rnd, 5))
+    rect(t, 4, 4, 11, 4, centre[0] + (255,)); rect(t, 4, 4, 4, 11, centre[0] + (255,))
+    rect(t, 4, 11, 11, 11, centre[2] + (255,)); rect(t, 11, 4, 11, 11, centre[2] + (255,))
+    px(t, 6, 6, (255, 255, 255, 200))
+    return t
+
+def pv_icon():
+    t = Image.new("RGBA", (16, 16)); rnd = random.Random(150)
+    rect(t, 1, 2, 14, 13, (170, 174, 184, 255))
+    for gy in range(3):
+        for gx in range(3):
+            x0, y0 = 2 + gx * 4, 3 + gy * 3 + (gy > 0)
+            for y in range(y0, y0 + 3):
+                for x in range(x0, x0 + 4):
+                    if x < 14 and y < 13:
+                        t.putpixel((x, y), jitter((44, 70, 150), rnd, 5))
+            px(t, x0, y0, (110, 150, 235, 255))
+    rect(t, 1, 13, 14, 13, RCOPPER[1] + (255,)); rect(t, 1, 2, 14, 2, (210, 214, 222, 255))
+    return t
+
+def blend_icon():
+    t = Image.new("RGBA", (16, 16)); rnd = random.Random(151)
+    for y in range(5, 15):
+        w = min(7, (y - 4) + 1)
+        for x in range(8 - w, 8 + w):
+            k = rnd.random()
+            col = (38, 70, 170) if k < 0.55 else (70, 100, 200) if k < 0.8 else (120, 126, 150)
+            t.putpixel((x, y), jitter(col, rnd, 6))
+    for x in range(2, 14):
+        px(t, x, 14, (24, 40, 110, 255))
+    return t
+
+def milestone3(shaped, rec):
+    ti = A + "/textures/item/"
+    for n, arm, centre in (("iron_core", IRON, RCOPPER), ("copper_core", COP4, RCOPPER),
+                           ("gold_core", GOLD4, RCOPPER), ("diamond_core", STEEL, DIAM4)):
+        flat_item(n, core_icon(arm, centre))
+    flat_item("pv_cell", pv_icon())
+    flat_item("silicon_lapis_blend", blend_icon())
+    for t in range(1, 5):
+        solar_assets(t)
+    helix_assets()
+    tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
+    vals = json.load(open(tag))["values"]
+    jdump({"values": vals + [f"{MOD}:{SOLAR_NAMES[t]}_solar_panel" for t in range(1, 5)] + [f"{MOD}:wind_turbine"]}, tag)
+    RC = f"{MOD}:redstone_copper_ingot"
+    shaped("iron_core", [" P ", "PRP", " P "], {"P": "#c:plates/iron", "R": RC})
+    shaped("copper_core", [" P ", "PRP", " P "], {"P": "#c:plates/copper", "R": RC})
+    shaped("gold_core", [" P ", "PRP", " P "], {"P": "#c:plates/gold", "R": RC})
+    shaped("diamond_core", [" P ", "PDP", " P "], {"P": "#c:plates/steel", "D": "#c:gems/diamond"})
+    shaped("pv_cell", ["GGG", "LWL", " R "], {"G": "#c:glass_blocks", "L": "#c:gems/lapis", "W": f"{MOD}:silicon_wafer", "R": RC}, 2)
+    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": f"{MOD}:silicon_wafer"}, "second": {"ingredient": "#c:gems/lapis", "count": 3},
+           "result": {"id": f"{MOD}:silicon_lapis_blend"}, "cooking_time": 200}, rec + "alloying/silicon_lapis_blend.json")
+    PV = f"{MOD}:pv_cell"
+    shaped("iron_solar_panel", ["GGG", "VVV", "PCP"], {"G": "#c:glass_blocks", "V": PV, "P": "#c:plates/iron", "C": f"{MOD}:iron_core"})
+    shaped("copper_solar_panel", ["SVS", "VCV", "SVS"], {"S": f"{MOD}:iron_solar_panel", "V": PV, "C": f"{MOD}:copper_core"})
+    shaped("gold_solar_panel", ["SVS", "VCV", "SVS"], {"S": f"{MOD}:copper_solar_panel", "V": PV, "C": f"{MOD}:gold_core"})
+    shaped("diamond_solar_panel", ["SBS", "BCB", "SBS"], {"S": f"{MOD}:gold_solar_panel", "B": f"{MOD}:silicon_lapis_blend", "C": f"{MOD}:diamond_core"})
+    shaped("wind_turbine", ["SCS", "CRC", "IXI"], {"S": "#c:plates/steel", "C": "#c:plates/copper", "R": "#c:rods/steel",
+                                                   "I": "#c:plates/iron", "X": RC})
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    lang.update({
+        "item.simplemachines.iron_core": "Iron Core", "item.simplemachines.copper_core": "Copper Core",
+        "item.simplemachines.gold_core": "Gold Core", "item.simplemachines.diamond_core": "Diamond Core",
+        "item.simplemachines.pv_cell": "PV Cell", "item.simplemachines.silicon_lapis_blend": "Silicon-Lapis Blend",
+        "block.simplemachines.iron_solar_panel": "Iron Solar Panel", "block.simplemachines.copper_solar_panel": "Copper Solar Panel",
+        "block.simplemachines.gold_solar_panel": "Gold Solar Panel", "block.simplemachines.diamond_solar_panel": "Diamond Solar Panel",
+        "block.simplemachines.wind_turbine": "Helical Wind Turbine",
+        "message.simplemachines.solar": "Making %1$s FE/t (%2$s). Stored %3$s / %4$s FE",
+        "message.simplemachines.wind": "Making %1$s FE/t (height %2$s%%, open air %3$s%%). Stored %4$s / %5$s FE",
+        "jei.simplemachines.info.iron_solar_panel": "4 FE per tick in daylight with open sky above. Stores 2,000 FE. LV output from the sides and bottom.",
+        "jei.simplemachines.info.copper_solar_panel": "20 FE per tick in daylight. Stores 10,000 FE. LV output.",
+        "jei.simplemachines.info.gold_solar_panel": "100 FE per tick in daylight. Stores 50,000 FE. LV output.",
+        "jei.simplemachines.info.diamond_solar_panel": "1,000 FE per tick in daylight and 500 at night. Stores 500,000 FE. MV output: connect it with Gold Cable or an LV/MV Transformer front, or LV blocks next to it explode.",
+        "jei.simplemachines.info.wind_turbine": "Two blocks tall. Makes up to 50 FE per tick: more the higher it stands (full output at Y 160), the more open air around the rotor (9x9x9) and in rain (x1.25) or thunder (x1.5). Stores 20,000 FE, LV output from the base.",
+        "jei.simplemachines.info.iron_core": "Core of the Iron Solar Panel.",
+        "jei.simplemachines.info.copper_core": "Core of the Copper Solar Panel.",
+        "jei.simplemachines.info.gold_core": "Core of the Gold Solar Panel.",
+        "jei.simplemachines.info.diamond_core": "Core of the Diamond Solar Panel.",
+        "jei.simplemachines.info.pv_cell": "Solar cell. Goes into every solar panel up to Gold.",
+        "jei.simplemachines.info.silicon_lapis_blend": "Made in the Alloy Smelter from a Silicon Wafer and 3 Lapis. Goes into the Diamond Solar Panel.",
     })
     jdump(lang, f"{A}/lang/en_us.json")
 

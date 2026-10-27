@@ -124,6 +124,8 @@ public class SimpleMachinesNeoForge {
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
         e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.transformerEntity, (be, side) -> new BufferEnergyHandler(be.input(side), true, false));
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.solarEntity, (be, side) -> new BufferEnergyHandler(be.energy, false, true));
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.windEntity, (be, side) -> new BufferEnergyHandler(be.energy, false, true));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE), SimpleMachines.MACHINES.get(Core.BATTERY));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,

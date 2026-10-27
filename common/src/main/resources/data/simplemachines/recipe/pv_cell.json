@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "#c:glass_blocks",
+    "L": "#c:gems/lapis",
+    "W": "simplemachines:silicon_wafer",
+    "R": "simplemachines:redstone_copper_ingot"
+  },
+  "pattern": [
+    "GGG",
+    "LWL",
+    " R "
+  ],
+  "result": {
+    "id": "simplemachines:pv_cell",
+    "count": 2
+  }
+}

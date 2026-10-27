@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/copper",
+    "R": "simplemachines:redstone_copper_ingot"
+  },
+  "pattern": [
+    " P ",
+    "PRP",
+    " P "
+  ],
+  "result": {
+    "id": "simplemachines:copper_core"
+  }
+}

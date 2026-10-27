@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "simplemachines:gold_solar_panel",
+    "B": "simplemachines:silicon_lapis_blend",
+    "C": "simplemachines:diamond_core"
+  },
+  "pattern": [
+    "SBS",
+    "BCB",
+    "SBS"
+  ],
+  "result": {
+    "id": "simplemachines:diamond_solar_panel"
+  }
+}

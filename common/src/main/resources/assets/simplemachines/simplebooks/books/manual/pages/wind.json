@@ -1,0 +1,29 @@
+{
+  "section": "power",
+  "sort": 6,
+  "title": "Helical Wind Turbine",
+  "subtitle": "Two blocks tall, best up high",
+  "text": "The turbine needs a free block above where you place it. Breaking either half takes the whole turbine.\n\nOutput is up to 50 FE/t: 50 x height x open air x weather. Height counts from Y 64 (nothing) to Y 160 (full). Open air is the share of air in the 9x9x9 space around the rotor, checked every 5 seconds. Rain gives x1.25 and thunder x1.5.\n\nIt stores 20k FE and gives LV out of the base. Right click it to read it.",
+  "drawing": "simplemachines:textures/simplebooks/manual/wind.png",
+  "caption": "Rotor on top, base below",
+  "right_title": "Recipe",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "SCS",
+        "CRC",
+        "IXI"
+      ],
+      "key": {
+        "S": "#c:plates/steel",
+        "C": "#c:plates/copper",
+        "R": "#c:rods/steel",
+        "I": "#c:plates/iron",
+        "X": "simplemachines:redstone_copper_ingot"
+      },
+      "output": "simplemachines:wind_turbine",
+      "note": "Crafting Table\n2x Steel Plate, 3x Copper Plate, 1x Steel Rod, 2x Iron Plate, 1x Redstone Copper Ingot"
+    }
+  ]
+}

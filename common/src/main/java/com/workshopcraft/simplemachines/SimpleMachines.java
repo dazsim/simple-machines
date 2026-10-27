@@ -153,6 +153,11 @@ public class SimpleMachines {
     public static Block mvHvTransformer;
     public static final List<Block> CABLES = new ArrayList<>();
     public static BlockEntityType<com.workshopcraft.simplemachines.cable.TransformerBlockEntity> transformerEntity;
+    public static final String[] SOLAR = {"iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel"};
+    public static final List<Block> SOLAR_PANELS = new ArrayList<>();
+    public static Block windTurbine;
+    public static BlockEntityType<com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity> solarEntity;
+    public static BlockEntityType<com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity> windEntity;
     public static Block itemPipe;
     public static Block fluidPipe;
     public static Item pipeFilter;
@@ -248,6 +253,17 @@ public class SimpleMachines {
         diamondCable = cable(r, "diamond_cable", MapColor.COLOR_LIGHT_BLUE, com.workshopcraft.simplemachines.cable.Voltage.HV);
         lvMvTransformer = transformer(r, "lv_mv_transformer", com.workshopcraft.simplemachines.cable.Voltage.MV);
         mvHvTransformer = transformer(r, "mv_hv_transformer", com.workshopcraft.simplemachines.cable.Voltage.HV);
+        for (int i = 0; i < SOLAR.length; i++) {
+            final Block b = new com.workshopcraft.simplemachines.gen.SolarPanelBlock(BlockBehaviour.Properties.of()
+                    .setId(ResourceKey.create(Registries.BLOCK, id(SOLAR[i]))).mapColor(MapColor.METAL).strength(3.0F)
+                    .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion(), i + 1);
+            r.accept(id(SOLAR[i]), b);
+            SOLAR_PANELS.add(b);
+        }
+        windTurbine = new com.workshopcraft.simplemachines.gen.WindTurbineBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("wind_turbine"))).mapColor(MapColor.METAL).strength(3.0F)
+                .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+        r.accept(id("wind_turbine"), windTurbine);
         itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
@@ -322,6 +338,13 @@ public class SimpleMachines {
         add(r, "diamond_cable", new BlockItem(diamondCable, props("diamond_cable").useBlockDescriptionPrefix()));
         add(r, "lv_mv_transformer", new BlockItem(lvMvTransformer, props("lv_mv_transformer").useBlockDescriptionPrefix()));
         add(r, "mv_hv_transformer", new BlockItem(mvHvTransformer, props("mv_hv_transformer").useBlockDescriptionPrefix()));
+        for (String name : List.of("iron_core", "copper_core", "gold_core", "diamond_core", "pv_cell", "silicon_lapis_blend")) {
+            add(r, name, new Item(props(name)));
+        }
+        for (int i = 0; i < SOLAR.length; i++) {
+            add(r, SOLAR[i], new BlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
+        }
+        add(r, "wind_turbine", new net.minecraft.world.item.DoubleHighBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix()));
         add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
         add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
         add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
@@ -424,6 +447,10 @@ public class SimpleMachines {
         r.accept(id("conduit"), conduitEntity);
         transformerEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.TransformerBlockEntity::new, Set.of(lvMvTransformer, mvHvTransformer));
         r.accept(id("transformer"), transformerEntity);
+        solarEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity::new, Set.copyOf(SOLAR_PANELS));
+        r.accept(id("solar_panel"), solarEntity);
+        windEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity::new, Set.of(windTurbine));
+        r.accept(id("wind_turbine"), windEntity);
         tankEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.pipe.TankBlockEntity::new, Set.of(tank));
         r.accept(id("fluid_tank"), tankEntity);
         toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));

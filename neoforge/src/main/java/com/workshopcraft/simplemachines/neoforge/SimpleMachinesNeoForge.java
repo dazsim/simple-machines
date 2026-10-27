@@ -22,6 +22,9 @@ import com.workshopcraft.simplemachines.assembly.Assembly;
 import net.minecraft.world.InteractionResult;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.minecraft.server.level.ServerPlayer;
+import com.workshopcraft.simplemachines.recipe.RecipeUnlocks;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -38,6 +41,9 @@ public class SimpleMachinesNeoForge {
         modBus.addListener(SimpleMachinesNeoForge::onRegister);
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
+        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {
+            if (e.getEntity() instanceof ServerPlayer p) RecipeUnlocks.onLogin(p);
+        });
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, pos, side);
             if (h == null) return 0;

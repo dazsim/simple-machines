@@ -9,6 +9,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
 import com.workshopcraft.simplemachines.recipe.KeepToolRecipe;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import com.workshopcraft.simplemachines.recipe.RecipeUnlocks;
 import net.minecraft.world.InteractionResult;
 import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
@@ -56,6 +58,7 @@ public class SimpleMachinesFabric implements ModInitializer {
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.cable);
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
                 Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> RecipeUnlocks.onLogin(handler.player));
         FabricTransfer.install();
         ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
             @Override

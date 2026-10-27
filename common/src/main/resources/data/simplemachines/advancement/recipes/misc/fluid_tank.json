@@ -46,6 +46,16 @@
           }
         ]
       }
+    },
+    "has_4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "simplemachines:fluid_pipe"
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -54,7 +64,8 @@
       "has_0",
       "has_1",
       "has_2",
-      "has_3"
+      "has_3",
+      "has_4"
     ]
   ],
   "rewards": {

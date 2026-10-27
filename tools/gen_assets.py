@@ -1081,6 +1081,9 @@ def loot_self(b):
            "entries": [{"type": "minecraft:item", "name": f"{MOD}:{b}"}]}],
            "random_sequence": f"{MOD}:blocks/{b}"}, f"{D}/{MOD}/loot_table/blocks/{b}.json")
 
+# items that are not ingredients but should still show a recipe
+EXTRA_UNLOCKS = {"fluid_tank": [f"{MOD}:fluid_pipe"], "pipe_filter": [f"{MOD}:item_pipe"]}
+
 def recipe_unlocks():
     # recipe book unlock per recipe: holding any ingredient (or knowing the recipe) grants it
     rec = f"{D}/{MOD}/recipe"
@@ -1095,6 +1098,7 @@ def recipe_unlocks():
         for i in ings:
             if i and i not in seen:
                 seen.append(i)
+        seen += [i for i in EXTRA_UNLOCKS.get(name, []) if i not in seen]
         if name.endswith("_assembly"):
             # a chassis in hand shows everything that can go on it
             seen += [f"{MOD}:iron_chassis", f"{MOD}:steel_chassis"]

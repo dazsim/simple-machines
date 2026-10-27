@@ -261,19 +261,70 @@ def d_fluids():
     sh.save("fluids")
 
 def d_tanks():
-    sh = Sheet()
-    c = 22
-    sh.poly([(250 + c, 130), (390 - c, 130), (390, 130 + c), (390, 290 - c), (390 - c, 290), (250 + c, 290), (250, 290 - c), (250, 130 + c)])
-    sh.line((262, 220), (378, 220), 1.4, SOFT)
-    for y in range(232, 290, 14): sh.line((262, y), (378, y), 1.0, SOFT)
-    sh.text((320, 310), "16 buckets", 12)
-    sh.line((90, 200), (250, 200), 2.0); sh.line((90, 224), (250, 224), 2.0)
-    for x in range(100, 240, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
-    sh.line((308, 130), (308, 70), 2.0); sh.line((332, 130), (332, 70), 2.0)
-    sh.line((390, 200), (550, 200), 2.0); sh.line((390, 224), (550, 224), 2.0)
-    for x in range(400, 540, 60): sh.arrow((x, 212), (x + 30, 212), 1.4, SOFT, 6)
-    sh.text((320, 40), "FLUID TANK", 14)
-    sh.text((320, 370), "pipes join on any face", 12, SOFT)
+    sh = Sheet(); P = iso((320, 215), 1.0)
+    h, e = 60, 9
+    # pipes behind: into the back faces
+    box(sh, P, -12, -12, -h - 70, 24, 24, 70, 1.8)
+    box(sh, P, -h - 70, -12, -12, 70, 24, 24, 1.8)
+    # chamfered cube, faces seen from (1, 1, 1)
+    faces = []
+    for a in range(3):
+        for sa in (1, -1):
+            pts = []
+            for u, v in ((1, 1), (1, -1), (-1, -1), (-1, 1)):
+                q = [0, 0, 0]; q[a] = sa * h; q[(a + 1) % 3] = u * (h - e); q[(a + 2) % 3] = v * (h - e)
+                pts.append(q)
+            faces.append(("face", (a, sa), pts))
+    for a in range(3):
+        b = (a + 1) % 3; c = (a + 2) % 3
+        for sa in (1, -1):
+            for sb in (1, -1):
+                pts = []
+                for sc in (1, -1):
+                    for k, (x0, x1) in enumerate(((h, h - e), (h - e, h))):
+                        q = [0, 0, 0]; q[a] = sa * x0; q[b] = sb * x1; q[c] = sc * (h - e)
+                        pts.append(q)
+                faces.append(("edge", (a, sa, b, sb), [pts[0], pts[1], pts[3], pts[2]]))
+    for sx in (1, -1):
+        for sy in (1, -1):
+            for sz in (1, -1):
+                sg = (sx, sy, sz)
+                pts = []
+                for a in range(3):
+                    q = [sg[i] * (h - e) for i in range(3)]; q[a] = sg[a] * h
+                    pts.append(q)
+                faces.append(("corner", sg, pts))
+    def normal(pts):
+        c = [sum(p[i] for p in pts) / len(pts) for i in range(3)]
+        return c, [x / max(abs(v) for v in c) for x in c]
+    def pr(q): return P(q[0], q[1], q[2])
+    for kind, key, pts in faces:
+        c, n = normal(pts)
+        if n[0] + n[1] + n[2] <= 0.01: continue
+        o = pr(c)
+        ang = lambda q: math.atan2(pr(q)[1] - o[1], pr(q)[0] - o[0])
+        sh.poly([pr(q) for q in sorted(pts, key=ang)], 2.0)
+        if kind == "edge":
+            a, sa, b, sb = key; cc = 3 - a - b
+            for t in (-30, 0, 30):
+                q = [0, 0, 0]; q[a] = sa * (h - e / 2); q[b] = sb * (h - e / 2); q[cc] = t
+                sh.circle(pr(q), 2.6, 1.2)
+        if kind == "face":
+            a, sa = key; u, v = (a + 1) % 3, (a + 2) % 3
+            def fq(x, y):
+                q = [0, 0, 0]; q[a] = sa * h; q[u] = x; q[v] = y
+                return pr(q)
+            w = h - e - 10
+            sh.poly([fq(-w, -w), fq(w, -w), fq(w, w), fq(-w, w)], 1.4, SOFT, None)
+            if a != 1:
+                for yy in range(-w + 6, 4, 9):
+                    if a == 2: sh.line(fq(-w + 4, yy), fq(w - 4, yy), 1.0, SOFT)
+                    else: sh.line(fq(yy, -w + 4), fq(yy, w - 4), 1.0, SOFT)
+    # pipes in front
+    box(sh, P, h, -12, -12, 50, 24, 24, 1.8)
+    box(sh, P, -12, -12, h, 24, 24, 50, 1.8)
+    sh.text((320, 30), "FLUID TANK", 14)
+    sh.text((320, 365), "16 buckets, pipes join on any face", 12, SOFT)
     sh.save("tanks")
 
 def d_output():

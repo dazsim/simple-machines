@@ -211,7 +211,7 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         return sp;
     }
 
-    private static TextureAtlasSprite get(Identifier id) {
+    static TextureAtlasSprite get(Identifier id) {
         return Minecraft.getInstance().getAtlasManager().get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, id));
     }
 

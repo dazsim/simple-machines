@@ -64,6 +64,11 @@ public class SimpleMachinesNeoForgeClient {
 
     @SuppressWarnings("unchecked")
     private static <T extends WorkBlockEntity> void renderer(EntityRenderersEvent.RegisterRenderers e, BlockEntityType<?> type) {
+        if (type == SimpleMachines.MACHINE_ENTITIES.get(Core.QUARRY)) {
+            e.registerBlockEntityRenderer((BlockEntityType<com.workshopcraft.simplemachines.quarry.QuarryBlockEntity>) type,
+                    com.workshopcraft.simplemachines.client.QuarryRenderer::new);
+            return;
+        }
         e.registerBlockEntityRenderer((BlockEntityType<T>) type, WorktopRenderer::new);
     }
 }

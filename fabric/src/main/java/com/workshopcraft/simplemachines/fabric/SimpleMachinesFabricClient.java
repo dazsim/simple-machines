@@ -48,6 +48,11 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
 
     @SuppressWarnings("unchecked")
     private static <T extends WorkBlockEntity> void renderer(BlockEntityType<?> type) {
+        if (type == SimpleMachines.MACHINE_ENTITIES.get(Core.QUARRY)) {
+            BlockEntityRenderers.register((BlockEntityType<com.workshopcraft.simplemachines.quarry.QuarryBlockEntity>) type,
+                    com.workshopcraft.simplemachines.client.QuarryRenderer::new);
+            return;
+        }
         BlockEntityRenderers.register((BlockEntityType<T>) type, WorktopRenderer::new);
     }
 

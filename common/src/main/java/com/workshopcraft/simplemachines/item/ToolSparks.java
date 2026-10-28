@@ -92,6 +92,22 @@ public final class ToolSparks {
         }
     }
 
+    /** Quarry drill biting into the top of a block, sunk this far into it. */
+    public static void quarry(ServerLevel level, net.minecraft.core.BlockPos pos, BlockState state, float sunk) {
+        final Kind kind = state.is(BlockTags.MINEABLE_WITH_PICKAXE) && !state.is(BlockTags.MINEABLE_WITH_SHOVEL) ? Kind.HOT : Kind.DUST;
+        final ParticleOptions particle = particle(kind, state);
+        final double x = pos.getX() + 0.5, y = pos.getY() + 1.06 - sunk, z = pos.getZ() + 0.5;
+        final Vec3 down = new Vec3(0, -1, 0);
+        final RandomSource r = level.getRandom();
+        for (ServerPlayer viewer : level.players()) {
+            if (viewer.distanceToSqr(x, y, z) > 48 * 48) continue;
+            for (int i = count(kind, true); i > 0; i--) {
+                final Vec3 v = spray(r, Direction.UP, down, kind);
+                level.sendParticles(viewer, particle, false, false, x, y, z, 0, v.x, v.y, v.z, 1.0);
+            }
+        }
+    }
+
     private static boolean destroying(ServerPlayerGameMode mode) {
         if (!looked) {
             looked = true;

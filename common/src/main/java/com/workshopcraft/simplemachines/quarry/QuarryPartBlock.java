@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** Landmark post, frame beam or drill head: a plain block with its own outline. */
 public class QuarryPartBlock extends Block {
-    public static final VoxelShape POST = box(6, 0, 6, 10, 12, 10);
+    public static final VoxelShape POST = Shapes.or(box(4, 0, 4, 12, 1, 12), box(5.5, 1, 5.5, 10.5, 13, 10.5));
     public static final VoxelShape HEAD = Shapes.or(box(3, 8, 3, 13, 16, 13), box(6, 0, 6, 10, 8, 10));
     private final VoxelShape shape;
     private final MapCodec<QuarryPartBlock> codec;

@@ -271,13 +271,13 @@ public class SimpleMachines {
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         r.accept(id("wind_turbine"), windTurbine);
         landmark = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("landmark"))).mapColor(MapColor.COLOR_RED).strength(0.5F)
+                .setId(ResourceKey.create(Registries.BLOCK, id("landmark"))).mapColor(MapColor.COLOR_YELLOW).strength(0.5F)
                 .sound(SoundType.METAL).noOcclusion().lightLevel(st -> 7), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.POST);
         r.accept(id("landmark"), landmark);
-        quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_frame"))).mapColor(MapColor.COLOR_YELLOW).strength(1.0F)
+        quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryFrameBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_frame"))).mapColor(MapColor.METAL).strength(1.0F)
                 .sound(SoundType.METAL).noOcclusion().noLootTable().isViewBlocking((st, l, p) -> false)
-                .isSuffocating((st, l, p) -> false), net.minecraft.world.phys.shapes.Shapes.block());
+                .isSuffocating((st, l, p) -> false));
         r.accept(id("quarry_frame"), quarryFrame);
         quarryHead = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("quarry_drill_head"))).mapColor(MapColor.METAL).strength(1.0F)

@@ -1,7 +1,55 @@
 {
-  "variants": {
-    "": {
-      "model": "simplemachines:block/quarry_frame"
+  "multipart": [
+    {
+      "when": {
+        "post": "true"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_post"
+      }
+    },
+    {
+      "when": {
+        "post": "false"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_hub"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_arm"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "simplemachines:block/quarry_frame_arm",
+        "y": 270
+      }
     }
-  }
+  ]
 }

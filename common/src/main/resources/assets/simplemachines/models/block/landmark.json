@@ -2,40 +2,127 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "textures": {
-    "post": "simplemachines:block/landmark",
-    "lamp": "minecraft:block/redstone_block",
-    "particle": "simplemachines:block/landmark"
+    "base": "minecraft:block/copper_block",
+    "post": "simplemachines:block/quarry_post",
+    "lamp": "minecraft:block/yellow_concrete",
+    "particle": "simplemachines:block/quarry_post"
   },
   "elements": [
     {
       "from": [
-        6,
+        4,
         0,
-        6
+        4
       ],
       "to": [
-        10,
-        10,
-        10
+        12,
+        1,
+        12
       ],
       "faces": {
         "north": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ]
         },
         "south": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ]
         },
         "east": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ]
         },
         "west": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ]
         },
         "up": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
         },
         "down": {
-          "texture": "#post"
+          "texture": "#base",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        1,
+        7
+      ],
+      "to": [
+        9,
+        10,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#post",
+          "uv": [
+            7,
+            6,
+            9,
+            15
+          ]
+        },
+        "south": {
+          "texture": "#post",
+          "uv": [
+            7,
+            6,
+            9,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#post",
+          "uv": [
+            7,
+            6,
+            9,
+            15
+          ]
+        },
+        "west": {
+          "texture": "#post",
+          "uv": [
+            7,
+            6,
+            9,
+            15
+          ]
         }
       }
     },
@@ -47,27 +134,63 @@
       ],
       "to": [
         10.5,
-        12,
+        13,
         10.5
       ],
       "faces": {
         "north": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            8
+          ]
         },
         "south": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            8
+          ]
         },
         "east": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            8
+          ]
         },
         "west": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            8
+          ]
         },
         "up": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            10
+          ]
         },
         "down": {
-          "texture": "#lamp"
+          "texture": "#lamp",
+          "uv": [
+            5,
+            5,
+            10,
+            10
+          ]
         }
       }
     }

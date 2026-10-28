@@ -53,6 +53,7 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
         s.show = false;
         if (level == null || !be.getBlockState().hasProperty(MachineBlock.FACING)) return;
         final double[] tip = be.tip(level.getGameTime() + partialTick);
+        QuarrySound.seen(be);
         if (tip == null) return;
         final BlockPos pos = be.getBlockPos();
         final Direction facing = be.getBlockState().getValue(MachineBlock.FACING);
@@ -67,7 +68,7 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
         s.tz = (float) (tip[2] - pos.getZ());
         s.gantryY = 2;
         s.railLight = LevelRenderer.getLightCoords(level, BlockPos.containing(tip[0], pos.getY() + 3, tip[2]));
-        s.headLight = LevelRenderer.getLightCoords(level, BlockPos.containing(tip[0], tip[1] + 0.3, tip[2]));
+        s.headLight = LevelRenderer.getLightCoords(level, BlockPos.containing(tip[0], tip[1] + 0.6, tip[2]));
     }
 
     @Override
@@ -102,10 +103,12 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
             final Quads h = new Quads(p, vc, s.headLight, OverlayTexture.NO_OVERLAY);
             final float tip = s.ty * 16F;
             // shaft
-            box(h, hx - 1.25F, tip + 9, hz - 1.25F, hx + 1.25F, y0 - 2, hz + 1.25F, steel, steel, steel);
+            box(h, hx - 1.25F, tip + 14, hz - 1.25F, hx + 1.25F, y0 - 2, hz + 1.25F, steel, steel, steel);
             // body with the drill face towards the quarry's front
-            head(h, hx - 5, tip + 3, hz - 5, hx + 5, tip + 9, hz + 5, steel, front, s.facing);
-            box(h, hx - 3, tip, hz - 3, hx + 3, tip + 3, hz + 3, bit, steel, bit);
+            // body stays above the block, only the bit (8px, the full sink depth) goes in
+            head(h, hx - 5, tip + 8, hz - 5, hx + 5, tip + 14, hz + 5, steel, front, s.facing);
+            box(h, hx - 3, tip + 4, hz - 3, hx + 3, tip + 8, hz + 3, bit, steel, bit);
+            box(h, hx - 1.5F, tip, hz - 1.5F, hx + 1.5F, tip + 4, hz + 1.5F, bit, bit, bit);
         });
     }
 

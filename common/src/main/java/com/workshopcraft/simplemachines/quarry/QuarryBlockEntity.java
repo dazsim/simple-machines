@@ -49,7 +49,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private static final int RESCAN = 512;
     private static final int REPAIR = 10;
     private static final int BUILD = 3;
-    private static final float DEPTH = 0.75F;
+    private static final float DEPTH = 0.5F;
     public static final int PER_BLOCK = 8000;
     public static final int BUFFER = 200_000;
 
@@ -76,6 +76,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private boolean paused;
     private boolean broken;
     private boolean built;
+    private boolean drilling;
     private float rate;
     private float sentRate = -1;
     // client view
@@ -142,7 +143,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
                 level.playSound(null, gap.pos, SoundEvents.NETHERITE_BLOCK_PLACE, SoundSource.BLOCKS, 0.6F, 1.4F);
             }
             crack(level, null);
-            sync(level, target, true, true);
+            sync(level, target, true, true, false);
             setLit(level, pos, state, false);
             setChanged();
             return;
@@ -197,13 +198,14 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         crack(level, solid ? aim : null);
         if (solid && ready && now % 2 == 0) ToolSparks.quarry(level, aim, level.getBlockState(aim), Math.min(1F, acc) * DEPTH);
         this.rate = rate;
-        sync(level, aim, !ready, false);
+        sync(level, aim, !ready, false, solid && ready);
         setLit(level, pos, level.getBlockState(pos), aim != null && energy.energy >= PER_BLOCK);
         setChanged();
     }
 
-    private void sync(ServerLevel level, @Nullable BlockPos aim, boolean stopped, boolean broken) {
-        if (Objects.equals(aim, target) && stopped == paused && broken == this.broken && rate == sentRate) return;
+    private void sync(ServerLevel level, @Nullable BlockPos aim, boolean stopped, boolean broken, boolean drilling) {
+        if (Objects.equals(aim, target) && stopped == paused && broken == this.broken && drilling == this.drilling && rate == sentRate) return;
+        this.drilling = drilling;
         target = aim;
         paused = stopped;
         this.broken = broken;
@@ -443,6 +445,12 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         return tipAt(time);
     }
 
+    /** True on the client while the head has arrived over a block and is cutting into it. */
+    public boolean drillingAt(float time) {
+        return drilling && built && planned && !paused && !broken && target != null && seen == serial
+                && target.equals(viewTo) && time >= moveStart + moveTicks;
+    }
+
     private double[] tipAt(float time) {
         final float m = smooth(Math.min(1F, Math.max(0F, (time - moveStart) / moveTicks)));
         final float p = Math.min(1F, Math.max(0F, accAt + (paused ? 0F : rate) * (time - accStart)));
@@ -487,6 +495,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         tag.putBoolean("paused", paused);
         tag.putBoolean("broken", broken);
         tag.putBoolean("built", built);
+        tag.putBoolean("drilling", drilling);
         return tag;
     }
 
@@ -520,6 +529,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         paused = input.getBooleanOr("paused", false);
         broken = input.getBooleanOr("broken", false);
         built = input.getBooleanOr("built", false);
+        drilling = input.getBooleanOr("drilling", false);
         serial++;
     }
 
@@ -541,6 +551,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         output.putLong("dug", dug);
         output.putInt("rescan", rescan);
         output.putBoolean("built", built);
+        output.putBoolean("drilling", drilling);
         if (extra != null) output.putLong("extra", extra.asLong());
     }
 

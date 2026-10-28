@@ -42,6 +42,7 @@ public final class ToolEffects {
     }
 
     public static void tick(Minecraft mc) {
+        QuarrySound.tick(mc);
         if (mc.player == null || mc.level == null) {
             SPINS.values().forEach(Spin::halt);
             SPINS.clear();

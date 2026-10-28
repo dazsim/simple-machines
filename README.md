@@ -27,7 +27,7 @@ Contents so far:
 - Item Pipe: moves items between inventories, see below.
 - Electric Drill and Chainsaw, see below.
 - Overclocker Circuit and Energy Cell machine upgrades, see below.
-- Compressor, Auto Crafter, Lava Generator, Solar Panels, Helical Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers and the Quarry, see below.
+- Compressor, Auto Crafter, Lava Generator, Solar Panels, Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers and the Quarry, see below.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
 
@@ -123,7 +123,7 @@ With Simple Books installed, getting your first screwdriver (from any mod) gives
 | Gold | 100 FE/t | 0 | LV |
 | Diamond | 1000 FE/t | 500 FE/t | MV |
 
-- Helical Wind Turbine: up to 50 FE/t. Output grows with height (full at Y 160), open air around the top and rain or thunder.
+- Wind Turbine: a base with 1 to 5 Turbine Blades stacked on top, each adding up to 50 FE/t, so five make up to 250 FE/t. Output is measured at the top blade and grows with height (full at Y 160), open air around it (9x9x9) and rain (x1.25) or thunder (x1.5). The blades turn together as one helix, faster and louder as they make more power. A blade with no base under it, or a sixth blade or higher, does nothing. Turbines from older worlds become a base with one blade.
 
 ## Voltage
 
@@ -147,11 +147,15 @@ Up to three pipe filters fit in it to choose what it keeps; sneak with an empty 
 
 ### 2.1.0
 
-- New: Compressor, Auto Crafter, Lava Generator, Solar Panels in four tiers, Helical Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers, Quarry and Landmarks.
+- New: Compressor, Auto Crafter, Lava Generator, Solar Panels in four tiers, Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers, Quarry and Landmarks.
 - Plates come from the Compressor now; the Rolling Mill makes rods and casings.
 - Iron and copper dusts work in the steel and redstone alloy recipes.
 - JEI recipe pages for every machine (optional).
 - The Battery shows its charge on a 5 bar gauge, in the world and as an item. Tank items show their fluid.
+- The Battery gauge bars glow.
+- The Wind Turbine is now a base with up to 5 stacked blades that turn together, with a soft wind sound. Old turbines become a base with one blade.
+- The Quarry clears plain blocks where its frame goes and takes up to three filters.
+- The Lava Generator keeps its lava when broken.
 - Generators take turns on which side they power first.
 - Switched-off cable sides can be clicked again with a screwdriver.
 - Recipe unlocks are checked again on login.

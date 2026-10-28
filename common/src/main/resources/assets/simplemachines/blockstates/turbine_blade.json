@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "stack=0": {
+      "model": "simplemachines:block/turbine_blade"
+    },
+    "stack=1": {
+      "model": "simplemachines:block/turbine_blade_spinning"
+    },
+    "stack=2": {
+      "model": "simplemachines:block/turbine_blade_spinning"
+    },
+    "stack=3": {
+      "model": "simplemachines:block/turbine_blade_spinning"
+    },
+    "stack=4": {
+      "model": "simplemachines:block/turbine_blade_spinning"
+    },
+    "stack=5": {
+      "model": "simplemachines:block/turbine_blade_spinning"
+    }
+  }
+}

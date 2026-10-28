@@ -9,9 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -34,11 +32,14 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
-/** Two block helical turbine. The base holds the power; the top half is the rotor and needs room above it. */
+/**
+ * Wind turbine base: holds the power and the cable output, with up to five turbine blades stacked on top.
+ * HALF is only kept so turbines from 2.1.0-alpha.13 and earlier load: an old upper half becomes a blade.
+ */
 public class WindTurbineBlock extends Block implements EntityBlock {
     public static final MapCodec<WindTurbineBlock> CODEC = simpleCodec(WindTurbineBlock::new);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-    private static final VoxelShape LOWER = Shapes.or(box(1, 0, 1, 15, 2, 15), box(6, 2, 6, 10, 9, 10), box(1, 9, 1, 15, 16, 15));
+    private static final VoxelShape LOWER = Shapes.or(box(1, 0, 1, 15, 2, 15), box(4, 2, 4, 12, 9, 12), box(6.5, 9, 6.5, 9.5, 16, 9.5));
     private static final VoxelShape UPPER = box(1, 0, 1, 15, 15.5, 15);
 
     public WindTurbineBlock(Properties properties) {
@@ -63,39 +64,18 @@ public class WindTurbineBlock extends Block implements EntityBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        final BlockPos pos = context.getClickedPos();
-        final Level level = context.getLevel();
-        if (pos.getY() >= level.getMaxY() || !level.getBlockState(pos.above()).canBeReplaced(context)) return null;
         return defaultBlockState();
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack stack) {
-        level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
     }
 
     @Override
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir,
                                      BlockPos neighbourPos, BlockState neighbour, RandomSource random) {
-        final DoubleBlockHalf half = state.getValue(HALF);
-        if (dir == (half == DoubleBlockHalf.LOWER ? Direction.UP : Direction.DOWN)
-                && !(neighbour.is(this) && neighbour.getValue(HALF) != half)) {
+        // an old upper half on its own goes; on a base it is turned into a blade by the base
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER && dir == Direction.DOWN
+                && !(neighbour.is(this) && neighbour.getValue(HALF) == DoubleBlockHalf.LOWER)) {
             return Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, level, ticks, pos, dir, neighbourPos, neighbour, random);
-    }
-
-    @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide() && player.preventsBlockDrops() && state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            final BlockPos below = pos.below();
-            final BlockState base = level.getBlockState(below);
-            if (base.is(this) && base.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                level.setBlock(below, Blocks.AIR.defaultBlockState(), 35);
-                level.levelEvent(player, 2001, below, Block.getId(base));
-            }
-        }
-        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -113,11 +93,7 @@ public class WindTurbineBlock extends Block implements EntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         final BlockPos base = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
-        if (level.getBlockEntity(base) instanceof WindTurbineBlockEntity be) {
-            be.openness = WindTurbineBlockEntity.measure(level, base);
-            player.sendOverlayMessage(Component.translatable("message.simplemachines.wind", String.format("%.1f", be.making(level, base)),
-                    Math.round(WindTurbineBlockEntity.height(base) * 100), Math.round(be.openness * 100), be.energy.energy, be.energy.capacity));
-        }
+        if (level.getBlockEntity(base) instanceof WindTurbineBlockEntity be) player.sendOverlayMessage(be.status(level, base));
         return InteractionResult.SUCCESS;
     }
 

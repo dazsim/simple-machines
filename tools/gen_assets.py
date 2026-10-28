@@ -1422,47 +1422,54 @@ def helix_assets():
                 w, h = (min(16, v) for v in size[d])
                 f["uv"] = [0, 0, w, h]
         return e
+    display = {"gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.625, 0.625, 0.625]},
+               "ground": {"rotation": [0, 0, 0], "translation": [0, 3, 0], "scale": [0.25, 0.25, 0.25]},
+               "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [0.5, 0.5, 0.5]},
+               "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+               "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 0, 0], "scale": [0.4, 0.4, 0.4]}}
+    tex = {"base": f"{MOD}:block/wind_turbine_base", "bolt": "minecraft:block/copper_block", "post": f"{MOD}:block/wind_turbine_post",
+           "blade": f"{MOD}:block/wind_turbine_blade", "particle": f"{MOD}:block/wind_turbine_base"}
+    # base: plate, housing and a stub of the shaft that the blades sit on
     els = [el((1, 0, 1), (15, 1, 15), all_faces("base"))]
     for (x, z) in ((2, 2), (13, 2), (2, 13), (13, 13)):
         els.append(el((x, 1, z), (x + 1, 1.5, z + 1), all_faces("bolt")))
     els += [el((5.5, 1, 5.5), (10.5, 2, 10.5), all_faces("bolt")),
-            el((6.5, 2, 6.5), (9.5, 8, 9.5), all_faces("post")),
-            el((5.5, 7, 5.5), (10.5, 8.5, 10.5), all_faces("bolt")),
-            el((7.5, 8.5, 7.5), (8.5, 30.5, 8.5), all_faces("post"))]
+            el((4, 2, 4), (12, 9, 12), all_faces("base")),
+            el((5.5, 9, 5.5), (10.5, 10, 10.5), all_faces("bolt")),
+            el((6.5, 10, 6.5), (9.5, 15, 9.5), all_faces("post")),
+            el((7.5, 15, 7.5), (8.5, 16, 8.5), all_faces("post"))]
+    jdump({"parent": "minecraft:block/block", "ambientocclusion": False, "textures": tex,
+           "elements": [box(e) for e in els], "display": display}, f"{A}/models/block/wind_turbine.json")
+    # loose blade: half a turn of helix, drawn still; in a stack the base draws it turning
     steps = [(0, 0), (0, 22.5), (0, 45), (1, -22.5), (1, 0), (1, 22.5), (1, 45), (0, -22.5)]
-    n = 21
-    for i in range(n):
-        y = 9 + i
-        axis, ang = steps[min(7, i * 8 // n)]
+    els = [el((7.5, 0, 7.5), (8.5, 16, 8.5), all_faces("post"))]
+    for i in range(16):
+        axis, ang = steps[i // 2]
         a, b2 = (0.5, 15.5), (7, 9)
         x0, x1, z0, z1 = (a[0], a[1], b2[0], b2[1]) if axis == 0 else (b2[0], b2[1], a[0], a[1])
-        rot = {"origin": [8, y, 8], "axis": "y", "angle": ang} if ang else None
-        e = box(el((x0, y, z0), (x1, y + 1, z1), {d: {"texture": "#blade"} for d in ("north", "south", "east", "west", "up", "down")}, rot))
+        rot = {"origin": [8, i, 8], "axis": "y", "angle": ang} if ang else None
+        e = box(el((x0, i, z0), (x1, i + 1, z1), {d: {"texture": "#blade"} for d in ("north", "south", "east", "west", "up", "down")}, rot))
         for d in ("north", "south", "east", "west"):
-            v = 0 if i == n - 1 else (15 if i == 0 else 4)
-            e["faces"][d]["uv"] = [0, v, e["faces"][d]["uv"][2], v + 1]
+            e["faces"][d]["uv"] = [0, 15 - i, e["faces"][d]["uv"][2], 16 - i]
         els.append(e)
-    els += [el((5.5, 8.5, 5.5), (10.5, 9, 10.5), all_faces("bolt")), el((5.5, 30, 5.5), (10.5, 30.5, 10.5), all_faces("bolt")),
-            el((7, 30.5, 7), (9, 31.5, 9), all_faces("bolt"))]
-    jdump({"parent": "minecraft:block/block", "ambientocclusion": False,
-           "textures": {"base": f"{MOD}:block/wind_turbine_base", "bolt": "minecraft:block/copper_block", "post": f"{MOD}:block/wind_turbine_post",
-                        "blade": f"{MOD}:block/wind_turbine_blade", "particle": f"{MOD}:block/wind_turbine_base"},
-           "elements": [box(e) for e in els],
-           "display": {"gui": {"rotation": [30, 225, 0], "translation": [0, -4, 0], "scale": [0.42, 0.42, 0.42]},
-                       "ground": {"rotation": [0, 0, 0], "translation": [0, 1, 0], "scale": [0.2, 0.2, 0.2]},
-                       "fixed": {"rotation": [0, 0, 0], "translation": [0, -4, 0], "scale": [0.42, 0.42, 0.42]},
-                       "thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 0, 0], "scale": [0.25, 0.25, 0.25]},
-                       "firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, -2, 0], "scale": [0.3, 0.3, 0.3]}}},
-          f"{A}/models/block/wind_turbine.json")
+    jdump({"parent": "minecraft:block/block", "ambientocclusion": False, "textures": tex,
+           "elements": [box(e) for e in els], "display": display}, f"{A}/models/block/turbine_blade.json")
     jdump({"textures": {"particle": f"{MOD}:block/wind_turbine_base"}}, f"{A}/models/block/wind_turbine_top.json")
+    jdump({"textures": {"particle": f"{MOD}:block/wind_turbine_blade"}}, f"{A}/models/block/turbine_blade_spinning.json")
     jdump({"variants": {"half=lower": {"model": f"{MOD}:block/wind_turbine"}, "half=upper": {"model": f"{MOD}:block/wind_turbine_top"}}},
           f"{A}/blockstates/wind_turbine.json")
+    jdump({"variants": {f"stack={i}": {"model": f"{MOD}:block/turbine_blade" + ("" if i == 0 else "_spinning")} for i in range(6)}},
+          f"{A}/blockstates/turbine_blade.json")
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/wind_turbine"}}, f"{A}/items/wind_turbine.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/turbine_blade"}}, f"{A}/items/turbine_blade.json")
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
            "conditions": [{"condition": "minecraft:survives_explosion"},
                           {"condition": "minecraft:block_state_property", "block": f"{MOD}:wind_turbine", "properties": {"half": "lower"}}],
            "entries": [{"type": "minecraft:item", "name": f"{MOD}:wind_turbine"}]}],
            "random_sequence": f"{MOD}:blocks/wind_turbine"}, f"{D}/{MOD}/loot_table/blocks/wind_turbine.json")
+    jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0, "conditions": [{"condition": "minecraft:survives_explosion"}],
+           "entries": [{"type": "minecraft:item", "name": f"{MOD}:turbine_blade"}]}],
+           "random_sequence": f"{MOD}:blocks/turbine_blade"}, f"{D}/{MOD}/loot_table/blocks/turbine_blade.json")
 
 def core_icon(arm, centre):
     t = Image.new("RGBA", (16, 16)); rnd = random.Random(sum(arm[0]) + sum(centre[0]))
@@ -1518,7 +1525,7 @@ def milestone3(shaped, rec):
     helix_assets()
     tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     vals = json.load(open(tag))["values"]
-    jdump({"values": vals + [f"{MOD}:{SOLAR_NAMES[t]}_solar_panel" for t in range(1, 5)] + [f"{MOD}:wind_turbine"]}, tag)
+    jdump({"values": vals + [f"{MOD}:{SOLAR_NAMES[t]}_solar_panel" for t in range(1, 5)] + [f"{MOD}:wind_turbine", f"{MOD}:turbine_blade"]}, tag)
     RC = f"{MOD}:redstone_copper_ingot"
     shaped("iron_core", [" P ", "PRP", " P "], {"P": "#c:plates/iron", "R": RC})
     shaped("copper_core", [" P ", "PRP", " P "], {"P": "#c:plates/copper", "R": RC})
@@ -1532,8 +1539,8 @@ def milestone3(shaped, rec):
     shaped("copper_solar_panel", ["SVS", "VCV", "SVS"], {"S": f"{MOD}:iron_solar_panel", "V": PV, "C": f"{MOD}:copper_core"})
     shaped("gold_solar_panel", ["SVS", "VCV", "SVS"], {"S": f"{MOD}:copper_solar_panel", "V": PV, "C": f"{MOD}:gold_core"})
     shaped("diamond_solar_panel", ["SBS", "BCB", "SBS"], {"S": f"{MOD}:gold_solar_panel", "B": f"{MOD}:silicon_lapis_blend", "C": f"{MOD}:diamond_core"})
-    shaped("wind_turbine", ["SCS", "CRC", "IXI"], {"S": "#c:plates/steel", "C": "#c:plates/copper", "R": "#c:rods/steel",
-                                                   "I": "#c:plates/iron", "X": RC})
+    shaped("wind_turbine", [" R ", "CXC", "III"], {"C": "#c:plates/copper", "R": "#c:rods/steel", "I": "#c:plates/iron", "X": RC})
+    shaped("turbine_blade", ["S  ", "CRC", "  S"], {"S": "#c:plates/steel", "C": "#c:plates/copper", "R": "#c:rods/steel"})
     lang = json.load(open(f"{A}/lang/en_us.json"))
     lang.update({
         "item.simplemachines.iron_core": "Iron Core", "item.simplemachines.copper_core": "Copper Core",
@@ -1541,14 +1548,22 @@ def milestone3(shaped, rec):
         "item.simplemachines.pv_cell": "PV Cell", "item.simplemachines.silicon_lapis_blend": "Silicon-Lapis Blend",
         "block.simplemachines.iron_solar_panel": "Iron Solar Panel", "block.simplemachines.copper_solar_panel": "Copper Solar Panel",
         "block.simplemachines.gold_solar_panel": "Gold Solar Panel", "block.simplemachines.diamond_solar_panel": "Diamond Solar Panel",
-        "block.simplemachines.wind_turbine": "Helical Wind Turbine",
+        "block.simplemachines.wind_turbine": "Wind Turbine Base",
+        "block.simplemachines.turbine_blade": "Turbine Blade",
+        "tooltip.simplemachines.wind_base": "Stack 1 to 5 Turbine Blades on top. Stores the power, LV output",
+        "tooltip.simplemachines.blade_1": "Up to 50 FE/t per blade on a Wind Turbine Base",
+        "tooltip.simplemachines.blade_2": "Only the first 5 blades in a stack turn",
+        "message.simplemachines.wind_no_blades": "No blades: stack 1 to 5 Turbine Blades on top. Stored %1$s / %2$s FE",
+        "message.simplemachines.wind_spare": "%1$s more above do nothing: only %2$s blades count.",
+        "message.simplemachines.blade_idle": "Idle: a blade needs a Wind Turbine Base under its stack, and only the first %1$s blades turn.",
         "message.simplemachines.solar": "Making %1$s FE/t (%2$s). Stored %3$s / %4$s FE",
-        "message.simplemachines.wind": "Making %1$s FE/t (height %2$s%%, open air %3$s%%). Stored %4$s / %5$s FE",
+        "message.simplemachines.wind": "Making %1$s FE/t with %2$s of %3$s blades (height %4$s%%, open air %5$s%%). Stored %6$s / %7$s FE",
         "jei.simplemachines.info.iron_solar_panel": "4 FE per tick in daylight with open sky above. Stores 2,000 FE. LV output from the sides and bottom.",
         "jei.simplemachines.info.copper_solar_panel": "20 FE per tick in daylight. Stores 10,000 FE. LV output.",
         "jei.simplemachines.info.gold_solar_panel": "100 FE per tick in daylight. Stores 50,000 FE. LV output.",
         "jei.simplemachines.info.diamond_solar_panel": "1,000 FE per tick in daylight and 500 at night. Stores 500,000 FE. MV output: connect it with Gold Cable or an LV/MV Transformer front, or LV blocks next to it explode.",
-        "jei.simplemachines.info.wind_turbine": "Two blocks tall. Makes up to 50 FE per tick: more the higher it stands (full output at Y 160), the more open air around the rotor (9x9x9) and in rain (x1.25) or thunder (x1.5). Stores 20,000 FE, LV output from the base.",
+        "jei.simplemachines.info.wind_turbine": "Holds the power of a wind turbine: stack 1 to 5 Turbine Blades on top. Each blade adds up to 50 FE per tick, so 5 blades make up to 250. Output is measured at the top blade: more the higher it is (full at Y 160), the more open air around it (9x9x9) and in rain (x1.25) or thunder (x1.5). Stores 50,000 FE, LV output from the base.",
+        "jei.simplemachines.info.turbine_blade": "Half a turn of helix. Stack up to 5 on a Wind Turbine Base and they join into one helix that turns faster as it makes more power. A blade with no base under its stack, or a 6th blade or higher, does nothing.",
         "jei.simplemachines.info.iron_core": "Core of the Iron Solar Panel.",
         "jei.simplemachines.info.copper_core": "Core of the Copper Solar Panel.",
         "jei.simplemachines.info.gold_core": "Core of the Gold Solar Panel.",

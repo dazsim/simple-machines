@@ -159,6 +159,7 @@ public class SimpleMachines {
     public static final String[] SOLAR = {"iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel"};
     public static final List<Block> SOLAR_PANELS = new ArrayList<>();
     public static Block windTurbine;
+    public static Block turbineBlade;
     public static Block landmark;
     public static Block quarryFrame;
     public static Block quarryHead;
@@ -270,6 +271,10 @@ public class SimpleMachines {
                 .setId(ResourceKey.create(Registries.BLOCK, id("wind_turbine"))).mapColor(MapColor.METAL).strength(3.0F)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         r.accept(id("wind_turbine"), windTurbine);
+        turbineBlade = new com.workshopcraft.simplemachines.gen.TurbineBladeBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("turbine_blade"))).mapColor(MapColor.METAL).strength(2.0F)
+                .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
+        r.accept(id("turbine_blade"), turbineBlade);
         landmark = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("landmark"))).mapColor(MapColor.COLOR_YELLOW).strength(0.5F)
                 .sound(SoundType.METAL).noOcclusion().lightLevel(st -> 7), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.POST);
@@ -366,7 +371,10 @@ public class SimpleMachines {
             add(r, SOLAR[i], new BlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
         }
         add(r, "landmark", new BlockItem(landmark, props("landmark").useBlockDescriptionPrefix()));
-        add(r, "wind_turbine", new net.minecraft.world.item.DoubleHighBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix()));
+        add(r, "wind_turbine", new com.workshopcraft.simplemachines.item.HintBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix(),
+                "tooltip.simplemachines.wind_base"));
+        add(r, "turbine_blade", new com.workshopcraft.simplemachines.item.HintBlockItem(turbineBlade, props("turbine_blade").useBlockDescriptionPrefix(),
+                "tooltip.simplemachines.blade_1", "tooltip.simplemachines.blade_2"));
         add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
         add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
         add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));

@@ -248,19 +248,23 @@ def d_solar():
     sh.save("solar")
 
 def d_wind():
-    sh = Sheet(); P = iso((300, 330), 0.9)
-    box(sh, P, 0, 0, 0, 100, 8, 100)
-    box(sh, P, 40, 8, 40, 20, 50, 20)
-    for k in range(14):
-        y = 60 + k * 10
-        import math as _m
-        a = _m.radians(k * 25)
-        dx, dz = 48 * _m.cos(a), 48 * _m.sin(a)
-        sh.line(P(50 - dx, y, 50 - dz), P(50 + dx, y, 50 + dz), 2.0)
-    sh.line(P(50, 58, 50), P(50, 200, 50), 2.6)
-    sh.dash((150, 70), (150, 330)); sh.text((150, 60), "2 blocks", 12, SOFT)
-    sh.text((480, 120), "higher = more", 12); sh.text((480, 145), "open air = more", 12); sh.text((480, 170), "rain, thunder = more", 12)
-    sh.text((320, 380), "Up to 50 FE/t at Y 160 and above, LV out of the base", 12, SOFT)
+    sh = Sheet(); P = iso((300, 360), 0.62)
+    box(sh, P, 0, 0, 0, 100, 6, 100)
+    box(sh, P, 25, 6, 25, 50, 45, 50)
+    box(sh, P, 42, 51, 42, 16, 49, 16)
+    for k in range(5 * 16):
+        y = 100 + k * 6.25
+        a = math.radians(k * 11.25)
+        dx, dz = 46 * math.cos(a), 46 * math.sin(a)
+        sh.line(P(50 - dx, y, 50 - dz), P(50 + dx, y, 50 + dz), 1.6 if k % 16 else 2.2)
+    sh.line(P(50, 100, 50), P(50, 600, 50), 2.4)
+    for i in range(5):
+        sh.tag(i + 1, (P(50, 150 + i * 100, 50)[0] + 95, P(50, 150 + i * 100, 50)[1]), 10)
+    sh.text((480, 60), "blades 1 to 5 on a base", 12); sh.text((480, 85), "6th and up do nothing", 12, SOFT)
+    sh.text((480, 140), "measured at the top blade:", 12); sh.text((480, 165), "higher = more", 12)
+    sh.text((480, 190), "open air = more", 12); sh.text((480, 215), "rain, thunder = more", 12)
+    sh.text((480, 330), "base: power and LV out", 12, SOFT)
+    sh.text((320, 388), "Up to 50 FE/t per blade at Y 160 and above, 250 with 5 blades", 12, SOFT)
     sh.save("wind")
 
 def d_quarry():
@@ -624,10 +628,10 @@ def pages():
          "solar", "Iron, Copper, Gold and Diamond", "Recipes",
          [craft("pv_cell"), process("alloying/silicon_lapis_blend", "alloy_smelter"), craft("iron_core"), craft("copper_core"),
           craft("gold_core")])
-    page("wind", "power", 6, "Helical Wind Turbine", "Two blocks tall, best up high",
-         "The turbine needs a free block above where you place it. Breaking either half takes the whole turbine.\n\nOutput is up to 50 FE/t: 50 x height x open air x weather. Height counts from Y 64 (nothing) to Y 160 (full). Open air is the share of air in the 9x9x9 space around the rotor, checked every 5 seconds. Rain gives x1.25 and thunder x1.5.\n\nIt stores 20k FE and gives LV out of the base. Right click it to read it.",
-         "wind", "Rotor on top, base below", "Recipe",
-         [craft("wind_turbine")])
+    page("wind", "power", 6, "Wind Turbine", "A base and up to 5 blades",
+         "Place a Wind Turbine Base, then stack Turbine Blades on top. The blades join into one helix and turn together, faster as they make more power.\n\nEach blade gives up to 50 FE/t, so 5 blades give up to 250: 50 x blades x height x open air x weather, all measured at the top blade. Height counts from Y 64 (nothing) to Y 160 (full). Open air is the share of air in the 9x9x9 space around the top blade. Rain gives x1.25 and thunder x1.5.\n\nA 6th blade or higher, or a blade with no base, does nothing. The base stores 50k FE and gives LV out of its bottom and sides. Right click it to read it.",
+         "wind", "Five blades on a base", "Recipes",
+         [craft("wind_turbine"), craft("turbine_blade")])
     page("pipes", "items", 0, "Item Pipes", "Three-way pipe ends",
          "Pipes connect to each other and to anything with an inventory. Use a screwdriver on a pipe end to cycle it:\n\nInput (default): the pipe delivers into that block.\nOutput: the pipe pulls items out every half second and sends them to the other inputs in turn.\nDisconnected: the pipe ignores that block.",
          "pipes", "One pipe, three ends", "Pipe",

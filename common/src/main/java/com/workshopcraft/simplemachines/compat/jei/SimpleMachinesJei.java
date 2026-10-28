@@ -57,7 +57,7 @@ public class SimpleMachinesJei implements IModPlugin {
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info.overvoltage"));
         }
-        for (String name : List.of("iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel", "wind_turbine",
+        for (String name : List.of("iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel", "wind_turbine", "turbine_blade",
                 "iron_core", "copper_core", "gold_core", "diamond_core", "pv_cell", "silicon_lapis_blend", "quarry", "quarry_assembly", "landmark")) {
             r.addItemStackInfo(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(SimpleMachines.id(name))),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name));

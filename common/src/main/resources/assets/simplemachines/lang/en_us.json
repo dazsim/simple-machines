@@ -123,8 +123,8 @@
   "jei.simplemachines.info.redstone_copper_cable": "LV cable, red. Carries up to 1,000 FE per tick for a whole connected run. Joins only other LV cables.",
   "jei.simplemachines.info.gold_cable": "MV cable, yellow. Carries up to 8,000 FE per tick. Joins only other MV cables.",
   "jei.simplemachines.info.diamond_cable": "HV cable, light blue. Carries up to 64,000 FE per tick. Joins only other HV cables.",
-  "jei.simplemachines.info.lv_mv_transformer": "The front (yellow ring) is MV and faces you when placed. The other faces (red rings) are LV. Power goes both ways, up to 1,000 FE per tick each way, losing 5%.",
-  "jei.simplemachines.info.mv_hv_transformer": "The front (light blue ring) is HV and faces you when placed. The other faces (yellow rings) are MV. Power goes both ways, up to 8,000 FE per tick each way, losing 5%.",
+  "jei.simplemachines.info.lv_mv_transformer": "The front (yellow ring) is MV and faces you when placed. The other faces (red rings) are LV. Click a face with a screwdriver to make it the MV side, or sneak-click to swap it to the opposite face. Power goes both ways, up to 1,000 FE per tick each way, losing 5%.",
+  "jei.simplemachines.info.mv_hv_transformer": "The front (light blue ring) is HV and faces you when placed. The other faces (yellow rings) are MV. Click a face with a screwdriver to make it the HV side, or sneak-click to swap it to the opposite face. Power goes both ways, up to 8,000 FE per tick each way, losing 5%.",
   "jei.simplemachines.info.overvoltage": "Every machine and battery is LV, the Diamond Solar Panel MV. Feeding a higher voltage into a lower rated block makes it explode.",
   "item.simplemachines.iron_core": "Iron Core",
   "item.simplemachines.copper_core": "Copper Core",
@@ -347,5 +347,6 @@
   "block.simplemachines.fluid_tank": "Fluid Tank",
   "tooltip.simplemachines.tank": "%s: %s / %s mB",
   "tooltip.simplemachines.tank_empty": "Empty, holds 16 buckets of one fluid",
-  "book.simplemachines.manual.title": "Simple Machines Manual"
+  "book.simplemachines.manual.title": "Simple Machines Manual",
+  "message.simplemachines.transformer_side": "%1$s side now faces %2$s, the other faces are %3$s"
 }

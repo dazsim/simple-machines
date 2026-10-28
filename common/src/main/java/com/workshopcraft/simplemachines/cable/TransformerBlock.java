@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-/** Steps power between two tiers. The front, facing whoever placed it, is the high side; the other five faces are the low side. */
+/** Steps power between two tiers. The front, facing whoever placed it, is the high side; the other five faces are the low side. A screwdriver moves the front. */
 public class TransformerBlock extends Block implements EntityBlock {
     public static final MapCodec<TransformerBlock> CODEC = simpleCodec(p -> new TransformerBlock(p, Voltage.MV));
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
@@ -80,6 +80,17 @@ public class TransformerBlock extends Block implements EntityBlock {
                     Voltage.NAME[high - 1], be.up.energy, be.down.energy, be.up.capacity));
         }
         return InteractionResult.SUCCESS;
+    }
+
+    /** Screwdriver: the clicked face becomes the high side; sneaking swaps the high side to the face opposite. */
+    public void screwdriver(ServerLevel level, BlockPos pos, BlockState state, Player player, Direction face, boolean sneak) {
+        final Direction front = sneak ? state.getValue(FACING).getOpposite() : face;
+        if (front != state.getValue(FACING)) {
+            level.setBlock(pos, state.setValue(FACING, front), 3);
+            CableNetwork.invalidate(level);
+        }
+        player.sendOverlayMessage(Component.translatable("message.simplemachines.transformer_side", Voltage.NAME[high],
+                Component.translatable("direction.simplemachines." + front.getSerializedName()), Voltage.NAME[high - 1]));
     }
 
     @Override

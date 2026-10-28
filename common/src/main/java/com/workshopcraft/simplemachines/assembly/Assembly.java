@@ -188,7 +188,7 @@ public final class Assembly {
         return level.getBlockEntity(pos) instanceof Worktops.Holder h ? h.worktop() : "";
     }
 
-    /** Any c:tools/screwdriver: screws parts in, sneak takes the last one off or opens a machine back up; on a machine it toggles auto-output of the clicked face. */
+    /** Any c:tools/screwdriver: screws parts in, sneak takes the last one off or opens a machine back up; on a machine it toggles auto-output of the clicked face, on a transformer it sets the high side. */
     public static boolean screwdriver(Level level, BlockPos pos, Player player, ItemStack held, BlockHitResult hit) {
         final Direction face = hit.getDirection();
         if (!held.is(Worktops.SCREWDRIVERS) || !player.mayBuild()) return false;
@@ -214,6 +214,13 @@ public final class Assembly {
                 final boolean on = be.toggleOutput(face);
                 player.sendOverlayMessage(Component.translatable(on ? "message.simplemachines.output_on" : "message.simplemachines.output_off",
                         Component.translatable("direction.simplemachines." + face.getSerializedName())));
+                ratchet(level, pos);
+            }
+            return true;
+        }
+        if (state.getBlock() instanceof com.workshopcraft.simplemachines.cable.TransformerBlock t) {
+            if (level instanceof net.minecraft.server.level.ServerLevel server) {
+                t.screwdriver(server, pos, state, player, face, sneak);
                 ratchet(level, pos);
             }
             return true;

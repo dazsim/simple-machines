@@ -162,7 +162,7 @@
   "message.simplemachines.quarry_filter_on": "Filter fitted",
   "message.simplemachines.quarry_filter_off": "Filter removed",
   "message.simplemachines.quarry_filter_full": "A filter is already fitted. Sneak with an empty hand to take it out",
-  "jei.simplemachines.info.quarry": "Free to run, needs no power. Digs out the area beside it down to bedrock, skipping air and fluids. Place Landmarks up to 64 blocks away in front of it and to one side to set the size, otherwise 16x16. Speed comes from the Electric Drill built into its assembly: iron 1 block per second, steel chassis x1.5, steel drill body x1.25, plus the drill's upgrades (up to x2). A diamond bit digs obsidian and ancient debris. Fit a Pipe Filter to choose what it keeps; the rest is voided.",
+  "jei.simplemachines.info.quarry": "Runs on MV only, 8000 FE per block mined (400 FE/t at 1 block per second, about 1500 FE/t at 3.75). LV will not feed it and HV blows it up. Stores 200k FE, 400k on steel. Digs out the area beside it down to bedrock, skipping air and fluids. Place Landmarks up to 64 blocks away in front of it and to one side to set the size, otherwise 16x16. Speed: iron 1 block per second, steel chassis x1.5, steel drill body x1.25, plus drill and chassis upgrades (together up to x2). A diamond bit digs obsidian and ancient debris. Fit a Pipe Filter to choose what it keeps; the rest is voided.",
   "jei.simplemachines.info.quarry_assembly": "Crafted with an Electric Drill, which keeps its body, bit and upgrades inside the quarry.",
   "jei.simplemachines.info.landmark": "Marks a far corner of a quarry: one in line with its front, one to its side, up to 64 blocks away.",
   "block.simplemachines.battery": "Battery",

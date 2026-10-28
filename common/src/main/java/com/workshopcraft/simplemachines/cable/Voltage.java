@@ -32,8 +32,20 @@ public final class Voltage {
         final BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof CableBlock cable) return cable.tier;
         if (state.getBlock() instanceof TransformerBlock t) return side == state.getValue(BlockStateProperties.FACING) ? t.high : t.high - 1;
+        if (level.getBlockEntity(pos) instanceof com.workshopcraft.simplemachines.quarry.QuarryBlockEntity) return MV;
         if (level.getBlockEntity(pos) instanceof WorkBlockEntity be && be.energyIn(side)) return LV;
         return -1;
+    }
+
+    /** Tier the block at pos sends towards the neighbour on side; anything not ours counts as LV. */
+    public static int sending(Level level, BlockPos pos, Direction side) {
+        final BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof CableBlock cable) return cable.tier;
+        if (state.getBlock() instanceof TransformerBlock t) return side == state.getValue(BlockStateProperties.FACING) ? t.high : t.high - 1;
+        if (level.getBlockEntity(pos) instanceof com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity solar) {
+            return com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity.VOLTAGE[solar.tier - 1];
+        }
+        return LV;
     }
 
     public static boolean overloads(Level level, BlockPos pos, @Nullable Direction side, int tier) {

@@ -30,13 +30,19 @@ public record QuarryDrill(boolean steel, boolean diamond, List<Upgrade> upgrades
     }
 
     public float bonus() {
-        return Math.min(PoweredToolItem.MAX_UPGRADE_BONUS,
-                0.5F * Upgrade.count(upgrades, Upgrade.OVERCLOCKER) + 0.15F * Upgrade.count(upgrades, Upgrade.ENERGY_CELL));
+        return bonus(List.of());
+    }
+
+    /** Drill and machine upgrades share one cap. */
+    public float bonus(List<Upgrade> machine) {
+        final int oc = Upgrade.count(upgrades, Upgrade.OVERCLOCKER) + Upgrade.count(machine, Upgrade.OVERCLOCKER);
+        final int cells = Upgrade.count(upgrades, Upgrade.ENERGY_CELL) + Upgrade.count(machine, Upgrade.ENERGY_CELL);
+        return Math.min(PoweredToolItem.MAX_UPGRADE_BONUS, 0.5F * oc + 0.15F * cells);
     }
 
     /** Blocks per second. */
-    public float speed(Tier tier) {
-        return tier.speed * (steel ? 1.25F : 1F) * (1F + bonus());
+    public float speed(Tier tier, List<Upgrade> machine) {
+        return tier.speed * (steel ? 1.25F : 1F) * (1F + bonus(machine));
     }
 
     public static String get(ItemStack stack) {

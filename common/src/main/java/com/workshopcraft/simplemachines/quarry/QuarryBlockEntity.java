@@ -2,6 +2,7 @@ package com.workshopcraft.simplemachines.quarry;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.assembly.Core;
+import com.workshopcraft.simplemachines.cable.Voltage;
 import com.workshopcraft.simplemachines.assembly.Tier;
 import com.workshopcraft.simplemachines.item.PoweredToolItem;
 import com.workshopcraft.simplemachines.machine.AreaBlockEntity;
@@ -31,13 +32,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Free quarry. Sits at one corner of its area, builds a frame round it, runs a gantry and drill head above it
+ * MV quarry, 8000 FE a block. Sits at one corner of its area, builds a frame round it, runs a gantry and drill head above it
  * and digs the inside layer by layer down to bedrock. Landmarks mark the far corners, otherwise 16x16.
  */
 public class QuarryBlockEntity extends AreaBlockEntity {
     public static final int DEFAULT = 16;
     public static final int MAX = 64;
     private static final int SCAN = 1024;
+    public static final int PER_BLOCK = 8000;
+    public static final int BUFFER = 200_000;
 
     private String drill = "";
     private ItemStack filter = ItemStack.EMPTY;
@@ -55,7 +58,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private long dug;
 
     public QuarryBlockEntity(BlockPos pos, BlockState state) {
-        super(SimpleMachines.MACHINE_ENTITIES.get(Core.QUARRY), pos, state, 0, 0);
+        super(SimpleMachines.MACHINE_ENTITIES.get(Core.QUARRY), pos, state, BUFFER, Voltage.RATE[Voltage.MV]);
     }
 
     public QuarryDrill drill() {
@@ -82,7 +85,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
 
     @Override
     public boolean energyIn(@Nullable Direction side) {
-        return false;
+        return side != null && level != null && Voltage.sending(level, getBlockPos().relative(side), side.getOpposite()) == Voltage.MV;
     }
 
     @Override
@@ -92,7 +95,6 @@ public class QuarryBlockEntity extends AreaBlockEntity {
 
     @Override
     protected void work(ServerLevel level, BlockPos pos, BlockState state, Tier tier) {
-        // overclockers on the quarry itself do nothing, its speed comes from the drill
         final long now = level.getGameTime();
         if (now == lastTick) return;
         lastTick = now;
@@ -102,7 +104,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
             setLit(level, pos, state, false);
             return;
         }
-        acc = Math.min(acc + drill().speed(tier) / 20F, 4F);
+        acc = Math.min(acc + drill().speed(tier, upgrades()) / 20F, 4F);
         total = 100;
         final QuarryDrill d = drill();
         for (int scans = 0; scans < SCAN && !done; scans++) {
@@ -110,15 +112,16 @@ public class QuarryBlockEntity extends AreaBlockEntity {
             if (!level.isLoaded(p)) break;
             final BlockState s = level.getBlockState(p);
             if (diggable(level, p, s, d)) {
-                if (acc < 1F || !hasRoom()) break;
+                if (acc < 1F || !hasRoom() || energy.energy < PER_BLOCK) break;
                 dig(level, p, s, d);
+                energy.energy -= PER_BLOCK;
                 acc -= 1F;
             }
             advance(level, pos, facing);
         }
         progress = Math.round(Math.min(1F, acc) * 100);
         if (!done) moveHead(level, pos, facing);
-        setLit(level, pos, level.getBlockState(pos), !done);
+        setLit(level, pos, level.getBlockState(pos), !done && energy.energy >= PER_BLOCK);
         setChanged();
     }
 

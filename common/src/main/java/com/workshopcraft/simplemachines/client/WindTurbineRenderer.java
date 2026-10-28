@@ -47,6 +47,7 @@ public class WindTurbineRenderer implements BlockEntityRenderer<WindTurbineBlock
         s.blades = 0;
         if (level == null) return;
         spin(be, level.getGameTime() + partialTick);
+        WindSound.seen(be);
         final BlockPos pos = be.getBlockPos();
         int n = 0;
         while (n < TurbineBladeBlock.MAX) {

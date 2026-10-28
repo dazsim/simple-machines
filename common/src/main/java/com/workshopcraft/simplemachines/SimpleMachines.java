@@ -136,6 +136,7 @@ public class SimpleMachines {
     };
     public static final net.minecraft.core.particles.SimpleParticleType WHITE_SPARK = new net.minecraft.core.particles.SimpleParticleType(false) {
     };
+    public static final SoundEvent WIND_SOUND = SoundEvent.createVariableRangeEvent(id("block.wind_turbine.spin"));
     public static final SoundEvent CHAINSAW_SOUND = SoundEvent.createVariableRangeEvent(id("item.chainsaw.run"));
     public static final Map<Upgrade, Item> UPGRADES = new EnumMap<>(Upgrade.class);
     public static final Map<Core, Item> ASSEMBLIES = new EnumMap<>(Core.class);
@@ -413,6 +414,7 @@ public class SimpleMachines {
     public static void registerSounds(BiConsumer<Identifier, SoundEvent> r) {
         r.accept(DRILL_SOUND.location(), DRILL_SOUND);
         r.accept(CHAINSAW_SOUND.location(), CHAINSAW_SOUND);
+        r.accept(WIND_SOUND.location(), WIND_SOUND);
     }
 
     public static void registerParticles(BiConsumer<Identifier, net.minecraft.core.particles.ParticleType<?>> r) {

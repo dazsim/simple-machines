@@ -16,5 +16,15 @@
         "stream": false
       }
     ]
+  },
+  "block.wind_turbine.spin": {
+    "subtitle": "subtitles.simplemachines.wind_turbine",
+    "sounds": [
+      {
+        "name": "simplemachines:block/wind_turbine",
+        "stream": false,
+        "attenuation_distance": 12
+      }
+    ]
   }
 }

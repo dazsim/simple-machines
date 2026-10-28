@@ -357,5 +357,6 @@
   "message.simplemachines.wind_no_blades": "No blades: stack 1 to 5 Turbine Blades on top. Stored %1$s / %2$s FE",
   "message.simplemachines.wind_spare": "%1$s more above do nothing: only %2$s blades count.",
   "message.simplemachines.blade_idle": "Idle: a blade needs a Wind Turbine Base under its stack, and only the first %1$s blades turn.",
-  "jei.simplemachines.info.turbine_blade": "Half a turn of helix. Stack up to 5 on a Wind Turbine Base and they join into one helix that turns faster as it makes more power. A blade with no base under its stack, or a 6th blade or higher, does nothing."
+  "jei.simplemachines.info.turbine_blade": "Half a turn of helix. Stack up to 5 on a Wind Turbine Base and they join into one helix that turns faster as it makes more power. A blade with no base under its stack, or a 6th blade or higher, does nothing.",
+  "subtitles.simplemachines.wind_turbine": "Wind turbine turns"
 }

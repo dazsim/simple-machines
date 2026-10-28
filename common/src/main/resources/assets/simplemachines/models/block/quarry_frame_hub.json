@@ -3,7 +3,7 @@
   "ambientocclusion": false,
   "textures": {
     "post": "simplemachines:block/quarry_post",
-    "rail": "simplemachines:block/quarry_rail",
+    "rail": "simplemachines:block/quarry_rail_hub",
     "particle": "simplemachines:block/quarry_rail"
   },
   "elements": [

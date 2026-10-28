@@ -49,6 +49,9 @@ public class SimpleMachinesJei implements IModPlugin {
         r.addRecipes(GeneratorCategory.TYPE, GeneratorCategory.fuels());
         r.addRecipes(LavaCategory.TYPE, List.of(LavaCategory.Burn.IRON, LavaCategory.Burn.STEEL));
         for (Core c : SOURCES) r.addRecipes(SourceCategory.type(c), List.of(SourceCategory.make(c)));
+        if (ViewerRecipes.get(net.minecraft.world.item.crafting.RecipeType.CRAFTING).stream().noneMatch(h -> h.value() instanceof com.workshopcraft.simplemachines.recipe.QuarryAssemblyRecipe)) {
+            r.addRecipes(RecipeTypes.CRAFTING, quarryAssembly());
+        }
         for (String name : List.of("redstone_copper_cable", "gold_cable", "diamond_cable", "lv_mv_transformer", "mv_hv_transformer")) {
             r.addItemStackInfo(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(SimpleMachines.id(name))),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name),
@@ -84,5 +87,26 @@ public class SimpleMachinesJei implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration r) {
         r.addGhostIngredientHandler(com.workshopcraft.simplemachines.client.AutoCrafterScreen.class, new AutoCrafterTransfer.Ghosts());
+    }
+
+    // NeoForge does not always hand the custom shaped quarry recipe to JEI, so show a copy built from the same pattern.
+    private static List<net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe>> quarryAssembly() {
+        try {
+            final var items = net.minecraft.core.registries.BuiltInRegistries.ITEM;
+            final java.util.function.Function<String, net.minecraft.world.item.crafting.Ingredient> tag = t -> net.minecraft.world.item.crafting.Ingredient.of(
+                    items.getOrThrow(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.fromNamespaceAndPath("c", t))));
+            final java.util.Map<Character, net.minecraft.world.item.crafting.Ingredient> key = java.util.Map.of(
+                    'R', tag.apply("rods/iron"), 'S', tag.apply("plates/steel"),
+                    'C', net.minecraft.world.item.crafting.Ingredient.of(items.getValue(SimpleMachines.id("redstone_copper_ingot"))),
+                    'D', net.minecraft.world.item.crafting.Ingredient.of(items.getValue(SimpleMachines.id("electric_drill"))));
+            final var recipe = new net.minecraft.world.item.crafting.ShapedRecipe(new net.minecraft.world.item.crafting.Recipe.CommonInfo(true),
+                    new net.minecraft.world.item.crafting.CraftingRecipe.CraftingBookInfo(net.minecraft.world.item.crafting.CraftingBookCategory.MISC, ""),
+                    net.minecraft.world.item.crafting.ShapedRecipePattern.of(key, "RCR", "SDS"),
+                    new net.minecraft.world.item.ItemStackTemplate(items.getValue(SimpleMachines.id("quarry_assembly"))));
+            return List.of(new net.minecraft.world.item.crafting.RecipeHolder<>(net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.RECIPE, SimpleMachines.id("quarry_assembly")), recipe));
+        } catch (RuntimeException e) {
+            return List.of();
+        }
     }
 }

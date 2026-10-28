@@ -92,7 +92,7 @@ public class SimpleMachines {
     public static final List<BlockEntityType<? extends WorkBlockEntity>> WORK_ENTITIES = new ArrayList<>();
     /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
     public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
-            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA);
+            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA, Core.QUARRY);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -125,6 +125,9 @@ public class SimpleMachines {
     /** "diamond" for a diamond drill bit or diamond-tipped chain; absent for the standard one, "none" while the stand shows it loose. */
     public static final DataComponentType<String> TOOL_TIP = DataComponentType.<String>builder()
             .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
+    /** The electric drill built into a quarry, as "frame;tip;upgrades". */
+    public static final DataComponentType<String> QUARRY_DRILL = DataComponentType.<String>builder()
+            .persistent(com.mojang.serialization.Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8).build();
     /** Which parts a tool model shows, as ToolStandRenderer bits; only set on the stacks the stand draws. */
     public static final DataComponentType<Integer> TOOL_PARTS = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
@@ -156,6 +159,9 @@ public class SimpleMachines {
     public static final String[] SOLAR = {"iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel"};
     public static final List<Block> SOLAR_PANELS = new ArrayList<>();
     public static Block windTurbine;
+    public static Block landmark;
+    public static Block quarryFrame;
+    public static Block quarryHead;
     public static BlockEntityType<com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity> solarEntity;
     public static BlockEntityType<com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity> windEntity;
     public static Block itemPipe;
@@ -264,6 +270,19 @@ public class SimpleMachines {
                 .setId(ResourceKey.create(Registries.BLOCK, id("wind_turbine"))).mapColor(MapColor.METAL).strength(3.0F)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         r.accept(id("wind_turbine"), windTurbine);
+        landmark = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("landmark"))).mapColor(MapColor.COLOR_RED).strength(0.5F)
+                .sound(SoundType.METAL).noOcclusion().lightLevel(st -> 7), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.POST);
+        r.accept(id("landmark"), landmark);
+        quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_frame"))).mapColor(MapColor.COLOR_YELLOW).strength(1.0F)
+                .sound(SoundType.METAL).noOcclusion().noLootTable().isViewBlocking((st, l, p) -> false)
+                .isSuffocating((st, l, p) -> false), net.minecraft.world.phys.shapes.Shapes.block());
+        r.accept(id("quarry_frame"), quarryFrame);
+        quarryHead = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_drill_head"))).mapColor(MapColor.METAL).strength(1.0F)
+                .sound(SoundType.METAL).noOcclusion().noLootTable(), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.HEAD);
+        r.accept(id("quarry_drill_head"), quarryHead);
         itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
@@ -288,6 +307,7 @@ public class SimpleMachines {
         MACHINES.put(Core.GENERATOR, generator);
         for (Core core : NEW_CORES) {
             final Block b = core == Core.BATTERY ? new com.workshopcraft.simplemachines.machine.BatteryBlock(built(core.block).lightLevel(st -> 0))
+                    : core == Core.QUARRY ? new com.workshopcraft.simplemachines.quarry.QuarryBlock(built(core.block))
                     : new WorkMachineBlock(built(core.block), core);
             r.accept(id(core.block), b);
             MACHINES.put(core, b);
@@ -323,7 +343,8 @@ public class SimpleMachines {
         for (Core core : Core.values()) {
             if (core == Core.NONE) continue;
             final String name = core.getSerializedName() + "_assembly";
-            ASSEMBLIES.put(core, add(r, name, new Item(props(name))));
+            ASSEMBLIES.put(core, add(r, name, core == Core.QUARRY
+                    ? new com.workshopcraft.simplemachines.quarry.QuarryAssemblyItem(props(name)) : new Item(props(name))));
         }
         controlBoard = add(r, "control_board", new Item(props("control_board")));
         for (Finish finish : Finish.values()) {
@@ -344,6 +365,7 @@ public class SimpleMachines {
         for (int i = 0; i < SOLAR.length; i++) {
             add(r, SOLAR[i], new BlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
         }
+        add(r, "landmark", new BlockItem(landmark, props("landmark").useBlockDescriptionPrefix()));
         add(r, "wind_turbine", new net.minecraft.world.item.DoubleHighBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix()));
         add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
         add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
@@ -397,6 +419,7 @@ public class SimpleMachines {
         r.accept(id("tool_frame"), TOOL_FRAME);
         r.accept(id("tool_parts"), TOOL_PARTS);
         r.accept(id("tool_tip"), TOOL_TIP);
+        r.accept(id("quarry_drill"), QUARRY_DRILL);
         r.accept(id("filter"), FILTER);
         r.accept(id("tank"), TANK);
         r.accept(id("crafter_pattern"), CRAFTER_PATTERN);
@@ -430,6 +453,7 @@ public class SimpleMachines {
         entity(r, Core.COMPRESSOR, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.COMPRESSOR), p, st, COMPRESSING, "compressor",
                 ProcessBlockEntity.COMPRESSOR_CAPACITY, ProcessBlockEntity.MAX_IN, ProcessBlockEntity.COMPRESSOR_PER_TICK));
         entity(r, Core.LAVA, LavaGeneratorBlockEntity::new);
+        entity(r, Core.QUARRY, com.workshopcraft.simplemachines.quarry.QuarryBlockEntity::new);
         entity(r, Core.HARVESTER, HarvesterBlockEntity::new);
         entity(r, Core.ALLOY, AlloySmelterBlockEntity::new);
         entity(r, Core.STONE, (p, st) -> new SourceBlockEntity(p, st, SourceBlockEntity.Kind.STONE));
@@ -493,5 +517,6 @@ public class SimpleMachines {
         r.accept(id("sawing"), SAWING_SERIALIZER);
         r.accept(id("compressing"), COMPRESSING_SERIALIZER);
         r.accept(id("crafting_shapeless_keep_tool"), KeepToolRecipe.SERIALIZER);
+        r.accept(id("crafting_shaped_quarry"), com.workshopcraft.simplemachines.recipe.QuarryAssemblyRecipe.SERIALIZER);
     }
 }

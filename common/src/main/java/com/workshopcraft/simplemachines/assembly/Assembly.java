@@ -17,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import com.workshopcraft.simplemachines.quarry.QuarryBlockEntity;
+import com.workshopcraft.simplemachines.quarry.QuarryDrill;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -54,6 +56,7 @@ public final class Assembly {
         }
         level.setBlock(pos, next, Block.UPDATE_ALL);
         if (!worktop.isEmpty() && level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
+        if (core != Core.NONE && level.getBlockEntity(pos) instanceof ChassisBlockEntity be) be.setDrill(QuarryDrill.get(stack));
         stack.consume(1, player);
         level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.8F, 0.9F);
         return InteractionResult.SUCCESS;
@@ -112,12 +115,14 @@ public final class Assembly {
             final Tier tier = ((ChassisBlock) state.getBlock()).tier;
             final String worktop = worktopAt(level, pos);
             final List<Upgrade> upgrades = upgradesAt(level, pos);
+            final String drill = level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be.drill() : "";
             level.setBlock(pos, state.getValue(CORE).machine().defaultBlockState()
                     .setValue(MachineBlock.FACING, state.getValue(ChassisBlock.FACING))
                     .setValue(PoweredMachineBlock.TIER, tier)
                     .setValue(PoweredMachineBlock.PANEL, state.getValue(PANEL)), Block.UPDATE_ALL);
             if (level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
             if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
+            if (level.getBlockEntity(pos) instanceof QuarryBlockEntity q) q.setDrill(drill);
         } else {
             level.setBlock(pos, state.setValue(STEP, step + 1), Block.UPDATE_ALL);
         }
@@ -152,7 +157,8 @@ public final class Assembly {
             part = new ItemStack(SimpleMachines.controlBoard);
             next = state.setValue(STEP, 2);
         } else {
-            part = new ItemStack(state.getValue(CORE).item());
+            part = coreStack(state, level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be : null);
+            if (level.getBlockEntity(pos) instanceof ChassisBlockEntity be) be.setDrill("");
             next = state.setValue(CORE, Core.NONE).setValue(STEP, 0);
         }
         if (next != state) level.setBlock(pos, next, Block.UPDATE_ALL);
@@ -166,12 +172,14 @@ public final class Assembly {
         final PoweredMachineBlock block = (PoweredMachineBlock) state.getBlock();
         final String worktop = worktopAt(level, pos);
         final List<Upgrade> upgrades = upgradesAt(level, pos);
+        final String drill = level.getBlockEntity(pos) instanceof QuarryBlockEntity q ? q.drillData() : "";
         level.setBlock(pos, state.getValue(PoweredMachineBlock.TIER).chassis().defaultBlockState()
                 .setValue(ChassisBlock.FACING, state.getValue(MachineBlock.FACING))
                 .setValue(CORE, block.core())
                 .setValue(PANEL, state.getValue(PoweredMachineBlock.PANEL))
                 .setValue(STEP, 6), Block.UPDATE_ALL);
         if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
+        if (level.getBlockEntity(pos) instanceof ChassisBlockEntity be) be.setDrill(drill);
         Block.popResource(level, pos.above(), Worktops.stack(worktop));
         ratchet(level, pos);
     }
@@ -214,11 +222,17 @@ public final class Assembly {
         return Pipes.screwdriver(level, pos, player, held, hit);
     }
 
+    private static ItemStack coreStack(BlockState state, @Nullable ChassisBlockEntity be) {
+        final ItemStack stack = new ItemStack(state.getValue(CORE).item());
+        if (be != null && !be.drill().isEmpty()) stack.set(SimpleMachines.QUARRY_DRILL, be.drill());
+        return stack;
+    }
+
     public static List<ItemStack> parts(BlockState state, @Nullable ChassisBlockEntity be) {
         final int step = state.getValue(STEP);
         final String worktop = be == null ? "" : be.worktop();
         final List<ItemStack> parts = new ArrayList<>();
-        if (step >= 1) parts.add(new ItemStack(state.getValue(CORE).item()));
+        if (step >= 1) parts.add(coreStack(state, be));
         if (step >= 3) parts.add(new ItemStack(SimpleMachines.controlBoard));
         if (step >= 4 && be != null) {
             for (Upgrade u : be.upgrades()) parts.add(new ItemStack(u.item()));

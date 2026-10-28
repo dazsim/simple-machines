@@ -1,0 +1,17 @@
+{
+  "type": "simplemachines:crafting_shaped_quarry",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "S": "#c:plates/steel",
+    "D": "simplemachines:electric_drill"
+  },
+  "pattern": [
+    "RCR",
+    "SDS"
+  ],
+  "result": {
+    "id": "simplemachines:quarry_assembly"
+  }
+}

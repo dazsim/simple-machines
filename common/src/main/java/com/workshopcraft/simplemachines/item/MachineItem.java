@@ -23,6 +23,7 @@ public class MachineItem extends BlockItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, out, flag);
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
+        com.workshopcraft.simplemachines.quarry.QuarryDrill.tooltip(stack, out);
         if (!ups.isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", Upgrade.summary(Upgrade.pack(ups), false)).withStyle(ChatFormatting.GRAY));
     }
 }

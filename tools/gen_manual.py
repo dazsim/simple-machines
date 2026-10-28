@@ -263,6 +263,30 @@ def d_wind():
     sh.text((320, 380), "Up to 50 FE/t at Y 160 and above, LV out of the base", 12, SOFT)
     sh.save("wind")
 
+def d_quarry():
+    sh = Sheet(); P = iso((330, 120), 0.5)
+    n, c = 6, 60
+    for i in range(n + 1):
+        for j in range(n + 1):
+            if i in (0, n) or j in (0, n):
+                if i == 0 and j == 0: continue
+                box(sh, P, i * c, 0, j * c, c, 14, c, 1.2)
+    machine(sh, P, s=0.6, x=0, z=0)
+    for i in range(1, n):
+        for j in range(1, n):
+            sh.poly([P(i * c, -40, j * c), P(i * c + c, -40, j * c), P(i * c + c, -40, j * c + c), P(i * c, -40, j * c + c)], 1.0, SOFT)
+    row = 3
+    for i in range(n + 1):
+        box(sh, P, i * c, 60, row * c + 20, c, 14, 20, 1.2)
+    box(sh, P, 2 * c + 15, 20, row * c + 15, 30, 40, 30, 1.6)
+    sh.line(P(2 * c + 30, 20, row * c + 30), P(2 * c + 30, -40, row * c + 30), 2.4)
+    for (i, j) in ((n, 0), (0, n)):
+        sh.line(P(i * c + c / 2, 14, j * c + c / 2), P(i * c + c / 2, 70, j * c + c / 2), 3.0)
+        sh.circle(P(i * c + c / 2, 76, j * c + c / 2), 6)
+    sh.text((488, 160), "landmark", 12, SOFT); sh.text((176, 160), "landmark", 12, SOFT)
+    sh.text((320, 380), "Digs the inside of the frame down to bedrock", 12, SOFT)
+    sh.save("quarry")
+
 def d_pipes():
     sh = Sheet()
     sh.line((60, 200), (580, 200), 2.0); sh.line((60, 224), (580, 224), 2.0)
@@ -558,6 +582,10 @@ def pages():
          "Click items into the 3x3 pattern; nothing is used up. Right click a slot with an empty hand to clear it, or press x to clear the lot. JEI's + button fills the pattern too.\n\nThe Ingredients row holds one stack per ingredient; tools and other unstackables get one slot each. Pipes and hoppers can only put matching items in.\n\nResults and leftovers such as empty buckets or used tools land in the 4 outputs. It waits when they are full. 20 FE/t for 5 seconds a craft, faster on steel. The redstone button picks always on, run with a signal or stop with one.",
          "machines", "Any side can take FE, items or an output port", "Assembly",
          [craft("crafter_assembly", "Crafter Assembly"), build("crafter_assembly", "auto_crafter", "Auto Crafter")])
+    page("quarry", "machines", 5, "Quarry", "Free, digs to bedrock",
+         "The Quarry needs no power. It sits at a corner and digs the area beside it, layer by layer down to bedrock, skipping air and fluids. Without Landmarks it takes 16x16; set Landmarks up to 64 blocks away, one in line with its front and one to a side.\n\nThe Electric Drill in its assembly sets the speed: 1 block/s, x1.5 on steel, x1.25 for a steel drill body, plus the drill's upgrades. A diamond bit digs obsidian. Outputs go into a chest or pipe beside it. Fit a Pipe Filter to choose what it keeps.",
+         "quarry", "Frame, gantry and head", "Recipes",
+         [craft("quarry_assembly", "Quarry Assembly"), build("quarry_assembly", "quarry", "Quarry"), craft("landmark")])
     page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",
          "The Solid Fuel Generator burns fuel into 40 FE/t (60 on steel). The Battery stores 500k FE (1M on steel): it takes FE on every side but the front and gives it out of the front.\n\nRedstone Copper Cable carries up to 1000 FE/t and connects to anything that takes or gives FE. Use a screwdriver on a cable side to disconnect it and again to reconnect it. Any of the 16 dyes colours a cable. The Charger, built from a Charger Assembly, fills FE items.",
          "power", "Generator, battery, machine", "Power",
@@ -637,7 +665,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

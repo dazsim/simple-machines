@@ -1,0 +1,63 @@
+{
+  "section": "machines",
+  "sort": 5,
+  "title": "Quarry",
+  "subtitle": "Free, digs to bedrock",
+  "text": "The Quarry needs no power. It sits at a corner and digs the area beside it, layer by layer down to bedrock, skipping air and fluids. Without Landmarks it takes 16x16; set Landmarks up to 64 blocks away, one in line with its front and one to a side.\n\nThe Electric Drill in its assembly sets the speed: 1 block/s, x1.5 on steel, x1.25 for a steel drill body, plus the drill's upgrades. A diamond bit digs obsidian. Outputs go into a chest or pipe beside it. Fit a Pipe Filter to choose what it keeps.",
+  "drawing": "simplemachines:textures/simplebooks/manual/quarry.png",
+  "caption": "Frame, gantry and head",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "SDS",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "S": "#c:plates/steel",
+        "D": "simplemachines:electric_drill"
+      },
+      "output": "simplemachines:quarry_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Steel Plate, 1x Electric Drill",
+      "title": "Quarry Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Quarry",
+      "inputs": [
+        "simplemachines:quarry_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:quarry",
+      "note": "Fit it to a chassis"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "T  ",
+        "R  ",
+        "C  "
+      ],
+      "key": {
+        "T": "minecraft:redstone_torch",
+        "R": "#c:rods/steel",
+        "C": "#c:ingots/copper"
+      },
+      "output": {
+        "item": "simplemachines:landmark",
+        "count": 2
+      },
+      "note": "Crafting Table\n1x Redstone Torch, 1x Steel Rod, 1x Copper Ingot"
+    }
+  ]
+}

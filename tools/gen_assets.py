@@ -306,7 +306,7 @@ def main():
 NEW = {"battery": "battery", "crusher": "crusher", "harvester": "crop_harvester", "alloy": "alloy_smelter",
        "stone": "stone_generator", "saw": "sawmill", "water": "water_generator", "hive": "mechanical_hive",
        "shearer": "shearer", "charger": "charger", "crafter": "auto_crafter",
-       "compressor": "compressor", "lava": "lava_generator"}
+       "compressor": "compressor", "lava": "lava_generator", "quarry": "quarry"}
 BUILT = ["electric_furnace", "rolling_mill", "solid_fuel_generator"] + list(NEW.values())
 CHASSIS = ["iron_chassis", "steel_chassis"]
 CORES = {"furnace": "electric_furnace", "rolling": "rolling_mill", "generator": "solid_fuel_generator", **NEW}
@@ -326,10 +326,10 @@ FRONT_HOLE = {"furnace": (4, 4, 12, 11), "rolling": (3, 6, 13, 10), "generator":
               "battery": (5, 3, 11, 12), "crusher": (3, 5, 13, 11), "harvester": (3, 4, 13, 10), "alloy": (4, 4, 12, 11),
               "stone": (4, 4, 12, 11), "saw": (3, 6, 13, 10), "water": (5, 4, 11, 11), "hive": (4, 4, 12, 11),
               "shearer": (3, 5, 13, 10), "charger": (5, 3, 11, 10), "crafter": (3, 3, 13, 13),
-              "compressor": (3, 3, 13, 12), "lava": (4, 3, 12, 12)}
+              "compressor": (3, 3, 13, 12), "lava": (4, 3, 12, 12), "quarry": (3, 3, 13, 13)}
 TOP_HOLE = {"furnace": (5, 5, 11, 11), "rolling": (4, 6, 12, 10), "generator": None, "crusher": (4, 4, 12, 12),
             "alloy": (5, 5, 11, 11), "water": (5, 5, 11, 11), "saw": (7, 3, 9, 13), "crafter": (3, 3, 13, 13),
-            "lava": (5, 5, 11, 11)}
+            "lava": (5, 5, 11, 11), "quarry": (6, 6, 10, 10)}
 WATER = [(96, 150, 230), (62, 110, 210), (40, 76, 170)]
 HONEY = [(255, 214, 96), (236, 168, 40), (176, 110, 22)]
 LAVA = [(255, 200, 70), (240, 120, 30), (180, 60, 20)]
@@ -477,6 +477,18 @@ def new_front(t, core, lit, u0, v0, u1, v1, level=None):
                 k = 0 if (u + v * 3) % 7 == 0 else (1 if v < top + 2 else 2)
                 px(t, u, v, c(LAVA[k] if lit or k else LAVA[1]))
         px(t, u0 + 1, v0 + 1, c((230, 240, 245))); px(t, u0 + 2, v0 + 2, c((200, 214, 222)))
+    elif core == "quarry":
+        # hazard stripes over a drill bit pointing down
+        for u in range(u0, u1 + 1):
+            px(t, u, v0, c(HONEY[1] if (u // 2) % 2 else DARK))
+        mid = (u0 + u1) // 2
+        for i in range(5):
+            rect(t, mid - 2 + i // 2, v0 + 2 + i, mid + 1 - i // 2, v0 + 2 + i, c(STEEL[1] if i % 2 else STEEL[0]))
+        rect(t, mid - 3, v0 + 1, mid + 2, v0 + 1, c(STEEL[2]))
+        px(t, mid - 1, v1 - 1, c(STEEL[0])); px(t, mid, v1 - 1, c(STEEL[0]))
+        if lit:
+            for u in (u0 + 1, u1 - 1):
+                px(t, u, v1 - 1, c(HONEY[0])); px(t, u, v1 - 2, c(FIRE[1]))
     elif core == "charger":
         bolt = [(3, 0), (2, 1), (2, 2), (1, 3), (2, 3), (3, 3), (3, 4), (2, 5), (2, 6)]
         for (a, b) in bolt:
@@ -513,6 +525,8 @@ def core_top(core):
                     a, b = x0 + 1 + i * 3, z0 + 1 + j * 3
                     rect(t, a, b, a + 1, b + 1, PLANK[1] + (255,))
                     px(t, a, b, PLANK[0] + (255,))
+        elif core == "quarry":
+            rect(t, x0, z0, x1 - 1, z1 - 1, STEEL[2] + (255,)); rect(t, x0 + 1, z0 + 1, x1 - 2, z1 - 2, DARK + (255,))
         elif core == "lava":
             rect(t, 5, 5, 10, 10, COPPER[1] + (255,)); rect(t, 6, 6, 9, 9, DARK + (255,)); rect(t, 7, 7, 8, 8, LAVA[1] + (255,))
         elif core == "rolling":
@@ -780,7 +794,8 @@ def built(shaped, rec):
                "entries": [{"type": "minecraft:item", "name": f"{MOD}:{block}", "functions": [
                    {"function": "minecraft:copy_state", "block": f"{MOD}:{block}", "properties": ["tier", "panel"]},
                    {"function": "minecraft:copy_components", "source": "block_entity", "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]
-                    + ([f"{MOD}:crafter_pattern"] if block == "auto_crafter" else [])}]}]}],
+                    + ([f"{MOD}:crafter_pattern"] if block == "auto_crafter" else [])
+                    + ([f"{MOD}:quarry_drill"] if block == "quarry" else [])}]}]}],
                "random_sequence": f"{MOD}:blocks/{block}"}, f"{D}/{MOD}/loot_table/blocks/{block}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{c}_core"}}, f"{A}/items/{c}_assembly.json")
 
@@ -1090,12 +1105,13 @@ def machines(shaped, rec):
     alpha6(shaped, rec, proc)
     milestone2(shaped)
     milestone3(shaped, rec)
+    milestone4(shaped, rec)
 
     lang = json.load(open(f"{A}/lang/en_us.json"))
     names = {"battery": "Battery", "crusher": "Crusher", "crop_harvester": "Crop Harvester", "alloy_smelter": "Alloy Smelter",
              "stone_generator": "Stone Generator", "sawmill": "Sawmill", "water_generator": "Water Generator",
              "mechanical_hive": "Mechanical Hive", "shearer": "Shearer", "charger": "Charger", "auto_crafter": "Auto Crafter",
-             "compressor": "Compressor", "lava_generator": "Lava Generator"}
+             "compressor": "Compressor", "lava_generator": "Lava Generator", "quarry": "Quarry"}
     for core, block in NEW.items():
         lang[f"block.simplemachines.{block}"] = names[block]
         lang[f"container.simplemachines.{block}"] = names[block]
@@ -1539,6 +1555,71 @@ def milestone3(shaped, rec):
         "jei.simplemachines.info.diamond_core": "Core of the Diamond Solar Panel.",
         "jei.simplemachines.info.pv_cell": "Solar cell. Goes into every solar panel up to Gold.",
         "jei.simplemachines.info.silicon_lapis_blend": "Made in the Alloy Smelter from a Silicon Wafer and 3 Lapis. Goes into the Diamond Solar Panel.",
+    })
+    jdump(lang, f"{A}/lang/en_us.json")
+
+def hazard_tex(seed, hollow):
+    rnd = random.Random(seed)
+    t = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for y in range(16):
+        for x in range(16):
+            if hollow and 3 <= x <= 12 and 3 <= y <= 12:
+                continue
+            band = ((x + y) // 3) % 2
+            t.putpixel((x, y), jitter(HONEY[1] if band else (40, 40, 44), rnd, 5))
+    if hollow:
+        for i in range(3, 13):
+            px(t, i, 3 + (i - 3), STEEL[2] + (255,)); px(t, i, 12 - (i - 3), STEEL[2] + (255,))
+    for i in range(16):
+        px(t, i, 0, STEEL[0] + (255,)); px(t, 0, i, STEEL[0] + (255,)); px(t, i, 15, STEEL[3] + (255,)); px(t, 15, i, STEEL[3] + (255,))
+    return t
+
+def milestone4(shaped, rec):
+    tb = A + "/textures/block/"
+    save(hazard_tex(101, True), tb + "quarry_frame.png")
+    model("quarry_frame", [el((0, 0, 0), (16, 16, 16), all_faces("all"))], {"all": f"{MOD}:block/quarry_frame", "particle": f"{MOD}:block/quarry_frame"})
+    jdump({"variants": {"": {"model": f"{MOD}:block/quarry_frame"}}}, f"{A}/blockstates/quarry_frame.json")
+    save(plate(STEEL, 102), tb + "quarry_drill_head.png")
+    bit = solid_tex(STEEL[0], 103, 3)
+    for y in range(16):
+        px(bit, (y * 2) % 16, y, STEEL[2] + (255,))
+    save(bit, tb + "quarry_drill_bit.png")
+    model("quarry_drill_head", [el((3, 8, 3), (13, 16, 13), all_faces("head")), el((5, 6, 5), (11, 8, 11), all_faces("head")),
+                                el((6, 0, 6), (10, 6, 10), all_faces("bit")), el((7, -2, 7), (9, 0, 9), all_faces("bit"))],
+          {"head": f"{MOD}:block/quarry_drill_head", "bit": f"{MOD}:block/quarry_drill_bit", "particle": f"{MOD}:block/quarry_drill_head"})
+    jdump({"variants": {"": {"model": f"{MOD}:block/quarry_drill_head"}}}, f"{A}/blockstates/quarry_drill_head.json")
+    post = solid_tex((236, 236, 236), 104, 3)
+    for y in range(0, 16):
+        if (y // 3) % 2:
+            for x in range(16):
+                px(post, x, y, jitter(RED[1], random.Random(y), 4))
+    save(post, tb + "landmark.png")
+    model("landmark", [el((6, 0, 6), (10, 10, 10), all_faces("post")), el((5.5, 10, 5.5), (10.5, 12, 10.5), all_faces("lamp"))],
+          {"post": f"{MOD}:block/landmark", "lamp": "minecraft:block/redstone_block", "particle": f"{MOD}:block/landmark"})
+    jdump({"variants": {"": {"model": f"{MOD}:block/landmark"}}}, f"{A}/blockstates/landmark.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/landmark"}}, f"{A}/items/landmark.json")
+    loot_self("landmark")
+    tag = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
+    vals = json.load(open(tag))["values"]
+    jdump({"values": vals + [f"{MOD}:landmark", f"{MOD}:quarry_frame", f"{MOD}:quarry_drill_head"]}, tag)
+    jdump({"type": f"{MOD}:crafting_shaped_quarry", "category": "misc",
+           "key": {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "S": "#c:plates/steel", "D": f"{MOD}:electric_drill"},
+           "pattern": ["RCR", "SDS"], "result": {"id": f"{MOD}:quarry_assembly"}}, rec + "quarry_assembly.json")
+    shaped("landmark", ["T", "R", "C"], {"T": "minecraft:redstone_torch", "R": "#c:rods/steel", "C": "#c:ingots/copper"}, 2)
+    lang = json.load(open(f"{A}/lang/en_us.json"))
+    lang.update({
+        "block.simplemachines.landmark": "Landmark", "block.simplemachines.quarry_frame": "Quarry Frame",
+        "block.simplemachines.quarry_drill_head": "Quarry Drill Head",
+        "tooltip.simplemachines.quarry_drill": "Drill: %1$s, %2$s, +%3$s%% speed",
+        "tooltip.simplemachines.frame_iron": "iron body", "tooltip.simplemachines.frame_steel": "steel body",
+        "tooltip.simplemachines.tip_standard": "standard bit", "tooltip.simplemachines.tip_diamond": "diamond bit",
+        "message.simplemachines.quarry": "Quarry %1$sx%2$s, at Y %3$s, %4$s blocks dug",
+        "message.simplemachines.quarry_filter_on": "Filter fitted",
+        "message.simplemachines.quarry_filter_off": "Filter removed",
+        "message.simplemachines.quarry_filter_full": "A filter is already fitted. Sneak with an empty hand to take it out",
+        "jei.simplemachines.info.quarry": "Free to run, needs no power. Digs out the area beside it down to bedrock, skipping air and fluids. Place Landmarks up to 64 blocks away in front of it and to one side to set the size, otherwise 16x16. Speed comes from the Electric Drill built into its assembly: iron 1 block per second, steel chassis x1.5, steel drill body x1.25, plus the drill's upgrades (up to x2). A diamond bit digs obsidian and ancient debris. Fit a Pipe Filter to choose what it keeps; the rest is voided.",
+        "jei.simplemachines.info.quarry_assembly": "Crafted with an Electric Drill, which keeps its body, bit and upgrades inside the quarry.",
+        "jei.simplemachines.info.landmark": "Marks a far corner of a quarry: one in line with its front, one to its side, up to 64 blocks away.",
     })
     jdump(lang, f"{A}/lang/en_us.json")
 

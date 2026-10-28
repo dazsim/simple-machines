@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": "minecraft:redstone_torch",
+    "R": "#c:rods/steel",
+    "C": "#c:ingots/copper"
+  },
+  "pattern": [
+    "T",
+    "R",
+    "C"
+  ],
+  "result": {
+    "id": "simplemachines:landmark",
+    "count": 2
+  }
+}

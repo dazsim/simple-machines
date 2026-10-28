@@ -21,6 +21,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
     private String worktop = "";
     private List<Upgrade> upgrades = new ArrayList<>();
     private @Nullable Upgrade loose;
+    private String drill = "";
 
     public ChassisBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.chassisEntity, pos, state);
@@ -58,6 +59,16 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         changed();
     }
 
+    /** The quarry drill riding along with a fitted quarry assembly. */
+    public String drill() {
+        return drill;
+    }
+
+    public void setDrill(String data) {
+        drill = data == null ? "" : data;
+        setChanged();
+    }
+
     /** Screws the loose upgrade in. */
     public void fix() {
         if (loose == null) return;
@@ -77,6 +88,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         worktop = input.getStringOr("worktop", "");
         upgrades = Upgrade.parse(input.getStringOr("upgrades", ""));
         loose = Upgrade.byId(input.getStringOr("loose_upgrade", ""));
+        drill = input.getStringOr("drill", "");
     }
 
     @Override
@@ -85,6 +97,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         output.putString("worktop", worktop);
         output.putString("upgrades", Upgrade.join(upgrades));
         output.putString("loose_upgrade", loose == null ? "" : loose.id);
+        output.putString("drill", drill);
     }
 
     @Override

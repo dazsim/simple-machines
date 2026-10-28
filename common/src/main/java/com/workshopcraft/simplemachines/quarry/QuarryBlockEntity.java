@@ -259,6 +259,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     /** Corner posts two blocks high with rails along the top edges. */
     private List<Piece> frame(BlockPos pos, Direction facing) {
         if (frame != null) return frame;
+        if (len < 2 || wid < 2) return List.of();
         final List<Piece> out = new ArrayList<>();
         final BlockState post = SimpleMachines.quarryFrame.defaultBlockState();
         final BlockState rail = post.setValue(QuarryFrameBlock.POST, false);

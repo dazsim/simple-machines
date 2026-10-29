@@ -24,6 +24,10 @@ public class MachineItem extends BlockItem {
         super.appendHoverText(stack, context, display, out, flag);
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
         com.workshopcraft.simplemachines.quarry.QuarryDrill.tooltip(stack, out);
+        final com.workshopcraft.simplemachines.pipe.TankContents lava = stack.get(SimpleMachines.TANK);
+        if (lava != null && lava.amount() > 0) out.accept(Component.translatable("tooltip.simplemachines.tank",
+                com.workshopcraft.simplemachines.pipe.TankItem.fluidName(lava.fluid()), lava.amount() / com.workshopcraft.simplemachines.pipe.TankBlockEntity.MB,
+                com.workshopcraft.simplemachines.machine.LavaGeneratorBlockEntity.TANK_MB).withStyle(ChatFormatting.GRAY));
         if (!ups.isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", Upgrade.summary(Upgrade.pack(ups), false)).withStyle(ChatFormatting.GRAY));
     }
 }

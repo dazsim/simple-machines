@@ -28,7 +28,8 @@
               "include": [
                 "simplemachines:energy",
                 "simplemachines:worktop",
-                "simplemachines:upgrades"
+                "simplemachines:upgrades",
+                "simplemachines:tank"
               ]
             }
           ]

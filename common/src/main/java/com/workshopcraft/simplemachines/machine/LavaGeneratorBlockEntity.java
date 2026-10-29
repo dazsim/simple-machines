@@ -7,6 +7,9 @@ import com.workshopcraft.simplemachines.pipe.FluidStore;
 import com.workshopcraft.simplemachines.pipe.TankBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import com.workshopcraft.simplemachines.pipe.TankContents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -139,6 +142,25 @@ public class LavaGeneratorBlockEntity extends WorkBlockEntity implements FluidSt
         super.saveAdditional(output);
         output.putLong("lava", lava);
         output.putInt("lava_burn", burn);
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (lava > 0) components.set(SimpleMachines.TANK, new TankContents(Fluids.LAVA, lava));
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        final TankContents c = components.get(SimpleMachines.TANK);
+        if (c != null) set(c.fluid(), c.amount());
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        super.removeComponentsFromTag(output);
+        output.discard("lava");
     }
 
     @Override

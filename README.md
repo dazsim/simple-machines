@@ -8,12 +8,12 @@ Contents so far:
 - Extruder: one input, fuel and one output. One iron or copper ingot makes 2 rods. Slow, burns fuel, no hopper sides, and only takes items it has a recipe for.
 - Iron Chassis (tier 1) and Steel Chassis (tier 2): the base every powered machine is built on. Steel machines run 1.5x faster and hold twice the energy.
 - Solid Fuel Generator: burns fuel into FE, 40 FE/t on iron, 60 FE/t on steel.
-- Rolling Mill: 20 FE/t, rolls iron, copper and steel ingots into 2 rods or one sheet. The button in its screen switches between rods and sheets.
+- Rolling Mill: 20 FE/t, rolls iron, copper and steel ingots into 2 rods, or iron and copper into casings. The button in its screen switches between rods and casings.
 - Electric Furnace: 20 FE/t, normal smelting recipes, a bit faster than a furnace.
 - Redstone Copper Cable: carries up to 1000 FE/t, connects to anything that takes or gives FE.
 - Parts: an assembly for each machine, control board, panels and worktops, screwdriver.
 - Finishes for panels and worktops: the twelve woods, the sixteen concrete colours, iron, copper and steel.
-- Steel ingot, Redstone Copper Ingot, iron, copper and steel rods and sheets.
+- Steel ingot, Redstone Copper Ingot, iron, copper and steel rods, iron, copper, gold and steel plates, iron and copper casings.
 - Battery: stores 500k FE on iron, 1M FE on steel. Takes FE on every side but the front and gives it out of the front, up to 1000 FE/t (2000 on steel). Keeps its charge as an item, so a charged battery can be carried and placed.
 - Crusher: 20 FE/t. Ores and raw ores give 2 dusts (a steel crusher has a 10% chance of a third), ingots give 1 dust, cobblestone gives gravel and gravel gives sand. Dusts smelt or blast back into ingots. Works for any metal whose `c:ores`, `c:raw_materials` and `c:dusts` tags are filled by some mod; iron, copper and gold dusts are included.
 - Sawmill: 20 FE/t. A log or stem gives 6 planks, a bamboo block 3, planks give 3 sticks.
@@ -27,6 +27,7 @@ Contents so far:
 - Item Pipe: moves items between inventories, see below.
 - Electric Drill and Chainsaw, see below.
 - Overclocker Circuit and Energy Cell machine upgrades, see below.
+- Compressor, Auto Crafter, Lava Generator, Solar Panels, Helical Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers and the Quarry, see below.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
 
@@ -98,15 +99,73 @@ With Simple Books installed, getting your first screwdriver (from any mod) gives
 - With Much More Storage installed, the wood and concrete worktop recipes here are turned off and its worktops are used instead. They look the same.
 - Screwdrivers are tagged `c:tools/screwdriver`. Any of them builds a machine or a cupboard, and sneaking takes parts off.
 
-## 2.0.0-release.1
+## Compressor and Auto Crafter
+
+- Compressor: 30 FE/t. An ingot makes a plate (iron, copper, gold and steel), 4 sand make a Silicon Wafer, 32 compostables make a Biofuel Block (burns for 2400 ticks), and 64 coal make a diamond.
+- Auto Crafter: 20 FE/t. Set a crafting pattern in its screen and it crafts from the ingredients fed into its buffer, into 4 output slots. A redstone button picks always on, on with a signal or on without one. The screen says what it is waiting for.
+
+## Fluids
+
+- Fluid Tank: holds 16 buckets of one fluid and keeps it when broken. Right click with a bucket to fill or empty it.
+- Fluid pipes move 250 mB at a time and use the same input, output and disconnected ends as item pipes.
+- Pipe filters fit on an input end. Right click it with an empty hand to set the list. Allow lets only the listed items or fluids out there, Deny lets everything else. Tags on also matches anything sharing a tag, data Match also checks enchantments and damage. Pipes send matching items to filtered ends first.
+- Item and fluid pipes are also crafted from casings and glass.
+
+## Generators
+
+- Lava Generator: 80 FE/t (120 on steel), burns 1 mB of lava every 10 ticks from a 4 bucket tank. Fill it with a bucket or a fluid pipe. It keeps its lava when broken.
+- Solar Panels, half height with a gauge, made from a PV Cell and a core:
+
+| Tier | Day | Night | Output |
+|---|---|---|---|
+| Iron | 4 FE/t | 0 | LV |
+| Copper | 20 FE/t | 0 | LV |
+| Gold | 100 FE/t | 0 | LV |
+| Diamond | 1000 FE/t | 500 FE/t | MV |
+
+- Helical Wind Turbine: up to 50 FE/t. Output grows with height (full at Y 160), open air around the top and rain or thunder.
+
+## Voltage
+
+Redstone Copper Cable is LV (1000 FE/t), Gold Cable MV (8000 FE/t) and Diamond Cable HV (64000 FE/t). Cables lose nothing. Machines take LV and the Quarry takes MV.
+
+The LV/MV and MV/HV Transformers step power up or down. The front face is the high side and the other faces are the low side; use a screwdriver on a face to make it the high side, or sneak to pick the face opposite. Each step loses 5%.
+
+Wiring a higher voltage into something rated lower makes it explode.
+
+## Quarry
+
+The Quarry Assembly is made with an Electric Drill, and the drill's frame, bit and upgrades carry over into the quarry. Build the Quarry on a chassis like any machine.
+
+It digs a 16x16 area with the quarry at one corner, out from its front, down to bedrock. Landmarks placed in line with it, up to 64 blocks away in front and to one side, set the size instead. It runs on MV at 8000 FE a block and holds 200k FE (400k on steel).
+
+Once powered, it builds a raised frame one piece at a time, then the gantry moves the drill head over the area layer by layer. Blocks in the way of the frame are dug out first, and their drops (or a chest's contents) go to its output. If something it can't break is in the way, the screen says so and it waits. If any frame piece is broken, it stops and rebuilds the frame before digging again.
+
+Fit a pipe filter to choose what it keeps; sneak with an empty hand to take it back. A diamond bit lets it dig obsidian.
+
+## Changelog
+
+### 2.1.0
+
+- New: Compressor, Auto Crafter, Lava Generator, Solar Panels in four tiers, Helical Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers, Quarry and Landmarks.
+- Plates come from the Compressor now; the Rolling Mill makes rods and casings.
+- Iron and copper dusts work in the steel and redstone alloy recipes.
+- JEI recipe pages for every machine (optional).
+- The Battery shows its charge on a 5 bar gauge, in the world and as an item. Tank items show their fluid.
+- Generators take turns on which side they power first.
+- Switched-off cable sides can be clicked again with a screwdriver.
+- Recipe unlocks are checked again on login.
+- Version numbers are plain from 2.0.1 on.
+
+### 2.0.0-release.1
 
 First 26.1 release. Same content as 0.1.0-alpha.16.
 
-## 0.1.0-alpha.14
+### 0.1.0-alpha.14
 
 - Square metal plate icons.
 
-## 0.1.0-alpha.13
+### 0.1.0-alpha.13
 
 - The chainsaw now uses the drill's yellow housing and the same greys, and the manual covers spin-up, sparks, tool tiers, upgrades, tree felling, cables, dyes and pipe ends.
 - The manual is crafted from a book, any screwdriver and a copper ingot, and the screwdriver is given back. Any screwdriver now triggers the free first copy.
@@ -114,19 +173,19 @@ First 26.1 release. Same content as 0.1.0-alpha.16.
 - The chainsaw bar no longer shows a stray texture past its tip, and battery and cell faces stay on their own texture.
 - The manual has cards for steel rods, the Charger and Power Cell, and all 11 assemblies.
 
-## 0.1.0-alpha.12
+### 0.1.0-alpha.12
 
 - Hold attack and the drill or chainsaw spins up with a rising motor pitch, keeps spinning from block to block, and only winds down (pitch falling) about half a second after you stop mining.
 
-## 0.1.0-alpha.11
+### 0.1.0-alpha.11
 
 - Drill sparks are back at the crosshair, and the drill is held aimed forward in first person so the bit tip sits on the crosshair.
 
-## 0.1.0-alpha.10
+### 0.1.0-alpha.10
 
 - Drill sparks now fly from the tip of the bit instead of the middle of the block, sprayed back off the face. Other players see them too.
 
-## 0.1.0-alpha.9
+### 0.1.0-alpha.9
 
 - New drill bit: a chunky tricone roller-cone bit on a threaded shank. The cones turn while mining. The drill body is yellow.
 - Tool tiers. The standard bit mines up to diamond ore; obsidian and netherite level blocks throw white-hot sparks and do not break. The new Diamond Drill Bit mines them, at full speed on a steel frame and 40% on an iron frame.
@@ -139,7 +198,7 @@ First 26.1 release. Same content as 0.1.0-alpha.16.
 - No arm swing or recoil while mining.
 - Manual: new Tool Tiers page.
 
-## 0.1.0-alpha.8
+### 0.1.0-alpha.8
 
 - Drill and Chainsaw are assembled from parts on the new Tool Stand: frame, core, control board, battery module and up to two upgrades, each screwed in. Sneak with a screwdriver to strip or swap parts. The finished tool recipes are gone; frames, cores, battery module and stand have recipes.
 - 3D tool models that show their parts. The drill bit spins and the chain runs while digging.
@@ -150,24 +209,24 @@ First 26.1 release. Same content as 0.1.0-alpha.16.
 - Screwdriver disconnects or reconnects a cable side.
 - Cables and item pipes can be dyed in the world; different colours stay apart.
 
-## 0.1.0-alpha.7
+### 0.1.0-alpha.7
 
 - Electric Drill, Chainsaw and Electric Shovel, charged in the Charger.
 - Overclocker Circuit and Energy Cell upgrades, an optional assembly step after the control board.
 - Simple Machines Manual for Simple Books (optional dependency).
 
-## 0.1.0-alpha.6
+### 0.1.0-alpha.6
 
 - Pipe ends cycle through input, output and disconnected with a screwdriver. Old extract ends load as output.
 
-## 0.1.0-alpha.5
+### 0.1.0-alpha.5
 
 - Item pipes and per-side auto-output.
 - New machines: Battery, Crusher, Sawmill, Alloy Smelter, Crop Harvester, Shearer, Stone Generator, Water Generator, Mechanical Hive and Charger.
 - Iron, copper and gold dusts.
 - Machine inventories are sided for hoppers and other mods.
 
-## 0.1.0-alpha.4
+### 0.1.0-alpha.4
 
 - Copper, iron and steel sheets redrawn as flat sheets.
 - Panels and worktops in all twelve woods and sixteen concrete colours, drawn to match Much More Storage.

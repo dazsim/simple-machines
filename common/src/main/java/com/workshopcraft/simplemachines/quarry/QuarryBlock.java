@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-/** The quarry: a pipe filter fits into it to choose what it keeps; sneak with an empty hand takes the filter back. */
+/** The quarry: up to three pipe filters fit into it to choose what it keeps; sneak with an empty hand takes the last one back. */
 public class QuarryBlock extends WorkMachineBlock {
     public QuarryBlock(Properties properties) {
         super(properties, Core.QUARRY);
@@ -28,13 +28,12 @@ public class QuarryBlock extends WorkMachineBlock {
         if (!held.is(SimpleMachines.pipeFilter)) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (level.getBlockEntity(pos) instanceof QuarryBlockEntity be) {
-            if (!be.filter().isEmpty()) {
-                player.sendOverlayMessage(Component.translatable("message.simplemachines.quarry_filter_full"));
+            if (!be.addFilter(held)) {
+                player.sendOverlayMessage(Component.translatable("message.simplemachines.quarry_filter_full", QuarryBlockEntity.FILTERS));
             } else {
-                be.setFilter(held.copyWithCount(1));
                 held.consume(1, player);
                 level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 0.8F, 1.0F);
-                player.sendOverlayMessage(Component.translatable("message.simplemachines.quarry_filter_on"));
+                player.sendOverlayMessage(Component.translatable("message.simplemachines.quarry_filter_on", be.filters().size(), QuarryBlockEntity.FILTERS));
             }
         }
         return InteractionResult.SUCCESS;
@@ -42,10 +41,9 @@ public class QuarryBlock extends WorkMachineBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (player.isSecondaryUseActive() && level.getBlockEntity(pos) instanceof QuarryBlockEntity be && !be.filter().isEmpty()) {
+        if (player.isSecondaryUseActive() && level.getBlockEntity(pos) instanceof QuarryBlockEntity be && !be.filters().isEmpty()) {
             if (!level.isClientSide()) {
-                Block.popResource(level, pos.above(), be.filter());
-                be.setFilter(ItemStack.EMPTY);
+                Block.popResource(level, pos.above(), be.takeFilter());
                 player.sendOverlayMessage(Component.translatable("message.simplemachines.quarry_filter_off"));
             }
             return InteractionResult.SUCCESS;

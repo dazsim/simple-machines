@@ -1614,10 +1614,10 @@ def milestone4(shaped, rec):
         "tooltip.simplemachines.frame_iron": "iron body", "tooltip.simplemachines.frame_steel": "steel body",
         "tooltip.simplemachines.tip_standard": "standard bit", "tooltip.simplemachines.tip_diamond": "diamond bit",
         "message.simplemachines.quarry": "Quarry %1$sx%2$s, at Y %3$s, %4$s blocks dug",
-        "message.simplemachines.quarry_filter_on": "Filter fitted",
+        "message.simplemachines.quarry_filter_on": "Filter fitted (%1$s of %2$s)",
         "message.simplemachines.quarry_filter_off": "Filter removed",
-        "message.simplemachines.quarry_filter_full": "A filter is already fitted. Sneak with an empty hand to take it out",
-        "jei.simplemachines.info.quarry": "Free to run, needs no power. Digs out the area beside it down to bedrock, skipping air and fluids. Place Landmarks up to 64 blocks away in front of it and to one side to set the size, otherwise 16x16. Speed comes from the Electric Drill built into its assembly: iron 1 block per second, steel chassis x1.5, steel drill body x1.25, plus the drill's upgrades (up to x2). A diamond bit digs obsidian and ancient debris. Fit a Pipe Filter to choose what it keeps; the rest is voided.",
+        "message.simplemachines.quarry_filter_full": "All %s filter slots are full. Sneak with an empty hand to take one out",
+        "jei.simplemachines.info.quarry": "Runs on MV at 8000 FE a block. Digs out the area beside it down to bedrock, skipping air and fluids. Place Landmarks up to 64 blocks away in front of it and to one side to set the size, otherwise 16x16. Speed comes from the Electric Drill built into its assembly: iron 1 block per second, steel chassis x1.5, steel drill body x1.25, plus the drill's upgrades (up to x2). A diamond bit digs obsidian and ancient debris. Fit up to 3 Pipe Filters to choose what it keeps; the rest is voided. Deny filters always void what they list, and with any allow filter fitted, only what one of them allows is kept.",
         "jei.simplemachines.info.quarry_assembly": "Crafted with an Electric Drill, which keeps its body, bit and upgrades inside the quarry.",
         "jei.simplemachines.info.landmark": "Marks a far corner of a quarry: one in line with its front, one to its side, up to 64 blocks away.",
     })

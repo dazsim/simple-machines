@@ -54,7 +54,8 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     public static final int BUFFER = 200_000;
 
     private String drill = "";
-    private ItemStack filter = ItemStack.EMPTY;
+    public static final int FILTERS = 3;
+    private final List<ItemStack> filters = new ArrayList<>();
     private boolean planned;
     private int len;
     private int wid;
@@ -108,13 +109,38 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         setChanged();
     }
 
-    public ItemStack filter() {
-        return filter;
+    public List<ItemStack> filters() {
+        return filters;
     }
 
-    public void setFilter(ItemStack stack) {
-        filter = stack.copy();
+    public boolean addFilter(ItemStack stack) {
+        if (filters.size() >= FILTERS) return false;
+        filters.add(stack.copyWithCount(1));
         setChanged();
+        return true;
+    }
+
+    public ItemStack takeFilter() {
+        if (filters.isEmpty()) return ItemStack.EMPTY;
+        final ItemStack s = filters.remove(filters.size() - 1);
+        setChanged();
+        return s;
+    }
+
+    /** Kept when no deny filter lists it and, if any allow filter is fitted, at least one allow filter lists it. */
+    boolean keeps(ItemStack stack) {
+        boolean allows = false, allowed = false;
+        for (ItemStack f : filters) {
+            final PipeFilter pf = f.getOrDefault(SimpleMachines.FILTER, PipeFilter.EMPTY);
+            if (pf.isEmpty()) continue;
+            if (pf.deny) {
+                if (pf.matches(stack)) return false;
+            } else {
+                allows = true;
+                if (pf.matches(stack)) allowed = true;
+            }
+        }
+        return !allows || allowed;
     }
 
     @Override
@@ -425,9 +451,8 @@ public class QuarryBlockEntity extends AreaBlockEntity {
             return;
         }
         dug++;
-        final PipeFilter pf = filter.isEmpty() ? null : filter.getOrDefault(SimpleMachines.FILTER, PipeFilter.EMPTY);
         for (ItemStack drop : drops) {
-            if (drop.isEmpty() || pf != null && !pf.accepts(drop)) continue;
+            if (drop.isEmpty() || !keeps(drop)) continue;
             keep(level, drop);
         }
     }
@@ -450,10 +475,8 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
         super.preRemoveSideEffects(pos, state);
         if (!(level instanceof ServerLevel server)) return;
-        if (!filter.isEmpty()) {
-            Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, filter);
-            filter = ItemStack.EMPTY;
-        }
+        for (ItemStack f : filters) Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, f);
+        filters.clear();
         if (cracked != null) server.destroyBlockProgress(breaker(), cracked, -1);
         cracked = null;
         if (!planned) return;
@@ -555,7 +578,9 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         drill = input.getStringOr("drill", "");
-        filter = input.read("filter", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        filters.clear();
+        input.read("filter", ItemStack.CODEC).ifPresent(filters::add);
+        input.read("filters", ItemStack.CODEC.listOf()).ifPresent(filters::addAll);
         planned = input.getBooleanOr("planned", false);
         len = input.getIntOr("length", 0);
         wid = input.getIntOr("width", 0);
@@ -585,7 +610,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putString("drill", drill);
-        if (!filter.isEmpty()) output.store("filter", ItemStack.CODEC, filter);
+        if (!filters.isEmpty()) output.store("filters", ItemStack.CODEC.listOf(), filters);
         output.putBoolean("planned", planned);
         output.putInt("length", len);
         output.putInt("width", wid);

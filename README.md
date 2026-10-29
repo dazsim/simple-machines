@@ -141,7 +141,7 @@ It digs a 16x16 area with the quarry at one corner, out from its front, down to 
 
 Once powered, it builds a raised frame one piece at a time, then the gantry moves the drill head over the area layer by layer. Blocks in the way of the frame are dug out first, and their drops (or a chest's contents) go to its output. If something it can't break is in the way, the screen says so and it waits. If any frame piece is broken, it stops and rebuilds the frame before digging again.
 
-Fit a pipe filter to choose what it keeps; sneak with an empty hand to take it back. A diamond bit lets it dig obsidian.
+Up to three pipe filters fit in it to choose what it keeps; sneak with an empty hand to take the last one back. A Deny filter always voids what it lists. If any Allow filter is fitted, only what at least one Allow filter lists is kept. So two Allow filters keep either list, and a Deny filter can take items back out of an Allow list. A diamond bit lets it dig obsidian.
 
 ## Changelog
 

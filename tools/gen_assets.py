@@ -1219,7 +1219,8 @@ def alpha6(shaped, rec, proc):
     if os.path.exists(COMPOSTER):
         import re
         ids = sorted(set(m.lower() for m in re.findall(r"add\([0-9.]+F, Items\.([A-Z0-9_]+)\)", open(COMPOSTER).read())))
-        jdump({"values": [{"id": f"minecraft:{i}", "required": False} for i in ids]}, f"{D}/{MOD}/tags/item/compostables.json")
+        jdump({"values": [{"id": f"minecraft:{i}", "required": False} for i in ids]
+               + [{"id": t, "required": False} for t in ("#c:seeds", "#c:crops")]}, f"{D}/{MOD}/tags/item/compostables.json")
     for m in ["iron", "copper", "steel", "gold"]:
         proc("compressing", f"{m}_plate", f"#c:ingots/{m}", f"{MOD}:{m}_sheet", time=100)
     proc("compressing", "diamond", "minecraft:coal", "minecraft:diamond", time=2400, inputs=64)

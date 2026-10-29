@@ -459,6 +459,14 @@
     {
       "id": "minecraft:wither_rose",
       "required": false
+    },
+    {
+      "id": "#c:seeds",
+      "required": false
+    },
+    {
+      "id": "#c:crops",
+      "required": false
     }
   ]
 }

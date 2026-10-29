@@ -156,6 +156,7 @@ Up to three pipe filters fit in it to choose what it keeps; sneak with an empty 
 - The Wind Turbine is now a base with up to 5 stacked blades that turn together, with a soft wind sound. Old turbines become a base with one blade.
 - The Quarry clears plain blocks where its frame goes and takes up to three filters.
 - The Lava Generator keeps its lava when broken.
+- The Compressor makes Biofuel from any seeds or crops tagged c:seeds or c:crops, so seeds and crops from other mods work too.
 - Generators take turns on which side they power first.
 - Switched-off cable sides can be clicked again with a screwdriver.
 - Recipe unlocks are checked again on login.

@@ -77,6 +77,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private boolean broken;
     private boolean built;
     private boolean drilling;
+    private boolean blocked;
     private float rate;
     private float sentRate = -1;
     // client view
@@ -135,12 +136,22 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         if (!planned) plan(level, pos, facing);
         if (row >= 0) clearGantry(level, pos, facing);
         total = 100;
+        final QuarryDrill d = drill();
         final Piece gap = gap(level, pos, facing);
-        if (gap != null) {
+        final Piece in = gap == null ? obstruction(level, pos, facing) : null;
+        final boolean stuck = in != null && !clearable(level, in.pos, level.getBlockState(in.pos), d);
+        if (stuck != blocked) {
+            blocked = stuck;
+            setChanged();
+        }
+        if (gap != null || in != null) {
             // no digging until the whole frame is up, built a piece at a time once there is power
-            if (energy.energy > 0 && now % (built ? REPAIR : BUILD) == 0) {
+            if (gap != null && energy.energy > 0 && now % (built ? REPAIR : BUILD) == 0) {
                 level.setBlock(gap.pos, gap.state, 3);
                 level.playSound(null, gap.pos, SoundEvents.NETHERITE_BLOCK_PLACE, SoundSource.BLOCKS, 0.6F, 1.4F);
+            } else if (in != null && !stuck && energy.energy >= PER_BLOCK && hasRoom() && now % BUILD == 0) {
+                dig(level, in.pos, level.getBlockState(in.pos), d, false);
+                energy.energy -= PER_BLOCK;
             }
             crack(level, null);
             sync(level, target, true, true, false);
@@ -152,7 +163,6 @@ public class QuarryBlockEntity extends AreaBlockEntity {
             built = true;
             setChanged();
         }
-        final QuarryDrill d = drill();
         if (extra == null) rescan(level, pos, facing, d);
         final float rate = d.speed(tier, upgrades()) / 20F;
         boolean ready = hasRoom() && energy.energy >= PER_BLOCK;
@@ -300,6 +310,35 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         return null;
     }
 
+    /** The first frame piece with a solid block in its place, landmarks aside. */
+    private @Nullable Piece obstruction(ServerLevel level, BlockPos pos, Direction facing) {
+        for (Piece piece : frame(pos, facing)) {
+            if (!level.isLoaded(piece.pos)) continue;
+            final BlockState s = level.getBlockState(piece.pos);
+            if (!s.is(SimpleMachines.quarryFrame) && !s.is(SimpleMachines.landmark)) return piece;
+        }
+        return null;
+    }
+
+    // vanilla containers are emptied into the output, any other block entity is left for the player
+    private boolean clearable(ServerLevel level, BlockPos p, BlockState s, QuarryDrill d) {
+        if (!diggable(level, p, s, d)) return false;
+        final BlockEntity be = level.getBlockEntity(p);
+        if (be == null) return true;
+        final net.minecraft.resources.Identifier id = net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType());
+        return be instanceof Container && id != null && id.getNamespace().equals("minecraft");
+    }
+
+    /** True while a block the quarry cannot clear stands where the frame goes. */
+    public boolean blocked() {
+        return blocked;
+    }
+
+    @Override
+    protected int mode() {
+        return blocked ? 1 : 0;
+    }
+
     /** True while a frame piece is missing and the quarry is waiting for the rebuild. */
     public boolean broken() {
         return broken;
@@ -368,6 +407,10 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     }
 
     private void dig(ServerLevel level, BlockPos p, BlockState s, QuarryDrill d) {
+        dig(level, p, s, d, true);
+    }
+
+    private void dig(ServerLevel level, BlockPos p, BlockState s, QuarryDrill d, boolean area) {
         final BlockEntity be = level.getBlockEntity(p);
         final ItemStack tool = new ItemStack(d.diamond() ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE);
         final List<ItemStack> drops = new ArrayList<>(Block.getDrops(s, level, p, be, null, tool));
@@ -377,6 +420,10 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         }
         level.levelEvent(2001, p, Block.getId(s));
         level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
+        if (!area) {
+            for (ItemStack drop : drops) if (!drop.isEmpty()) keep(level, drop);
+            return;
+        }
         dug++;
         final PipeFilter pf = filter.isEmpty() ? null : filter.getOrDefault(SimpleMachines.FILTER, PipeFilter.EMPTY);
         for (ItemStack drop : drops) {
@@ -529,6 +576,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         paused = input.getBooleanOr("paused", false);
         broken = input.getBooleanOr("broken", false);
         built = input.getBooleanOr("built", false);
+        blocked = input.getBooleanOr("blocked", false);
         drilling = input.getBooleanOr("drilling", false);
         serial++;
     }
@@ -551,6 +599,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         output.putLong("dug", dug);
         output.putInt("rescan", rescan);
         output.putBoolean("built", built);
+        output.putBoolean("blocked", blocked);
         output.putBoolean("drilling", drilling);
         if (extra != null) output.putLong("extra", extra.asLong());
     }

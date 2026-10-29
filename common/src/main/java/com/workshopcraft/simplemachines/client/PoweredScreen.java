@@ -54,6 +54,10 @@ public class PoweredScreen extends AbstractContainerScreen<PoweredMenu> {
                 graphics.setTooltipForNextFrame(Component.translatable("gui.simplemachines.lava_tank", mb, cap), mouseX, mouseY);
             }
         }
+        if (layout == Layout.GRID && (menu.value(5) & 1) != 0) {
+            final Component blocked = Component.translatable("gui.simplemachines.quarry_blocked");
+            graphics.text(font, blocked, x + 8, y + inventoryLabelY - 10, 0xFFB02020, false);
+        }
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
         final Component fe = Component.literal(menu.energy() + " / " + menu.capacity() + " FE");

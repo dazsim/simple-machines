@@ -159,6 +159,7 @@
   "tooltip.simplemachines.tip_standard": "standard bit",
   "tooltip.simplemachines.tip_diamond": "diamond bit",
   "message.simplemachines.quarry": "Quarry %1$sx%2$s, at Y %3$s, %4$s blocks dug",
+  "gui.simplemachines.quarry_blocked": "Frame blocked, clear the way",
   "message.simplemachines.quarry_filter_on": "Filter fitted",
   "message.simplemachines.quarry_filter_off": "Filter removed",
   "message.simplemachines.quarry_filter_full": "A filter is already fitted. Sneak with an empty hand to take it out",

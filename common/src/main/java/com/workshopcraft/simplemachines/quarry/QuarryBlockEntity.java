@@ -50,6 +50,9 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private static final int REPAIR = 10;
     private static final int BUILD = 3;
     private static final float DEPTH = 0.5F;
+    // the head moves this many blocks a tick; a move counts towards the next cut for at most STEP ticks, one ordinary step
+    private static final double SPEED = 0.35;
+    private static final int STEP = 5;
     public static final int PER_BLOCK = 8000;
     public static final int BUFFER = 200_000;
 
@@ -81,6 +84,14 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private boolean blocked;
     private float rate;
     private float sentRate = -1;
+    private int sentTravel;
+    // where the head is going, how many ticks are left to get there and how long the whole move takes
+    private @Nullable BlockPos headAt;
+    private int travel;
+    private int travelTicks;
+    private final double[] headFrom = new double[3];
+    private final double[] headTo = new double[3];
+    private long headStart;
     // client view
     private int serial;
     private int seen = -1;
@@ -91,6 +102,8 @@ public class QuarryBlockEntity extends AreaBlockEntity {
     private float moveTicks = 1;
     private float accStart;
     private float accAt;
+    private int moveLeft;
+    private int stepLeft;
 
     public QuarryBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.MACHINE_ENTITIES.get(Core.QUARRY), pos, state, BUFFER, Voltage.RATE[Voltage.MV]);
@@ -192,14 +205,18 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         if (extra == null) rescan(level, pos, facing, d);
         final float rate = d.speed(tier, upgrades()) / 20F;
         boolean ready = hasRoom() && energy.energy >= PER_BLOCK;
-        if (ready) acc = Math.min(acc + rate, 1F + rate);
+        if (ready) {
+            if (travel == 0) acc = Math.min(acc + rate, 1F + rate);
+            else if (travelTicks + 1 - travel < STEP) acc = Math.min(acc + rate, 1F + rate);
+        }
+        if (travel > 0) travel--;
         BlockPos aim = null;
         boolean solid = false;
         if (extra != null) {
             final BlockState s = level.isLoaded(extra) ? level.getBlockState(extra) : null;
             if (s == null || !diggable(level, extra, s, d)) {
                 extra = null;
-            } else if (ready && acc >= 1F) {
+            } else if (moveTo(extra, now) && ready && acc >= 1F) {
                 dig(level, extra, s, d);
                 energy.energy -= PER_BLOCK;
                 acc -= 1F;
@@ -216,7 +233,7 @@ public class QuarryBlockEntity extends AreaBlockEntity {
                 if (!level.isLoaded(p)) break;
                 final BlockState s = level.getBlockState(p);
                 if (diggable(level, p, s, d)) {
-                    if (acc < 1F || !ready) {
+                    if (!moveTo(p, now) || acc < 1F || !ready) {
                         aim = p;
                         solid = true;
                         break;
@@ -228,19 +245,55 @@ public class QuarryBlockEntity extends AreaBlockEntity {
                 }
                 advance(level, pos, facing);
             }
-            if (aim == null && !done) aim = cell(pos, facing);
+            if (aim == null && !done) {
+                aim = cell(pos, facing);
+                moveTo(aim, now);
+            }
         }
+        // nothing is cut, cracked or sparked until the head is over the block
+        final boolean cutting = solid && travel == 0;
         progress = Math.round(Math.min(1F, acc) * 100);
-        crack(level, solid ? aim : null);
-        if (solid && ready && now % 2 == 0) ToolSparks.quarry(level, aim, level.getBlockState(aim), Math.min(1F, acc) * DEPTH);
+        crack(level, cutting ? aim : null);
+        if (cutting && ready && now % 2 == 0) ToolSparks.quarry(level, aim, level.getBlockState(aim), Math.min(1F, acc) * DEPTH);
         this.rate = rate;
-        sync(level, aim, !ready, false, solid && ready);
+        sync(level, aim, !ready, false, cutting && ready);
         setLit(level, pos, level.getBlockState(pos), aim != null && energy.energy >= PER_BLOCK);
         setChanged();
     }
 
+    /** Sends the head to p if it is not already headed there. True once it is over p. */
+    private boolean moveTo(BlockPos p, long now) {
+        if (!p.equals(headAt)) {
+            final double[] at = headAt == null ? null : headNow(now);
+            headTo[0] = p.getX() + 0.5;
+            headTo[1] = p.getY() + 1;
+            headTo[2] = p.getZ() + 0.5;
+            if (at == null) {
+                System.arraycopy(headTo, 0, headFrom, 0, 3);
+                travelTicks = 0;
+            } else {
+                System.arraycopy(at, 0, headFrom, 0, 3);
+                final double dist = Math.sqrt(sq(headTo[0] - at[0]) + sq(headTo[1] - at[1]) + sq(headTo[2] - at[2]));
+                travelTicks = (int) Math.ceil(Math.max(2, Math.min(30, dist / SPEED)));
+            }
+            headAt = p;
+            headStart = now;
+            // one spare tick so the head is seen to land before the cut starts
+            travel = travelTicks == 0 ? 0 : travelTicks + 1;
+        }
+        return travel == 0;
+    }
+
+    private double[] headNow(long now) {
+        final float m = travelTicks <= 0 ? 1F : smooth(Math.min(1F, Math.max(0F, (now - headStart) / (float) travelTicks)));
+        return new double[]{headFrom[0] + (headTo[0] - headFrom[0]) * m, headFrom[1] + (headTo[1] - headFrom[1]) * m,
+                headFrom[2] + (headTo[2] - headFrom[2]) * m};
+    }
+
     private void sync(ServerLevel level, @Nullable BlockPos aim, boolean stopped, boolean broken, boolean drilling) {
-        if (Objects.equals(aim, target) && stopped == paused && broken == this.broken && drilling == this.drilling && rate == sentRate) return;
+        if (Objects.equals(aim, target) && stopped == paused && broken == this.broken && drilling == this.drilling && rate == sentRate
+                && (travel == 0) == (sentTravel == 0)) return;
+        sentTravel = travel;
         this.drilling = drilling;
         target = aim;
         paused = stopped;
@@ -507,8 +560,10 @@ public class QuarryBlockEntity extends AreaBlockEntity {
                 else System.arraycopy(now, 0, from, 0, 3);
                 final double dist = Math.sqrt(sq(to[0] - from[0]) + sq(to[1] - from[1]) + sq(to[2] - from[2]));
                 moveStart = time;
-                moveTicks = (float) Math.max(2, Math.min(30, dist / 0.35));
+                moveTicks = travel > 0 ? travel - 1 : (float) Math.max(2, Math.min(30, dist / SPEED));
             }
+            moveLeft = travel;
+            stepLeft = Math.max(0, Math.min(travel, STEP - (travelTicks + 1 - travel)));
             accStart = time;
             accAt = acc;
         }
@@ -523,7 +578,10 @@ public class QuarryBlockEntity extends AreaBlockEntity {
 
     private double[] tipAt(float time) {
         final float m = smooth(Math.min(1F, Math.max(0F, (time - moveStart) / moveTicks)));
-        final float p = Math.min(1F, Math.max(0F, accAt + (paused ? 0F : rate) * (time - accStart)));
+        // while the head travels the cut only moves on for the first STEP ticks, as on the server
+        final float e = Math.max(0F, time - accStart);
+        final float counted = moveLeft > 0 ? Math.min(e, stepLeft) + Math.max(0F, e - moveLeft) : e;
+        final float p = Math.min(1F, Math.max(0F, accAt + (paused ? 0F : rate) * counted));
         return new double[]{from[0] + (to[0] - from[0]) * m, from[1] + (to[1] - from[1]) * m - p * m * DEPTH,
                 from[2] + (to[2] - from[2]) * m};
     }
@@ -566,6 +624,8 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         tag.putBoolean("broken", broken);
         tag.putBoolean("built", built);
         tag.putBoolean("drilling", drilling);
+        tag.putInt("travel", travel);
+        tag.putInt("travel_ticks", travelTicks);
         return tag;
     }
 
@@ -603,6 +663,15 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         built = input.getBooleanOr("built", false);
         blocked = input.getBooleanOr("blocked", false);
         drilling = input.getBooleanOr("drilling", false);
+        travel = input.getIntOr("travel", 0);
+        travelTicks = input.getIntOr("travel_ticks", 0);
+        headAt = input.getLong("head_at").map(BlockPos::of).orElse(null);
+        if (headAt != null) {
+            headTo[0] = headAt.getX() + 0.5;
+            headTo[1] = headAt.getY() + 1;
+            headTo[2] = headAt.getZ() + 0.5;
+            System.arraycopy(headTo, 0, headFrom, 0, 3);
+        }
         serial++;
     }
 
@@ -626,6 +695,9 @@ public class QuarryBlockEntity extends AreaBlockEntity {
         output.putBoolean("built", built);
         output.putBoolean("blocked", blocked);
         output.putBoolean("drilling", drilling);
+        output.putInt("travel", travel);
+        output.putInt("travel_ticks", travelTicks);
+        if (headAt != null) output.putLong("head_at", headAt.asLong());
         if (extra != null) output.putLong("extra", extra.asLong());
     }
 

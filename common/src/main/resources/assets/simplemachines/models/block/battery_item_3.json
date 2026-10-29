@@ -1,0 +1,6 @@
+{
+  "parent": "simplemachines:block/battery_item",
+  "textures": {
+    "front": "simplemachines:block/battery_core_front_3"
+  }
+}

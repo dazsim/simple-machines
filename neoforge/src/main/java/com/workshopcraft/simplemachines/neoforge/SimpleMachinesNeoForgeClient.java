@@ -36,8 +36,10 @@ public class SimpleMachinesNeoForgeClient {
             e.registerSpriteSet(SimpleMachines.HOT_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::provider);
             e.registerSpriteSet(SimpleMachines.WHITE_SPARK, com.workshopcraft.simplemachines.client.HotSparkParticle::whiteProvider);
         });
-        modBus.addListener((net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent e) ->
-                e.register(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.MAP_CODEC));
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent e) -> {
+            e.register(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.MAP_CODEC);
+            e.register(SimpleMachines.id("charge"), com.workshopcraft.simplemachines.client.BatteryCharge.MAP_CODEC);
+        });
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent e) ->
                 e.register(SimpleMachines.id("tank_fluid"), com.workshopcraft.simplemachines.client.TankItemRenderer.Unbaked.MAP_CODEC));
         modBus.addListener((RegisterMenuScreensEvent e) -> {

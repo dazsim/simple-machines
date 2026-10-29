@@ -1,6 +1,6 @@
 # Simple Machines
 
-Machines, metals and parts for Minecraft 26.1.x, NeoForge and Fabric. Early alpha.
+Machines, metals and parts for Minecraft 26.1 to 26.1.2, NeoForge and Fabric.
 
 Contents so far:
 
@@ -148,13 +148,15 @@ Up to three pipe filters fit in it to choose what it keeps; sneak with an empty 
 ### 2.1.0
 
 - New: Compressor, Auto Crafter, Lava Generator, Solar Panels in four tiers, Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers, Quarry and Landmarks.
-- Plates come from the Compressor now; the Rolling Mill makes rods and casings.
+- Plates come from the Compressor now; the Rolling Mill makes rods and casings. A mill left in sheet mode in an older world waits until its mode is changed.
 - Iron and copper dusts work in the steel and redstone alloy recipes.
 - JEI recipe pages for every machine (optional).
 - The Battery shows its charge on a 5 bar gauge, in the world and as an item. Tank items show their fluid.
 - The Battery gauge bars glow.
 - The Wind Turbine is now a base with up to 5 stacked blades that turn together, with a soft wind sound. Old turbines become a base with one blade.
+- The Quarry builds its raised frame a piece at a time and repairs it, moves the drill head on a gantry with sparks and a drill sound, and only starts cutting once the head is over the block.
 - The Quarry clears plain blocks where its frame goes and takes up to three filters.
+- A screwdriver sets which face of a transformer is the high side.
 - The Lava Generator keeps its lava when broken.
 - The Compressor makes Biofuel from any seeds or crops tagged c:seeds or c:crops, so seeds and crops from other mods work too.
 - Generators take turns on which side they power first.

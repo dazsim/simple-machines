@@ -264,27 +264,38 @@ def d_wind():
     sh.save("wind")
 
 def d_quarry():
-    sh = Sheet(); P = iso((330, 120), 0.5)
-    n, c = 6, 60
-    for i in range(n + 1):
-        for j in range(n + 1):
-            if i in (0, n) or j in (0, n):
-                if i == 0 and j == 0: continue
-                box(sh, P, i * c, 0, j * c, c, 14, c, 1.2)
+    sh = Sheet(); P = iso((330, 110), 0.5)
+    n, c, top, t = 6, 60, 120, 10
+    L = n * c
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0: continue
+            sh.poly([P(i * c, -50, j * c), P(i * c + c, -50, j * c), P(i * c + c, -50, j * c + c), P(i * c, -50, j * c + c)], 1.0, SOFT, fill=None)
+    for (x0, z0), (x1, z1) in (((0, L), (L, L)), ((L, 0), (L, L)), ((c, 0), (L, 0)), ((0, c), (0, L))):
+        sh.dash(P(x0, 0, z0), P(x1, 0, z1))
+    for (x, z) in ((L, 0), (0, L), (L, L)):
+        sh.dash(P(x, 0, z), P(x, -50, z))
     machine(sh, P, s=0.6, x=0, z=0)
-    for i in range(1, n):
-        for j in range(1, n):
-            sh.poly([P(i * c, -40, j * c), P(i * c + c, -40, j * c), P(i * c + c, -40, j * c + c), P(i * c, -40, j * c + c)], 1.0, SOFT)
-    row = 3
-    for i in range(n + 1):
-        box(sh, P, i * c, 60, row * c + 20, c, 14, 20, 1.2)
-    box(sh, P, 2 * c + 15, 20, row * c + 15, 30, 40, 30, 1.6)
-    sh.line(P(2 * c + 30, 20, row * c + 30), P(2 * c + 30, -40, row * c + 30), 2.4)
-    for (i, j) in ((n, 0), (0, n)):
-        sh.line(P(i * c + c / 2, 14, j * c + c / 2), P(i * c + c / 2, 70, j * c + c / 2), 3.0)
-        sh.circle(P(i * c + c / 2, 76, j * c + c / 2), 6)
-    sh.text((488, 160), "landmark", 12, SOFT); sh.text((176, 160), "landmark", 12, SOFT)
-    sh.text((320, 380), "Digs the inside of the frame down to bedrock", 12, SOFT)
+    def post(x, z): box(sh, P, x - t / 2, 0, z - t / 2, t, top, t, 1.4)
+    def rail(x0, z0, x1, z1, y=top): box(sh, P, min(x0, x1) - t / 2, y, min(z0, z1) - t / 2, abs(x1 - x0) + t, t, abs(z1 - z0) + t, 1.4)
+    post(L, 0); post(0, L)
+    rail(0, 0, L, 0); rail(0, 0, 0, L)
+    gz, gx = 3.5 * c, 2.5 * c
+    box(sh, P, 0, top + t, gz - 8, L, 8, 16, 1.4)
+    sh.line(P(gx, top, gz), P(gx, -38, gz), 2.4)
+    box(sh, P, gx - 14, top - 6, gz - 14, 28, 26, 28, 1.6)
+    sh.poly([P(gx - 9, -38, gz - 9), P(gx + 9, -38, gz - 9), P(gx, -56, gz)], 1.4)
+    sh.poly([P(gx + 9, -38, gz - 9), P(gx + 9, -38, gz + 9), P(gx, -56, gz)], 1.4)
+    post(L, L)
+    rail(L, 0, L, L); rail(0, L, L, L)
+    for (x, z) in ((L + 34, 0), (0, L + 34)):
+        sh.line(P(x, 0, z), P(x, 46, z), 3.0)
+        sh.circle(P(x, 52, z), 6)
+    lx, ly = P(L + 34, 70, 0); sh.text((lx + 40, ly - 6), "landmark", 12, SOFT)
+    lx, ly = P(0, 70, L + 34); sh.text((lx - 40, ly - 6), "landmark", 12, SOFT)
+    gx0, gy0 = P(L, top + t + 8, gz); sh.text((gx0 + 46, gy0 - 4), "gantry", 12, SOFT)
+    hx, hy = P(gx, 0, gz); sh.text((hx - 62, hy + 4), "drill head", 12, SOFT)
+    sh.text((320, 385), "Raised frame on corner posts, digs inside it down to bedrock", 12, SOFT)
     sh.save("quarry")
 
 def d_pipes():
@@ -582,8 +593,8 @@ def pages():
          "Click items into the 3x3 pattern; nothing is used up. Right click a slot with an empty hand to clear it, or press x to clear the lot. JEI's + button fills the pattern too.\n\nThe Ingredients row holds one stack per ingredient; tools and other unstackables get one slot each. Pipes and hoppers can only put matching items in.\n\nResults and leftovers such as empty buckets or used tools land in the 4 outputs. It waits when they are full. 20 FE/t for 5 seconds a craft, faster on steel. The redstone button picks always on, run with a signal or stop with one.",
          "machines", "Any side can take FE, items or an output port", "Assembly",
          [craft("crafter_assembly", "Crafter Assembly"), build("crafter_assembly", "auto_crafter", "Auto Crafter")])
-    page("quarry", "machines", 5, "Quarry", "Free, digs to bedrock",
-         "The Quarry needs no power. It sits at a corner and digs the area beside it, layer by layer down to bedrock, skipping air and fluids. Without Landmarks it takes 16x16; set Landmarks up to 64 blocks away, one in line with its front and one to a side.\n\nThe Electric Drill in its assembly sets the speed: 1 block/s, x1.5 on steel, x1.25 for a steel drill body, plus the drill's upgrades. A diamond bit digs obsidian. Outputs go into a chest or pipe beside it. Fit a Pipe Filter to choose what it keeps.",
+    page("quarry", "machines", 5, "Quarry", "MV, 8000 FE a block",
+         "The Quarry runs on MV only (Gold Cable, an LV/MV transformer front or a Diamond Solar Panel); LV will not feed it and HV blows it up. Each block costs 8000 FE: 400 FE/t at 1 block/s. It stores 200k FE, 400k on steel. It digs the area beside it to bedrock, 16x16 or up to 64 blocks set by Landmarks in line with its front and to a side.\n\nSpeed: 1 block/s, x1.5 steel, x1.25 steel drill body, plus drill and chassis upgrades sharing one +100% cap. A diamond bit digs obsidian. Up to 3 Pipe Filters pick what it keeps: deny filters always void, and with any allow filter fitted only what one allows is kept.\n\nThe frame is free and goes up piece by piece once the quarry has power. If a piece is broken the quarry stops and rebuilds it piece by piece, then carries on. Blocks in the frame's way are dug out first; if one can't be, it waits. Blocks dropped into the pit get dug too.",
          "quarry", "Frame, gantry and head", "Recipes",
          [craft("quarry_assembly", "Quarry Assembly"), build("quarry_assembly", "quarry", "Quarry"), craft("landmark")])
     page("power", "power", 0, "Power and Cables", "FE from fuel, stored and carried",

@@ -38,6 +38,7 @@
     "simplemachines:item_pipe",
     "simplemachines:tool_stand",
     "simplemachines:fluid_pipe",
-    "simplemachines:fluid_tank"
+    "simplemachines:fluid_tank",
+    "simplemachines:ender_programmer"
   ]
 }

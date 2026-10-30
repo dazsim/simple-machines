@@ -73,6 +73,11 @@
       "id": "tools",
       "title": "Tools",
       "icon": "simplemachines:electric_drill"
+    },
+    {
+      "id": "ender",
+      "title": "Ender",
+      "icon": "simplemachines:ender_programmer"
     }
   ]
 }

@@ -92,7 +92,7 @@ public class SimpleMachines {
     public static final List<BlockEntityType<? extends WorkBlockEntity>> WORK_ENTITIES = new ArrayList<>();
     /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
     public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
-            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA, Core.QUARRY);
+            Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA, Core.QUARRY, Core.PROGRAMMER);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -114,6 +114,12 @@ public class SimpleMachines {
             DataComponentType.<net.minecraft.world.item.component.ItemContainerContents>builder()
                     .persistent(net.minecraft.world.item.component.ItemContainerContents.CODEC)
                     .networkSynchronized(net.minecraft.world.item.component.ItemContainerContents.STREAM_CODEC).cacheEncoding().build();
+    public static final MenuType<com.workshopcraft.simplemachines.ender.EnderProgrammerMenu> PROGRAMMER_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.ender.EnderProgrammerMenu::client, FeatureFlags.VANILLA_SET);
+    public static final DataComponentType<com.workshopcraft.simplemachines.ender.EnderLink> ENDER_LINK =
+            DataComponentType.<com.workshopcraft.simplemachines.ender.EnderLink>builder()
+                    .persistent(com.workshopcraft.simplemachines.ender.EnderLink.CODEC)
+                    .networkSynchronized(com.workshopcraft.simplemachines.ender.EnderLink.STREAM_CODEC).build();
     public static final DataComponentType<Integer> ENERGY = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
@@ -184,6 +190,7 @@ public class SimpleMachines {
     public static Block toolStand;
     public static BlockEntityType<com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity> toolStandEntity;
     public static Item powerCell;
+    public static Item linkCard;
     public static final List<Item> TOOLS = new ArrayList<>();
     public static BlockEntityType<AlloyFurnaceBlockEntity> alloyFurnaceEntity;
     public static BlockEntityType<ExtruderBlockEntity> extruderEntity;
@@ -388,6 +395,8 @@ public class SimpleMachines {
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
+        for (String name : List.of("ender_ingot", "ender_wire", "ender_coil")) add(r, name, new Item(props(name)));
+        linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.ender.LinkCardItem(props("link_card").stacksTo(16)));
         add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
@@ -433,6 +442,7 @@ public class SimpleMachines {
         r.accept(id("filter"), FILTER);
         r.accept(id("tank"), TANK);
         r.accept(id("crafter_pattern"), CRAFTER_PATTERN);
+        r.accept(id("ender_link"), ENDER_LINK);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -472,6 +482,7 @@ public class SimpleMachines {
         entity(r, Core.SHEARER, ShearerBlockEntity::new);
         entity(r, Core.CHARGER, ChargerBlockEntity::new);
         entity(r, Core.CRAFTER, com.workshopcraft.simplemachines.machine.AutoCrafterBlockEntity::new);
+        entity(r, Core.PROGRAMMER, com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity::new);
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
@@ -508,6 +519,7 @@ public class SimpleMachines {
         r.accept(id("electric_furnace"), ELECTRIC_FURNACE_MENU);
         r.accept(id("pipe_filter"), FILTER_MENU);
         r.accept(id("auto_crafter"), CRAFTER_MENU);
+        r.accept(id("ender_programmer"), PROGRAMMER_MENU);
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> r) {

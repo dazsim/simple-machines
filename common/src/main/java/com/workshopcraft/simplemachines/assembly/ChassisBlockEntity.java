@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.assembly;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.ender.EnderLink;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +23,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
     private List<Upgrade> upgrades = new ArrayList<>();
     private @Nullable Upgrade loose;
     private String drill = "";
+    private @Nullable EnderLink ender;
 
     public ChassisBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.chassisEntity, pos, state);
@@ -69,6 +71,16 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         setChanged();
     }
 
+    /** The ender code of the machine this chassis was opened from, kept until it is screwed back together. */
+    public @Nullable EnderLink ender() {
+        return ender;
+    }
+
+    public void setEnder(@Nullable EnderLink link) {
+        ender = link;
+        setChanged();
+    }
+
     /** Screws the loose upgrade in. */
     public void fix() {
         if (loose == null) return;
@@ -89,6 +101,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         upgrades = Upgrade.parse(input.getStringOr("upgrades", ""));
         loose = Upgrade.byId(input.getStringOr("loose_upgrade", ""));
         drill = input.getStringOr("drill", "");
+        ender = input.read("ender", EnderLink.CODEC).orElse(null);
     }
 
     @Override
@@ -98,6 +111,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         output.putString("upgrades", Upgrade.join(upgrades));
         output.putString("loose_upgrade", loose == null ? "" : loose.id);
         output.putString("drill", drill);
+        output.storeNullable("ender", EnderLink.CODEC, ender);
     }
 
     @Override

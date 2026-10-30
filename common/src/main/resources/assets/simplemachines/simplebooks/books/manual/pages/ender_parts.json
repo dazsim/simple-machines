@@ -1,0 +1,47 @@
+{
+  "section": "ender",
+  "sort": 1,
+  "title": "Ender Parts",
+  "subtitle": "Ingots, wire and coils",
+  "text": "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Devices in later updates are built from them.",
+  "drawing": "simplemachines:textures/simplebooks/manual/ender.png",
+  "caption": "Programmer and card",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "process",
+      "inputs": [
+        "simplemachines:redstone_copper_ingot",
+        "#c:ender_pearls"
+      ],
+      "appliance": "simplemachines:alloy_smelter",
+      "output": "simplemachines:ender_ingot"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        "simplemachines:ender_ingot"
+      ],
+      "appliance": "simplemachines:rolling_mill",
+      "output": {
+        "item": "simplemachines:ender_wire",
+        "count": 2
+      },
+      "note": "Rod mode"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " W ",
+        "WSW",
+        " W "
+      ],
+      "key": {
+        "W": "simplemachines:ender_wire",
+        "S": "#c:rods/steel"
+      },
+      "output": "simplemachines:ender_coil",
+      "note": "Crafting Table\n4x Ender Wire, 1x Steel Rod"
+    }
+  ]
+}

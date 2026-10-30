@@ -454,6 +454,21 @@ def d_tools():
     sh.text((320, 40), "POWERED TOOLS", 14); sh.text((320, 340), "built on a Tool Stand, recharge in the Charger", 12, SOFT)
     sh.save("tools")
 
+def d_ender():
+    sh = Sheet(); P = iso((190, 230), 1.0)
+    machine(sh, P)
+    sh.text((190, 40), "ENDER PROGRAMMER", 14)
+    cx, cy = 420, 170
+    sh.poly([(cx, cy), (cx + 120, cy), (cx + 120, cy + 76), (cx, cy + 76)])
+    sh.poly([(cx + 14, cy + 22), (cx + 40, cy + 22), (cx + 40, cy + 44), (cx + 14, cy + 44)], 1.4)
+    sh.line((cx, cy + 60), (cx + 120, cy + 60), 1.4, SOFT)
+    sh.text((cx + 82, cy + 33), "482913", 13)
+    sh.text((cx + 60, cy + 102), "link card", 12, SOFT)
+    sh.arrow((300, 205), (405, 205))
+    sh.text((352, 188), "write", 12, SOFT)
+    sh.text((320, 345), "type a code, press Enter, then use the card on a device", 12, SOFT)
+    sh.save("ender")
+
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -678,9 +693,18 @@ def pages():
           seq("Electric Drill", [M + "electric_drill"], "Pickaxe and shovel blocks."), seq("Chainsaw", [M + "chainsaw"], "Axe blocks."),
           text("With no charge left the motor stays still, digging is slow and nothing drops. Recharge the tool in the Charger.")])
 
+    page("ender", "ender", 0, "Ender Programmer", "LV, 500 FE a write",
+         "Ender devices that share a code are linked wherever they are. The Ender Programmer writes codes onto Link Cards.\n\nPut a card in the slot, type up to 6 digits or press Random, then press Write or Enter. Each write costs 500 FE; it holds 10k FE.\n\nRight click a device with a written card to give it that code. Sneak right click to copy the device's code onto the card. Cards are not used up.\n\nPublic codes are shared by everyone. Private codes belong to the one who set them, so two players can both use 482913 without meeting. Use a screwdriver on a device to switch it; only its owner can change its code or open it.",
+         "ender", "Programmer and card", "Recipes",
+         [craft("programmer_assembly", "Programmer Assembly"), build("programmer_assembly", "ender_programmer", "Ender Programmer"), craft("link_card")])
+    page("ender_parts", "ender", 1, "Ender Parts", "Ingots, wire and coils",
+         "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Devices in later updates are built from them.",
+         "ender", "Programmer and card", "Recipes",
+         [process("alloying/ender_ingot", "alloy_smelter"), process("rolling/ender_wire", "rolling_mill", "Rod mode"), craft("ender_coil")])
+
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_ender]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},
@@ -703,7 +727,8 @@ def main():
                         {"id": "power", "title": "Power", "icon": f"{MOD}:redstone_copper_cable"},
                         {"id": "items", "title": "Items", "icon": f"{MOD}:item_pipe"},
                         {"id": "upgrades", "title": "Upgrades", "icon": f"{MOD}:overclocker_circuit"},
-                        {"id": "tools", "title": "Tools", "icon": f"{MOD}:electric_drill"}]},
+                        {"id": "tools", "title": "Tools", "icon": f"{MOD}:electric_drill"},
+                        {"id": "ender", "title": "Ender", "icon": f"{MOD}:ender_programmer"}]},
           f"{A}/simplebooks/books/manual.json")
     pages()
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/manual"}}, f"{A}/items/manual.json")

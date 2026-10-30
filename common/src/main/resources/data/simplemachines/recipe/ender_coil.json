@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": "simplemachines:ender_wire",
+    "S": "#c:rods/steel"
+  },
+  "pattern": [
+    " W ",
+    "WSW",
+    " W "
+  ],
+  "result": {
+    "id": "simplemachines:ender_coil"
+  }
+}

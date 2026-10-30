@@ -1,0 +1,62 @@
+{
+  "section": "ender",
+  "sort": 0,
+  "title": "Ender Programmer",
+  "subtitle": "LV, 500 FE a write",
+  "text": "Ender devices that share a code are linked wherever they are. The Ender Programmer writes codes onto Link Cards.\n\nPut a card in the slot, type up to 6 digits or press Random, then press Write or Enter. Each write costs 500 FE; it holds 10k FE.\n\nRight click a device with a written card to give it that code. Sneak right click to copy the device's code onto the card. Cards are not used up.\n\nPublic codes are shared by everyone. Private codes belong to the one who set them, so two players can both use 482913 without meeting. Use a screwdriver on a device to switch it; only its owner can change its code or open it.",
+  "drawing": "simplemachines:textures/simplebooks/manual/ender.png",
+  "caption": "Programmer and card",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "WIW",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "W": "simplemachines:ender_wire",
+        "I": "simplemachines:ender_ingot"
+      },
+      "output": "simplemachines:programmer_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Ender Wire, 1x Ender Ingot",
+      "title": "Programmer Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Ender Programmer",
+      "inputs": [
+        "simplemachines:programmer_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:ender_programmer",
+      "note": "Fit it to a chassis"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "PWP",
+        "   ",
+        "   "
+      ],
+      "key": {
+        "P": "#c:plates/iron",
+        "W": "simplemachines:ender_wire"
+      },
+      "output": {
+        "item": "simplemachines:link_card",
+        "count": 2
+      },
+      "note": "Crafting Table\n2x Iron Plate, 1x Ender Wire"
+    }
+  ]
+}

@@ -65,6 +65,7 @@ public final class PowerTooltip {
         switch (p.unit()) {
             case RUNNING -> out.accept(line("uses_tick", num(p.use() * fast / 2)));
             case BLOCK -> out.accept(line("uses_block", num(p.use())));
+            case WRITE -> out.accept(line("uses_write", num(p.use())));
             case SHEAR -> out.accept(line("uses_shear", num(p.use())));
             case CROP -> out.accept(line("uses_crop", num(p.use())));
             case CHARGE -> out.accept(line("charges_items", num(p.use() * tier.storage * fast / 2)));

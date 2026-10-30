@@ -1,0 +1,173 @@
+#!/usr/bin/env python3
+# Ender Programmer and its parts (2.2.0). Run from the repo root after gen_assets.py: python3 tools/gen_ender.py
+import json, os, shutil, sys
+
+g = {"__file__": os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_assets.py"), "__name__": "gen_assets"}
+exec(open(g["__file__"]).read().rsplit("\nmain()", 1)[0], g)
+A, D, MOD, rect, px, save, jdump, model = g["A"], g["D"], g["MOD"], g["rect"], g["px"], g["save"], g["jdump"], g["model"]
+PLAN = "/workspace/mods/simplemachines-dist/2.2-plan/textures/"
+DARK = (36, 30, 28, 255)
+TEAL = [(44, 205, 177), (52, 153, 136), (24, 86, 76)]
+AMBER = [(232, 190, 50), (120, 92, 30)]
+KEYS = [(200, 206, 224), (150, 156, 176)]
+CORE = "programmer"
+BLOCK = "ender_programmer"
+g["FRONT_HOLE"][CORE] = (3, 3, 13, 13)
+
+def front(lit):
+    # the plan's screen and keypad, packed into the 10x10 window the front panel leaves open
+    t = g["core_base"](51)
+    rect(t, 3, 3, 12, 12, DARK)
+    screen = TEAL[0] if lit else TEAL[2]
+    rect(t, 4, 4, 11, 4, screen + (255,))
+    for u in range(4, 12, 2):
+        px(t, u, 5, screen + (255,))
+    for v in (7, 9, 11):
+        for u in range(5, 11):
+            px(t, u, v, KEYS[(u - 5) % 2] + (255,))
+    if lit:
+        px(t, 10, 11, TEAL[0] + (255,))
+    px(t, 12, 3, (AMBER[0] if lit else AMBER[1]) + (255,))
+    return t
+
+def top():
+    t = g["core_top"](CORE)
+    px(t, 12, 3, TEAL[1] + (255,))
+    return t
+
+def gui_tex():
+    t = g["gui"]("gen")
+    bg = (198, 198, 198, 255)
+    rect(t, 60, 16, 150, 80, bg)
+    def inset(x0, y0, x1, y1, fill=(139, 139, 139, 255)):
+        rect(t, x0, y0, x1, y1, fill)
+        rect(t, x0, y0, x1 - 1, y0, (55, 55, 55, 255)); rect(t, x0, y0, x0, y1 - 1, (55, 55, 55, 255))
+        rect(t, x0 + 1, y1, x1, y1, (255, 255, 255, 255)); rect(t, x1, y0 + 1, x1, y1, (255, 255, 255, 255))
+    inset(8, 19, 100, 32)
+    inset(119, 40, 136, 57)
+    return t
+
+def part(m, when, y):
+    a = {"apply": {"model": f"{MOD}:block/{m}"}}
+    if y:
+        a["apply"]["y"] = y
+    a["when"] = when
+    return a
+
+def lang_update():
+    p = f"{A}/lang/en_us.json"
+    lang = json.load(open(p))
+    lang.update({
+        "item.simplemachines.ender_ingot": "Ender Ingot",
+        "item.simplemachines.ender_wire": "Ender Wire",
+        "item.simplemachines.ender_coil": "Ender Coil",
+        "item.simplemachines.link_card": "Link Card",
+        "item.simplemachines.programmer_assembly": "Programmer Assembly",
+        "block.simplemachines.ender_programmer": "Ender Programmer",
+        "container.simplemachines.ender_programmer": "Ender Programmer",
+        "gui.simplemachines.ender_code": "Code",
+        "gui.simplemachines.ender_random": "Random",
+        "gui.simplemachines.ender_write": "Write",
+        "gui.simplemachines.ender_private": "Private",
+        "gui.simplemachines.ender_public": "Public",
+        "gui.simplemachines.ender_private_hint": "Private codes belong to you alone and never clash with anyone else's",
+        "gui.simplemachines.ender_wrote": "Wrote %s to the card.",
+        "gui.simplemachines.ender_no_card": "Put a Link Card in the slot.",
+        "gui.simplemachines.ender_no_power": "Not enough power.",
+        "gui.simplemachines.ender_not_owner": "That card holds someone else's code.",
+        "gui.simplemachines.ender_no_code": "Type a code first.",
+        "gui.simplemachines.ender_cost": "%s FE per write",
+        "tooltip.simplemachines.ender_code": "Code %s, %s",
+        "tooltip.simplemachines.ender_public": "public",
+        "tooltip.simplemachines.ender_private": "private",
+        "tooltip.simplemachines.link_card_blank": "Blank: write a code in an Ender Programmer",
+        "tooltip.simplemachines.link_card": "Right-click an ender device to set its code, sneak to copy it",
+        "tooltip.simplemachines.uses_write": "Uses %s FE per write",
+        "message.simplemachines.ender_set": "Code set to %s",
+        "message.simplemachines.ender_copied": "Copied code %s to the card",
+        "message.simplemachines.ender_not_owner": "This code belongs to someone else",
+        "message.simplemachines.ender_now_private": "Code %s is now private",
+        "message.simplemachines.ender_now_public": "Code %s is now public",
+    })
+    jdump(lang, p)
+
+def recipes():
+    rec = f"{D}/{MOD}/recipe/"
+    def shaped(name, pattern, key, count=1):
+        result = {"id": f"{MOD}:{name}"}
+        if count > 1:
+            result["count"] = count
+        jdump({"type": "minecraft:crafting_shaped", "category": "misc", "key": key, "pattern": pattern, "result": result}, rec + name + ".json")
+    jdump({"type": f"{MOD}:alloying", "first": {"ingredient": f"{MOD}:redstone_copper_ingot"}, "second": {"ingredient": "#c:ender_pearls"},
+           "result": {"id": f"{MOD}:ender_ingot"}, "cooking_time": 400}, rec + "alloying/ender_ingot.json")
+    jdump({"type": f"{MOD}:rolling", "input": {"ingredient": f"{MOD}:ender_ingot"},
+           "result": {"id": f"{MOD}:ender_wire", "count": 2}, "cooking_time": 100}, rec + "rolling/ender_wire.json")
+    W = f"{MOD}:ender_wire"
+    shaped("ender_coil", [" W ", "WSW", " W "], {"W": W, "S": "#c:rods/steel"})
+    shaped("link_card", ["PWP"], {"P": "#c:plates/iron", "W": W}, 2)
+    shaped("programmer_assembly", ["RCR", "WIW"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "W": W, "I": f"{MOD}:ender_ingot"})
+
+def main():
+    tb, ti = A + "/textures/block/", A + "/textures/item/"
+    save(front(False), tb + f"{CORE}_core_front.png")
+    save(front(True), tb + f"{CORE}_core_front_on.png")
+    save(top(), tb + f"{CORE}_core_top.png")
+    for it in ["ender_ingot", "ender_wire", "ender_coil", "link_card"]:
+        shutil.copy(PLAN + it + ".png", ti + it + ".png")
+        jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
+        jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
+    save(gui_tex(), A + f"/textures/gui/{BLOCK}.png")
+
+    core_tex = lambda on: {"front": f"{MOD}:block/{CORE}_core_front" + on, "side": f"{MOD}:block/core_side",
+                           "top": f"{MOD}:block/{CORE}_core_top", "bottom": f"{MOD}:block/core_bottom", "particle": f"{MOD}:block/core_side"}
+    model(f"{CORE}_core", g["core_elements"](False), core_tex(""))
+    model(f"{CORE}_core_on", g["core_elements"](False), core_tex("_on"))
+    model(f"{CORE}_core_loose", g["core_elements"](True), core_tex(""))
+    for f in g["FINISHES"]:
+        pt = {"panel": g["finish_tex"](f, "panel"), "particle": g["finish_tex"](f, "panel")}
+        for loose in ["", "_loose"]:
+            model(f"{CORE}_{f}_front_panel{loose}", g["front_panel"](CORE, bool(loose)), pt)
+
+    # the chassis blockstates were written for every other core already
+    for tier in ["iron", "steel"]:
+        p = f"{A}/blockstates/{tier}_chassis.json"
+        parts = [x for x in json.load(open(p))["multipart"] if x.get("when", {}).get("core") != CORE]
+        for f, y in g["FACINGS"]:
+            parts.append(part(f"{CORE}_core_loose", {"facing": f, "core": CORE, "step": "1"}, y))
+            parts.append(part(f"{CORE}_core", {"facing": f, "core": CORE, "step": "2|3|4|5|6|7"}, y))
+            for fin in g["FINISHES"]:
+                parts.append(part(f"{CORE}_{fin}_front_panel_loose", {"facing": f, "core": CORE, "panel": fin, "step": "5"}, y))
+                parts.append(part(f"{CORE}_{fin}_front_panel", {"facing": f, "core": CORE, "panel": fin, "step": "6|7"}, y))
+        jdump({"multipart": parts}, p)
+
+    parts = [{"when": {"tier": t}, "apply": {"model": f"{MOD}:block/{t}_chassis"}} for t in ["iron", "steel"]]
+    for f, y in g["FACINGS"]:
+        parts.append(part(f"{CORE}_core", {"facing": f, "lit": "false"}, y))
+        parts.append(part(f"{CORE}_core_on", {"facing": f, "lit": "true"}, y))
+        for fin in g["FINISHES"]:
+            parts.append(part(f"{CORE}_{fin}_front_panel", {"facing": f, "panel": fin}, y))
+            parts.append(part(f"{fin}_side_panels", {"facing": f, "panel": fin}, y))
+    jdump({"multipart": parts}, f"{A}/blockstates/{BLOCK}.json")
+    elements = g["frame_elements"]() + g["core_elements"](False) + g["front_panel"](CORE, False) + g["side_panels"](False) + g["worktop_elements"](CORE, False)
+    item = model(f"{BLOCK}_item", elements, {"frame": f"{MOD}:block/iron_chassis", "floor": f"{MOD}:block/chassis_floor",
+                 **core_tex(""), "panel": g["finish_tex"]("oak", "panel"), "worktop": g["finish_tex"]("oak", "worktop")})
+    jdump({"model": {"type": "minecraft:model", "model": item}}, f"{A}/items/{BLOCK}.json")
+    jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{CORE}_core"}}, f"{A}/items/{CORE}_assembly.json")
+    jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
+           "conditions": [{"condition": "minecraft:survives_explosion"}],
+           "entries": [{"type": "minecraft:item", "name": f"{MOD}:{BLOCK}", "functions": [
+               {"function": "minecraft:copy_state", "block": f"{MOD}:{BLOCK}", "properties": ["tier", "panel"]},
+               {"function": "minecraft:copy_components", "source": "block_entity",
+                "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]}]}]}],
+           "random_sequence": f"{MOD}:blocks/{BLOCK}"}, f"{D}/{MOD}/loot_table/blocks/{BLOCK}.json")
+    p = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
+    tag = json.load(open(p))
+    if f"{MOD}:{BLOCK}" not in tag["values"]:
+        tag["values"].append(f"{MOD}:{BLOCK}")
+    jdump(tag, p)
+    lang_update()
+    recipes()
+    g["recipe_unlocks"]()
+
+if __name__ == "__main__":
+    main()

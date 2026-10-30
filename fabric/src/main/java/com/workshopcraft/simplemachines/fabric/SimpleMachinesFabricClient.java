@@ -32,6 +32,7 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         MenuScreens.register(SimpleMachines.ALLOY_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.FILTER_MENU, com.workshopcraft.simplemachines.client.FilterScreen::new);
         MenuScreens.register(SimpleMachines.CRAFTER_MENU, com.workshopcraft.simplemachines.client.AutoCrafterScreen::new);
+        MenuScreens.register(SimpleMachines.PROGRAMMER_MENU, com.workshopcraft.simplemachines.client.EnderProgrammerScreen::new);
         MenuScreens.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
         MenuScreens.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
         MenuScreens.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);

@@ -28,7 +28,7 @@ import java.util.Map;
  * use and steelUse are FE per unit; out is the most it pushes per tick; chassis means capacity and out scale with the chassis tier.
  */
 public record PowerInfo(int accepts, int sends, int out, int use, int steelUse, int night, Unit unit, int capacity, boolean chassis) {
-    public enum Unit { NONE, RUNNING, BLOCK, SHEAR, CROP, CHARGE, BURNING, SUN, BLADE, TRANSFORMER, CABLE }
+    public enum Unit { NONE, RUNNING, BLOCK, SHEAR, CROP, CHARGE, BURNING, SUN, BLADE, TRANSFORMER, CABLE, WRITE }
 
     private static Map<Block, PowerInfo> table;
 
@@ -62,6 +62,8 @@ public record PowerInfo(int accepts, int sends, int out, int use, int steelUse, 
         m.put(mc.get(Core.HIVE), user(SourceBlockEntity.Kind.HIVE.perTick, Unit.RUNNING, SourceBlockEntity.CAPACITY));
         m.put(mc.get(Core.SHEARER), user(ShearerBlockEntity.PER_SHEAR, Unit.SHEAR, ShearerBlockEntity.CAPACITY));
         m.put(mc.get(Core.HARVESTER), user(HarvesterBlockEntity.PER_CROP, Unit.CROP, HarvesterBlockEntity.CAPACITY));
+        m.put(mc.get(Core.PROGRAMMER), user(com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity.PER_WRITE, Unit.WRITE,
+                com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity.CAPACITY));
         m.put(mc.get(Core.CHARGER), user(ChargerBlockEntity.RATE, Unit.CHARGE, ChargerBlockEntity.CAPACITY));
         m.put(mc.get(Core.QUARRY), new PowerInfo(Voltage.MV, -1, 0, QuarryBlockEntity.PER_BLOCK, QuarryBlockEntity.PER_BLOCK, 0, Unit.BLOCK,
                 QuarryBlockEntity.BUFFER, true));

@@ -25,7 +25,8 @@ public enum Core implements StringRepresentable {
     CRAFTER("crafter", "auto_crafter"),
     COMPRESSOR("compressor", "compressor"),
     LAVA("lava", "lava_generator"),
-    QUARRY("quarry", "quarry");
+    QUARRY("quarry", "quarry"),
+    PROGRAMMER("programmer", "ender_programmer");
 
     private final String name;
     public final String block;

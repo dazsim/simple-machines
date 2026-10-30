@@ -25,7 +25,7 @@ public class QuarryBlock extends WorkMachineBlock {
     @Override
     protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
                                           InteractionHand hand, BlockHitResult hit) {
-        if (!held.is(SimpleMachines.pipeFilter)) return InteractionResult.TRY_WITH_EMPTY_HAND;
+        if (!held.is(SimpleMachines.pipeFilter)) return super.useItemOn(held, state, level, pos, player, hand, hit);
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (level.getBlockEntity(pos) instanceof QuarryBlockEntity be) {
             if (!be.addFilter(held)) {

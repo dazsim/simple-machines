@@ -27,7 +27,7 @@ public class SourceBlockEntity extends WorkBlockEntity {
         final Core core;
         final int size;
         final int time;
-        final int perTick;
+        public final int perTick;
 
         Kind(Core core, int size, int time, int perTick) {
             this.core = core;

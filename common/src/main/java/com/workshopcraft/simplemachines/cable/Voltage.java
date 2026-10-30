@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jspecify.annotations.Nullable;
@@ -22,6 +23,8 @@ public final class Voltage {
     public static final int LV = 0, MV = 1, HV = 2;
     public static final int[] RATE = {1000, 8000, 64000};
     public static final String[] NAME = {"LV", "MV", "HV"};
+    /** Brightest stripe of each cable texture. */
+    public static final int[] COLOR = {0xF4785C, 0xE8BE28, 0x96E4F0};
     private static final float POWER = 2.0F;
 
     private Voltage() {
@@ -32,8 +35,10 @@ public final class Voltage {
         final BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof CableBlock cable) return cable.tier;
         if (state.getBlock() instanceof TransformerBlock t) return side == state.getValue(BlockStateProperties.FACING) ? t.high : t.high - 1;
-        if (level.getBlockEntity(pos) instanceof com.workshopcraft.simplemachines.quarry.QuarryBlockEntity) return MV;
-        if (level.getBlockEntity(pos) instanceof WorkBlockEntity be && be.energyIn(side)) return LV;
+        final int a = accepts(state.getBlock());
+        // above LV the rating holds on every face, so a higher tier blows it even where it would not take energy
+        if (a > LV) return a;
+        if (a == LV && level.getBlockEntity(pos) instanceof WorkBlockEntity be && be.energyIn(side)) return LV;
         return -1;
     }
 
@@ -42,10 +47,19 @@ public final class Voltage {
         final BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof CableBlock cable) return cable.tier;
         if (state.getBlock() instanceof TransformerBlock t) return side == state.getValue(BlockStateProperties.FACING) ? t.high : t.high - 1;
-        if (level.getBlockEntity(pos) instanceof com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity solar) {
-            return com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity.VOLTAGE[solar.tier - 1];
-        }
-        return LV;
+        return Math.max(LV, sends(state.getBlock()));
+    }
+
+    /** Tier a block of ours takes in, -1 when it takes none. */
+    public static int accepts(Block block) {
+        final PowerInfo p = PowerInfo.of(block);
+        return p == null ? -1 : p.accepts();
+    }
+
+    /** Tier a block of ours sends, -1 when it sends none. */
+    public static int sends(Block block) {
+        final PowerInfo p = PowerInfo.of(block);
+        return p == null ? -1 : p.sends();
     }
 
     public static boolean overloads(Level level, BlockPos pos, @Nullable Direction side, int tier) {

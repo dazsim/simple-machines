@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.function.Consumer;
 
-/** Block item with a grey hint line or two under its name. */
+/** Block item with its power lines, if it has any, and a grey hint line or two. */
 public class HintBlockItem extends BlockItem {
     private final String[] hints;
 
@@ -22,6 +22,7 @@ public class HintBlockItem extends BlockItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, out, flag);
+        PowerTooltip.append(stack, getBlock(), out);
         for (String h : hints) out.accept(Component.translatable(h).withStyle(ChatFormatting.GRAY));
     }
 }

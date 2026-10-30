@@ -69,7 +69,15 @@ public class PoweredMenu extends AbstractContainerMenu {
 
     /** Packed upgrade counts, see Upgrade.pack. */
     public int upgrades() {
-        return data.get(6);
+        return data.get(6) & 0xFF;
+    }
+
+    public int voltage() {
+        return EnergyMenu.voltage(data.get(6));
+    }
+
+    public boolean sendsOnly() {
+        return (data.get(6) & 1 << 10) != 0;
     }
 
     public int capacity() {

@@ -145,6 +145,13 @@ Up to three pipe filters fit in it to choose what it keeps; sneak with an empty 
 
 ## Changelog
 
+### 2.1.1
+
+- Tooltips on every powered block and item show its voltage in the cable colour, what it accepts or sends, what it uses or makes, and what it holds.
+- Powered tools show what they use per block and the Charger tier. The Quarry Assembly says it builds an MV quarry.
+- Machine screens show LV, MV or HV over the energy bar, and the bar tooltip shows the tier.
+- Solar Panels, Wind Turbines and Transformers keep their energy when broken.
+
 ### 2.1.0
 
 - New: Compressor, Auto Crafter, Lava Generator, Solar Panels in four tiers, Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers, Quarry and Landmarks.

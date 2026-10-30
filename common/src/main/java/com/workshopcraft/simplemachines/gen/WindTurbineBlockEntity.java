@@ -6,6 +6,8 @@ import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -23,7 +25,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 /** Lives in the base. Output = 50 per blade x blades x height x openness x weather, measured at the top blade. */
 public class WindTurbineBlockEntity extends BlockEntity {
     public static final int MAX = 50;
-    public final EnergyBuffer energy = new EnergyBuffer(50000, 0, 500, this::setChanged);
+    public static final int CAPACITY = 50_000, OUT = 500;
+    public final EnergyBuffer energy = new EnergyBuffer(CAPACITY, 0, OUT, this::setChanged);
     public float openness = -1;
     private int blades = -1;
     private float part;
@@ -186,5 +189,22 @@ public class WindTurbineBlockEntity extends BlockEntity {
         output.putInt("energy", energy.energy);
         output.putFloat("rate", rate);
         output.putInt("blades", Math.max(0, blades));
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (energy.energy > 0) components.set(SimpleMachines.ENERGY, energy.energy);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        energy.energy = Math.min(energy.capacity, components.getOrDefault(SimpleMachines.ENERGY, 0));
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("energy");
     }
 }

@@ -19,7 +19,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "simplemachines:wind_turbine"
+          "name": "simplemachines:wind_turbine",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "source": "block_entity",
+              "include": [
+                "simplemachines:energy"
+              ]
+            }
+          ]
         }
       ]
     }

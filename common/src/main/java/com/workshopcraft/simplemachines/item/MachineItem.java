@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.List;
 import java.util.function.Consumer;
 
-/** A finished machine as an item; lists the upgrades fitted inside it. */
+/** A finished machine as an item; lists its power, then the upgrades fitted inside it. */
 public class MachineItem extends BlockItem {
     public MachineItem(Block block, Properties properties) {
         super(block, properties);
@@ -23,6 +23,7 @@ public class MachineItem extends BlockItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, out, flag);
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
+        PowerTooltip.append(stack, getBlock(), out);
         com.workshopcraft.simplemachines.quarry.QuarryDrill.tooltip(stack, out);
         final com.workshopcraft.simplemachines.pipe.TankContents lava = stack.get(SimpleMachines.TANK);
         if (lava != null && lava.amount() > 0) out.accept(Component.translatable("tooltip.simplemachines.tank",

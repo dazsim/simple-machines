@@ -63,7 +63,7 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
                 case 3 -> energy.energy >>> 16;
                 case 4 -> energy.capacity / 1000;
                 case 5 -> mode();
-                case 6 -> Upgrade.pack(upgrades);
+                case 6 -> Upgrade.pack(upgrades) | EnergyMenu.packTier(getBlockState().getBlock());
                 default -> 0;
             };
         }

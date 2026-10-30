@@ -4,6 +4,8 @@ import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,9 +23,14 @@ public class TransformerBlockEntity extends BlockEntity {
     public TransformerBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.transformerEntity, pos, state);
         high = state.getBlock() instanceof TransformerBlock t ? t.high : Voltage.MV;
-        final int rate = Voltage.RATE[high - 1];
+        final int rate = rate(high);
         up = new EnergyBuffer(rate * 10, rate, rate, this::setChanged);
         down = new EnergyBuffer(rate * 10, rate, rate, this::setChanged);
+    }
+
+    /** FE/t a transformer with this high side moves each way; each buffer holds ten ticks of it. */
+    public static int rate(int high) {
+        return Voltage.RATE[high - 1];
     }
 
     /** The buffer energy offered on side goes into. */
@@ -73,5 +80,26 @@ public class TransformerBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.putInt("up", up.energy);
         output.putInt("down", down.energy);
+    }
+
+    // the item keeps one total; placed again it fills up first, then down
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (up.energy + down.energy > 0) components.set(SimpleMachines.ENERGY, up.energy + down.energy);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        final int e = components.getOrDefault(SimpleMachines.ENERGY, 0);
+        up.energy = Math.min(up.capacity, e);
+        down.energy = Math.min(down.capacity, e - up.energy);
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("up");
+        output.discard("down");
     }
 }

@@ -75,6 +75,7 @@ public class AutoCrafterScreen extends AbstractContainerScreen<AutoCrafterMenu> 
         final boolean overRs = over(mouseX, mouseY, RS_X, RS_Y, RS_S);
         button(graphics, RS_X, RS_Y, RS_S, overRs);
         graphics.item(ICONS[Mth.clamp(menu.redstone(), 0, 2)], x + RS_X + 1, y + RS_Y + 1);
+        EnergyBar.tag(graphics, font, x, y, BAR_X, BAR_Y, BAR_W, menu.voltage());
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
         if (menu.upgrades() != 0) {
@@ -82,7 +83,7 @@ public class AutoCrafterScreen extends AbstractContainerScreen<AutoCrafterMenu> 
             graphics.text(font, ups, x + imageWidth - 8 - font.width(ups), y + inventoryLabelY, 0xFF2D5AA0, false);
         }
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
-            graphics.setTooltipForNextFrame(Component.literal(menu.energy() + " / " + menu.capacity() + " FE"), mouseX, mouseY);
+            EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
         } else if (overClear) {
             graphics.setTooltipForNextFrame(font, Component.translatable("gui.simplemachines.crafter_clear"), mouseX, mouseY);
         } else if (overRs) {

@@ -360,16 +360,16 @@ public class SimpleMachines {
             PANELS.put(finish, add(r, panels, new Item(props(panels))));
             WORKTOPS.put(finish, add(r, worktop, new Item(props(worktop))));
         }
-        add(r, "redstone_copper_cable", new BlockItem(cable, props("redstone_copper_cable").useBlockDescriptionPrefix()));
-        add(r, "gold_cable", new BlockItem(goldCable, props("gold_cable").useBlockDescriptionPrefix()));
-        add(r, "diamond_cable", new BlockItem(diamondCable, props("diamond_cable").useBlockDescriptionPrefix()));
-        add(r, "lv_mv_transformer", new BlockItem(lvMvTransformer, props("lv_mv_transformer").useBlockDescriptionPrefix()));
-        add(r, "mv_hv_transformer", new BlockItem(mvHvTransformer, props("mv_hv_transformer").useBlockDescriptionPrefix()));
+        add(r, "redstone_copper_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(cable, props("redstone_copper_cable").useBlockDescriptionPrefix()));
+        add(r, "gold_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(goldCable, props("gold_cable").useBlockDescriptionPrefix()));
+        add(r, "diamond_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(diamondCable, props("diamond_cable").useBlockDescriptionPrefix()));
+        add(r, "lv_mv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(lvMvTransformer, props("lv_mv_transformer").useBlockDescriptionPrefix()));
+        add(r, "mv_hv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(mvHvTransformer, props("mv_hv_transformer").useBlockDescriptionPrefix()));
         for (String name : List.of("iron_core", "copper_core", "gold_core", "diamond_core", "pv_cell", "silicon_lapis_blend")) {
             add(r, name, new Item(props(name)));
         }
         for (int i = 0; i < SOLAR.length; i++) {
-            add(r, SOLAR[i], new BlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
+            add(r, SOLAR[i], new com.workshopcraft.simplemachines.item.HintBlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
         }
         add(r, "landmark", new BlockItem(landmark, props("landmark").useBlockDescriptionPrefix()));
         add(r, "wind_turbine", new com.workshopcraft.simplemachines.item.HintBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix(),

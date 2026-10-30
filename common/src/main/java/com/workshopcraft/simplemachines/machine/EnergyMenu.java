@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.machine;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.cable.PowerInfo;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -13,6 +14,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 /**
  * Generator (1 fuel slot), or Rolling Mill and Electric Furnace (input + output).
@@ -98,7 +100,27 @@ public class EnergyMenu extends AbstractContainerMenu {
 
     /** Packed upgrade counts, see Upgrade.pack. */
     public int upgrades() {
-        return data.get(6);
+        return data.get(6) & 0xFF;
+    }
+
+    /** Tier for the screen tag, -1 for none. */
+    public int voltage() {
+        return voltage(data.get(6));
+    }
+
+    public boolean sendsOnly() {
+        return (data.get(6) & 1 << 10) != 0;
+    }
+
+    /** The screen tier above the upgrade counts in data slot 6: tier + 1 in bits 8 and 9, bit 10 when the block only sends. */
+    public static int packTier(Block block) {
+        final PowerInfo p = PowerInfo.of(block);
+        if (p == null) return 0;
+        return (PowerInfo.screenTier(block) + 1) << 8 | (p.accepts() < 0 ? 1 << 10 : 0);
+    }
+
+    public static int voltage(int slot) {
+        return (slot >> 8 & 3) - 1;
     }
 
     public int capacity() {

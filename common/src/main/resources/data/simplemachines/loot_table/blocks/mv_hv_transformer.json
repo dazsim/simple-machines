@@ -12,7 +12,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "simplemachines:mv_hv_transformer"
+          "name": "simplemachines:mv_hv_transformer",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "source": "block_entity",
+              "include": [
+                "simplemachines:energy"
+              ]
+            }
+          ]
         }
       ]
     }

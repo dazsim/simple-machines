@@ -58,12 +58,13 @@ public class PoweredScreen extends AbstractContainerScreen<PoweredMenu> {
             final Component blocked = Component.translatable("gui.simplemachines.quarry_blocked");
             graphics.text(font, blocked, x + 8, y + inventoryLabelY - 10, 0xFFB02020, false);
         }
+        EnergyBar.tag(graphics, font, x, y, BAR_X, BAR_Y, BAR_W, menu.voltage());
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
         final Component fe = Component.literal(menu.energy() + " / " + menu.capacity() + " FE");
         if (layout.slots().length == 0) graphics.text(font, fe, x + (BAR_X - font.width(fe)) / 2 + 4, y + 39, 0xFF404040, false);
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
-            graphics.setTooltipForNextFrame(fe, mouseX, mouseY);
+            EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
         }
     }
 }

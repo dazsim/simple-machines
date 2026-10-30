@@ -2,6 +2,8 @@ package com.workshopcraft.simplemachines.item;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.assembly.Upgrade;
+import com.workshopcraft.simplemachines.cable.Voltage;
+import com.workshopcraft.simplemachines.machine.ChargerBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
@@ -217,6 +219,8 @@ public class PoweredToolItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         final NumberFormat f = NumberFormat.getIntegerInstance(Locale.ROOT);
         out.accept(Component.translatable("tooltip.simplemachines.charge", f.format(energy(stack)), f.format(capacity(stack))).withStyle(ChatFormatting.GRAY));
+        out.accept(Component.translatable("tooltip.simplemachines.charges_at", PowerTooltip.tier(Voltage.LV), f.format(ChargerBlockEntity.RATE)).withStyle(ChatFormatting.GRAY));
+        out.accept(Component.translatable("tooltip.simplemachines.uses_block", f.format(perBlock(stack))).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable(steel(stack) ? "tooltip.simplemachines.steel_frame" : "tooltip.simplemachines.iron_frame").withStyle(ChatFormatting.GRAY));
         final boolean saw = stack.is(SimpleMachines.TOOLS.get(1));
         out.accept(Component.translatable(diamond(stack) ? (saw ? "tooltip.simplemachines.diamond_chain" : "tooltip.simplemachines.diamond_bit")

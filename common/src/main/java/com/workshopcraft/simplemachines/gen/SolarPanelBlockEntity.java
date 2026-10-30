@@ -5,6 +5,8 @@ import com.workshopcraft.simplemachines.cable.Voltage;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,5 +53,22 @@ public class SolarPanelBlockEntity extends BlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("energy", energy.energy);
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        super.collectImplicitComponents(components);
+        if (energy.energy > 0) components.set(SimpleMachines.ENERGY, energy.energy);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        energy.energy = Math.min(energy.capacity, components.getOrDefault(SimpleMachines.ENERGY, 0));
+    }
+
+    @Override
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("energy");
     }
 }

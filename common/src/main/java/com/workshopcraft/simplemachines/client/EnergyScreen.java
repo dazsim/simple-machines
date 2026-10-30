@@ -74,10 +74,11 @@ public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
             final Component ups = Upgrade.summary(menu.upgrades(), true);
             graphics.text(font, ups, x + imageWidth - 8 - font.width(ups), y + inventoryLabelY, 0xFF2D5AA0, false);
         }
+        EnergyBar.tag(graphics, font, x, y, BAR_X, BAR_Y, BAR_W, menu.voltage());
         final int h = Mth.ceil(menu.energyFraction() * BAR_H);
         if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
-            graphics.setTooltipForNextFrame(Component.literal(menu.energy() + " / " + menu.capacity() + " FE"), mouseX, mouseY);
+            EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
         }
     }
 }

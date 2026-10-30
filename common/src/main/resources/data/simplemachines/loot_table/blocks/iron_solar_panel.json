@@ -12,7 +12,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "simplemachines:iron_solar_panel"
+          "name": "simplemachines:iron_solar_panel",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "source": "block_entity",
+              "include": [
+                "simplemachines:energy"
+              ]
+            }
+          ]
         }
       ]
     }

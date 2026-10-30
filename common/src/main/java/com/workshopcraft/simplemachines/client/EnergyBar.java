@@ -19,7 +19,7 @@ final class EnergyBar {
         if (tier < 0) return;
         final String s = Voltage.NAME[tier];
         final int ty = y + barY - 10;
-        graphics.fill(x + barX, ty - 2, x + barX + barW, ty + 8, 0xFF373737);
+        graphics.fill(x + barX - 1, ty - 2, x + barX + barW, ty + 9, 0xFF373737);
         graphics.text(font, s, x + barX + (barW - font.width(s) + 1) / 2, ty, 0xFF000000 | Voltage.COLOR[tier], false);
     }
 

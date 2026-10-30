@@ -18,7 +18,9 @@ final class EnergyBar {
     static void tag(GuiGraphicsExtractor graphics, Font font, int x, int y, int barX, int barY, int barW, int tier) {
         if (tier < 0) return;
         final String s = Voltage.NAME[tier];
-        graphics.text(font, s, x + barX + (barW - font.width(s) + 1) / 2, y + barY - 10, 0xFF000000 | Voltage.COLOR[tier], false);
+        final int ty = y + barY - 10;
+        graphics.fill(x + barX, ty - 2, x + barX + barW, ty + 8, 0xFF373737);
+        graphics.text(font, s, x + barX + (barW - font.width(s) + 1) / 2, ty, 0xFF000000 | Voltage.COLOR[tier], false);
     }
 
     static void hover(GuiGraphicsExtractor graphics, Font font, int energy, int capacity, int tier, boolean sendsOnly, int mouseX, int mouseY) {

@@ -149,8 +149,10 @@ Up to three pipe filters fit in it to choose what it keeps; sneak with an empty 
 
 - Tooltips on every powered block and item show its voltage in the cable colour, what it accepts or sends, what it uses or makes, and what it holds.
 - Powered tools show what they use per block and the Charger tier. The Quarry Assembly says it builds an MV quarry.
-- Machine screens show LV, MV or HV over the energy bar, and the bar tooltip shows the tier.
+- Machine screens show LV, MV or HV over the energy bar on a dark backing plate, and the bar tooltip shows the tier.
+- The Battery screen shows its charge with thousands separators, like 300,000 / 500,000 FE.
 - Solar Panels, Wind Turbines and Transformers keep their energy when broken.
+- The manual's voltage page says tooltips and machine screens show each voltage in its cable colour.
 
 ### 2.1.0
 

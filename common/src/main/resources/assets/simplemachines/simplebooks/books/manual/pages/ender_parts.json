@@ -3,7 +3,7 @@
   "sort": 1,
   "title": "Ender Parts",
   "subtitle": "Ingots, wire and coils",
-  "text": "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Devices in later updates are built from them.",
+  "text": "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Ender Buffers, Tanks and Backpacks are built from them.",
   "drawing": "simplemachines:textures/simplebooks/manual/ender.png",
   "caption": "Programmer and card",
   "right_title": "Recipes",

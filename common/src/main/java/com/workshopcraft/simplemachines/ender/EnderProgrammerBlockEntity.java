@@ -63,7 +63,7 @@ public class EnderProgrammerBlockEntity extends WorkBlockEntity {
 
     @Override
     protected boolean accepts(ServerLevel level, int slot, ItemStack stack) {
-        return stack.is(SimpleMachines.linkCard);
+        return EnderLink.programmable(stack);
     }
 
     @Override

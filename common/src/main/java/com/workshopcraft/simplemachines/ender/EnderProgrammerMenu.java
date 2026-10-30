@@ -37,7 +37,7 @@ public class EnderProgrammerMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, 0, CARD_X, CARD_Y) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(SimpleMachines.linkCard);
+                return EnderLink.programmable(stack);
             }
 
             @Override

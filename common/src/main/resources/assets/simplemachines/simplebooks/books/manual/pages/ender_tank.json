@@ -1,0 +1,45 @@
+{
+  "section": "ender",
+  "sort": 4,
+  "title": "Ender Tank",
+  "subtitle": "LV, 8 FE/t, 16 shared buckets",
+  "text": "Every Ender Tank on the same code shares one tank of 16 buckets of one fluid. Fluid pipes connect on any side, private or not.\n\nPut a bucket of fluid in the top slot to pour it in, or an empty bucket to fill it; the result comes out below.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. The code survives breaking and taking it apart, and the fluid stays on the code.",
+  "drawing": "simplemachines:textures/simplebooks/manual/ender_tank.png",
+  "caption": "Two tanks, one fluid",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:ender_coil",
+        "X": "simplemachines:fluid_tank"
+      },
+      "output": "simplemachines:tank_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Ender Coil, 1x Fluid Tank",
+      "title": "Tank Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Ender Tank",
+      "inputs": [
+        "simplemachines:tank_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:ender_tank",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

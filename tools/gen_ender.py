@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-# Ender Programmer and its parts (2.2.0). Run from the repo root after gen_assets.py: python3 tools/gen_ender.py
+# Ender devices and their parts (2.2.0). Run from the repo root after gen_assets.py: python3 tools/gen_ender.py
 import json, os, shutil, sys
+from PIL import Image
 
 g = {"__file__": os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_assets.py"), "__name__": "gen_assets"}
 exec(open(g["__file__"]).read().rsplit("\nmain()", 1)[0], g)
@@ -10,9 +11,9 @@ DARK = (36, 30, 28, 255)
 TEAL = [(44, 205, 177), (52, 153, 136), (24, 86, 76)]
 AMBER = [(232, 190, 50), (120, 92, 30)]
 KEYS = [(200, 206, 224), (150, 156, 176)]
-CORE = "programmer"
-BLOCK = "ender_programmer"
-g["FRONT_HOLE"][CORE] = (3, 3, 13, 13)
+CORES = {"programmer": "ender_programmer", "buffer": "ender_buffer", "tank": "ender_tank"}
+LINKED = ("buffer", "tank")
+g["FRONT_HOLE"].update({"programmer": (3, 3, 13, 13), "buffer": (3, 3, 13, 13), "tank": (4, 2, 12, 14)})
 
 def front(lit):
     # the plan's screen and keypad, packed into the 10x10 window the front panel leaves open
@@ -31,8 +32,49 @@ def front(lit):
     return t
 
 def top():
-    t = g["core_top"](CORE)
+    t = g["core_top"]("programmer")
     px(t, 12, 3, TEAL[1] + (255,))
+    return t
+
+def panel(W, H):
+    t = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
+    rect(t, 1, 1, W - 2, H - 2, (198, 198, 198, 255))
+    rect(t, 1, 0, W - 3, 0, (0, 0, 0, 255)); rect(t, 0, 1, 0, H - 3, (0, 0, 0, 255))
+    rect(t, 2, H - 1, W - 2, H - 1, (0, 0, 0, 255)); rect(t, W - 1, 2, W - 1, H - 2, (0, 0, 0, 255))
+    px(t, W - 2, 1, (0, 0, 0, 255)); px(t, 1, H - 2, (0, 0, 0, 255)); px(t, W - 2, H - 2, (0, 0, 0, 255))
+    rect(t, 1, 1, W - 3, 2, (255, 255, 255, 255)); rect(t, 1, 1, 2, H - 3, (255, 255, 255, 255))
+    rect(t, 3, H - 3, W - 2, H - 2, (85, 85, 85, 255)); rect(t, W - 3, 3, W - 2, H - 2, (85, 85, 85, 255))
+    px(t, W - 2, H - 2, (0, 0, 0, 0)); px(t, W - 3, H - 3, (85, 85, 85, 255))
+    return t
+
+def inset(t, x0, y0, x1, y1, fill=(139, 139, 139, 255)):
+    rect(t, x0, y0, x1, y1, fill)
+    rect(t, x0, y0, x1 - 1, y0, (55, 55, 55, 255)); rect(t, x0, y0, x0, y1 - 1, (55, 55, 55, 255))
+    rect(t, x0 + 1, y1, x1, y1, (255, 255, 255, 255)); rect(t, x1, y0 + 1, x1, y1, (255, 255, 255, 255))
+
+def inventory(t, y):
+    for r in range(3):
+        for c in range(9):
+            inset(t, 7 + c * 18, y + r * 18, 24 + c * 18, y + 17 + r * 18)
+    for c in range(9):
+        inset(t, 7 + c * 18, y + 58, 24 + c * 18, y + 75)
+
+def buffer_gui():
+    t = panel(176, 195)
+    for r in range(3):
+        for c in range(9):
+            inset(t, 7 + c * 18, 17 + r * 18, 24 + c * 18, 34 + r * 18)
+    inset(t, 7, 87, 168, 94)
+    inventory(t, 112)
+    return t
+
+def tank_gui():
+    t = panel(176, 166)
+    inset(t, 39, 19, 56, 36)
+    inset(t, 39, 43, 56, 60)
+    inset(t, 79, 16, 96, 69)
+    inset(t, 152, 16, 167, 69)
+    inventory(t, 83)
     return t
 
 def gui_tex():
@@ -88,6 +130,31 @@ def lang_update():
         "message.simplemachines.ender_not_owner": "This code belongs to someone else",
         "message.simplemachines.ender_now_private": "Code %s is now private",
         "message.simplemachines.ender_now_public": "Code %s is now public",
+        "item.simplemachines.buffer_assembly": "Buffer Assembly",
+        "item.simplemachines.tank_assembly": "Tank Assembly",
+        "item.simplemachines.ender_backpack": "Ender Backpack",
+        "block.simplemachines.ender_buffer": "Ender Buffer",
+        "block.simplemachines.ender_tank": "Ender Tank",
+        "container.simplemachines.ender_buffer": "Ender Buffer",
+        "container.simplemachines.ender_tank": "Ender Tank",
+        "container.simplemachines.ender_backpack": "Ender Backpack",
+        "gui.simplemachines.ender_no_card": "Put a Link Card or Backpack in the slot.",
+        "gui.simplemachines.ender_not_owner": "That holds someone else's code.",
+        "gui.simplemachines.ender_wrote": "Wrote %s.",
+        "gui.simplemachines.ender_code_label": "Code %s",
+        "gui.simplemachines.ender_no_link": "No code: right-click with a Link Card",
+        "gui.simplemachines.ender_offline": "No power: not sharing",
+        "gui.simplemachines.ender_owner_public": "Public. Owner: %s",
+        "gui.simplemachines.ender_owner_private": "Private. Owner: %s",
+        "gui.simplemachines.ender_someone": "someone else",
+        "gui.simplemachines.ender_fe": "%s / %s FE",
+        "gui.simplemachines.ender_tank_empty": "Empty",
+        "gui.simplemachines.ender_tank_amount": "%s / %s B",
+        "tooltip.simplemachines.backpack_blank": "Blank: write a code in an Ender Programmer",
+        "tooltip.simplemachines.backpack": "Right-click to open the Ender Buffer on its code",
+        "tooltip.simplemachines.uses_open": "Uses %s FE per open",
+        "message.simplemachines.backpack_no_code": "This backpack has no code yet",
+        "message.simplemachines.backpack_no_power": "The backpack needs charging",
     })
     jdump(lang, p)
 
@@ -106,17 +173,22 @@ def recipes():
     shaped("ender_coil", [" W ", "WSW", " W "], {"W": W, "S": "#c:rods/steel"})
     shaped("link_card", ["PWP"], {"P": "#c:plates/iron", "W": W}, 2)
     shaped("programmer_assembly", ["RCR", "WIW"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "W": W, "I": f"{MOD}:ender_ingot"})
+    E = f"{MOD}:ender_coil"
+    shaped("buffer_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:chest"})
+    shaped("tank_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:fluid_tank"})
+    shaped("ender_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
 
-def main():
-    tb, ti = A + "/textures/block/", A + "/textures/item/"
-    save(front(False), tb + f"{CORE}_core_front.png")
-    save(front(True), tb + f"{CORE}_core_front_on.png")
-    save(top(), tb + f"{CORE}_core_top.png")
-    for it in ["ender_ingot", "ender_wire", "ender_coil", "link_card"]:
-        shutil.copy(PLAN + it + ".png", ti + it + ".png")
-        jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
-        jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
-    save(gui_tex(), A + f"/textures/gui/{BLOCK}.png")
+def device(CORE, BLOCK):
+    tb = A + "/textures/block/"
+    if CORE == "programmer":
+        save(front(False), tb + f"{CORE}_core_front.png")
+        save(front(True), tb + f"{CORE}_core_front_on.png")
+        save(top(), tb + f"{CORE}_core_top.png")
+        save(gui_tex(), A + f"/textures/gui/{BLOCK}.png")
+    else:
+        for suffix in ["front", "front_on", "top"]:
+            shutil.copy(PLAN + f"{BLOCK}_core_{suffix}.png", tb + f"{CORE}_core_{suffix}.png")
+        save(buffer_gui() if CORE == "buffer" else tank_gui(), A + f"/textures/gui/{BLOCK}.png")
 
     core_tex = lambda on: {"front": f"{MOD}:block/{CORE}_core_front" + on, "side": f"{MOD}:block/core_side",
                            "top": f"{MOD}:block/{CORE}_core_top", "bottom": f"{MOD}:block/core_bottom", "particle": f"{MOD}:block/core_side"}
@@ -153,18 +225,27 @@ def main():
                  **core_tex(""), "panel": g["finish_tex"]("oak", "panel"), "worktop": g["finish_tex"]("oak", "worktop")})
     jdump({"model": {"type": "minecraft:model", "model": item}}, f"{A}/items/{BLOCK}.json")
     jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:block/{CORE}_core"}}, f"{A}/items/{CORE}_assembly.json")
+    keep = [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"] + ([f"{MOD}:ender_link"] if CORE in LINKED else [])
     jdump({"type": "minecraft:block", "pools": [{"rolls": 1, "bonus_rolls": 0,
            "conditions": [{"condition": "minecraft:survives_explosion"}],
            "entries": [{"type": "minecraft:item", "name": f"{MOD}:{BLOCK}", "functions": [
                {"function": "minecraft:copy_state", "block": f"{MOD}:{BLOCK}", "properties": ["tier", "panel"]},
-               {"function": "minecraft:copy_components", "source": "block_entity",
-                "include": [f"{MOD}:energy", f"{MOD}:worktop", f"{MOD}:upgrades"]}]}]}],
+               {"function": "minecraft:copy_components", "source": "block_entity", "include": keep}]}]}],
            "random_sequence": f"{MOD}:blocks/{BLOCK}"}, f"{D}/{MOD}/loot_table/blocks/{BLOCK}.json")
     p = f"{D}/minecraft/tags/block/mineable/pickaxe.json"
     tag = json.load(open(p))
     if f"{MOD}:{BLOCK}" not in tag["values"]:
         tag["values"].append(f"{MOD}:{BLOCK}")
     jdump(tag, p)
+
+def main():
+    ti = A + "/textures/item/"
+    for it in ["ender_ingot", "ender_wire", "ender_coil", "link_card", "ender_backpack"]:
+        shutil.copy(PLAN + it + ".png", ti + it + ".png")
+        jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
+        jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
+    for core, block in CORES.items():
+        device(core, block)
     lang_update()
     recipes()
     g["recipe_unlocks"]()

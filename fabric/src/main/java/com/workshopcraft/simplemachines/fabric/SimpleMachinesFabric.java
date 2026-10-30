@@ -62,7 +62,7 @@ public class SimpleMachinesFabric implements ModInitializer {
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity((be, side) -> new FabricTank(be), SimpleMachines.tankEntity);
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntities((be, side) ->
                 be instanceof com.workshopcraft.simplemachines.pipe.FluidStore store ? new FabricTank(store) : null,
-                SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA));
+                SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA), SimpleMachines.MACHINE_ENTITIES.get(Core.TANK));
         net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, context) -> builder.add(SimpleMachines.biofuelItem, 2400));
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
@@ -110,6 +110,8 @@ public class SimpleMachinesFabric implements ModInitializer {
         };
         EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, BatteryBlockEntity.itemCapacity(stack), BatteryBlockEntity.RATE),
                 SimpleMachines.MACHINES.get(Core.BATTERY).asItem());
+        EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx,
+                com.workshopcraft.simplemachines.ender.EnderBackpackItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.enderBackpack);
         EnergyStorage.ITEM.registerForItems((stack, ctx) -> new ItemEnergyStorage(ctx, PoweredToolItem.capacity(stack), PoweredToolItem.RATE),
                 SimpleMachines.TOOLS.toArray(new Item[0]));
         EnergyBuffer.lookup = (level, pos, side) -> EnergyStorage.SIDED.find(level, pos, side) != null;

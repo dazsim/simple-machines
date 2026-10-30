@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:leather",
+    "W": "simplemachines:ender_wire",
+    "E": "simplemachines:ender_coil",
+    "P": "simplemachines:power_cell"
+  },
+  "pattern": [
+    "LWL",
+    "LEL",
+    "LPL"
+  ],
+  "result": {
+    "id": "simplemachines:ender_backpack"
+  }
+}

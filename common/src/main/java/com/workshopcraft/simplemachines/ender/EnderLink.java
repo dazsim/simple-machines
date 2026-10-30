@@ -2,6 +2,7 @@ package com.workshopcraft.simplemachines.ender;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.workshopcraft.simplemachines.SimpleMachines;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.UUIDUtil;
@@ -47,6 +48,11 @@ public record EnderLink(int code, UUID owner, boolean priv, String modules) {
     /** Whether player may open or recode a device on this link. */
     public static boolean allows(@Nullable EnderLink link, Player player) {
         return link == null || !link.priv || link.ownedBy(player);
+    }
+
+    /** Whether the Ender Programmer can write a code onto this stack. */
+    public static boolean programmable(net.minecraft.world.item.ItemStack stack) {
+        return stack.is(SimpleMachines.linkCard) || stack.is(SimpleMachines.enderBackpack);
     }
 
     public EnderLink withCode(int c, UUID who, boolean p) {

@@ -64,6 +64,8 @@ public record PowerInfo(int accepts, int sends, int out, int use, int steelUse, 
         m.put(mc.get(Core.HARVESTER), user(HarvesterBlockEntity.PER_CROP, Unit.CROP, HarvesterBlockEntity.CAPACITY));
         m.put(mc.get(Core.PROGRAMMER), user(com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity.PER_WRITE, Unit.WRITE,
                 com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity.CAPACITY));
+        for (Core c : new Core[]{Core.BUFFER, Core.TANK}) m.put(mc.get(c), user(com.workshopcraft.simplemachines.ender.EnderDeviceBlockEntity.UPKEEP,
+                Unit.RUNNING, com.workshopcraft.simplemachines.ender.EnderDeviceBlockEntity.CAPACITY));
         m.put(mc.get(Core.CHARGER), user(ChargerBlockEntity.RATE, Unit.CHARGE, ChargerBlockEntity.CAPACITY));
         m.put(mc.get(Core.QUARRY), new PowerInfo(Voltage.MV, -1, 0, QuarryBlockEntity.PER_BLOCK, QuarryBlockEntity.PER_BLOCK, 0, Unit.BLOCK,
                 QuarryBlockEntity.BUFFER, true));

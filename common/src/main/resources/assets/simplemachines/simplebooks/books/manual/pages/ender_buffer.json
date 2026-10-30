@@ -1,0 +1,45 @@
+{
+  "section": "ender",
+  "sort": 2,
+  "title": "Ender Buffer",
+  "subtitle": "LV, 8 FE/t, 27 shared slots",
+  "text": "Every Ender Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nPipes and hoppers can put items in and take them out on any side, even on a private buffer; private only locks the screen and the code.\n\nIt uses 8 FE/t and holds 20k FE. Without power it stops sharing until power comes back. Breaking or taking it apart keeps its code, and the items stay on the code.",
+  "drawing": "simplemachines:textures/simplebooks/manual/ender_buffer.png",
+  "caption": "Two buffers, one inventory",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:ender_coil",
+        "X": "minecraft:chest"
+      },
+      "output": "simplemachines:buffer_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Ender Coil, 1x Chest",
+      "title": "Buffer Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Ender Buffer",
+      "inputs": [
+        "simplemachines:buffer_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:ender_buffer",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

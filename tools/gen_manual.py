@@ -469,6 +469,28 @@ def d_ender():
     sh.text((320, 345), "type a code, press Enter, then use the card on a device", 12, SOFT)
     sh.save("ender")
 
+def d_ender_buffer():
+    sh = Sheet()
+    machine(sh, iso((150, 210), 0.8)); machine(sh, iso((490, 210), 0.8))
+    sh.text((320, 40), "ENDER BUFFERS ON ONE CODE", 14)
+    sh.arrow((250, 160), (390, 160)); sh.arrow((390, 185), (250, 185))
+    sh.text((320, 140), "482913", 13)
+    sh.text((150, 312), "base", 12, SOFT); sh.text((490, 312), "mine, other dimension", 12, SOFT)
+    sh.text((320, 355), "the same 27 slots in every buffer and backpack on the code", 12, SOFT)
+    sh.save("ender_buffer")
+
+def d_ender_tank():
+    sh = Sheet()
+    machine(sh, iso((150, 210), 0.8)); machine(sh, iso((490, 210), 0.8))
+    sh.text((320, 40), "ENDER TANKS ON ONE CODE", 14)
+    cx, cy = 300, 120
+    sh.poly([(cx, cy), (cx + 40, cy), (cx + 40, cy + 110), (cx, cy + 110)])
+    sh.line((cx, cy + 50), (cx + 40, cy + 50), 1.4, SOFT)
+    sh.text((cx + 20, cy + 130), "16 B", 12, SOFT)
+    sh.arrow((230, 175), (290, 175)); sh.arrow((350, 175), (410, 175))
+    sh.text((320, 355), "one fluid, 16 buckets, shared by every tank on the code", 12, SOFT)
+    sh.save("ender_tank")
+
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -698,13 +720,25 @@ def pages():
          "ender", "Programmer and card", "Recipes",
          [craft("programmer_assembly", "Programmer Assembly"), build("programmer_assembly", "ender_programmer", "Ender Programmer"), craft("link_card")])
     page("ender_parts", "ender", 1, "Ender Parts", "Ingots, wire and coils",
-         "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Devices in later updates are built from them.",
+         "Ender parts start with the Ender Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Ender Wire.\n\nWire wound on a steel rod makes an Ender Coil. Ender Buffers, Tanks and Backpacks are built from them.",
          "ender", "Programmer and card", "Recipes",
          [process("alloying/ender_ingot", "alloy_smelter"), process("rolling/ender_wire", "rolling_mill", "Rod mode"), craft("ender_coil")])
+    page("ender_buffer", "ender", 2, "Ender Buffer", "LV, 8 FE/t, 27 shared slots",
+         "Every Ender Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nPipes and hoppers can put items in and take them out on any side, even on a private buffer; private only locks the screen and the code.\n\nIt uses 8 FE/t and holds 20k FE. Without power it stops sharing until power comes back. Breaking or taking it apart keeps its code, and the items stay on the code.",
+         "ender_buffer", "Two buffers, one inventory", "Assembly",
+         [craft("buffer_assembly", "Buffer Assembly"), build("buffer_assembly", "ender_buffer", "Ender Buffer")])
+    page("ender_backpack", "ender", 3, "Ender Backpack", "The buffer, carried",
+         "Write a code onto the Ender Backpack in the Ender Programmer, the same way as a Link Card. Right click with it to open the Ender Buffer slots on that code from anywhere, in any dimension.\n\nEach open uses 1000 FE from its own 50k FE battery. Charge it in the Charger.\n\nThe Programmer's Private button applies to the backpack too: a private backpack opens only its owner's private buffers. Backpacks cannot be put inside a buffer.",
+         "ender_buffer", "Two buffers, one inventory", "Recipe",
+         [craft("ender_backpack")])
+    page("ender_tank", "ender", 4, "Ender Tank", "LV, 8 FE/t, 16 shared buckets",
+         "Every Ender Tank on the same code shares one tank of 16 buckets of one fluid. Fluid pipes connect on any side, private or not.\n\nPut a bucket of fluid in the top slot to pour it in, or an empty bucket to fill it; the result comes out below.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. The code survives breaking and taking it apart, and the fluid stays on the code.",
+         "ender_tank", "Two tanks, one fluid", "Assembly",
+         [craft("tank_assembly", "Tank Assembly"), build("tank_assembly", "ender_tank", "Ender Tank")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_ender]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_ender, d_ender_buffer, d_ender_tank]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

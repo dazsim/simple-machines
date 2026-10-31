@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.assembly;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
-import com.workshopcraft.simplemachines.ender.EnderLink;
+import com.workshopcraft.simplemachines.entangled.EntangledLink;
 import com.workshopcraft.simplemachines.machine.MachineBlock;
 import com.workshopcraft.simplemachines.machine.PoweredMachineBlock;
 import net.minecraft.core.BlockPos;
@@ -117,7 +117,7 @@ public final class Assembly {
             final String worktop = worktopAt(level, pos);
             final List<Upgrade> upgrades = upgradesAt(level, pos);
             final String drill = level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be.drill() : "";
-            final EnderLink ender = level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be.ender() : null;
+            final EntangledLink entangled = level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be.entangled() : null;
             level.setBlock(pos, state.getValue(CORE).machine().defaultBlockState()
                     .setValue(MachineBlock.FACING, state.getValue(ChassisBlock.FACING))
                     .setValue(PoweredMachineBlock.TIER, tier)
@@ -125,7 +125,7 @@ public final class Assembly {
             if (level.getBlockEntity(pos) instanceof Worktops.Holder h) h.setWorktop(worktop);
             if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
             if (level.getBlockEntity(pos) instanceof QuarryBlockEntity q) q.setDrill(drill);
-            if (ender != null && level.getBlockEntity(pos) instanceof EnderLink.Holder h) h.setLink(ender);
+            if (entangled != null && level.getBlockEntity(pos) instanceof EntangledLink.Holder h) h.setLink(entangled);
         } else {
             level.setBlock(pos, state.setValue(STEP, step + 1), Block.UPDATE_ALL);
         }
@@ -163,7 +163,7 @@ public final class Assembly {
             part = coreStack(state, level.getBlockEntity(pos) instanceof ChassisBlockEntity be ? be : null);
             if (level.getBlockEntity(pos) instanceof ChassisBlockEntity be) {
                 be.setDrill("");
-                be.setEnder(null);
+                be.setEntangled(null);
             }
             next = state.setValue(CORE, Core.NONE).setValue(STEP, 0);
         }
@@ -179,7 +179,7 @@ public final class Assembly {
         final String worktop = worktopAt(level, pos);
         final List<Upgrade> upgrades = upgradesAt(level, pos);
         final String drill = level.getBlockEntity(pos) instanceof QuarryBlockEntity q ? q.drillData() : "";
-        final EnderLink ender = level.getBlockEntity(pos) instanceof EnderLink.Holder h ? h.link() : null;
+        final EntangledLink entangled = level.getBlockEntity(pos) instanceof EntangledLink.Holder h ? h.link() : null;
         level.setBlock(pos, state.getValue(PoweredMachineBlock.TIER).chassis().defaultBlockState()
                 .setValue(ChassisBlock.FACING, state.getValue(MachineBlock.FACING))
                 .setValue(CORE, block.core())
@@ -188,7 +188,7 @@ public final class Assembly {
         if (level.getBlockEntity(pos) instanceof Upgrade.Holder h) h.setUpgrades(upgrades);
         if (level.getBlockEntity(pos) instanceof ChassisBlockEntity be) {
             be.setDrill(drill);
-            be.setEnder(ender);
+            be.setEntangled(entangled);
         }
         Block.popResource(level, pos.above(), Worktops.stack(worktop));
         ratchet(level, pos);
@@ -219,14 +219,14 @@ public final class Assembly {
             if (!level.isClientSide()) disassemble(state, level, pos);
             return true;
         }
-        if (state.getBlock() instanceof PoweredMachineBlock && level.getBlockEntity(pos) instanceof EnderLink.Holder h && h.link() != null) {
+        if (state.getBlock() instanceof PoweredMachineBlock && level.getBlockEntity(pos) instanceof EntangledLink.Holder h && h.link() != null) {
             if (!level.isClientSide()) {
-                final EnderLink link = h.link();
+                final EntangledLink link = h.link();
                 if (!link.ownedBy(player)) {
-                    player.sendOverlayMessage(Component.translatable("message.simplemachines.ender_not_owner"));
+                    player.sendOverlayMessage(Component.translatable("message.simplemachines.entangled_not_owner"));
                 } else {
                     h.setLink(link.withPrivate(!link.priv()));
-                    player.sendOverlayMessage(Component.translatable(link.priv() ? "message.simplemachines.ender_now_public" : "message.simplemachines.ender_now_private", link.digits()));
+                    player.sendOverlayMessage(Component.translatable(link.priv() ? "message.simplemachines.entangled_now_public" : "message.simplemachines.entangled_now_private", link.digits()));
                     ratchet(level, pos);
                 }
             }

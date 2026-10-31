@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "#c:rods/iron",
+    "C": "simplemachines:redstone_copper_ingot",
+    "W": "simplemachines:entangled_wire",
+    "I": "simplemachines:entangled_ingot"
+  },
+  "pattern": [
+    "RCR",
+    "WIW"
+  ],
+  "result": {
+    "id": "simplemachines:entangled_programmer_assembly"
+  }
+}

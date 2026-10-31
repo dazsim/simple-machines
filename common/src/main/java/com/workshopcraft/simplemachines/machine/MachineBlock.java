@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
-import com.workshopcraft.simplemachines.ender.LinkCardItem;
+import com.workshopcraft.simplemachines.entangled.LinkCardItem;
 
 public abstract class MachineBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;

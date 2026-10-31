@@ -1,0 +1,47 @@
+{
+  "section": "entangled",
+  "sort": 1,
+  "title": "Entangled Parts",
+  "subtitle": "Ingots, wire and coils",
+  "text": "Entangled parts start with the Entangled Ingot, alloyed from redstone copper and an ender pearl in the Alloy Smelter. The Rolling Mill in rod mode turns each ingot into 2 Entangled Wire.\n\nWire wound on a steel rod makes an Entangled Coil. Entangled Buffers, Tanks and Backpacks are built from them.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_programmer.png",
+  "caption": "Programmer and card",
+  "right_title": "Recipes",
+  "steps": [
+    {
+      "kind": "process",
+      "inputs": [
+        "simplemachines:redstone_copper_ingot",
+        "#c:ender_pearls"
+      ],
+      "appliance": "simplemachines:alloy_smelter",
+      "output": "simplemachines:entangled_ingot"
+    },
+    {
+      "kind": "process",
+      "inputs": [
+        "simplemachines:entangled_ingot"
+      ],
+      "appliance": "simplemachines:rolling_mill",
+      "output": {
+        "item": "simplemachines:entangled_wire",
+        "count": 2
+      },
+      "note": "Rod mode"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        " W ",
+        "WSW",
+        " W "
+      ],
+      "key": {
+        "W": "simplemachines:entangled_wire",
+        "S": "#c:rods/steel"
+      },
+      "output": "simplemachines:entangled_coil",
+      "note": "Crafting Table\n4x Entangled Wire, 1x Steel Rod"
+    }
+  ]
+}

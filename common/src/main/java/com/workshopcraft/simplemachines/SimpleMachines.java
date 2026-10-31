@@ -115,16 +115,16 @@ public class SimpleMachines {
             DataComponentType.<net.minecraft.world.item.component.ItemContainerContents>builder()
                     .persistent(net.minecraft.world.item.component.ItemContainerContents.CODEC)
                     .networkSynchronized(net.minecraft.world.item.component.ItemContainerContents.STREAM_CODEC).cacheEncoding().build();
-    public static final MenuType<com.workshopcraft.simplemachines.ender.EnderProgrammerMenu> PROGRAMMER_MENU =
-            new MenuType<>(com.workshopcraft.simplemachines.ender.EnderProgrammerMenu::client, FeatureFlags.VANILLA_SET);
-    public static final MenuType<com.workshopcraft.simplemachines.ender.EntangledBufferMenu> BUFFER_MENU =
-            new MenuType<>(com.workshopcraft.simplemachines.ender.EntangledBufferMenu::client, FeatureFlags.VANILLA_SET);
-    public static final MenuType<com.workshopcraft.simplemachines.ender.EntangledTankMenu> TANK_MENU =
-            new MenuType<>(com.workshopcraft.simplemachines.ender.EntangledTankMenu::client, FeatureFlags.VANILLA_SET);
-    public static final DataComponentType<com.workshopcraft.simplemachines.ender.EnderLink> ENDER_LINK =
-            DataComponentType.<com.workshopcraft.simplemachines.ender.EnderLink>builder()
-                    .persistent(com.workshopcraft.simplemachines.ender.EnderLink.CODEC)
-                    .networkSynchronized(com.workshopcraft.simplemachines.ender.EnderLink.STREAM_CODEC).build();
+    public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledProgrammerMenu> PROGRAMMER_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledProgrammerMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledBufferMenu> BUFFER_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledBufferMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledTankMenu> TANK_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledTankMenu::client, FeatureFlags.VANILLA_SET);
+    public static final DataComponentType<com.workshopcraft.simplemachines.entangled.EntangledLink> ENTANGLED_LINK =
+            DataComponentType.<com.workshopcraft.simplemachines.entangled.EntangledLink>builder()
+                    .persistent(com.workshopcraft.simplemachines.entangled.EntangledLink.CODEC)
+                    .networkSynchronized(com.workshopcraft.simplemachines.entangled.EntangledLink.STREAM_CODEC).build();
     public static final DataComponentType<Integer> ENERGY = DataComponentType.<Integer>builder()
             .persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).build();
     public static final DataComponentType<String> WORKTOP = DataComponentType.<String>builder()
@@ -401,9 +401,9 @@ public class SimpleMachines {
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
-        for (String name : List.of("ender_ingot", "ender_wire", "ender_coil")) add(r, name, new Item(props(name)));
-        linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.ender.LinkCardItem(props("link_card").stacksTo(16)));
-        entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.ender.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)));
+        for (String name : List.of("entangled_ingot", "entangled_wire", "entangled_coil")) add(r, name, new Item(props(name)));
+        linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.entangled.LinkCardItem(props("link_card").stacksTo(16)));
+        entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)));
         add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
@@ -449,7 +449,7 @@ public class SimpleMachines {
         r.accept(id("filter"), FILTER);
         r.accept(id("tank"), TANK);
         r.accept(id("crafter_pattern"), CRAFTER_PATTERN);
-        r.accept(id("ender_link"), ENDER_LINK);
+        r.accept(id("entangled_link"), ENTANGLED_LINK);
     }
 
     public static void registerTabs(BiConsumer<Identifier, CreativeModeTab> r) {
@@ -489,9 +489,9 @@ public class SimpleMachines {
         entity(r, Core.SHEARER, ShearerBlockEntity::new);
         entity(r, Core.CHARGER, ChargerBlockEntity::new);
         entity(r, Core.CRAFTER, com.workshopcraft.simplemachines.machine.AutoCrafterBlockEntity::new);
-        entity(r, Core.PROGRAMMER, com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity::new);
-        entity(r, Core.BUFFER, com.workshopcraft.simplemachines.ender.EntangledBufferBlockEntity::new);
-        entity(r, Core.TANK, com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity::new);
+        entity(r, Core.PROGRAMMER, com.workshopcraft.simplemachines.entangled.EntangledProgrammerBlockEntity::new);
+        entity(r, Core.BUFFER, com.workshopcraft.simplemachines.entangled.EntangledBufferBlockEntity::new);
+        entity(r, Core.TANK, com.workshopcraft.simplemachines.entangled.EntangledTankBlockEntity::new);
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
@@ -528,7 +528,7 @@ public class SimpleMachines {
         r.accept(id("electric_furnace"), ELECTRIC_FURNACE_MENU);
         r.accept(id("pipe_filter"), FILTER_MENU);
         r.accept(id("auto_crafter"), CRAFTER_MENU);
-        r.accept(id("ender_programmer"), PROGRAMMER_MENU);
+        r.accept(id("entangled_programmer"), PROGRAMMER_MENU);
         r.accept(id("entangled_buffer"), BUFFER_MENU);
         r.accept(id("entangled_tank"), TANK_MENU);
     }

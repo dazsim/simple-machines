@@ -1,0 +1,13 @@
+{
+  "type": "simplemachines:alloying",
+  "first": {
+    "ingredient": "simplemachines:redstone_copper_ingot"
+  },
+  "second": {
+    "ingredient": "#c:ender_pearls"
+  },
+  "result": {
+    "id": "simplemachines:entangled_ingot"
+  },
+  "cooking_time": 400
+}

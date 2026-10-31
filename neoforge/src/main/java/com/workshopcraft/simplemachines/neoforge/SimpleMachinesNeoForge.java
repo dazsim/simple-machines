@@ -132,7 +132,7 @@ public class SimpleMachinesNeoForge {
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 PoweredToolItem.capacity(stack), PoweredToolItem.RATE), SimpleMachines.TOOLS.toArray(new Item[0]));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
-                com.workshopcraft.simplemachines.ender.EntangledBackpackItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.entangledBackpack);
+                com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.entangledBackpack);
     }
 
     private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {
@@ -153,8 +153,8 @@ public class SimpleMachinesNeoForge {
     }
 
     @SuppressWarnings("unchecked")
-    private static BlockEntityType<com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity> entangledTankEntity() {
-        return (BlockEntityType<com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity>)
+    private static BlockEntityType<com.workshopcraft.simplemachines.entangled.EntangledTankBlockEntity> entangledTankEntity() {
+        return (BlockEntityType<com.workshopcraft.simplemachines.entangled.EntangledTankBlockEntity>)
                 SimpleMachines.MACHINE_ENTITIES.get(com.workshopcraft.simplemachines.assembly.Core.TANK);
     }
 }

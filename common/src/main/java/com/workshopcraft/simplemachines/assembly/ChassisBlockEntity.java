@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.assembly;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
-import com.workshopcraft.simplemachines.ender.EnderLink;
+import com.workshopcraft.simplemachines.entangled.EntangledLink;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
     private List<Upgrade> upgrades = new ArrayList<>();
     private @Nullable Upgrade loose;
     private String drill = "";
-    private @Nullable EnderLink ender;
+    private @Nullable EntangledLink entangled;
 
     public ChassisBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.chassisEntity, pos, state);
@@ -71,13 +71,13 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         setChanged();
     }
 
-    /** The ender code of the machine this chassis was opened from, kept until it is screwed back together. */
-    public @Nullable EnderLink ender() {
-        return ender;
+    /** The entangled code of the machine this chassis was opened from, kept until it is screwed back together. */
+    public @Nullable EntangledLink entangled() {
+        return entangled;
     }
 
-    public void setEnder(@Nullable EnderLink link) {
-        ender = link;
+    public void setEntangled(@Nullable EntangledLink link) {
+        entangled = link;
         setChanged();
     }
 
@@ -101,7 +101,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         upgrades = Upgrade.parse(input.getStringOr("upgrades", ""));
         loose = Upgrade.byId(input.getStringOr("loose_upgrade", ""));
         drill = input.getStringOr("drill", "");
-        ender = input.read("ender", EnderLink.CODEC).orElse(null);
+        entangled = input.read("entangled", EntangledLink.CODEC).orElse(null);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class ChassisBlockEntity extends BlockEntity implements Worktops.Holder, 
         output.putString("upgrades", Upgrade.join(upgrades));
         output.putString("loose_upgrade", loose == null ? "" : loose.id);
         output.putString("drill", drill);
-        output.storeNullable("ender", EnderLink.CODEC, ender);
+        output.storeNullable("entangled", EntangledLink.CODEC, entangled);
     }
 
     @Override

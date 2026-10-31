@@ -3,7 +3,7 @@ package com.workshopcraft.simplemachines.fabric;
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.cable.CableNetwork;
 import com.workshopcraft.simplemachines.cable.Voltage;
-import com.workshopcraft.simplemachines.ender.EnderAccess;
+import com.workshopcraft.simplemachines.entangled.EntangledAccess;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 import net.minecraft.core.BlockPos;
@@ -47,7 +47,7 @@ public class CableEnergyStorage extends SnapshotParticipant<Integer> implements 
             final CableNetwork.End end = net.ends.get((net.next + i) % size);
             if (end.pos().equals(source)) continue;
             final int room = (int) Math.min(left, Integer.MAX_VALUE);
-            final long n = EnderAccess.through(level, end.pos(), end.pos().relative(end.side()), () -> offer(end, room, tx));
+            final long n = EntangledAccess.through(level, end.pos(), end.pos().relative(end.side()), () -> offer(end, room, tx));
             moved += n;
             left -= n;
         }

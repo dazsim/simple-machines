@@ -32,7 +32,7 @@
       "conditions": {
         "items": [
           {
-            "items": "simplemachines:ender_coil"
+            "items": "simplemachines:entangled_coil"
           }
         ]
       }

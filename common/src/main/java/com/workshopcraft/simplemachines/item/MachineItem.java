@@ -23,9 +23,9 @@ public class MachineItem extends BlockItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, out, flag);
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
-        final com.workshopcraft.simplemachines.ender.EnderLink link = stack.get(SimpleMachines.ENDER_LINK);
+        final com.workshopcraft.simplemachines.entangled.EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (link != null) link.tooltip(out);
-        if (link != null && link.priv()) out.accept(Component.translatable("tooltip.simplemachines.ender_private_pipes").withStyle(ChatFormatting.GRAY));
+        if (link != null && link.priv()) out.accept(Component.translatable("tooltip.simplemachines.entangled_private_pipes").withStyle(ChatFormatting.GRAY));
         PowerTooltip.append(stack, getBlock(), out);
         com.workshopcraft.simplemachines.quarry.QuarryDrill.tooltip(stack, out);
         final com.workshopcraft.simplemachines.pipe.TankContents lava = stack.get(SimpleMachines.TANK);

@@ -1,5 +1,5 @@
 {
-  "section": "ender",
+  "section": "entangled",
   "sort": 4,
   "title": "Entangled Tank",
   "subtitle": "LV, 8 FE/t, 16 shared buckets",
@@ -18,11 +18,11 @@
       "key": {
         "R": "#c:rods/iron",
         "C": "simplemachines:redstone_copper_ingot",
-        "E": "simplemachines:ender_coil",
+        "E": "simplemachines:entangled_coil",
         "X": "simplemachines:fluid_tank"
       },
       "output": "simplemachines:entangled_tank_assembly",
-      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Ender Coil, 1x Fluid Tank",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Entangled Coil, 1x Fluid Tank",
       "title": "Entangled Tank Assembly"
     },
     {

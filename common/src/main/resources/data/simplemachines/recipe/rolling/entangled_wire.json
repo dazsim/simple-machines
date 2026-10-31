@@ -1,0 +1,11 @@
+{
+  "type": "simplemachines:rolling",
+  "input": {
+    "ingredient": "simplemachines:entangled_ingot"
+  },
+  "result": {
+    "id": "simplemachines:entangled_wire",
+    "count": 2
+  },
+  "cooking_time": 100
+}

@@ -3,7 +3,7 @@ package com.workshopcraft.simplemachines.neoforge;
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.cable.CableNetwork;
 import com.workshopcraft.simplemachines.cable.Voltage;
-import com.workshopcraft.simplemachines.ender.EnderAccess;
+import com.workshopcraft.simplemachines.entangled.EntangledAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +53,7 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
             final CableNetwork.End end = net.ends.get((net.next + i) % size);
             if (end.pos().equals(source)) continue;
             final int room = left;
-            final int n = EnderAccess.through(level, end.pos(), end.pos().relative(end.side()), () -> offer(end, room, tx));
+            final int n = EntangledAccess.through(level, end.pos(), end.pos().relative(end.side()), () -> offer(end, room, tx));
             moved += n;
             left -= n;
         }

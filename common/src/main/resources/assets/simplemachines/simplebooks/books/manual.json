@@ -75,9 +75,9 @@
       "icon": "simplemachines:electric_drill"
     },
     {
-      "id": "ender",
-      "title": "Ender",
-      "icon": "simplemachines:ender_programmer"
+      "id": "entangled",
+      "title": "Entangled",
+      "icon": "simplemachines:entangled_programmer"
     }
   ]
 }

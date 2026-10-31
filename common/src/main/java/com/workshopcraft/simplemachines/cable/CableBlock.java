@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.cable;
 
 import com.mojang.serialization.MapCodec;
-import com.workshopcraft.simplemachines.ender.EnderAccess;
+import com.workshopcraft.simplemachines.entangled.EntangledAccess;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,7 +73,7 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         if (ConduitBlockEntity.blockedAt(level, pos, dir)) return false;
         if (neighbour.isAir()) return false;
         if (!(level instanceof Level real)) return current;
-        return EnderAccess.check(real, pos.relative(dir), pos, () -> EnergyBuffer.lookup.has(real, pos.relative(dir), dir.getOpposite()));
+        return EntangledAccess.check(real, pos.relative(dir), pos, () -> EnergyBuffer.lookup.has(real, pos.relative(dir), dir.getOpposite()));
     }
 
     @Override

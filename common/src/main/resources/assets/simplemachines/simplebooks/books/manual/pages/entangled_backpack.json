@@ -1,9 +1,9 @@
 {
-  "section": "ender",
+  "section": "entangled",
   "sort": 3,
   "title": "Entangled Backpack",
   "subtitle": "The buffer, carried",
-  "text": "Write a code onto the Entangled Backpack in the Ender Programmer, the same way as a Link Card. Right click with it to open the Entangled Buffer slots on that code from anywhere, in any dimension.\n\nEach open uses 1000 FE from its own 50k FE battery. Charge it in the Charger.\n\nThe Programmer's Private button applies to the backpack too: a private backpack opens only its owner's private buffers. Backpacks cannot be put inside a buffer.",
+  "text": "Write a code onto the Entangled Backpack in the Entangled Programmer, the same way as a Link Card. Right click with it to open the Entangled Buffer slots on that code from anywhere, in any dimension.\n\nEach open uses 1000 FE from its own 50k FE battery. Charge it in the Charger.\n\nThe Programmer's Private button applies to the backpack too: a private backpack opens only its owner's private buffers. Backpacks cannot be put inside a buffer.",
   "drawing": "simplemachines:textures/simplebooks/manual/entangled_buffer.png",
   "caption": "Two buffers, one inventory",
   "right_title": "Recipe",
@@ -17,12 +17,12 @@
       ],
       "key": {
         "L": "minecraft:leather",
-        "W": "simplemachines:ender_wire",
-        "E": "simplemachines:ender_coil",
+        "W": "simplemachines:entangled_wire",
+        "E": "simplemachines:entangled_coil",
         "P": "simplemachines:power_cell"
       },
       "output": "simplemachines:entangled_backpack",
-      "note": "Crafting Table\n6x Leather, 1x Ender Wire, 1x Ender Coil, 1x Power Cell"
+      "note": "Crafting Table\n6x Leather, 1x Entangled Wire, 1x Entangled Coil, 1x Power Cell"
     }
   ]
 }

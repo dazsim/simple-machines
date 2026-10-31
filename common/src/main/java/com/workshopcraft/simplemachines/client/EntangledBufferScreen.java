@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.client;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
-import com.workshopcraft.simplemachines.ender.EntangledBufferMenu;
+import com.workshopcraft.simplemachines.entangled.EntangledBufferMenu;
 import com.workshopcraft.simplemachines.item.PowerTooltip;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -34,10 +34,10 @@ public class EntangledBufferScreen extends AbstractContainerScreen<EntangledBuff
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
-        graphics.text(font, title, 8, 6, EnderStatus.TITLE, false);
-        EnderStatus.code(graphics, font, menu, 168, 6);
-        EnderStatus.line(graphics, font, menu, 8, 76);
-        graphics.text(font, Component.translatable("gui.simplemachines.ender_fe",
-                PowerTooltip.num(menu.energy()), PowerTooltip.num(menu.capacity())), 8, 98, EnderStatus.TITLE, false);
+        graphics.text(font, title, 8, 6, EntangledStatus.TITLE, false);
+        EntangledStatus.code(graphics, font, menu, 168, 6);
+        EntangledStatus.line(graphics, font, menu, 8, 76);
+        graphics.text(font, Component.translatable("gui.simplemachines.entangled_fe",
+                PowerTooltip.num(menu.energy()), PowerTooltip.num(menu.capacity())), 8, 98, EntangledStatus.TITLE, false);
     }
 }

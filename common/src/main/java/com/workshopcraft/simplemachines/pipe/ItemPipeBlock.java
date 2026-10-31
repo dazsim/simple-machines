@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import com.workshopcraft.simplemachines.cable.ConduitBlockEntity;
 import com.workshopcraft.simplemachines.cable.Conduits;
 import com.workshopcraft.simplemachines.SimpleMachines;
-import com.workshopcraft.simplemachines.ender.EnderAccess;
+import com.workshopcraft.simplemachines.entangled.EntangledAccess;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -104,7 +104,7 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         }
         if (neighbour.isAir()) return Link.NONE;
         if (!(level instanceof Level real)) return current;
-        if (!EnderAccess.check(real, pos.relative(dir), pos, () -> lookup().has(real, pos.relative(dir), dir.getOpposite()))) return Link.NONE;
+        if (!EntangledAccess.check(real, pos.relative(dir), pos, () -> lookup().has(real, pos.relative(dir), dir.getOpposite()))) return Link.NONE;
         return current.end() ? current : Link.LINK;
     }
 

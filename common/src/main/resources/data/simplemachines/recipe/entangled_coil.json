@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": "simplemachines:entangled_wire",
+    "S": "#c:rods/steel"
+  },
+  "pattern": [
+    " W ",
+    "WSW",
+    " W "
+  ],
+  "result": {
+    "id": "simplemachines:entangled_coil"
+  }
+}

@@ -39,8 +39,8 @@
     "simplemachines:tool_stand",
     "simplemachines:fluid_pipe",
     "simplemachines:fluid_tank",
-    "simplemachines:ender_programmer",
     "simplemachines:entangled_buffer",
-    "simplemachines:entangled_tank"
+    "simplemachines:entangled_tank",
+    "simplemachines:entangled_programmer"
   ]
 }

@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.pipe;
 
 import com.workshopcraft.simplemachines.cable.ConduitBlockEntity;
-import com.workshopcraft.simplemachines.ender.EnderAccess;
+import com.workshopcraft.simplemachines.entangled.EntangledAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -85,7 +85,7 @@ public final class PipeNetwork {
     /** The extract end's pipe speaks for the source, each delivering end's pipe for its target. */
     private <T> int route(ServerLevel level, BlockPos from, Direction fromSide, int max, Transfer.Mover<T> mover,
                           Transfer.Probe<T> probe, BiPredicate<PipeFilter, T> match, Consumer<T> moved) {
-        return EnderAccess.through(level, from, from.relative(fromSide), () -> routeAll(level, from, fromSide, max, mover, probe, match, moved));
+        return EntangledAccess.through(level, from, from.relative(fromSide), () -> routeAll(level, from, fromSide, max, mover, probe, match, moved));
     }
 
     private <T> int routeAll(ServerLevel level, BlockPos from, Direction fromSide, int max, Transfer.Mover<T> mover,
@@ -102,7 +102,7 @@ public final class PipeNetwork {
         for (int i = 0; i < allow.size(); i++) {
             final Target t = allow.get(Math.floorMod(nextAllow++, allow.size()));
             final PipeFilter f = filters.get(t);
-            final int n = EnderAccess.through(level, t.pos(), t.pipe(),
+            final int n = EntangledAccess.through(level, t.pos(), t.pipe(),
                     () -> mover.move(level, from, fromSide, t.pos(), t.side(), max, x -> match.test(f, x), moved));
             if (n > 0) {
                 total += n;
@@ -111,7 +111,7 @@ public final class PipeNetwork {
         }
         final Predicate<T> unclaimed = x -> {
             for (Target a : allow) {
-                if (match.test(filters.get(a), x) && EnderAccess.check(level, a.pos(), a.pipe(), () -> probe.accepts(level, a.pos(), a.side(), x))) return false;
+                if (match.test(filters.get(a), x) && EntangledAccess.check(level, a.pos(), a.pipe(), () -> probe.accepts(level, a.pos(), a.side(), x))) return false;
             }
             return true;
         };
@@ -120,7 +120,7 @@ public final class PipeNetwork {
         for (int i = 0; i < rest.size(); i++) {
             final Target t = rest.get(Math.floorMod(next++, rest.size()));
             final PipeFilter f = filters.get(t);
-            final int n = EnderAccess.through(level, t.pos(), t.pipe(), () -> mover.move(level, from, fromSide, t.pos(), t.side(), left,
+            final int n = EntangledAccess.through(level, t.pos(), t.pipe(), () -> mover.move(level, from, fromSide, t.pos(), t.side(), left,
                     x -> (f == null || !match.test(f, x)) && unclaimed.test(x), moved));
             if (n > 0) {
                 total += n;

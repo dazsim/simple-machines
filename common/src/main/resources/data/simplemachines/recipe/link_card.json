@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": "#c:plates/iron",
-    "W": "simplemachines:ender_wire"
+    "W": "simplemachines:entangled_wire"
   },
   "pattern": [
     "PWP"

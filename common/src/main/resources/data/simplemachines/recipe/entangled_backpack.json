@@ -3,8 +3,8 @@
   "category": "misc",
   "key": {
     "L": "minecraft:leather",
-    "W": "simplemachines:ender_wire",
-    "E": "simplemachines:ender_coil",
+    "W": "simplemachines:entangled_wire",
+    "E": "simplemachines:entangled_coil",
     "P": "simplemachines:power_cell"
   },
   "pattern": [

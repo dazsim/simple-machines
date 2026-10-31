@@ -1,7 +1,7 @@
 package com.workshopcraft.simplemachines.client;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
-import com.workshopcraft.simplemachines.ender.EntangledTankMenu;
+import com.workshopcraft.simplemachines.entangled.EntangledTankMenu;
 import com.workshopcraft.simplemachines.pipe.TankBlockEntity;
 import com.workshopcraft.simplemachines.pipe.TankItem;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -51,14 +51,14 @@ public class EntangledTankScreen extends AbstractContainerScreen<EntangledTankMe
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
-        graphics.text(font, title, 8, 6, EnderStatus.TITLE, false);
-        EnderStatus.codeAfter(graphics, font, menu, 8 + font.width(title) + 4, 6);
+        graphics.text(font, title, 8, 6, EntangledStatus.TITLE, false);
+        EntangledStatus.codeAfter(graphics, font, menu, 8 + font.width(title) + 4, 6);
         final Fluid f = menu.fluid();
         final boolean empty = f == Fluids.EMPTY || menu.millibuckets() <= 0;
         graphics.text(font, empty ? Component.translatable("gui.simplemachines.entangled_tank_empty") : TankItem.fluidName(f), 102, 21,
-                empty ? EnderStatus.TITLE : EnderStatus.BLUE, false);
-        graphics.text(font, Component.translatable("gui.simplemachines.entangled_tank_amount", buckets(menu.millibuckets()), MAX_MB / 1000), 102, 31, EnderStatus.TITLE, false);
-        EnderStatus.line(graphics, font, menu, 8, 72);
+                empty ? EntangledStatus.TITLE : EntangledStatus.BLUE, false);
+        graphics.text(font, Component.translatable("gui.simplemachines.entangled_tank_amount", buckets(menu.millibuckets()), MAX_MB / 1000), 102, 31, EntangledStatus.TITLE, false);
+        EntangledStatus.line(graphics, font, menu, 8, 72);
     }
 
     private static String buckets(int mb) {

@@ -4,7 +4,7 @@
   "key": {
     "R": "#c:rods/iron",
     "C": "simplemachines:redstone_copper_ingot",
-    "E": "simplemachines:ender_coil",
+    "E": "simplemachines:entangled_coil",
     "X": "simplemachines:fluid_tank"
   },
   "pattern": [

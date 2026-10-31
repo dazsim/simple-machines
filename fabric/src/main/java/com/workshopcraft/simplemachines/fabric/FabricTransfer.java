@@ -67,7 +67,7 @@ final class FabricTransfer {
         };
     }
 
-    // private ender devices answer strangers with the empty storage, which is not something to connect to
+    // private entangled devices answer strangers with the empty storage, which is not something to connect to
     private static boolean present(Storage<?> s) {
         return s != null && s != Storage.empty();
     }

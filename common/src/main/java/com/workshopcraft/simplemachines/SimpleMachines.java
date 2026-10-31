@@ -469,6 +469,10 @@ public class SimpleMachines {
                 .build());
     }
 
+    public static void registerTicketTypes(BiConsumer<Identifier, net.minecraft.server.level.TicketType> r) {
+        r.accept(id("chunk_loader"), com.workshopcraft.simplemachines.entangled.ChunkLoaders.TICKET);
+    }
+
     public static void registerBlockEntities(BiConsumer<Identifier, BlockEntityType<?>> r) {
         alloyFurnaceEntity = new BlockEntityType<>(AlloyFurnaceBlockEntity::new, Set.of(alloyFurnace));
         r.accept(id("alloy_furnace"), alloyFurnaceEntity);

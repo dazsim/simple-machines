@@ -17,6 +17,7 @@ import net.minecraft.world.level.material.Fluids;
 
 /** Bucket in and out slots, then the player inventory. Extras carry the fluid id and the amount in mB. */
 public class EntangledTankMenu extends EntangledDeviceMenu {
+    public static final int INV_Y = 98, HEIGHT = 180;
     public static final int IN_X = 40, IN_Y = 20, OUT_Y = 44;
     private final Container container;
 
@@ -40,7 +41,7 @@ public class EntangledTankMenu extends EntangledDeviceMenu {
                 return false;
             }
         });
-        addStandardInventorySlots(inventory, 8, 84);
+        addStandardInventorySlots(inventory, 8, INV_Y);
         addDataSlots(data);
     }
 
@@ -54,6 +55,11 @@ public class EntangledTankMenu extends EntangledDeviceMenu {
 
     public int millibuckets() {
         return extra(1);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        return id == BUTTON_LOADER && toggleLoader(container);
     }
 
     @Override

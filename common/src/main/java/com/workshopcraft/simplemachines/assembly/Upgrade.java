@@ -10,18 +10,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Optional parts screwed in after the control board, up to SLOTS per machine, any mix.
+ * Optional parts screwed in after the control board, two slots per machine, three on entangled devices, any mix.
  * Each Overclocker adds half the base speed (FE use and intake rise with it); each Energy Cell adds the base storage again.
+ * Modules only fit entangled buffers, tanks and relays: one Chunk Loader, then up to two Range Modules.
  */
 public enum Upgrade {
-    OVERCLOCKER("overclocker_circuit"),
-    ENERGY_CELL("energy_cell");
+    OVERCLOCKER("overclocker_circuit", false),
+    ENERGY_CELL("energy_cell", false),
+    CHUNK_LOADER("chunk_loader_module", true),
+    RANGE("range_module", true);
 
-    public static final int SLOTS = 2;
+    public static final int SLOTS = 2, MAX_SLOTS = 3, MAX_RANGE = 2;
     public final String id;
+    public final boolean module;
 
-    Upgrade(String id) {
+    Upgrade(String id, boolean module) {
         this.id = id;
+        this.module = module;
+    }
+
+    public static boolean loads(Core core) {
+        return core == Core.BUFFER || core == Core.TANK || core.relay();
+    }
+
+    public static int slots(@Nullable Core core) {
+        return core != null && loads(core) ? MAX_SLOTS : SLOTS;
+    }
+
+    /** Why this part can't go into a chassis of the given core that already holds these, or null when it fits. */
+    public @Nullable String refusal(Core core, List<Upgrade> fitted) {
+        if (fitted.size() >= slots(core)) return "message.simplemachines.upgrades_full";
+        if (this == OVERCLOCKER && core.entangled()) return "message.simplemachines.no_overclock_entangled";
+        if (!module) return null;
+        if (!loads(core)) return "message.simplemachines.module_no_loader";
+        if (this == CHUNK_LOADER) return fitted.contains(CHUNK_LOADER) ? "message.simplemachines.module_one_loader" : null;
+        if (!fitted.contains(CHUNK_LOADER)) return "message.simplemachines.module_needs_loader";
+        return count(fitted, RANGE) >= MAX_RANGE ? "message.simplemachines.module_range_full" : null;
     }
 
     public Item item() {
@@ -42,7 +66,7 @@ public enum Upgrade {
         final List<Upgrade> out = new ArrayList<>();
         for (String part : s.split(",")) {
             final Upgrade u = byId(part.trim());
-            if (u != null && out.size() < SLOTS) out.add(u);
+            if (u != null && out.size() < MAX_SLOTS) out.add(u);
         }
         return out;
     }
@@ -59,18 +83,27 @@ public enum Upgrade {
         return n;
     }
 
-    /** Overclockers in the low bits, cells above, for a menu data slot. */
+    /** Two bits per kind in declaration order, for a menu data slot. */
     public static int pack(List<Upgrade> list) {
-        return count(list, OVERCLOCKER) | count(list, ENERGY_CELL) << 4;
+        int out = 0;
+        for (Upgrade u : values()) out |= Math.min(3, count(list, u)) << 2 * u.ordinal();
+        return out;
     }
 
-    /** "Overclocker Circuit x2, Energy Cell" style summary, empty when there are none. */
+    public static int count(int packed, Upgrade u) {
+        return packed >> 2 * u.ordinal() & 3;
+    }
+
+    /** "Overclocker Circuit x2, Energy Cell" style summary of upgrades or of modules, empty when there are none. */
     public static Component summary(int packed, boolean brief) {
-        final int[] n = {packed & 15, packed >> 4 & 15};
+        return summary(packed, brief, false);
+    }
+
+    public static Component summary(int packed, boolean brief, boolean modules) {
         Component out = null;
         for (Upgrade u : values()) {
-            final int c = n[u.ordinal()];
-            if (c == 0) continue;
+            final int c = count(packed, u);
+            if (c == 0 || u.module != modules) continue;
             Component name = Component.translatable(brief ? "upgrade.simplemachines." + u.id : "item.simplemachines." + u.id);
             if (c > 1) name = Component.translatable("upgrade.simplemachines.times", name, c);
             out = out == null ? name : Component.translatable("upgrade.simplemachines.and", out, name);

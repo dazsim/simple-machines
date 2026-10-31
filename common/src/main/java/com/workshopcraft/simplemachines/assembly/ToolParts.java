@@ -78,7 +78,8 @@ public final class ToolParts {
                 stack.consume(1, player);
             }
         } else if (upgrade != null) {
-            if (step < ToolStandBlockEntity.DONE) msg = step % 2 == 1 ? "message.simplemachines.loose" : "message.simplemachines.tool_upgrade_early";
+            if (upgrade.module) msg = "message.simplemachines.module_no_loader";
+            else if (step < ToolStandBlockEntity.DONE) msg = step % 2 == 1 ? "message.simplemachines.loose" : "message.simplemachines.tool_upgrade_early";
             else if (be.loose() != null) msg = "message.simplemachines.loose";
             else if (be.upgrades().size() >= Upgrade.SLOTS) msg = "message.simplemachines.upgrades_full";
             else {

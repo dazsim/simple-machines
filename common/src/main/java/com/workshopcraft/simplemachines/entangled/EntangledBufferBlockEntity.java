@@ -91,6 +91,7 @@ public class EntangledBufferBlockEntity extends EntangledDeviceBlockEntity {
     /** The channel's items stay on the channel when the block goes; anything left in the block itself drops. */
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        dropLoader();
         if (level != null) Containers.dropContents(level, pos, items);
     }
 

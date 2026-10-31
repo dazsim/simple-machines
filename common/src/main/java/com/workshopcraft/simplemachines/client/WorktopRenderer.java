@@ -50,7 +50,8 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         int topLight;
         int ports;
         final int[] portLight = new int[6];
-        final Upgrade[] cards = new Upgrade[Upgrade.SLOTS];
+        final Upgrade[] cards = new Upgrade[Upgrade.MAX_SLOTS];
+        int slots = Upgrade.SLOTS;
         int looseCard = -1;
     }
 
@@ -71,8 +72,9 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         s.looseCard = -1;
         if (state.getBlock() instanceof ChassisBlock && be instanceof ChassisBlockEntity chassis && state.getValue(ChassisBlock.STEP) >= 4) {
             int i = 0;
-            for (Upgrade u : chassis.upgrades()) if (i < Upgrade.SLOTS) s.cards[i++] = u;
-            if (chassis.loose() != null && i < Upgrade.SLOTS) {
+            s.slots = Upgrade.slots(state.getValue(ChassisBlock.CORE));
+            for (Upgrade u : chassis.upgrades()) if (i < s.slots) s.cards[i++] = u;
+            if (chassis.loose() != null && i < s.slots) {
                 s.looseCard = i;
                 s.cards[i] = chassis.loose();
             }
@@ -130,10 +132,10 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         pose.translate(-0.5F, 0, -0.5F);
         out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
             final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
-            for (int i = 0; i < Upgrade.SLOTS; i++) {
+            for (int i = 0; i < s.slots; i++) {
                 if (s.cards[i] == null) continue;
                 final TextureAtlasSprite sp = get(SimpleMachines.id("block/" + s.cards[i].id));
-                final float z0 = i == 0 ? 4 : 8.5F, z1 = z0 + 3.5F;
+                final float z0 = s.slots > 2 ? 2.5F + 4 * i : i == 0 ? 4 : 8.5F, z1 = z0 + 3.5F;
                 final float y0 = i == s.looseCard ? 6 : 3, y1 = y0 + 8;
                 final float x0 = 2.25F, x1 = 3;
                 q.face(EAST, x0, y0, z0, x1, y1, z1, sp, 4, 0, 12, 16);

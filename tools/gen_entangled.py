@@ -66,21 +66,24 @@ def inventory(t, y):
         inset(t, 7 + c * 18, y + 58, 24 + c * 18, y + 75)
 
 def buffer_gui():
-    t = panel(176, 195)
+    t = panel(176, 212)
     for r in range(3):
         for c in range(9):
             inset(t, 7 + c * 18, 17 + r * 18, 24 + c * 18, 34 + r * 18)
-    inset(t, 7, 87, 168, 94)
-    inventory(t, 112)
+    # the three module slots show what is fitted, they are filled at the worktop
+    for i in range(3):
+        inset(t, 114 + i * 18, 105, 131 + i * 18, 122)
+    inset(t, 7, 106, 78, 113)
+    inventory(t, 129)
     return t
 
 def tank_gui():
-    t = panel(176, 166)
+    t = panel(176, 180)
     inset(t, 39, 19, 56, 36)
     inset(t, 39, 43, 56, 60)
     inset(t, 79, 16, 96, 69)
     inset(t, 152, 16, 167, 69)
-    inventory(t, 83)
+    inventory(t, 97)
     return t
 
 def relay_front(t, lit):
@@ -92,7 +95,7 @@ def relay_front(t, lit):
     return im
 
 def relay_gui():
-    t = panel(176, 92)
+    t = panel(176, 106)
     inset(t, 152, 16, 167, 69)
     return t
 
@@ -227,6 +230,43 @@ def lang_update():
         "message.simplemachines.pad_cooldown": "Wait a moment before teleporting again",
         "message.simplemachines.pad_gone": "The other pad is gone",
         "message.simplemachines.pad_blocked": "Something is blocking the other pad",
+        "item.simplemachines.chunk_loader_module": "Chunk Loader Module",
+        "item.simplemachines.range_module": "Range Module",
+        "tooltip.simplemachines.chunk_loader_module": "Keeps the chunk it sits in loaded",
+        "tooltip.simplemachines.range_module": "Widens a Chunk Loader by one chunk each way",
+        "tooltip.simplemachines.chunk_loader_cost": "1x1 area: %s FE/t, plus %s FE/t device upkeep",
+        "tooltip.simplemachines.range_module_cost": "3x3 area: %s FE/t, 5x5 with two: %s FE/t",
+        "tooltip.simplemachines.module_cap": "Up to %s chunks per player, set by the server",
+        "tooltip.simplemachines.chunk_loader_module_fit": "Fit after the control board of an Entangled Buffer, Tank or Relay, one per device",
+        "tooltip.simplemachines.range_module_fit": "Fit next to a Chunk Loader, two at most",
+        "tooltip.simplemachines.modules": "Modules: %s",
+        "tooltip.simplemachines.loader_area": "Loads %sx%s (%s chunks) for %s FE/t",
+        "tooltip.simplemachines.upgrade_fit": "Fit after a machine's control board, or on a finished tool on its stand, then screw in (2 slots, 3 on entangled devices)",
+        "message.simplemachines.upgrades_full": "The upgrade slots are full",
+        "message.simplemachines.no_overclock_entangled": "Entangled devices can't take an Overclocker",
+        "message.simplemachines.module_no_loader": "This device can't load chunks",
+        "message.simplemachines.module_one_loader": "One Chunk Loader per device",
+        "message.simplemachines.module_needs_loader": "Fit a Chunk Loader first",
+        "message.simplemachines.module_range_full": "Two Range modules at most",
+        "gui.simplemachines.loader_none": "No Chunk Loader module",
+        "gui.simplemachines.loader_off": "Loader off",
+        "gui.simplemachines.loader_disabled": "Chunk loading is off on this server",
+        "gui.simplemachines.loader_no_code": "Loader: needs a code",
+        "gui.simplemachines.loader_active": "Loader %sx%s, %s FE/t",
+        "gui.simplemachines.loader_away": "Loader paused: owner offline",
+        "gui.simplemachines.loader_grace": "No power: unloads in %s s",
+        "gui.simplemachines.loader_no_power": "Needs %s FE to restart",
+        "gui.simplemachines.loader_over": "Over limit: %s chunks max",
+        "gui.simplemachines.loader_chunks": "%s chunks, you use %s/%s",
+        "gui.simplemachines.loader_chunks_uncapped": "%s chunks, you use %s",
+        "gui.simplemachines.loader_switch_on": "On",
+        "gui.simplemachines.loader_switch_off": "Off",
+        "gui.simplemachines.loader_switch_hint": "Turn the Chunk Loader on or off",
+        "gui.simplemachines.module_slots_hint": "Module slots: fit a Chunk Loader and Range modules after the control board",
+        "jei.simplemachines.info.chunk_loader_module": "Fit into an Entangled Buffer, Tank or Relay at the worktop, with a code set. "
+            "It keeps its own chunk loaded for 32 FE/t, even with nobody near and the owner offline. "
+            "Out of power it waits 10 s, then lets the chunks go. Each player can load 75 chunks; the server can change that.",
+        "jei.simplemachines.info.range_module": "Fit next to a Chunk Loader. One makes it load 3x3 chunks for 288 FE/t, two make it 5x5 for 800 FE/t.",
     })
     jdump(lang, p)
 
@@ -251,6 +291,9 @@ def recipes():
     for t, cable in (("lv", "redstone_copper_cable"), ("mv", "gold_cable"), ("hv", "diamond_cable")):
         shaped(f"entangled_relay_{t}_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:{cable}"})
     shaped("entangled_pad_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:ender_eye"})
+    P = "#c:plates/steel"
+    shaped("chunk_loader_module", ["PCP", "WDW", "PBP"], {"P": P, "C": E, "W": W, "D": "#c:gems/diamond", "B": f"{MOD}:control_board"})
+    shaped("range_module", ["PWP", "WEW", "PWP"], {"P": P, "W": W, "E": "#c:ender_pearls"})
     shaped("entangled_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
 
 def device(CORE, BLOCK):
@@ -325,10 +368,13 @@ def device(CORE, BLOCK):
 
 def main():
     ti = A + "/textures/item/"
-    for it in ["entangled_ingot", "entangled_wire", "entangled_coil", "link_card", "entangled_backpack"]:
+    for it in ["entangled_ingot", "entangled_wire", "entangled_coil", "link_card", "entangled_backpack", "chunk_loader_module", "range_module"]:
         shutil.copy(PLAN + it + ".png", ti + it + ".png")
         jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")
+    for it in ["chunk_loader_module", "range_module"]:
+        # the worktop draws fitted upgrades from the block atlas
+        shutil.copy(PLAN + it + ".png", A + f"/textures/block/{it}.png")
     for core, block in CORES.items():
         device(core, block)
     lang_update()

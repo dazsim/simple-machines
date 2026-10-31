@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** The 27 channel slots, then the player inventory. Opened from a buffer block or from a backpack held in locked. */
 public class EntangledBufferMenu extends EntangledDeviceMenu {
-    public static final int GRID_Y = 18, INV_Y = 113, HEIGHT = 195;
+    public static final int GRID_Y = 18, INV_Y = 130, HEIGHT = 212;
     private final Container container;
     private final int locked;
 
@@ -66,6 +66,11 @@ public class EntangledBufferMenu extends EntangledDeviceMenu {
     public void clicked(int slot, int button, ContainerInput type, Player player) {
         if (locked >= 0 && type == ContainerInput.SWAP && button == locked) return;
         super.clicked(slot, button, type, player);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        return id == BUTTON_LOADER && toggleLoader(container);
     }
 
     @Override

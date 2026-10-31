@@ -38,6 +38,13 @@ public class MachineItem extends BlockItem {
         if (lava != null && lava.amount() > 0) out.accept(Component.translatable("tooltip.simplemachines.tank",
                 com.workshopcraft.simplemachines.pipe.TankItem.fluidName(lava.fluid()), lava.amount() / com.workshopcraft.simplemachines.pipe.TankBlockEntity.MB,
                 com.workshopcraft.simplemachines.machine.LavaGeneratorBlockEntity.TANK_MB).withStyle(ChatFormatting.GRAY));
-        if (!ups.isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", Upgrade.summary(Upgrade.pack(ups), false)).withStyle(ChatFormatting.GRAY));
+        final List<Upgrade> plain = ups.stream().filter(u -> !u.module).toList();
+        if (!plain.isEmpty()) out.accept(Component.translatable("tooltip.simplemachines.upgrades", Upgrade.summary(Upgrade.pack(plain), false)).withStyle(ChatFormatting.GRAY));
+        if (ups.contains(Upgrade.CHUNK_LOADER)) {
+            out.accept(Component.translatable("tooltip.simplemachines.modules", Upgrade.summary(Upgrade.pack(ups), false, true)).withStyle(ChatFormatting.BLUE));
+            final int side = 2 * Math.min(Upgrade.MAX_RANGE, Upgrade.count(ups, Upgrade.RANGE)) + 1;
+            out.accept(Component.translatable("tooltip.simplemachines.loader_area", side, side * side,
+                    side * side * com.workshopcraft.simplemachines.ServerConfig.DEFAULT_FE_PER_CHUNK).withStyle(ChatFormatting.GRAY));
+        }
     }
 }

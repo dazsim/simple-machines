@@ -74,26 +74,8 @@ public final class Voltage {
                 terrainDamage(level.getServer()) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE);
     }
 
-    /** config/simplemachines-server.properties, overvoltage_terrain_damage (default true). Read on each blast so edits apply live. */
+    /** overvoltage_terrain_damage in the server config (default true). */
     public static boolean terrainDamage(MinecraftServer server) {
-        final Path file = server.getServerDirectory().resolve("config").resolve("simplemachines-server.properties");
-        final Properties props = new Properties();
-        try {
-            if (Files.exists(file)) {
-                try (Reader r = Files.newBufferedReader(file)) {
-                    props.load(r);
-                }
-            }
-            if (!props.containsKey("overvoltage_terrain_damage")) {
-                props.setProperty("overvoltage_terrain_damage", "true");
-                Files.createDirectories(file.getParent());
-                try (Writer w = Files.newBufferedWriter(file)) {
-                    props.store(w, "Simple Machines server settings");
-                }
-            }
-        } catch (IOException e) {
-            return true;
-        }
-        return !"false".equalsIgnoreCase(props.getProperty("overvoltage_terrain_damage", "true").trim());
+        return com.workshopcraft.simplemachines.ServerConfig.bool(server, com.workshopcraft.simplemachines.ServerConfig.TERRAIN_DAMAGE);
     }
 }

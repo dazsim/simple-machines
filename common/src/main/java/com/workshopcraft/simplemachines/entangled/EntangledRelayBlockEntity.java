@@ -95,7 +95,7 @@ public class EntangledRelayBlockEntity extends EntangledDeviceBlockEntity {
     @Override
     public void serverTick(ServerLevel level, BlockPos pos, BlockState state) {
         super.serverTick(level, pos, state);
-        energy.maxIn = receive ? 0 : Voltage.RATE[voltage];
+        energy.maxIn = receive ? 0 : Voltage.RATE[voltage] + loaderDraw();
         energy.maxOut = Voltage.RATE[voltage];
     }
 

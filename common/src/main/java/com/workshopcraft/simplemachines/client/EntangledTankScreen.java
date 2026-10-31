@@ -5,6 +5,7 @@ import com.workshopcraft.simplemachines.entangled.EntangledTankMenu;
 import com.workshopcraft.simplemachines.pipe.TankBlockEntity;
 import com.workshopcraft.simplemachines.pipe.TankItem;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -22,7 +23,22 @@ public class EntangledTankScreen extends AbstractContainerScreen<EntangledTankMe
     private static final int BAR_X = 153, BAR_Y = 17, BAR_W = 14, BAR_H = 52;
 
     public EntangledTankScreen(EntangledTankMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title, 176, 166);
+        super(menu, inventory, title, 176, EntangledTankMenu.HEIGHT);
+    }
+
+    private Button loader;
+
+    @Override
+    protected void init() {
+        super.init();
+        loader = addRenderableWidget(EntangledStatus.switchButton(this, menu, leftPos + 138, topPos + 80));
+        EntangledStatus.refresh(loader, menu);
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        EntangledStatus.refresh(loader, menu);
     }
 
     @Override
@@ -47,6 +63,9 @@ public class EntangledTankScreen extends AbstractContainerScreen<EntangledTankMe
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
             EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
         }
+        if (EntangledStatus.fitted(menu) && mouseX >= x + 8 && mouseX < x + 134 && mouseY >= y + 83 && mouseY < y + 93) {
+            graphics.setTooltipForNextFrame(font, EntangledStatus.chunks(menu), mouseX, mouseY);
+        }
     }
 
     @Override
@@ -59,6 +78,7 @@ public class EntangledTankScreen extends AbstractContainerScreen<EntangledTankMe
                 empty ? EntangledStatus.TITLE : EntangledStatus.BLUE, false);
         graphics.text(font, Component.translatable("gui.simplemachines.entangled_tank_amount", buckets(menu.millibuckets()), MAX_MB / 1000), 102, 31, EntangledStatus.TITLE, false);
         EntangledStatus.line(graphics, font, menu, 8, 72);
+        EntangledStatus.loader(graphics, font, menu, 8, 84);
     }
 
     private static String buckets(int mb) {

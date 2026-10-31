@@ -514,6 +514,41 @@ def d_entangled_pad():
     sh.text((320, 360), "2,000 FE + 20 FE per block, at most 50,000 FE", 12, SOFT)
     sh.save("entangled_pad")
 
+def chunk_grid(sh, cx, cy, n, lit, cell=26):
+    # a 5x5 patch of chunks seen from above, the lit square around the middle is what loads
+    x0, y0 = cx - 2.5 * cell, cy - 2.5 * cell
+    for i in range(5):
+        for j in range(5):
+            on = abs(i - 2) <= lit and abs(j - 2) <= lit
+            sh.poly([(x0 + i * cell, y0 + j * cell), (x0 + (i + 1) * cell, y0 + j * cell), (x0 + (i + 1) * cell, y0 + (j + 1) * cell), (x0 + i * cell, y0 + (j + 1) * cell)],
+                    1.2, SOFT, fill=(44, 120, 190, 255) if on else None)
+    sh.circle((cx, cy), 6, 1.6, fill=INK)
+
+def d_entangled_chunk_loader():
+    sh = Sheet()
+    P = iso((170, 250), 0.85); machine(sh, P)
+    sh.text((320, 40), "CHUNK LOADER", 14)
+    sh.poly([(330, 150), (410, 150), (410, 230), (330, 230)])
+    sh.poly([(350, 170), (390, 170), (390, 210), (350, 210)], 1.4)
+    for k in range(4): sh.line((338 + k * 20, 230), (338 + k * 20, 220), 1.4)
+    sh.arrow((320, 190), (250, 190))
+    sh.text((370, 255), "1 per device", 12, SOFT)
+    chunk_grid(sh, 520, 190, 5, 0)
+    sh.text((520, 270), "its own chunk", 12, SOFT)
+    sh.text((320, 330), "32 FE/t per chunk + 8 FE/t upkeep", 12, SOFT)
+    sh.text((320, 355), "keeps loading with nobody near, owner offline too", 12, SOFT)
+    sh.save("entangled_chunk_loader")
+
+def d_entangled_range():
+    sh = Sheet()
+    sh.text((320, 40), "RANGE MODULES", 14)
+    for i, (label, fe) in enumerate([("1x1, loader", "32 FE/t"), ("3x3, + 1 Range", "288 FE/t"), ("5x5, + 2 Range", "800 FE/t")]):
+        x = 120 + i * 200
+        chunk_grid(sh, x, 180, 5, i)
+        sh.text((x, 270), label, 12); sh.text((x, 292), fe, 12, SOFT)
+    sh.text((320, 345), "75 chunks per player, set by the server", 12, SOFT)
+    sh.save("entangled_range")
+
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -716,7 +751,7 @@ def pages():
          [seq("Set an output side", [M + "screwdriver"], "Use the screwdriver on the side facing the chest. Use it again to turn that side off."),
           text("Hoppers and other mods see the same sides: inputs can be filled, outputs emptied.")])
     page("upgrades", "upgrades", 0, "Upgrades", "Optional step after the control board",
-         "With the control board fixed, right click with an upgrade and screw it in. There are two slots and any mix fits.\n\nEach Overclocker adds half the base speed; FE use and intake rise with it. Each Energy Cell adds the base storage again. Two Overclockers run at double speed; two Cells hold triple.\n\nUpgrades stay with the machine and drop back when it is taken apart.",
+         "With the control board fixed, right click with an upgrade and screw it in. There are two slots, three on Entangled Buffers, Tanks and Relays, and any mix fits.\n\nEach Overclocker adds half the base speed; FE use and intake rise with it. Each Energy Cell adds the base storage again. Two Overclockers run at double speed; two Cells hold triple.\n\nUpgrades stay with the machine and drop back when it is taken apart.",
          "upgrades", "Upgrade cards on the control board", "Recipes",
          [craft("overclocker_circuit"), craft("energy_cell"),
           text("Fitted upgrades show on the machine's tooltip and in its screen.")])
@@ -759,7 +794,7 @@ def pages():
          "entangled_tank", "Two tanks, one fluid", "Assembly",
          [craft("entangled_tank_assembly", "Entangled Tank Assembly"), build("entangled_tank_assembly", "entangled_tank", "Entangled Tank")])
     page("entangled_relay", "entangled", 5, "Entangled Relay", "LV, MV and HV, 10% loss",
-         "Entangled Relays move FE between every relay on the same code, across any distance and any dimension. Open one and press the button to choose Send or Receive.\n\nA sender takes power from cables and shares it out between the receivers on its code, losing a tenth on the way. A receiver pushes it into the cables or machines next to it.\n\nEach tier moves its own voltage: 1,000 FE/t for LV, 8,000 for MV and 64,000 for HV. Higher voltage blows a relay, and a receiver blows lower rated machines it feeds, like a generator. A private relay only connects to Simple Machines cables you placed yourself.\n\nIt uses 8 FE/t and stops relaying without power. Breaking it keeps its code. The relay does not keep chunks loaded.",
+         "Entangled Relays move FE between every relay on the same code, across any distance and any dimension. Open one and press the button to choose Send or Receive.\n\nA sender takes power from cables and shares it out between the receivers on its code, losing a tenth on the way. A receiver pushes it into the cables or machines next to it.\n\nEach tier moves its own voltage: 1,000 FE/t for LV, 8,000 for MV and 64,000 for HV. Higher voltage blows a relay, and a receiver blows lower rated machines it feeds, like a generator. A private relay only connects to Simple Machines cables you placed yourself.\n\nIt uses 8 FE/t and stops relaying without power. Breaking it keeps its code. A Chunk Loader Module keeps its chunk loaded.",
          "entangled_relay", "Power over one code", "Assembly",
          [craft("entangled_relay_lv_assembly", "LV Relay Assembly"), craft("entangled_relay_mv_assembly", "MV Relay Assembly"), craft("entangled_relay_hv_assembly", "HV Relay Assembly")])
     page("entangled_pad", "entangled", 6, "Entangled Pad", "Jump to teleport",
@@ -767,9 +802,18 @@ def pages():
          "entangled_pad", "Jump on one, land on the other", "Assembly",
          [craft("entangled_pad_assembly", "Entangled Pad Assembly"), build("entangled_pad_assembly", "entangled_pad", "Entangled Pad")])
 
+    page("entangled_chunk_loader", "entangled", 7, "Chunk Loader", "32 FE/t per chunk",
+         "A Chunk Loader Module keeps the chunk its device sits in loaded, with nobody near and the owner offline. Fit it after the control board of an Entangled Buffer, Tank or Relay, like an upgrade. Those three have 3 slots and take no Overclocker; the programmer and pad can't load chunks.\n\nThe device needs a code and power. The loader draws 32 FE/t per chunk on top of the 8 FE/t upkeep, so a far away base always has a running cost. Its screen shows the area, the draw and your chunks, and the button turns the loader off.\n\nOut of power it waits 10 s, then lets the chunks go. Once its chunk is loaded again it restarts when it holds 20 ticks of FE.",
+         "entangled_chunk_loader", "Load the chunk, pay per chunk", "Recipe",
+         [craft("chunk_loader_module")])
+    page("entangled_range", "entangled", 8, "Range Module", "3x3 or 5x5 chunks",
+         "A Range Module widens a Chunk Loader by one chunk each way. Fit it next to the loader, two at most.\n\nLoader alone: 1x1, 1 chunk, 32 FE/t.\nOne Range: 3x3, 9 chunks, 288 FE/t.\nTwo Range: 5x5, 25 chunks, 800 FE/t.\nAll of them fit on LV. Overlapping loaders each pay for their own area.\n\nEach player can load 75 chunks. Past that a loader shows Over limit and the device works without loading. Server owners can change the cap, the FE per chunk and offline loading in config/simplemachines-server.properties.",
+         "entangled_range", "Bigger area, bigger draw", "Recipe",
+         [craft("range_module")])
+
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay, d_entangled_pad]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay, d_entangled_pad, d_entangled_chunk_loader, d_entangled_range]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

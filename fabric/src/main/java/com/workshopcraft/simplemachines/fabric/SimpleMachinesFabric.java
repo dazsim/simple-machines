@@ -44,6 +44,7 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerBlocks(direct(BuiltInRegistries.BLOCK));
         SimpleMachines.registerItems(direct(BuiltInRegistries.ITEM));
         SimpleMachines.registerTabs(direct(BuiltInRegistries.CREATIVE_MODE_TAB));
+        SimpleMachines.registerTicketTypes(direct(BuiltInRegistries.TICKET_TYPE));
         SimpleMachines.registerBlockEntities(direct(BuiltInRegistries.BLOCK_ENTITY_TYPE));
         SimpleMachines.registerMenus(direct(BuiltInRegistries.MENU));
         SimpleMachines.registerRecipeTypes(direct(BuiltInRegistries.RECIPE_TYPE));
@@ -70,10 +71,17 @@ public class SimpleMachinesFabric implements ModInitializer {
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.input(side), true, false), SimpleMachines.transformerEntity);
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy, false, true), SimpleMachines.solarEntity);
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy, false, true), SimpleMachines.windEntity);
-        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(com.workshopcraft.simplemachines.cable.Voltage::terrainDamage);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STARTED.register(com.workshopcraft.simplemachines.entangled.ChunkLoaders::onServerStarted);
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.END_SERVER_TICK.register(server ->
+                com.workshopcraft.simplemachines.entangled.ChunkLoaders.get(server).tick(server));
         UseBlockCallback.EVENT.register((player, level, hand, hit) ->
                 Assembly.screwdriver(level, hit.getBlockPos(), player, player.getItemInHand(hand), hit) ? InteractionResult.SUCCESS : InteractionResult.PASS);
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> RecipeUnlocks.onLogin(handler.player));
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            RecipeUnlocks.onLogin(handler.player);
+            com.workshopcraft.simplemachines.entangled.ChunkLoaders.onJoin(handler.player);
+        });
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) ->
+                com.workshopcraft.simplemachines.entangled.ChunkLoaders.onLeave(handler.player));
         FabricTransfer.install();
         ChargerBlockEntity.itemEnergy = new ChargerBlockEntity.ItemEnergy() {
             @Override

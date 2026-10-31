@@ -1,0 +1,27 @@
+{
+  "section": "entangled",
+  "sort": 8,
+  "title": "Range Module",
+  "subtitle": "3x3 or 5x5 chunks",
+  "text": "A Range Module widens a Chunk Loader by one chunk each way. Fit it next to the loader, two at most.\n\nLoader alone: 1x1, 1 chunk, 32 FE/t.\nOne Range: 3x3, 9 chunks, 288 FE/t.\nTwo Range: 5x5, 25 chunks, 800 FE/t.\nAll of them fit on LV. Overlapping loaders each pay for their own area.\n\nEach player can load 75 chunks. Past that a loader shows Over limit and the device works without loading. Server owners can change the cap, the FE per chunk and offline loading in config/simplemachines-server.properties.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_range.png",
+  "caption": "Bigger area, bigger draw",
+  "right_title": "Recipe",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "PWP",
+        "WEW",
+        "PWP"
+      ],
+      "key": {
+        "P": "#c:plates/steel",
+        "W": "simplemachines:entangled_wire",
+        "E": "#c:ender_pearls"
+      },
+      "output": "simplemachines:range_module",
+      "note": "Crafting Table\n4x Steel Plate, 4x Entangled Wire, 1x Ender Pearl"
+    }
+  ]
+}

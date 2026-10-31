@@ -42,11 +42,19 @@ public class SimpleMachinesNeoForge {
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartedEvent e) ->
-                com.workshopcraft.simplemachines.cable.Voltage.terrainDamage(e.getServer()));
+                com.workshopcraft.simplemachines.entangled.ChunkLoaders.onServerStarted(e.getServer()));
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.tick.ServerTickEvent.Post e) ->
+                com.workshopcraft.simplemachines.entangled.ChunkLoaders.get(e.getServer()).tick(e.getServer()));
+        NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedOutEvent e) -> {
+            if (e.getEntity() instanceof ServerPlayer p) com.workshopcraft.simplemachines.entangled.ChunkLoaders.onLeave(p);
+        });
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.OnDatapackSyncEvent e) -> e.sendRecipes(SimpleMachines.ALLOYING,
                 SimpleMachines.EXTRUDING, SimpleMachines.ROLLING, SimpleMachines.CRUSHING, SimpleMachines.SAWING, SimpleMachines.COMPRESSING));
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {
-            if (e.getEntity() instanceof ServerPlayer p) RecipeUnlocks.onLogin(p);
+            if (e.getEntity() instanceof ServerPlayer p) {
+                RecipeUnlocks.onLogin(p);
+                com.workshopcraft.simplemachines.entangled.ChunkLoaders.onJoin(p);
+            }
         });
         EnergyBuffer.pusher = (level, pos, side, amount) -> {
             final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, pos, side);
@@ -109,6 +117,7 @@ public class SimpleMachinesNeoForge {
         e.register(Registries.BLOCK, h -> SimpleMachines.registerBlocks(h::register));
         e.register(Registries.ITEM, h -> SimpleMachines.registerItems(h::register));
         e.register(Registries.CREATIVE_MODE_TAB, h -> SimpleMachines.registerTabs(h::register));
+        e.register(Registries.TICKET_TYPE, h -> SimpleMachines.registerTicketTypes(h::register));
         e.register(Registries.BLOCK_ENTITY_TYPE, h -> SimpleMachines.registerBlockEntities(h::register));
         e.register(Registries.MENU, h -> SimpleMachines.registerMenus(h::register));
         e.register(Registries.RECIPE_TYPE, h -> SimpleMachines.registerRecipeTypes(h::register));

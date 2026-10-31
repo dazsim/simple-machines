@@ -44,6 +44,14 @@ public enum Core implements StringRepresentable {
         this.block = block;
     }
 
+    public boolean relay() {
+        return this == RELAY_LV || this == RELAY_MV || this == RELAY_HV;
+    }
+
+    public boolean entangled() {
+        return this == PROGRAMMER || this == BUFFER || this == TANK || this == PAD || relay();
+    }
+
     public Item item() {
         return SimpleMachines.ASSEMBLIES.get(this);
     }

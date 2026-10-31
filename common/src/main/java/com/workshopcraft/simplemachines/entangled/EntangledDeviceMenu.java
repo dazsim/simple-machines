@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /** Shared data for entangled device screens: the energy values, then code, flags, owner in 8 shorts and two extras. */
 public abstract class EntangledDeviceMenu extends AbstractContainerMenu {
+    public static final int BUTTON_LOADER = 1;
     protected final ContainerData data;
 
     protected EntangledDeviceMenu(@Nullable MenuType<?> type, int id, ContainerData data) {
@@ -22,6 +23,7 @@ public abstract class EntangledDeviceMenu extends AbstractContainerMenu {
     public static int encode(int k, @Nullable EntangledLink link, boolean online, int extra0, int extra1) {
         if (k == 11) return extra0;
         if (k == 12) return extra1;
+        if (k >= EntangledDeviceBlockEntity.LOADER_DATA) return 0;
         if (link == null) return k == 2 && online ? 2 : 0;
         return switch (k) {
             case 0 -> (link.code() + 1) & 0xFFFF;
@@ -83,5 +85,45 @@ public abstract class EntangledDeviceMenu extends AbstractContainerMenu {
 
     public int extra(int i) {
         return get(11 + i);
+    }
+
+    /** Packed upgrade and module counts, see Upgrade.pack. */
+    public int upgrades() {
+        return data.get(6) & 0xFF;
+    }
+
+    public EntangledDeviceBlockEntity.LoaderStatus loaderStatus() {
+        final EntangledDeviceBlockEntity.LoaderStatus[] all = EntangledDeviceBlockEntity.LoaderStatus.values();
+        return all[Math.min(all.length - 1, get(EntangledDeviceBlockEntity.LOADER_DATA) & 15)];
+    }
+
+    public int loaderRadius() {
+        return get(EntangledDeviceBlockEntity.LOADER_DATA) >> 4 & 3;
+    }
+
+    public boolean loaderOn() {
+        return (get(EntangledDeviceBlockEntity.LOADER_DATA) & 1 << 6) != 0;
+    }
+
+    public int graceSeconds() {
+        return get(EntangledDeviceBlockEntity.LOADER_DATA) >> 8 & 15;
+    }
+
+    public int loaderDraw() {
+        return get(EntangledDeviceBlockEntity.LOADER_DATA + 1) | get(EntangledDeviceBlockEntity.LOADER_DATA + 2) << 16;
+    }
+
+    public int chunkCap() {
+        return get(EntangledDeviceBlockEntity.LOADER_DATA + 3);
+    }
+
+    public int chunksUsed() {
+        return get(EntangledDeviceBlockEntity.LOADER_DATA + 4);
+    }
+
+    protected static boolean toggleLoader(@Nullable Object target) {
+        if (!(target instanceof EntangledDeviceBlockEntity be)) return false;
+        be.toggleLoader();
+        return true;
     }
 }

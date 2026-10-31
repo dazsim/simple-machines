@@ -46,6 +46,7 @@ public class EntangledRelayMenu extends EntangledDeviceMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
+        if (id == BUTTON_LOADER) return toggleLoader(relay);
         if (id != BUTTON_MODE || relay == null) return false;
         relay.toggleMode();
         return true;

@@ -15,10 +15,11 @@ import net.minecraft.world.entity.player.Inventory;
 public class EntangledRelayScreen extends AbstractContainerScreen<EntangledRelayMenu> {
     private static final Identifier TEXTURE = SimpleMachines.id("textures/gui/entangled_relay.png");
     private static final int BAR_X = 153, BAR_Y = 17, BAR_W = 14, BAR_H = 52;
-    private Button mode;
+    static final int HEIGHT = 106;
+    private Button mode, loader;
 
     public EntangledRelayScreen(EntangledRelayMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title, 176, 92);
+        super(menu, inventory, title, 176, HEIGHT);
     }
 
     @Override
@@ -26,6 +27,8 @@ public class EntangledRelayScreen extends AbstractContainerScreen<EntangledRelay
         super.init();
         mode = addRenderableWidget(Button.builder(modeLabel(), b -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, EntangledRelayMenu.BUTTON_MODE))
                 .bounds(leftPos + 8, topPos + 30, 60, 16).build());
+        loader = addRenderableWidget(EntangledStatus.switchButton(this, menu, leftPos + 138, topPos + 87));
+        EntangledStatus.refresh(loader, menu);
     }
 
     private Component modeLabel() {
@@ -36,6 +39,7 @@ public class EntangledRelayScreen extends AbstractContainerScreen<EntangledRelay
     protected void containerTick() {
         super.containerTick();
         mode.setMessage(modeLabel());
+        EntangledStatus.refresh(loader, menu);
     }
 
     @Override
@@ -50,6 +54,9 @@ public class EntangledRelayScreen extends AbstractContainerScreen<EntangledRelay
         if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
             EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), false, mouseX, mouseY);
         }
+        if (EntangledStatus.fitted(menu) && mouseX >= x + 8 && mouseX < x + 134 && mouseY >= y + 89 && mouseY < y + 99) {
+            graphics.setTooltipForNextFrame(font, EntangledStatus.chunks(menu), mouseX, mouseY);
+        }
     }
 
     @Override
@@ -63,5 +70,6 @@ public class EntangledRelayScreen extends AbstractContainerScreen<EntangledRelay
                 PowerTooltip.num(menu.flowIn())), 8, 52, EntangledStatus.TITLE, false);
         graphics.text(font, Component.translatable("gui.simplemachines.relay_out", PowerTooltip.num(menu.flowOut())), 8, 62, EntangledStatus.TITLE, false);
         EntangledStatus.line(graphics, font, menu, 8, 78);
+        EntangledStatus.loader(graphics, font, menu, 8, 91);
     }
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "#c:plates/steel",
+    "W": "simplemachines:entangled_wire",
+    "E": "#c:ender_pearls"
+  },
+  "pattern": [
+    "PWP",
+    "WEW",
+    "PWP"
+  ],
+  "result": {
+    "id": "simplemachines:range_module"
+  }
+}

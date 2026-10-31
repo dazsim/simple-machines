@@ -70,7 +70,7 @@ public final class Assembly {
         if (step < 4 || !(level.getBlockEntity(pos) instanceof ChassisBlockEntity be)) msg = step % 2 == 1 ? hint(step) : "message.simplemachines.upgrade_early";
         else if (step > 4) msg = "message.simplemachines.upgrade_late";
         else if (be.loose() != null) msg = hint(1);
-        else if (be.upgrades().size() >= Upgrade.SLOTS) msg = "message.simplemachines.upgrades_full";
+        else if (upgrade.refusal(level.getBlockState(pos).getValue(CORE), be.upgrades()) instanceof String why) msg = why;
         else {
             be.setLoose(upgrade);
             stack.consume(1, player);
@@ -104,7 +104,7 @@ public final class Assembly {
         final int step = state.getValue(STEP);
         if (step == 4 && level.getBlockEntity(pos) instanceof ChassisBlockEntity be && be.loose() != null) {
             be.fix();
-            player.sendOverlayMessage(Component.translatable("message.simplemachines.upgrade_fitted", be.upgrades().size(), Upgrade.SLOTS));
+            player.sendOverlayMessage(Component.translatable("message.simplemachines.upgrade_fitted", be.upgrades().size(), Upgrade.slots(state.getValue(CORE))));
             ratchet(level, pos);
             return true;
         }

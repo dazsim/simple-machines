@@ -93,7 +93,7 @@ public class SimpleMachines {
     /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
     public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
             Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA, Core.QUARRY, Core.PROGRAMMER,
-            Core.BUFFER, Core.TANK, Core.RELAY_LV, Core.RELAY_MV, Core.RELAY_HV);
+            Core.BUFFER, Core.TANK, Core.RELAY_LV, Core.RELAY_MV, Core.RELAY_HV, Core.PAD);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -123,6 +123,8 @@ public class SimpleMachines {
             new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledTankMenu::client, FeatureFlags.VANILLA_SET);
     public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledRelayMenu> RELAY_MENU =
             new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledRelayMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledPadMenu> PAD_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledPadMenu::client, FeatureFlags.VANILLA_SET);
     public static final DataComponentType<com.workshopcraft.simplemachines.entangled.EntangledLink> ENTANGLED_LINK =
             DataComponentType.<com.workshopcraft.simplemachines.entangled.EntangledLink>builder()
                     .persistent(com.workshopcraft.simplemachines.entangled.EntangledLink.CODEC)
@@ -365,7 +367,9 @@ public class SimpleMachines {
             if (core == Core.NONE) continue;
             final String name = core.getSerializedName() + "_assembly";
             ASSEMBLIES.put(core, add(r, name, core == Core.QUARRY
-                    ? new com.workshopcraft.simplemachines.quarry.QuarryAssemblyItem(props(name)) : new Item(props(name))));
+                    ? new com.workshopcraft.simplemachines.quarry.QuarryAssemblyItem(props(name))
+                    : core == Core.PAD ? new com.workshopcraft.simplemachines.item.HintItem(props(name), "tooltip.simplemachines.pad_assembly",
+                            "tooltip.simplemachines.pad_assembly_codes", "tooltip.simplemachines.pad_assembly_private") : new Item(props(name))));
         }
         controlBoard = add(r, "control_board", new Item(props("control_board")));
         for (Finish finish : Finish.values()) {
@@ -498,6 +502,7 @@ public class SimpleMachines {
             final int voltage = v;
             entity(r, Core.RELAYS[v], (p, st) -> new com.workshopcraft.simplemachines.entangled.EntangledRelayBlockEntity(p, st, voltage));
         }
+        entity(r, Core.PAD, com.workshopcraft.simplemachines.entangled.EntangledPadBlockEntity::new);
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
@@ -538,6 +543,7 @@ public class SimpleMachines {
         r.accept(id("entangled_buffer"), BUFFER_MENU);
         r.accept(id("entangled_tank"), TANK_MENU);
         r.accept(id("entangled_relay"), RELAY_MENU);
+        r.accept(id("entangled_pad"), PAD_MENU);
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> r) {

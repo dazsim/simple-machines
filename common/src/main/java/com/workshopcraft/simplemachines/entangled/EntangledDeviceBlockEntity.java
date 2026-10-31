@@ -134,10 +134,18 @@ public abstract class EntangledDeviceBlockEntity extends WorkBlockEntity impleme
             Conduits.refreshAround(level, pos);
         }
         final boolean was = online;
-        online = link != null && energy.energy >= UPKEEP;
-        if (online) energy.energy -= UPKEEP;
+        online = link != null && energy.energy >= upkeep();
+        if (online) energy.energy -= upkeep();
         if (was != online) setChanged();
-        setLit(level, pos, state, online);
+        setLit(level, pos, state, lit());
+    }
+
+    protected int upkeep() {
+        return UPKEEP;
+    }
+
+    protected boolean lit() {
+        return online;
     }
 
     @Override

@@ -39,6 +39,8 @@ public class EntangledData extends SavedData {
     private final Map<String, Channel> channels;
     /** Relays loaded right now, by channel key. Not saved: relays join again as they tick. */
     final Map<String, java.util.Set<EntangledRelayBlockEntity>> relays = new HashMap<>();
+    /** Game time each player may next use a pad. Not saved. */
+    final Map<UUID, Long> padCooldown = new HashMap<>();
 
     public EntangledData() {
         this(new HashMap<>());
@@ -69,6 +71,10 @@ public class EntangledData extends SavedData {
 
     public @Nullable Channel find(String kind, EntangledLink link) {
         return channels.get(key(kind, link));
+    }
+
+    @Nullable Channel byKey(String key) {
+        return channels.get(key);
     }
 
     /** Whether any channel of any kind already uses this code in the scope. */

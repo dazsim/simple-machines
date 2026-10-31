@@ -44,6 +44,7 @@
     "simplemachines:entangled_programmer",
     "simplemachines:entangled_relay_lv",
     "simplemachines:entangled_relay_mv",
-    "simplemachines:entangled_relay_hv"
+    "simplemachines:entangled_relay_hv",
+    "simplemachines:entangled_pad"
   ]
 }

@@ -194,6 +194,7 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
             case CRUSHER -> new float[]{4, 4, 12, 12};
             case ALLOY, WATER -> new float[]{5, 5, 11, 11};
             case SAW -> new float[]{7, 3, 9, 13};
+            case PAD -> new float[]{3, 3, 13, 13};
             default -> null;
         };
         if (hole == null) return new float[][]{{0, 0, 16, 16}};

@@ -1,0 +1,45 @@
+{
+  "section": "entangled",
+  "sort": 6,
+  "title": "Entangled Pad",
+  "subtitle": "Jump to teleport",
+  "text": "Give two Entangled Pads the same code, then jump on one to go to the other. It works across any distance and any dimension. Each code holds two pads.\n\nThe pad you jump from pays 2,000 FE plus 20 FE per block of x and z distance, at most 50,000 FE. It runs on MV, holds 100k FE and has no upkeep. A pad lights up when it is ready, and its screen shows where it goes and what a trip costs.\n\nA private pad only teleports its owner and only connects to Simple Machines cables you placed yourself. A public pad teleports anyone. There is a 3 second wait between trips.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_pad.png",
+  "caption": "Jump on one, land on the other",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:entangled_coil",
+        "X": "minecraft:ender_eye"
+      },
+      "output": "simplemachines:entangled_pad_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Entangled Coil, 1x Ender Eye",
+      "title": "Entangled Pad Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Entangled Pad",
+      "inputs": [
+        "simplemachines:entangled_pad_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:entangled_pad",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

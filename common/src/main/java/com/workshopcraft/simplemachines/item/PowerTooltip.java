@@ -75,6 +75,8 @@ public final class PowerTooltip {
             case RUNNING -> out.accept(line("uses_tick", num(p.use() * fast / 2)));
             case BLOCK -> out.accept(line("uses_block", num(p.use())));
             case WRITE -> out.accept(line("uses_write", num(p.use())));
+            case TELEPORT -> out.accept(line("uses_teleport", num(p.use()), num(p.steelUse()),
+                    num(com.workshopcraft.simplemachines.entangled.EntangledPadBlockEntity.MAX_COST)));
             case SHEAR -> out.accept(line("uses_shear", num(p.use())));
             case CROP -> out.accept(line("uses_crop", num(p.use())));
             case CHARGE -> out.accept(line("charges_items", num(p.use() * tier.storage * fast / 2)));

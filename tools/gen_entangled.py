@@ -12,11 +12,14 @@ TEAL = [(44, 205, 177), (52, 153, 136), (24, 86, 76)]
 AMBER = [(232, 190, 50), (120, 92, 30)]
 KEYS = [(200, 206, 224), (150, 156, 176)]
 CORES = {"entangled_programmer": "entangled_programmer", "entangled_buffer": "entangled_buffer", "entangled_tank": "entangled_tank",
-         "entangled_relay_lv": "entangled_relay_lv", "entangled_relay_mv": "entangled_relay_mv", "entangled_relay_hv": "entangled_relay_hv"}
-LINKED = ("entangled_buffer", "entangled_tank", "entangled_relay_lv", "entangled_relay_mv", "entangled_relay_hv")
+         "entangled_relay_lv": "entangled_relay_lv", "entangled_relay_mv": "entangled_relay_mv", "entangled_relay_hv": "entangled_relay_hv",
+         "entangled_pad": "entangled_pad"}
+LINKED = ("entangled_buffer", "entangled_tank", "entangled_relay_lv", "entangled_relay_mv", "entangled_relay_hv", "entangled_pad")
 TIERS = {"lv": (0xF4, 0x78, 0x5C), "mv": (0xE8, 0xBE, 0x28), "hv": (0x96, 0xE4, 0xF0)}
 g["FRONT_HOLE"].update({"entangled_programmer": (3, 3, 13, 13), "entangled_buffer": (3, 3, 13, 13), "entangled_tank": (4, 2, 12, 14),
-                        **{f"entangled_relay_{t}": (4, 3, 12, 13) for t in TIERS}})
+                        **{f"entangled_relay_{t}": (4, 3, 12, 13) for t in TIERS}, "entangled_pad": (3, 3, 13, 13)})
+# the pad shows through the worktop, so you can see where to jump
+g["TOP_HOLE"]["entangled_pad"] = (3, 3, 13, 13)
 
 def front(lit):
     # the plan's screen and keypad, packed into the 10x10 window the front panel leaves open
@@ -90,6 +93,11 @@ def relay_front(t, lit):
 
 def relay_gui():
     t = panel(176, 92)
+    inset(t, 152, 16, 167, 69)
+    return t
+
+def pad_gui():
+    t = panel(176, 104)
     inset(t, 152, 16, 167, 69)
     return t
 
@@ -189,6 +197,36 @@ def lang_update():
         "gui.simplemachines.relay_out": "Out %s FE/t",
         "tooltip.simplemachines.relay_sends": "Sends %s on the receive side, 10%% loss",
         "tooltip.simplemachines.entangled_private_cables": "Private: only your Simple Machines cables connect",
+        "block.simplemachines.entangled_pad": "Entangled Pad",
+        "item.simplemachines.entangled_pad_assembly": "Entangled Pad Assembly",
+        "jei.simplemachines.info.entangled_pad": "Give two pads the same code with a Link Card, then jump on one to teleport to the other, in any dimension. "
+            "The pad you jump from pays 2,000 FE plus 20 FE per block of x and z distance, at most 50,000 FE. Two pads per code. "
+            "A private pad only teleports its owner; a public one teleports anyone. Higher voltage than MV on its input blows it.",
+        "tooltip.simplemachines.uses_teleport": "Uses %s FE + %s FE per block per teleport (max %s)",
+        "tooltip.simplemachines.pad_no_code": "No code yet: right-click with a Link Card",
+        "tooltip.simplemachines.pad_private": "Private: only you can teleport, only your Simple Machines cables connect",
+        "tooltip.simplemachines.pad_public": "Public: anyone can teleport, any cable connects",
+        "tooltip.simplemachines.pad_assembly": "Build into a chassis to make an Entangled Pad",
+        "tooltip.simplemachines.pad_assembly_codes": "Two pads on one code: jump on one to teleport to the other",
+        "tooltip.simplemachines.pad_assembly_private": "Private code: only you can teleport. Public code: anyone can",
+        "gui.simplemachines.pad_linked": "Linked: %s",
+        "gui.simplemachines.pad_dim_overworld": "Overworld",
+        "gui.simplemachines.pad_dim_nether": "Nether",
+        "gui.simplemachines.pad_dim_end": "The End",
+        "gui.simplemachines.pad_dim_other": "another dimension",
+        "gui.simplemachines.pad_trip": "Trip: %s FE",
+        "gui.simplemachines.pad_ready": "Ready. Jump to go.",
+        "gui.simplemachines.pad_alone": "No other pad yet",
+        "gui.simplemachines.pad_full": "Code full: 2 pads",
+        "gui.simplemachines.pad_low": "Needs %s FE to go",
+        "message.simplemachines.pad_not_owner": "This pad is private: only its owner can teleport",
+        "message.simplemachines.pad_no_code": "This pad has no code yet",
+        "message.simplemachines.pad_alone": "No other pad on this code",
+        "message.simplemachines.pad_full": "This code already has %s pads",
+        "message.simplemachines.pad_low": "Not enough power: this trip needs %s FE",
+        "message.simplemachines.pad_cooldown": "Wait a moment before teleporting again",
+        "message.simplemachines.pad_gone": "The other pad is gone",
+        "message.simplemachines.pad_blocked": "Something is blocking the other pad",
     })
     jdump(lang, p)
 
@@ -212,6 +250,7 @@ def recipes():
     shaped("entangled_tank_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:fluid_tank"})
     for t, cable in (("lv", "redstone_copper_cable"), ("mv", "gold_cable"), ("hv", "diamond_cable")):
         shaped(f"entangled_relay_{t}_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:{cable}"})
+    shaped("entangled_pad_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:ender_eye"})
     shaped("entangled_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
 
 def device(CORE, BLOCK):
@@ -227,13 +266,17 @@ def device(CORE, BLOCK):
         save(relay_front(tier, True), tb + f"{CORE}_core_front_on.png")
         shutil.copy(PLAN + "entangled_relay_core_top.png", tb + f"{CORE}_core_top.png")
         save(relay_gui(), A + "/textures/gui/entangled_relay.png")
+    elif CORE == "entangled_pad":
+        for suffix in ["front", "front_on", "top", "top_on"]:
+            shutil.copy(PLAN + f"{BLOCK}_core_{suffix}.png", tb + f"{CORE}_core_{suffix}.png")
+        save(pad_gui(), A + f"/textures/gui/{BLOCK}.png")
     else:
         for suffix in ["front", "front_on", "top"]:
             shutil.copy(PLAN + f"{BLOCK}_core_{suffix}.png", tb + f"{CORE}_core_{suffix}.png")
         save(buffer_gui() if CORE == "entangled_buffer" else tank_gui(), A + f"/textures/gui/{BLOCK}.png")
 
     core_tex = lambda on: {"front": f"{MOD}:block/{CORE}_core_front" + on, "side": f"{MOD}:block/core_side",
-                           "top": f"{MOD}:block/{CORE}_core_top", "bottom": f"{MOD}:block/core_bottom", "particle": f"{MOD}:block/core_side"}
+                           "top": f"{MOD}:block/{CORE}_core_top" + (on if CORE == "entangled_pad" else ""), "bottom": f"{MOD}:block/core_bottom", "particle": f"{MOD}:block/core_side"}
     model(f"{CORE}_core", g["core_elements"](False), core_tex(""))
     model(f"{CORE}_core_on", g["core_elements"](False), core_tex("_on"))
     model(f"{CORE}_core_loose", g["core_elements"](True), core_tex(""))

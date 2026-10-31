@@ -31,7 +31,8 @@ public enum Core implements StringRepresentable {
     TANK("entangled_tank", "entangled_tank"),
     RELAY_LV("entangled_relay_lv", "entangled_relay_lv"),
     RELAY_MV("entangled_relay_mv", "entangled_relay_mv"),
-    RELAY_HV("entangled_relay_hv", "entangled_relay_hv");
+    RELAY_HV("entangled_relay_hv", "entangled_relay_hv"),
+    PAD("entangled_pad", "entangled_pad");
 
     public static final Core[] RELAYS = {RELAY_LV, RELAY_MV, RELAY_HV};
 

@@ -25,8 +25,13 @@ public class MachineItem extends BlockItem {
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
         final com.workshopcraft.simplemachines.entangled.EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (link != null) link.tooltip(out);
-        if (link != null && link.priv()) out.accept(Component.translatable(com.workshopcraft.simplemachines.cable.PowerInfo.of(getBlock()) instanceof com.workshopcraft.simplemachines.cable.PowerInfo p
-                && p.unit() == com.workshopcraft.simplemachines.cable.PowerInfo.Unit.RELAY ? "tooltip.simplemachines.entangled_private_cables" : "tooltip.simplemachines.entangled_private_pipes").withStyle(ChatFormatting.GRAY));
+        final com.workshopcraft.simplemachines.cable.PowerInfo.Unit unit = com.workshopcraft.simplemachines.cable.PowerInfo.of(getBlock()) instanceof com.workshopcraft.simplemachines.cable.PowerInfo p
+                ? p.unit() : com.workshopcraft.simplemachines.cable.PowerInfo.Unit.NONE;
+        if (unit == com.workshopcraft.simplemachines.cable.PowerInfo.Unit.TELEPORT) {
+            out.accept(Component.translatable(link == null ? "tooltip.simplemachines.pad_no_code" : link.priv() ? "tooltip.simplemachines.pad_private"
+                    : "tooltip.simplemachines.pad_public").withStyle(ChatFormatting.GRAY));
+        } else if (link != null && link.priv()) out.accept(Component.translatable(unit == com.workshopcraft.simplemachines.cable.PowerInfo.Unit.RELAY
+                ? "tooltip.simplemachines.entangled_private_cables" : "tooltip.simplemachines.entangled_private_pipes").withStyle(ChatFormatting.GRAY));
         PowerTooltip.append(stack, getBlock(), out);
         com.workshopcraft.simplemachines.quarry.QuarryDrill.tooltip(stack, out);
         final com.workshopcraft.simplemachines.pipe.TankContents lava = stack.get(SimpleMachines.TANK);

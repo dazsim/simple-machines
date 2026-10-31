@@ -502,6 +502,18 @@ def d_entangled_relay():
     sh.text((320, 355), "senders share their power out between every receiver on the code", 12, SOFT)
     sh.save("entangled_relay")
 
+def d_entangled_pad():
+    sh = Sheet()
+    for o in ((150, 230), (490, 230)):
+        P = iso(o, 0.8); machine(sh, P)
+        sh.poly([P(25, 92, 25), P(75, 92, 25), P(75, 92, 75), P(25, 92, 75)], 1.6)
+    sh.text((320, 40), "ENTANGLED PADS ON ONE CODE", 14)
+    sh.arrow((150, 140), (150, 100)); sh.arrow((190, 95), (450, 95)); sh.arrow((490, 100), (490, 140))
+    sh.text((150, 80), "jump", 12, SOFT); sh.text((320, 76), "482913", 13)
+    sh.text((150, 332), "here", 12, SOFT); sh.text((490, 332), "there, any dimension", 12, SOFT)
+    sh.text((320, 360), "2,000 FE + 20 FE per block, at most 50,000 FE", 12, SOFT)
+    sh.save("entangled_pad")
+
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -750,10 +762,14 @@ def pages():
          "Entangled Relays move FE between every relay on the same code, across any distance and any dimension. Open one and press the button to choose Send or Receive.\n\nA sender takes power from cables and shares it out between the receivers on its code, losing a tenth on the way. A receiver pushes it into the cables or machines next to it.\n\nEach tier moves its own voltage: 1,000 FE/t for LV, 8,000 for MV and 64,000 for HV. Higher voltage blows a relay, and a receiver blows lower rated machines it feeds, like a generator. A private relay only connects to Simple Machines cables you placed yourself.\n\nIt uses 8 FE/t and stops relaying without power. Breaking it keeps its code. The relay does not keep chunks loaded.",
          "entangled_relay", "Power over one code", "Assembly",
          [craft("entangled_relay_lv_assembly", "LV Relay Assembly"), craft("entangled_relay_mv_assembly", "MV Relay Assembly"), craft("entangled_relay_hv_assembly", "HV Relay Assembly")])
+    page("entangled_pad", "entangled", 6, "Entangled Pad", "Jump to teleport",
+         "Give two Entangled Pads the same code, then jump on one to go to the other. It works across any distance and any dimension. Each code holds two pads.\n\nThe pad you jump from pays 2,000 FE plus 20 FE per block of x and z distance, at most 50,000 FE. It runs on MV, holds 100k FE and has no upkeep. A pad lights up when it is ready, and its screen shows where it goes and what a trip costs.\n\nA private pad only teleports its owner and only connects to Simple Machines cables you placed yourself. A public pad teleports anyone. There is a 3 second wait between trips.",
+         "entangled_pad", "Jump on one, land on the other", "Assembly",
+         [craft("entangled_pad_assembly", "Entangled Pad Assembly"), build("entangled_pad_assembly", "entangled_pad", "Entangled Pad")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay, d_entangled_pad]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

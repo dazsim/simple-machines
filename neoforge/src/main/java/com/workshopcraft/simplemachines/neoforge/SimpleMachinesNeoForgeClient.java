@@ -51,6 +51,7 @@ public class SimpleMachinesNeoForgeClient {
             e.register(SimpleMachines.BUFFER_MENU, com.workshopcraft.simplemachines.client.EntangledBufferScreen::new);
             e.register(SimpleMachines.TANK_MENU, com.workshopcraft.simplemachines.client.EntangledTankScreen::new);
             e.register(SimpleMachines.RELAY_MENU, com.workshopcraft.simplemachines.client.EntangledRelayScreen::new);
+            e.register(SimpleMachines.PAD_MENU, com.workshopcraft.simplemachines.client.EntangledPadScreen::new);
             e.register(SimpleMachines.EXTRUDER_MENU, MachineScreen::new);
             e.register(SimpleMachines.GENERATOR_MENU, EnergyScreen::new);
             e.register(SimpleMachines.ROLLING_MILL_MENU, EnergyScreen::new);

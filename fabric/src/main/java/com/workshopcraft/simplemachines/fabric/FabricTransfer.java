@@ -23,7 +23,7 @@ final class FabricTransfer {
     }
 
     static void install() {
-        Transfer.lookup = (level, pos, side) -> ItemStorage.SIDED.find(level, pos, side) != null;
+        Transfer.lookup = (level, pos, side) -> present(ItemStorage.SIDED.find(level, pos, side));
         Transfer.mover = (level, from, fromSide, to, toSide, max, filter, moved) -> {
             final Storage<ItemVariant> source = ItemStorage.SIDED.find(level, from, fromSide);
             final Storage<ItemVariant> target = ItemStorage.SIDED.find(level, to, toSide);
@@ -34,7 +34,7 @@ final class FabricTransfer {
             final Storage<ItemVariant> target = ItemStorage.SIDED.find(level, pos, side);
             return target != null && StorageUtil.simulateInsert(target, ItemVariant.of(stack), 1, Transaction.getCurrentUnsafe()) > 0;
         };
-        Transfer.fluidLookup = (level, pos, side) -> FluidStorage.SIDED.find(level, pos, side) != null;
+        Transfer.fluidLookup = (level, pos, side) -> present(FluidStorage.SIDED.find(level, pos, side));
         Transfer.fluidMover = (level, from, fromSide, to, toSide, max, filter, moved) -> {
             final Storage<FluidVariant> source = FluidStorage.SIDED.find(level, from, fromSide);
             final Storage<FluidVariant> target = FluidStorage.SIDED.find(level, to, toSide);
@@ -65,5 +65,10 @@ final class FabricTransfer {
             final FluidVariant v = StorageUtil.findStoredResource(s);
             return v == null || v.isBlank() ? null : v.getFluid();
         };
+    }
+
+    // private ender devices answer strangers with the empty storage, which is not something to connect to
+    private static boolean present(Storage<?> s) {
+        return s != null && s != Storage.empty();
     }
 }

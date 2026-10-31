@@ -122,6 +122,11 @@ public abstract class WorkBlockEntity extends BaseContainerBlockEntity implement
         return true;
     }
 
+    /** Whether hoppers, pipes and other mods may reach this block's items, fluid and energy right now. */
+    public boolean exposed() {
+        return true;
+    }
+
     public boolean energyOut(@Nullable Direction side) {
         return true;
     }

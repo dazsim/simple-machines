@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -65,6 +66,23 @@ public final class Conduits {
                 Component.translatable("direction.simplemachines." + side.getSerializedName())));
         server.playSound(null, pos, SoundEvents.TRIPWIRE_CLICK_ON, SoundSource.BLOCKS, 0.6F, on ? 1.2F : 0.9F);
         return true;
+    }
+
+    /** Remembers who placed a conduit, then works out its sides again now that it has an owner. */
+    public static void placed(Level level, BlockPos pos, LivingEntity placer) {
+        if (!(level instanceof ServerLevel server) || !(placer instanceof Player)) return;
+        if (!(server.getBlockEntity(pos) instanceof ConduitBlockEntity be)) return;
+        be.setOwner(placer.getUUID());
+        update(server, pos);
+        CableNetwork.invalidate(server);
+        PipeNetwork.invalidate(server);
+    }
+
+    /** Works out the sides of the conduits around pos again, after the block there changed who may connect. */
+    public static void refreshAround(ServerLevel level, BlockPos pos) {
+        for (Direction d : Direction.values()) update(level, pos.relative(d));
+        CableNetwork.invalidate(level);
+        PipeNetwork.invalidate(level);
     }
 
     /** Works out the sides of a conduit and its neighbours again after a colour or side change. */

@@ -35,7 +35,7 @@ public class EnderBufferBlockEntity extends EnderDeviceBlockEntity {
 
     @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
-        return online;
+        return online && exposed();
     }
 
     /** The channel's items stay on the channel when the block goes. */

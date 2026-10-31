@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.pipe;
 
 import com.workshopcraft.simplemachines.cable.ConduitBlockEntity;
+import com.workshopcraft.simplemachines.ender.EnderAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -81,7 +82,13 @@ public final class PipeNetwork {
         return level.getBlockEntity(t.pipe()) instanceof ConduitBlockEntity be ? be.filter(t.dir()) : null;
     }
 
+    /** The extract end's pipe speaks for the source, each delivering end's pipe for its target. */
     private <T> int route(ServerLevel level, BlockPos from, Direction fromSide, int max, Transfer.Mover<T> mover,
+                          Transfer.Probe<T> probe, BiPredicate<PipeFilter, T> match, Consumer<T> moved) {
+        return EnderAccess.through(level, from, from.relative(fromSide), () -> routeAll(level, from, fromSide, max, mover, probe, match, moved));
+    }
+
+    private <T> int routeAll(ServerLevel level, BlockPos from, Direction fromSide, int max, Transfer.Mover<T> mover,
                           Transfer.Probe<T> probe, BiPredicate<PipeFilter, T> match, Consumer<T> moved) {
         final List<Target> allow = new ArrayList<>(), rest = new ArrayList<>();
         final Map<Target, PipeFilter> filters = new HashMap<>();
@@ -95,14 +102,17 @@ public final class PipeNetwork {
         for (int i = 0; i < allow.size(); i++) {
             final Target t = allow.get(Math.floorMod(nextAllow++, allow.size()));
             final PipeFilter f = filters.get(t);
-            final int n = mover.move(level, from, fromSide, t.pos(), t.side(), max, x -> match.test(f, x), moved);
+            final int n = EnderAccess.through(level, t.pos(), t.pipe(),
+                    () -> mover.move(level, from, fromSide, t.pos(), t.side(), max, x -> match.test(f, x), moved));
             if (n > 0) {
                 total += n;
                 break;
             }
         }
         final Predicate<T> unclaimed = x -> {
-            for (Target a : allow) if (match.test(filters.get(a), x) && probe.accepts(level, a.pos(), a.side(), x)) return false;
+            for (Target a : allow) {
+                if (match.test(filters.get(a), x) && EnderAccess.check(level, a.pos(), a.pipe(), () -> probe.accepts(level, a.pos(), a.side(), x))) return false;
+            }
             return true;
         };
         if (total >= max) return total;
@@ -110,8 +120,8 @@ public final class PipeNetwork {
         for (int i = 0; i < rest.size(); i++) {
             final Target t = rest.get(Math.floorMod(next++, rest.size()));
             final PipeFilter f = filters.get(t);
-            final int n = mover.move(level, from, fromSide, t.pos(), t.side(), left,
-                    x -> (f == null || !match.test(f, x)) && unclaimed.test(x), moved);
+            final int n = EnderAccess.through(level, t.pos(), t.pipe(), () -> mover.move(level, from, fromSide, t.pos(), t.side(), left,
+                    x -> (f == null || !match.test(f, x)) && unclaimed.test(x), moved));
             if (n > 0) {
                 total += n;
                 break;

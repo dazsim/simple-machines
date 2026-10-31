@@ -724,7 +724,7 @@ def pages():
          "ender", "Programmer and card", "Recipes",
          [process("alloying/ender_ingot", "alloy_smelter"), process("rolling/ender_wire", "rolling_mill", "Rod mode"), craft("ender_coil")])
     page("ender_buffer", "ender", 2, "Ender Buffer", "LV, 8 FE/t, 27 shared slots",
-         "Every Ender Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nPipes and hoppers can put items in and take them out on any side, even on a private buffer; private only locks the screen and the code.\n\nIt uses 8 FE/t and holds 20k FE. Without power it stops sharing until power comes back. Breaking or taking it apart keeps its code, and the items stay on the code.",
+         "Every Ender Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nOn a public buffer, pipes, hoppers and other mods' pipes work on any side. A private buffer only connects to Simple Machines pipes and cables you placed yourself. Hoppers and other mods' pipes only work on public devices, and pipes placed before 2.2 have no owner, so replace them.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. Breaking it keeps its code, and the items stay on the code.",
          "ender_buffer", "Two buffers, one inventory", "Assembly",
          [craft("buffer_assembly", "Buffer Assembly"), build("buffer_assembly", "ender_buffer", "Ender Buffer")])
     page("ender_backpack", "ender", 3, "Ender Backpack", "The buffer, carried",
@@ -732,7 +732,7 @@ def pages():
          "ender_buffer", "Two buffers, one inventory", "Recipe",
          [craft("ender_backpack")])
     page("ender_tank", "ender", 4, "Ender Tank", "LV, 8 FE/t, 16 shared buckets",
-         "Every Ender Tank on the same code shares one tank of 16 buckets of one fluid. Fluid pipes connect on any side, private or not.\n\nPut a bucket of fluid in the top slot to pour it in, or an empty bucket to fill it; the result comes out below.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. The code survives breaking and taking it apart, and the fluid stays on the code.",
+         "Every Ender Tank on the same code shares one tank of 16 buckets of one fluid.\n\nAny fluid pipe works on a public tank. A private tank only connects to Simple Machines pipes and cables you placed yourself; other mods' pipes only work on public devices. Pipes placed before 2.2 have no owner, so replace them.\n\nPut a bucket of fluid in the top slot to pour it in, or an empty one to fill it.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. The code and fluid survive breaking it.",
          "ender_tank", "Two tanks, one fluid", "Assembly",
          [craft("tank_assembly", "Tank Assembly"), build("tank_assembly", "ender_tank", "Ender Tank")])
 

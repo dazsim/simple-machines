@@ -121,7 +121,7 @@ public class SimpleMachinesNeoForge {
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.extruderEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, SimpleMachines.tankEntity, (be, side) -> new NeoTank(be));
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, lavaEntity(), (be, side) -> new NeoTank(be));
-        e.registerBlockEntity(Capabilities.Fluid.BLOCK, enderTankEntity(), (be, side) -> new NeoTank(be));
+        e.registerBlockEntity(Capabilities.Fluid.BLOCK, enderTankEntity(), (be, side) -> be.exposed() ? new NeoTank(be) : null);
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
         e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.transformerEntity, (be, side) -> new BufferEnergyHandler(be.input(side), true, false));
@@ -136,8 +136,9 @@ public class SimpleMachinesNeoForge {
     }
 
     private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {
-        e.registerBlockEntity(Capabilities.Item.BLOCK, type, WorldlyContainerWrapper::new);
-        e.registerBlockEntity(Capabilities.Energy.BLOCK, type, (be, side) -> new BufferEnergyHandler(be.energy(), be.energyIn(side), be.energyOut(side)));
+        e.registerBlockEntity(Capabilities.Item.BLOCK, type, (be, side) -> be.exposed() ? new WorldlyContainerWrapper(be, side) : null);
+        e.registerBlockEntity(Capabilities.Energy.BLOCK, type, (be, side) ->
+                be.exposed() ? new BufferEnergyHandler(be.energy(), be.energyIn(side), be.energyOut(side)) : null);
     }
 
     private static EnergyHandler item(Container container, int slot) {

@@ -403,6 +403,7 @@
   "tooltip.simplemachines.ender_code": "Code %s, %s",
   "tooltip.simplemachines.ender_public": "public",
   "tooltip.simplemachines.ender_private": "private",
+  "tooltip.simplemachines.ender_private_pipes": "Private: only your Simple Machines pipes connect",
   "tooltip.simplemachines.link_card_blank": "Blank: write a code in an Ender Programmer",
   "tooltip.simplemachines.link_card": "Right-click an ender device to set its code, sneak to copy it",
   "tooltip.simplemachines.uses_write": "Uses %s FE per write",

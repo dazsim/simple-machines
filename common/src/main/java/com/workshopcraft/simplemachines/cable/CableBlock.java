@@ -1,6 +1,7 @@
 package com.workshopcraft.simplemachines.cable;
 
 import com.mojang.serialization.MapCodec;
+import com.workshopcraft.simplemachines.ender.EnderAccess;
 import com.workshopcraft.simplemachines.machine.EnergyBuffer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
@@ -71,7 +73,7 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         if (ConduitBlockEntity.blockedAt(level, pos, dir)) return false;
         if (neighbour.isAir()) return false;
         if (!(level instanceof Level real)) return current;
-        return EnergyBuffer.lookup.has(real, pos.relative(dir), dir.getOpposite());
+        return EnderAccess.check(real, pos.relative(dir), pos, () -> EnergyBuffer.lookup.has(real, pos.relative(dir), dir.getOpposite()));
     }
 
     @Override
@@ -107,6 +109,12 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
     /** Whether energy may come in from this side; a side switched off with the screwdriver takes none. */
     public static boolean open(BlockGetter level, BlockPos pos, @Nullable Direction side) {
         return side == null || !ConduitBlockEntity.blockedAt(level, pos, side);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (placer != null) Conduits.placed(level, pos, placer);
     }
 
     @Override

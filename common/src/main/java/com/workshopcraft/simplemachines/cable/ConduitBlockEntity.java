@@ -11,6 +11,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -25,8 +26,9 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.UUID;
 
-/** Dye colour of a cable or pipe, the sides switched off with the screwdriver, pipe filters, and the fluid a pipe shows. */
+/** Who placed a cable or pipe, its dye colour, the sides switched off with the screwdriver, pipe filters, and the fluid a pipe shows. */
 public class ConduitBlockEntity extends BlockEntity {
     private int colour = -1;
     private int blocked;
@@ -34,9 +36,23 @@ public class ConduitBlockEntity extends BlockEntity {
     private int filterMask;
     private Fluid fluid = Fluids.EMPTY;
     private long fluidUntil;
+    private @Nullable UUID owner;
 
     public ConduitBlockEntity(BlockPos pos, BlockState state) {
         super(SimpleMachines.conduitEntity, pos, state);
+    }
+
+    public @Nullable UUID owner() {
+        return owner;
+    }
+
+    public void setOwner(@Nullable UUID who) {
+        owner = who;
+        setChanged();
+    }
+
+    public static @Nullable UUID ownerAt(BlockGetter level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof ConduitBlockEntity be ? be.owner : null;
     }
 
     public @Nullable DyeColor colour() {
@@ -150,6 +166,7 @@ public class ConduitBlockEntity extends BlockEntity {
         final Identifier id = Identifier.tryParse(input.getStringOr("fluid", ""));
         fluid = id == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.getValue(id);
         fluidUntil = input.getLongOr("fluid_until", 0);
+        owner = input.read("owner", UUIDUtil.CODEC).orElse(null);
     }
 
     @Override
@@ -158,6 +175,7 @@ public class ConduitBlockEntity extends BlockEntity {
         output.putInt("colour", colour);
         output.putInt("blocked", blocked);
         filters.forEach((d, f) -> output.store("filter_" + d.getSerializedName(), PipeFilter.CODEC, f));
+        if (owner != null) output.store("owner", UUIDUtil.CODEC, owner);
     }
 
     @Override

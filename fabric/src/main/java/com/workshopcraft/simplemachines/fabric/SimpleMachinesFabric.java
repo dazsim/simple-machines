@@ -61,7 +61,8 @@ public class SimpleMachinesFabric implements ModInitializer {
         ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), SimpleMachines.extruderEntity);
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntity((be, side) -> new FabricTank(be), SimpleMachines.tankEntity);
         net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage.SIDED.registerForBlockEntities((be, side) ->
-                be instanceof com.workshopcraft.simplemachines.pipe.FluidStore store ? new FabricTank(store) : null,
+                be instanceof com.workshopcraft.simplemachines.pipe.FluidStore store
+                        ? be instanceof WorkBlockEntity w && !w.exposed() ? Storage.empty() : new FabricTank(store) : null,
                 SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA), SimpleMachines.MACHINE_ENTITIES.get(Core.TANK));
         net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, context) -> builder.add(SimpleMachines.biofuelItem, 2400));
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
@@ -127,8 +128,9 @@ public class SimpleMachinesFabric implements ModInitializer {
     }
 
     private static <T extends WorkBlockEntity> void work(BlockEntityType<T> type) {
-        ItemStorage.SIDED.registerForBlockEntity((be, side) -> ContainerStorage.of(be, side), type);
-        EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.energy(), be.energyIn(side), be.energyOut(side)), type);
+        ItemStorage.SIDED.registerForBlockEntity((be, side) -> be.exposed() ? ContainerStorage.of(be, side) : Storage.empty(), type);
+        EnergyStorage.SIDED.registerForBlockEntity((be, side) ->
+                be.exposed() ? new BufferEnergyStorage(be.energy(), be.energyIn(side), be.energyOut(side)) : null, type);
     }
 
     private static <T> BiConsumer<Identifier, T> direct(Registry<T> registry) {

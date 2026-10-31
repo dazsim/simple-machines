@@ -2,8 +2,10 @@ package com.workshopcraft.simplemachines.ender;
 
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.assembly.Tier;
+import com.workshopcraft.simplemachines.cable.Conduits;
 import com.workshopcraft.simplemachines.machine.EnergyMenu;
 import com.workshopcraft.simplemachines.machine.WorkBlockEntity;
+import com.workshopcraft.simplemachines.pipe.Transfer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -26,6 +29,8 @@ public abstract class EnderDeviceBlockEntity extends WorkBlockEntity implements 
     private final String kind;
     protected @Nullable EnderLink link;
     protected boolean online;
+    private @Nullable String sharedScope;
+    private static final int[] NO_SLOTS = {};
 
     protected final ContainerData menuData = new ContainerData() {
         @Override
@@ -90,8 +95,40 @@ public abstract class EnderDeviceBlockEntity extends WorkBlockEntity implements 
         return false;
     }
 
+    /** Public devices work with anything; private ones only with the owner's own pipes and cables. */
+    @Override
+    public boolean exposed() {
+        return EnderAccess.allows(level, worldPosition, link);
+    }
+
+    @Override
+    public boolean energyIn(@Nullable Direction side) {
+        return exposed();
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return exposed() ? super.getSlotsForFace(side) : NO_SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
+        return exposed() && super.canPlaceItemThroughFace(slot, stack, side);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
+        return exposed() && super.canTakeItemThroughFace(slot, stack, side);
+    }
+
     @Override
     protected void work(ServerLevel level, BlockPos pos, BlockState state, Tier tier) {
+        final String scope = link == null ? "public" : link.scope();
+        if (!scope.equals(sharedScope)) {
+            sharedScope = scope;
+            Transfer.invalidator.invalidate(level, pos);
+            Conduits.refreshAround(level, pos);
+        }
         final boolean was = online;
         online = link != null && energy.energy >= UPKEEP;
         if (online) energy.energy -= UPKEEP;

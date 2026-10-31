@@ -3,6 +3,7 @@ package com.workshopcraft.simplemachines.neoforge;
 import com.workshopcraft.simplemachines.cable.CableBlock;
 import com.workshopcraft.simplemachines.cable.CableNetwork;
 import com.workshopcraft.simplemachines.cable.Voltage;
+import com.workshopcraft.simplemachines.ender.EnderAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -51,14 +52,8 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
         for (int i = 0; i < size && left > 0; i++) {
             final CableNetwork.End end = net.ends.get((net.next + i) % size);
             if (end.pos().equals(source)) continue;
-            if (Voltage.overloads(level, end.pos(), end.side(), net.tier)) {
-                updateSnapshots(tx);
-                blow.add(end.pos());
-                continue;
-            }
-            final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, end.pos(), end.side());
-            if (h == null) continue;
-            final int n = h.insert(left, tx);
+            final int room = left;
+            final int n = EnderAccess.through(level, end.pos(), end.pos().relative(end.side()), () -> offer(end, room, tx));
             moved += n;
             left -= n;
         }
@@ -68,6 +63,18 @@ public class CableEnergyHandler extends SnapshotJournal<Integer> implements Ener
             net.moved += moved;
         }
         return moved;
+    }
+
+    /** Offers energy to one end, with the cable touching it speaking for the network. */
+    private int offer(CableNetwork.End end, int amount, TransactionContext tx) {
+        if (Voltage.overloads(level, end.pos(), end.side(), net.tier)) {
+            updateSnapshots(tx);
+            blow.add(end.pos());
+            return 0;
+        }
+        final EnergyHandler h = level.getCapability(Capabilities.Energy.BLOCK, end.pos(), end.side());
+        if (h == null) return 0;
+        return h.insert(amount, tx);
     }
 
     @Override

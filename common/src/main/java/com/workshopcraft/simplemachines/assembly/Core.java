@@ -27,8 +27,8 @@ public enum Core implements StringRepresentable {
     LAVA("lava", "lava_generator"),
     QUARRY("quarry", "quarry"),
     PROGRAMMER("programmer", "ender_programmer"),
-    BUFFER("buffer", "ender_buffer"),
-    TANK("tank", "ender_tank");
+    BUFFER("entangled_buffer", "entangled_buffer"),
+    TANK("entangled_tank", "entangled_tank");
 
     private final String name;
     public final String block;

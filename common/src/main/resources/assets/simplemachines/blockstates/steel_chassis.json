@@ -56751,6000 +56751,6000 @@
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core_loose"
+        "model": "simplemachines:block/entangled_buffer_core_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core"
+        "model": "simplemachines:block/entangled_buffer_core"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel"
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel"
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel"
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel"
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel"
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel"
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel"
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel"
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel"
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel"
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel"
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel"
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel"
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel"
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel"
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel_loose"
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel"
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core_loose",
+        "model": "simplemachines:block/entangled_buffer_core_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core",
+        "model": "simplemachines:block/entangled_buffer_core",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core_loose",
+        "model": "simplemachines:block/entangled_buffer_core_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core",
+        "model": "simplemachines:block/entangled_buffer_core",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core_loose",
+        "model": "simplemachines:block/entangled_buffer_core_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_core",
+        "model": "simplemachines:block/entangled_buffer_core",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_spruce_front_panel",
+        "model": "simplemachines:block/entangled_buffer_spruce_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_birch_front_panel",
+        "model": "simplemachines:block/entangled_buffer_birch_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_jungle_front_panel",
+        "model": "simplemachines:block/entangled_buffer_jungle_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_acacia_front_panel",
+        "model": "simplemachines:block/entangled_buffer_acacia_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_dark_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_buffer_mangrove_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cherry_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cherry_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pale_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_buffer_bamboo_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_crimson_front_panel",
+        "model": "simplemachines:block/entangled_buffer_crimson_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_warped_front_panel",
+        "model": "simplemachines:block/entangled_buffer_warped_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_white_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_orange_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_magenta_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_blue_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_yellow_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_lime_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_pink_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_gray_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_light_gray_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_cyan_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_purple_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_blue_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_brown_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_green_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_red_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_buffer_black_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_iron_front_panel",
+        "model": "simplemachines:block/entangled_buffer_iron_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_copper_front_panel",
+        "model": "simplemachines:block/entangled_buffer_copper_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/buffer_steel_front_panel",
+        "model": "simplemachines:block/entangled_buffer_steel_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "buffer",
+        "core": "entangled_buffer",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core_loose"
+        "model": "simplemachines:block/entangled_tank_core_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core"
+        "model": "simplemachines:block/entangled_tank_core"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel"
+        "model": "simplemachines:block/entangled_tank_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel"
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_birch_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel"
+        "model": "simplemachines:block/entangled_tank_birch_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel"
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel"
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel"
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel"
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel"
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel"
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel"
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel"
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_warped_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel"
+        "model": "simplemachines:block/entangled_tank_warped_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel"
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_iron_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel"
+        "model": "simplemachines:block/entangled_tank_iron_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_copper_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel"
+        "model": "simplemachines:block/entangled_tank_copper_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel_loose"
+        "model": "simplemachines:block/entangled_tank_steel_front_panel_loose"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel"
+        "model": "simplemachines:block/entangled_tank_steel_front_panel"
       },
       "when": {
         "facing": "north",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core_loose",
+        "model": "simplemachines:block/entangled_tank_core_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core",
+        "model": "simplemachines:block/entangled_tank_core",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel_loose",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel",
         "y": 90
       },
       "when": {
         "facing": "east",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core_loose",
+        "model": "simplemachines:block/entangled_tank_core_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core",
+        "model": "simplemachines:block/entangled_tank_core",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel_loose",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel",
         "y": 180
       },
       "when": {
         "facing": "south",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core_loose",
+        "model": "simplemachines:block/entangled_tank_core_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "1"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_core",
+        "model": "simplemachines:block/entangled_tank_core",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "step": "2|3|4|5|6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_spruce_front_panel",
+        "model": "simplemachines:block/entangled_tank_spruce_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "spruce",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_birch_front_panel",
+        "model": "simplemachines:block/entangled_tank_birch_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "birch",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_jungle_front_panel",
+        "model": "simplemachines:block/entangled_tank_jungle_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "jungle",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_acacia_front_panel",
+        "model": "simplemachines:block/entangled_tank_acacia_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "acacia",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_dark_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_dark_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "dark_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_mangrove_front_panel",
+        "model": "simplemachines:block/entangled_tank_mangrove_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "mangrove",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cherry_front_panel",
+        "model": "simplemachines:block/entangled_tank_cherry_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cherry",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pale_oak_front_panel",
+        "model": "simplemachines:block/entangled_tank_pale_oak_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pale_oak",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_bamboo_front_panel",
+        "model": "simplemachines:block/entangled_tank_bamboo_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "bamboo",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_crimson_front_panel",
+        "model": "simplemachines:block/entangled_tank_crimson_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "crimson",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_warped_front_panel",
+        "model": "simplemachines:block/entangled_tank_warped_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "warped",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_white_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_white_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "white_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_orange_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_orange_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "orange_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_magenta_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_magenta_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "magenta_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_blue_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_yellow_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_yellow_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "yellow_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_lime_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_lime_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "lime_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_pink_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_pink_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "pink_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_gray_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_light_gray_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_light_gray_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "light_gray_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_cyan_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_cyan_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "cyan_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_purple_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_purple_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "purple_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_blue_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_blue_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "blue_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_brown_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_brown_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "brown_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_green_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_green_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "green_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_red_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_red_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "red_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_black_concrete_front_panel",
+        "model": "simplemachines:block/entangled_tank_black_concrete_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "black_concrete",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_iron_front_panel",
+        "model": "simplemachines:block/entangled_tank_iron_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "iron",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_copper_front_panel",
+        "model": "simplemachines:block/entangled_tank_copper_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "copper",
         "step": "6|7"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel_loose",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel_loose",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "5"
       }
     },
     {
       "apply": {
-        "model": "simplemachines:block/tank_steel_front_panel",
+        "model": "simplemachines:block/entangled_tank_steel_front_panel",
         "y": 270
       },
       "when": {
         "facing": "west",
-        "core": "tank",
+        "core": "entangled_tank",
         "panel": "steel",
         "step": "6|7"
       }

@@ -121,7 +121,7 @@ public class SimpleMachinesNeoForge {
         e.registerBlockEntity(Capabilities.Item.BLOCK, SimpleMachines.extruderEntity, WorldlyContainerWrapper::new);
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, SimpleMachines.tankEntity, (be, side) -> new NeoTank(be));
         e.registerBlockEntity(Capabilities.Fluid.BLOCK, lavaEntity(), (be, side) -> new NeoTank(be));
-        e.registerBlockEntity(Capabilities.Fluid.BLOCK, enderTankEntity(), (be, side) -> be.exposed() ? new NeoTank(be) : null);
+        e.registerBlockEntity(Capabilities.Fluid.BLOCK, entangledTankEntity(), (be, side) -> be.exposed() ? new NeoTank(be) : null);
         e.registerBlock(Capabilities.Energy.BLOCK, (level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyHandler(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
         e.registerBlockEntity(Capabilities.Energy.BLOCK, SimpleMachines.transformerEntity, (be, side) -> new BufferEnergyHandler(be.input(side), true, false));
@@ -132,7 +132,7 @@ public class SimpleMachinesNeoForge {
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
                 PoweredToolItem.capacity(stack), PoweredToolItem.RATE), SimpleMachines.TOOLS.toArray(new Item[0]));
         e.registerItem(Capabilities.Energy.ITEM, (stack, access) -> new ItemAccessEnergyHandler(access, SimpleMachines.ENERGY,
-                com.workshopcraft.simplemachines.ender.EnderBackpackItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.enderBackpack);
+                com.workshopcraft.simplemachines.ender.EntangledBackpackItem.CAPACITY, PoweredToolItem.RATE), SimpleMachines.entangledBackpack);
     }
 
     private static <T extends WorkBlockEntity> void work(RegisterCapabilitiesEvent e, BlockEntityType<T> type) {
@@ -153,8 +153,8 @@ public class SimpleMachinesNeoForge {
     }
 
     @SuppressWarnings("unchecked")
-    private static BlockEntityType<com.workshopcraft.simplemachines.ender.EnderTankBlockEntity> enderTankEntity() {
-        return (BlockEntityType<com.workshopcraft.simplemachines.ender.EnderTankBlockEntity>)
+    private static BlockEntityType<com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity> entangledTankEntity() {
+        return (BlockEntityType<com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity>)
                 SimpleMachines.MACHINE_ENTITIES.get(com.workshopcraft.simplemachines.assembly.Core.TANK);
     }
 }

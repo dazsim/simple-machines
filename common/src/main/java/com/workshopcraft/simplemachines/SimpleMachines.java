@@ -117,10 +117,10 @@ public class SimpleMachines {
                     .networkSynchronized(net.minecraft.world.item.component.ItemContainerContents.STREAM_CODEC).cacheEncoding().build();
     public static final MenuType<com.workshopcraft.simplemachines.ender.EnderProgrammerMenu> PROGRAMMER_MENU =
             new MenuType<>(com.workshopcraft.simplemachines.ender.EnderProgrammerMenu::client, FeatureFlags.VANILLA_SET);
-    public static final MenuType<com.workshopcraft.simplemachines.ender.EnderBufferMenu> BUFFER_MENU =
-            new MenuType<>(com.workshopcraft.simplemachines.ender.EnderBufferMenu::client, FeatureFlags.VANILLA_SET);
-    public static final MenuType<com.workshopcraft.simplemachines.ender.EnderTankMenu> TANK_MENU =
-            new MenuType<>(com.workshopcraft.simplemachines.ender.EnderTankMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.ender.EntangledBufferMenu> BUFFER_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.ender.EntangledBufferMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.ender.EntangledTankMenu> TANK_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.ender.EntangledTankMenu::client, FeatureFlags.VANILLA_SET);
     public static final DataComponentType<com.workshopcraft.simplemachines.ender.EnderLink> ENDER_LINK =
             DataComponentType.<com.workshopcraft.simplemachines.ender.EnderLink>builder()
                     .persistent(com.workshopcraft.simplemachines.ender.EnderLink.CODEC)
@@ -196,7 +196,7 @@ public class SimpleMachines {
     public static BlockEntityType<com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity> toolStandEntity;
     public static Item powerCell;
     public static Item linkCard;
-    public static Item enderBackpack;
+    public static Item entangledBackpack;
     public static final List<Item> TOOLS = new ArrayList<>();
     public static BlockEntityType<AlloyFurnaceBlockEntity> alloyFurnaceEntity;
     public static BlockEntityType<ExtruderBlockEntity> extruderEntity;
@@ -403,7 +403,7 @@ public class SimpleMachines {
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
         for (String name : List.of("ender_ingot", "ender_wire", "ender_coil")) add(r, name, new Item(props(name)));
         linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.ender.LinkCardItem(props("link_card").stacksTo(16)));
-        enderBackpack = add(r, "ender_backpack", new com.workshopcraft.simplemachines.ender.EnderBackpackItem(props("ender_backpack").stacksTo(1)));
+        entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.ender.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)));
         add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
@@ -490,8 +490,8 @@ public class SimpleMachines {
         entity(r, Core.CHARGER, ChargerBlockEntity::new);
         entity(r, Core.CRAFTER, com.workshopcraft.simplemachines.machine.AutoCrafterBlockEntity::new);
         entity(r, Core.PROGRAMMER, com.workshopcraft.simplemachines.ender.EnderProgrammerBlockEntity::new);
-        entity(r, Core.BUFFER, com.workshopcraft.simplemachines.ender.EnderBufferBlockEntity::new);
-        entity(r, Core.TANK, com.workshopcraft.simplemachines.ender.EnderTankBlockEntity::new);
+        entity(r, Core.BUFFER, com.workshopcraft.simplemachines.ender.EntangledBufferBlockEntity::new);
+        entity(r, Core.TANK, com.workshopcraft.simplemachines.ender.EntangledTankBlockEntity::new);
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
@@ -529,8 +529,8 @@ public class SimpleMachines {
         r.accept(id("pipe_filter"), FILTER_MENU);
         r.accept(id("auto_crafter"), CRAFTER_MENU);
         r.accept(id("ender_programmer"), PROGRAMMER_MENU);
-        r.accept(id("ender_buffer"), BUFFER_MENU);
-        r.accept(id("ender_tank"), TANK_MENU);
+        r.accept(id("entangled_buffer"), BUFFER_MENU);
+        r.accept(id("entangled_tank"), TANK_MENU);
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> r) {

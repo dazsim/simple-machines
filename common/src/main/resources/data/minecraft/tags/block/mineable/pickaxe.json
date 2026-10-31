@@ -40,7 +40,7 @@
     "simplemachines:fluid_pipe",
     "simplemachines:fluid_tank",
     "simplemachines:ender_programmer",
-    "simplemachines:ender_buffer",
-    "simplemachines:ender_tank"
+    "simplemachines:entangled_buffer",
+    "simplemachines:entangled_tank"
   ]
 }

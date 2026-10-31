@@ -52,7 +52,7 @@ public record EnderLink(int code, UUID owner, boolean priv, String modules) {
 
     /** Whether the Ender Programmer can write a code onto this stack. */
     public static boolean programmable(net.minecraft.world.item.ItemStack stack) {
-        return stack.is(SimpleMachines.linkCard) || stack.is(SimpleMachines.enderBackpack);
+        return stack.is(SimpleMachines.linkCard) || stack.is(SimpleMachines.entangledBackpack);
     }
 
     public EnderLink withCode(int c, UUID who, boolean p) {

@@ -1,0 +1,45 @@
+{
+  "section": "ender",
+  "sort": 2,
+  "title": "Entangled Buffer",
+  "subtitle": "LV, 8 FE/t, 27 shared slots",
+  "text": "Every Entangled Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nOn a public buffer, pipes, hoppers and other mods' pipes work on any side. A private buffer only connects to Simple Machines pipes and cables you placed yourself. Hoppers and other mods' pipes only work on public devices, and pipes placed before 2.2 have no owner, so replace them.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. Without power or a code it takes nothing in. Breaking it keeps its code, and the items stay on the code.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_buffer.png",
+  "caption": "Two buffers, one inventory",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:ender_coil",
+        "X": "minecraft:chest"
+      },
+      "output": "simplemachines:entangled_buffer_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Ender Coil, 1x Chest",
+      "title": "Entangled Buffer Assembly"
+    },
+    {
+      "kind": "process",
+      "title": "Entangled Buffer",
+      "inputs": [
+        "simplemachines:entangled_buffer_assembly"
+      ],
+      "on": {
+        "items": [
+          "simplemachines:iron_chassis",
+          "simplemachines:steel_chassis"
+        ],
+        "name": "Chassis"
+      },
+      "output": "simplemachines:entangled_buffer",
+      "note": "Fit it to a chassis"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Ender devices and their parts (2.2.0). Run from the repo root after gen_assets.py: python3 tools/gen_ender.py
+# Ender parts, the programmer and the entangled devices (2.2.0). Run from the repo root after gen_assets.py: python3 tools/gen_ender.py
 import json, os, shutil, sys
 from PIL import Image
 
@@ -11,9 +11,9 @@ DARK = (36, 30, 28, 255)
 TEAL = [(44, 205, 177), (52, 153, 136), (24, 86, 76)]
 AMBER = [(232, 190, 50), (120, 92, 30)]
 KEYS = [(200, 206, 224), (150, 156, 176)]
-CORES = {"programmer": "ender_programmer", "buffer": "ender_buffer", "tank": "ender_tank"}
-LINKED = ("buffer", "tank")
-g["FRONT_HOLE"].update({"programmer": (3, 3, 13, 13), "buffer": (3, 3, 13, 13), "tank": (4, 2, 12, 14)})
+CORES = {"programmer": "ender_programmer", "entangled_buffer": "entangled_buffer", "entangled_tank": "entangled_tank"}
+LINKED = ("entangled_buffer", "entangled_tank")
+g["FRONT_HOLE"].update({"programmer": (3, 3, 13, 13), "entangled_buffer": (3, 3, 13, 13), "entangled_tank": (4, 2, 12, 14)})
 
 def front(lit):
     # the plan's screen and keypad, packed into the 10x10 window the front panel leaves open
@@ -123,21 +123,21 @@ def lang_update():
         "tooltip.simplemachines.ender_public": "public",
         "tooltip.simplemachines.ender_private": "private",
         "tooltip.simplemachines.link_card_blank": "Blank: write a code in an Ender Programmer",
-        "tooltip.simplemachines.link_card": "Right-click an ender device to set its code, sneak to copy it",
+        "tooltip.simplemachines.link_card": "Right-click an entangled device to set its code, sneak to copy it",
         "tooltip.simplemachines.uses_write": "Uses %s FE per write",
         "message.simplemachines.ender_set": "Code set to %s",
         "message.simplemachines.ender_copied": "Copied code %s to the card",
         "message.simplemachines.ender_not_owner": "This code belongs to someone else",
         "message.simplemachines.ender_now_private": "Code %s is now private",
         "message.simplemachines.ender_now_public": "Code %s is now public",
-        "item.simplemachines.buffer_assembly": "Buffer Assembly",
-        "item.simplemachines.tank_assembly": "Tank Assembly",
-        "item.simplemachines.ender_backpack": "Ender Backpack",
-        "block.simplemachines.ender_buffer": "Ender Buffer",
-        "block.simplemachines.ender_tank": "Ender Tank",
-        "container.simplemachines.ender_buffer": "Ender Buffer",
-        "container.simplemachines.ender_tank": "Ender Tank",
-        "container.simplemachines.ender_backpack": "Ender Backpack",
+        "item.simplemachines.entangled_buffer_assembly": "Entangled Buffer Assembly",
+        "item.simplemachines.entangled_tank_assembly": "Entangled Tank Assembly",
+        "item.simplemachines.entangled_backpack": "Entangled Backpack",
+        "block.simplemachines.entangled_buffer": "Entangled Buffer",
+        "block.simplemachines.entangled_tank": "Entangled Tank",
+        "container.simplemachines.entangled_buffer": "Entangled Buffer",
+        "container.simplemachines.entangled_tank": "Entangled Tank",
+        "container.simplemachines.entangled_backpack": "Entangled Backpack",
         "gui.simplemachines.ender_no_card": "Put a Link Card or Backpack in the slot.",
         "gui.simplemachines.ender_not_owner": "That holds someone else's code.",
         "gui.simplemachines.ender_wrote": "Wrote %s.",
@@ -148,10 +148,10 @@ def lang_update():
         "gui.simplemachines.ender_owner_private": "Private. Owner: %s",
         "gui.simplemachines.ender_someone": "someone else",
         "gui.simplemachines.ender_fe": "%s / %s FE",
-        "gui.simplemachines.ender_tank_empty": "Empty",
-        "gui.simplemachines.ender_tank_amount": "%s / %s B",
+        "gui.simplemachines.entangled_tank_empty": "Empty",
+        "gui.simplemachines.entangled_tank_amount": "%s / %s B",
         "tooltip.simplemachines.backpack_blank": "Blank: write a code in an Ender Programmer",
-        "tooltip.simplemachines.backpack": "Right-click to open the Ender Buffer on its code",
+        "tooltip.simplemachines.backpack": "Right-click to open the Entangled Buffer on its code",
         "tooltip.simplemachines.uses_open": "Uses %s FE per open",
         "message.simplemachines.backpack_no_code": "This backpack has no code yet",
         "message.simplemachines.backpack_no_power": "The backpack needs charging",
@@ -174,9 +174,9 @@ def recipes():
     shaped("link_card", ["PWP"], {"P": "#c:plates/iron", "W": W}, 2)
     shaped("programmer_assembly", ["RCR", "WIW"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "W": W, "I": f"{MOD}:ender_ingot"})
     E = f"{MOD}:ender_coil"
-    shaped("buffer_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:chest"})
-    shaped("tank_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:fluid_tank"})
-    shaped("ender_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
+    shaped("entangled_buffer_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:chest"})
+    shaped("entangled_tank_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:fluid_tank"})
+    shaped("entangled_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
 
 def device(CORE, BLOCK):
     tb = A + "/textures/block/"
@@ -188,7 +188,7 @@ def device(CORE, BLOCK):
     else:
         for suffix in ["front", "front_on", "top"]:
             shutil.copy(PLAN + f"{BLOCK}_core_{suffix}.png", tb + f"{CORE}_core_{suffix}.png")
-        save(buffer_gui() if CORE == "buffer" else tank_gui(), A + f"/textures/gui/{BLOCK}.png")
+        save(buffer_gui() if CORE == "entangled_buffer" else tank_gui(), A + f"/textures/gui/{BLOCK}.png")
 
     core_tex = lambda on: {"front": f"{MOD}:block/{CORE}_core_front" + on, "side": f"{MOD}:block/core_side",
                            "top": f"{MOD}:block/{CORE}_core_top", "bottom": f"{MOD}:block/core_bottom", "particle": f"{MOD}:block/core_side"}
@@ -240,7 +240,7 @@ def device(CORE, BLOCK):
 
 def main():
     ti = A + "/textures/item/"
-    for it in ["ender_ingot", "ender_wire", "ender_coil", "link_card", "ender_backpack"]:
+    for it in ["ender_ingot", "ender_wire", "ender_coil", "link_card", "entangled_backpack"]:
         shutil.copy(PLAN + it + ".png", ti + it + ".png")
         jdump({"parent": "minecraft:item/generated", "textures": {"layer0": f"{MOD}:item/{it}"}}, f"{A}/models/item/{it}.json")
         jdump({"model": {"type": "minecraft:model", "model": f"{MOD}:item/{it}"}}, f"{A}/items/{it}.json")

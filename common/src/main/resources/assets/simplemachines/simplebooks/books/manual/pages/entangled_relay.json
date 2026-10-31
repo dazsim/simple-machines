@@ -1,0 +1,63 @@
+{
+  "section": "entangled",
+  "sort": 5,
+  "title": "Entangled Relay",
+  "subtitle": "LV, MV and HV, 10% loss",
+  "text": "Entangled Relays move FE between every relay on the same code, across any distance and any dimension. Open one and press the button to choose Send or Receive.\n\nA sender takes power from cables and shares it out between the receivers on its code, losing a tenth on the way. A receiver pushes it into the cables or machines next to it.\n\nEach tier moves its own voltage: 1,000 FE/t for LV, 8,000 for MV and 64,000 for HV. Higher voltage blows a relay, and a receiver blows lower rated machines it feeds, like a generator. A private relay only connects to Simple Machines cables you placed yourself.\n\nIt uses 8 FE/t and stops relaying without power. Breaking it keeps its code. The relay does not keep chunks loaded.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_relay.png",
+  "caption": "Power over one code",
+  "right_title": "Assembly",
+  "steps": [
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:entangled_coil",
+        "X": "simplemachines:redstone_copper_cable"
+      },
+      "output": "simplemachines:entangled_relay_lv_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Entangled Coil, 1x Redstone Copper Cable",
+      "title": "LV Relay Assembly"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:entangled_coil",
+        "X": "simplemachines:gold_cable"
+      },
+      "output": "simplemachines:entangled_relay_mv_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Entangled Coil, 1x Gold Cable",
+      "title": "MV Relay Assembly"
+    },
+    {
+      "kind": "craft_shaped",
+      "pattern": [
+        "RCR",
+        "EXE",
+        "   "
+      ],
+      "key": {
+        "R": "#c:rods/iron",
+        "C": "simplemachines:redstone_copper_ingot",
+        "E": "simplemachines:entangled_coil",
+        "X": "simplemachines:diamond_cable"
+      },
+      "output": "simplemachines:entangled_relay_hv_assembly",
+      "note": "Crafting Table\n2x Iron Rod, 1x Redstone Copper Ingot, 2x Entangled Coil, 1x Diamond Cable",
+      "title": "HV Relay Assembly"
+    }
+  ]
+}

@@ -52,7 +52,8 @@ public class SimpleMachinesJei implements IModPlugin {
         if (ViewerRecipes.get(net.minecraft.world.item.crafting.RecipeType.CRAFTING).stream().noneMatch(h -> h.value() instanceof com.workshopcraft.simplemachines.recipe.QuarryAssemblyRecipe)) {
             r.addRecipes(RecipeTypes.CRAFTING, quarryAssembly());
         }
-        for (String name : List.of("redstone_copper_cable", "gold_cable", "diamond_cable", "lv_mv_transformer", "mv_hv_transformer")) {
+        for (String name : List.of("redstone_copper_cable", "gold_cable", "diamond_cable", "lv_mv_transformer", "mv_hv_transformer",
+                "entangled_relay_lv", "entangled_relay_mv", "entangled_relay_hv")) {
             r.addItemStackInfo(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(SimpleMachines.id(name))),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info.overvoltage"));

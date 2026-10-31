@@ -37,6 +37,8 @@ public class EntangledData extends SavedData {
             DataFixTypes.SAVED_DATA_COMMAND_STORAGE);
 
     private final Map<String, Channel> channels;
+    /** Relays loaded right now, by channel key. Not saved: relays join again as they tick. */
+    final Map<String, java.util.Set<EntangledRelayBlockEntity>> relays = new HashMap<>();
 
     public EntangledData() {
         this(new HashMap<>());

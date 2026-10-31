@@ -50,7 +50,11 @@ public abstract class EntangledDeviceBlockEntity extends WorkBlockEntity impleme
     };
 
     protected EntangledDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size, String kind) {
-        super(type, pos, state, size, CAPACITY, MAX_IN, 0);
+        this(type, pos, state, size, kind, CAPACITY, MAX_IN, 0);
+    }
+
+    protected EntangledDeviceBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int size, String kind, int capacity, int maxIn, int maxOut) {
+        super(type, pos, state, size, capacity, maxIn, maxOut);
         this.kind = kind;
     }
 

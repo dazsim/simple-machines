@@ -11,9 +11,12 @@ DARK = (36, 30, 28, 255)
 TEAL = [(44, 205, 177), (52, 153, 136), (24, 86, 76)]
 AMBER = [(232, 190, 50), (120, 92, 30)]
 KEYS = [(200, 206, 224), (150, 156, 176)]
-CORES = {"entangled_programmer": "entangled_programmer", "entangled_buffer": "entangled_buffer", "entangled_tank": "entangled_tank"}
-LINKED = ("entangled_buffer", "entangled_tank")
-g["FRONT_HOLE"].update({"entangled_programmer": (3, 3, 13, 13), "entangled_buffer": (3, 3, 13, 13), "entangled_tank": (4, 2, 12, 14)})
+CORES = {"entangled_programmer": "entangled_programmer", "entangled_buffer": "entangled_buffer", "entangled_tank": "entangled_tank",
+         "entangled_relay_lv": "entangled_relay_lv", "entangled_relay_mv": "entangled_relay_mv", "entangled_relay_hv": "entangled_relay_hv"}
+LINKED = ("entangled_buffer", "entangled_tank", "entangled_relay_lv", "entangled_relay_mv", "entangled_relay_hv")
+TIERS = {"lv": (0xF4, 0x78, 0x5C), "mv": (0xE8, 0xBE, 0x28), "hv": (0x96, 0xE4, 0xF0)}
+g["FRONT_HOLE"].update({"entangled_programmer": (3, 3, 13, 13), "entangled_buffer": (3, 3, 13, 13), "entangled_tank": (4, 2, 12, 14),
+                        **{f"entangled_relay_{t}": (4, 3, 12, 13) for t in TIERS}})
 
 def front(lit):
     # the plan's screen and keypad, packed into the 10x10 window the front panel leaves open
@@ -75,6 +78,19 @@ def tank_gui():
     inset(t, 79, 16, 96, 69)
     inset(t, 152, 16, 167, 69)
     inventory(t, 83)
+    return t
+
+def relay_front(t, lit):
+    # the plan's tier pip sits behind the front panel, so the tier also runs along the bottom of the window
+    im = Image.open(PLAN + f"entangled_relay_{t}_core_front" + ("_on" if lit else "") + ".png").convert("RGBA")
+    c = TIERS[t] if lit else tuple(x * 11 // 20 for x in TIERS[t])
+    for u in range(5, 11):
+        px(im, u, 12, c + (255,))
+    return im
+
+def relay_gui():
+    t = panel(176, 92)
+    inset(t, 152, 16, 167, 69)
     return t
 
 def gui_tex():
@@ -155,6 +171,24 @@ def lang_update():
         "tooltip.simplemachines.uses_open": "Uses %s FE per open",
         "message.simplemachines.backpack_no_code": "This backpack has no code yet",
         "message.simplemachines.backpack_no_power": "The backpack needs charging",
+        **{k: v for t in ("LV", "MV", "HV") for k, v in {
+            f"block.simplemachines.entangled_relay_{t.lower()}": f"Entangled Relay {t}",
+            f"item.simplemachines.entangled_relay_{t.lower()}_assembly": f"Entangled Relay {t} Assembly",
+        }.items()},
+        "jei.simplemachines.info.entangled_relay_lv": "LV relay. Sends up to 1,000 FE per tick to every relay on its code, in any dimension, losing 10% on the way. Higher voltage on its input blows it.",
+        "jei.simplemachines.info.entangled_relay_mv": "MV relay. Sends up to 8,000 FE per tick to every relay on its code, in any dimension, losing 10% on the way. Higher voltage on its input blows it.",
+        "jei.simplemachines.info.entangled_relay_hv": "HV relay. Sends up to 64,000 FE per tick to every relay on its code, in any dimension, losing 10% on the way.",
+        "gui.simplemachines.relay_send": "Send",
+        "gui.simplemachines.relay_receive": "Receive",
+        "gui.simplemachines.relay_sender": "%s sender",
+        "gui.simplemachines.relay_senders": "%s senders",
+        "gui.simplemachines.relay_receiver": "%s receiver",
+        "gui.simplemachines.relay_receivers": "%s receivers",
+        "gui.simplemachines.relay_in": "In %s FE/t",
+        "gui.simplemachines.relay_in_after": "In %s FE/t (after 10%%)",
+        "gui.simplemachines.relay_out": "Out %s FE/t",
+        "tooltip.simplemachines.relay_sends": "Sends %s on the receive side, 10%% loss",
+        "tooltip.simplemachines.entangled_private_cables": "Private: only your Simple Machines cables connect",
     })
     jdump(lang, p)
 
@@ -176,6 +210,8 @@ def recipes():
     E = f"{MOD}:entangled_coil"
     shaped("entangled_buffer_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": "minecraft:chest"})
     shaped("entangled_tank_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:fluid_tank"})
+    for t, cable in (("lv", "redstone_copper_cable"), ("mv", "gold_cable"), ("hv", "diamond_cable")):
+        shaped(f"entangled_relay_{t}_assembly", ["RCR", "EXE"], {"R": "#c:rods/iron", "C": f"{MOD}:redstone_copper_ingot", "E": E, "X": f"{MOD}:{cable}"})
     shaped("entangled_backpack", ["LWL", "LEL", "LPL"], {"L": "minecraft:leather", "W": W, "E": E, "P": f"{MOD}:power_cell"})
 
 def device(CORE, BLOCK):
@@ -185,6 +221,12 @@ def device(CORE, BLOCK):
         save(front(True), tb + f"{CORE}_core_front_on.png")
         save(top(), tb + f"{CORE}_core_top.png")
         save(gui_tex(), A + f"/textures/gui/{BLOCK}.png")
+    elif CORE.startswith("entangled_relay_"):
+        tier = CORE.rsplit("_", 1)[1]
+        save(relay_front(tier, False), tb + f"{CORE}_core_front.png")
+        save(relay_front(tier, True), tb + f"{CORE}_core_front_on.png")
+        shutil.copy(PLAN + "entangled_relay_core_top.png", tb + f"{CORE}_core_top.png")
+        save(relay_gui(), A + "/textures/gui/entangled_relay.png")
     else:
         for suffix in ["front", "front_on", "top"]:
             shutil.copy(PLAN + f"{BLOCK}_core_{suffix}.png", tb + f"{CORE}_core_{suffix}.png")

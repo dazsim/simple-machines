@@ -51,6 +51,15 @@ public final class PowerTooltip {
             out.accept(line("transformer_screwdriver", tier(p.sends())));
             return;
         }
+        if (p.unit() == PowerInfo.Unit.RELAY) {
+            final Tier t = stack.getOrDefault(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY).get(PoweredMachineBlock.TIER);
+            final int cap = p.capacity() * (t == null ? Tier.IRON : t).storage;
+            out.accept(line("accepts", tier(p.accepts()), num(p.out())));
+            out.accept(line("relay_sends", tier(p.sends())));
+            out.accept(line("uses_tick", num(p.use())));
+            energy(stack, cap, out, line("holds", num(cap)));
+            return;
+        }
         Tier tier = Tier.IRON;
         int oc = 0, cells = 0;
         if (p.chassis()) {

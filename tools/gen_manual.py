@@ -491,6 +491,17 @@ def d_entangled_tank():
     sh.text((320, 355), "one fluid, 16 buckets, shared by every tank on the code", 12, SOFT)
     sh.save("entangled_tank")
 
+def d_entangled_relay():
+    sh = Sheet()
+    machine(sh, iso((150, 210), 0.8)); machine(sh, iso((490, 210), 0.8))
+    sh.text((320, 40), "ENTANGLED RELAYS ON ONE CODE", 14)
+    sh.arrow((250, 172), (390, 172))
+    sh.text((320, 150), "482913", 13)
+    sh.text((320, 196), "-10%", 12, SOFT)
+    sh.text((150, 312), "send: 1,000 FE/t in", 12, SOFT); sh.text((490, 312), "receive: 900 FE/t out", 12, SOFT)
+    sh.text((320, 355), "senders share their power out between every receiver on the code", 12, SOFT)
+    sh.save("entangled_relay")
+
 def textures():
     g = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(g)
     for i in range(0, 64, 16):
@@ -735,10 +746,14 @@ def pages():
          "Every Entangled Tank on the same code shares one tank of 16 buckets of one fluid.\n\nAny fluid pipe works on a public tank. A private tank only connects to Simple Machines pipes and cables you placed yourself; other mods' pipes only work on public devices. Pipes placed before 2.2 have no owner, so replace them.\n\nPut a bucket of fluid in the top slot to pour it in, or an empty one to fill it.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. The code and fluid survive breaking it.",
          "entangled_tank", "Two tanks, one fluid", "Assembly",
          [craft("entangled_tank_assembly", "Entangled Tank Assembly"), build("entangled_tank_assembly", "entangled_tank", "Entangled Tank")])
+    page("entangled_relay", "entangled", 5, "Entangled Relay", "LV, MV and HV, 10% loss",
+         "Entangled Relays move FE between every relay on the same code, across any distance and any dimension. Open one and press the button to choose Send or Receive.\n\nA sender takes power from cables and shares it out between the receivers on its code, losing a tenth on the way. A receiver pushes it into the cables or machines next to it.\n\nEach tier moves its own voltage: 1,000 FE/t for LV, 8,000 for MV and 64,000 for HV. Higher voltage blows a relay, and a receiver blows lower rated machines it feeds, like a generator. A private relay only connects to Simple Machines cables you placed yourself.\n\nIt uses 8 FE/t and stops relaying without power. Breaking it keeps its code. The relay does not keep chunks loaded.",
+         "entangled_relay", "Power over one code", "Assembly",
+         [craft("entangled_relay_lv_assembly", "LV Relay Assembly"), craft("entangled_relay_mv_assembly", "MV Relay Assembly"), craft("entangled_relay_hv_assembly", "HV Relay Assembly")])
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

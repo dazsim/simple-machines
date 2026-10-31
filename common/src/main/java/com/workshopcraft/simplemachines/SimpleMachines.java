@@ -93,7 +93,7 @@ public class SimpleMachines {
     /** The machines added in 0.1.0-alpha.5, all plain WorkMachineBlocks. */
     public static final List<Core> NEW_CORES = List.of(Core.BATTERY, Core.CRUSHER, Core.HARVESTER, Core.ALLOY, Core.STONE,
             Core.SAW, Core.WATER, Core.HIVE, Core.SHEARER, Core.CHARGER, Core.CRAFTER, Core.COMPRESSOR, Core.LAVA, Core.QUARRY, Core.PROGRAMMER,
-            Core.BUFFER, Core.TANK);
+            Core.BUFFER, Core.TANK, Core.RELAY_LV, Core.RELAY_MV, Core.RELAY_HV);
     public static final MenuType<MachineMenu> ALLOY_MENU = new MenuType<>(MachineMenu::alloy, FeatureFlags.VANILLA_SET);
     public static final MenuType<MachineMenu> EXTRUDER_MENU = new MenuType<>(MachineMenu::extruder, FeatureFlags.VANILLA_SET);
     public static final MenuType<EnergyMenu> GENERATOR_MENU = new MenuType<>(EnergyMenu::generator, FeatureFlags.VANILLA_SET);
@@ -121,6 +121,8 @@ public class SimpleMachines {
             new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledBufferMenu::client, FeatureFlags.VANILLA_SET);
     public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledTankMenu> TANK_MENU =
             new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledTankMenu::client, FeatureFlags.VANILLA_SET);
+    public static final MenuType<com.workshopcraft.simplemachines.entangled.EntangledRelayMenu> RELAY_MENU =
+            new MenuType<>(com.workshopcraft.simplemachines.entangled.EntangledRelayMenu::client, FeatureFlags.VANILLA_SET);
     public static final DataComponentType<com.workshopcraft.simplemachines.entangled.EntangledLink> ENTANGLED_LINK =
             DataComponentType.<com.workshopcraft.simplemachines.entangled.EntangledLink>builder()
                     .persistent(com.workshopcraft.simplemachines.entangled.EntangledLink.CODEC)
@@ -492,6 +494,10 @@ public class SimpleMachines {
         entity(r, Core.PROGRAMMER, com.workshopcraft.simplemachines.entangled.EntangledProgrammerBlockEntity::new);
         entity(r, Core.BUFFER, com.workshopcraft.simplemachines.entangled.EntangledBufferBlockEntity::new);
         entity(r, Core.TANK, com.workshopcraft.simplemachines.entangled.EntangledTankBlockEntity::new);
+        for (int v = 0; v < Core.RELAYS.length; v++) {
+            final int voltage = v;
+            entity(r, Core.RELAYS[v], (p, st) -> new com.workshopcraft.simplemachines.entangled.EntangledRelayBlockEntity(p, st, voltage));
+        }
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
@@ -531,6 +537,7 @@ public class SimpleMachines {
         r.accept(id("entangled_programmer"), PROGRAMMER_MENU);
         r.accept(id("entangled_buffer"), BUFFER_MENU);
         r.accept(id("entangled_tank"), TANK_MENU);
+        r.accept(id("entangled_relay"), RELAY_MENU);
     }
 
     public static void registerRecipeTypes(BiConsumer<Identifier, RecipeType<?>> r) {

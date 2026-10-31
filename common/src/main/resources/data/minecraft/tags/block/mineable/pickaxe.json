@@ -41,6 +41,9 @@
     "simplemachines:fluid_tank",
     "simplemachines:entangled_buffer",
     "simplemachines:entangled_tank",
-    "simplemachines:entangled_programmer"
+    "simplemachines:entangled_programmer",
+    "simplemachines:entangled_relay_lv",
+    "simplemachines:entangled_relay_mv",
+    "simplemachines:entangled_relay_hv"
   ]
 }

@@ -28,7 +28,12 @@ public enum Core implements StringRepresentable {
     QUARRY("quarry", "quarry"),
     PROGRAMMER("entangled_programmer", "entangled_programmer"),
     BUFFER("entangled_buffer", "entangled_buffer"),
-    TANK("entangled_tank", "entangled_tank");
+    TANK("entangled_tank", "entangled_tank"),
+    RELAY_LV("entangled_relay_lv", "entangled_relay_lv"),
+    RELAY_MV("entangled_relay_mv", "entangled_relay_mv"),
+    RELAY_HV("entangled_relay_hv", "entangled_relay_hv");
+
+    public static final Core[] RELAYS = {RELAY_LV, RELAY_MV, RELAY_HV};
 
     private final String name;
     public final String block;

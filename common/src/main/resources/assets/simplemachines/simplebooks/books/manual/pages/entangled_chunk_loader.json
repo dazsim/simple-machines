@@ -1,6 +1,6 @@
 {
   "section": "entangled",
-  "sort": 7,
+  "sort": 8,
   "title": "Chunk Loader",
   "subtitle": "32 FE/t per chunk",
   "text": "A Chunk Loader Module keeps the chunk its device sits in loaded, with nobody near and the owner offline. Fit it after the control board of an Entangled Buffer, Tank or Relay, like an upgrade. Those three have 3 slots and take no Overclocker; the programmer and pad can't load chunks.\n\nThe device needs a code and power. The loader draws 32 FE/t per chunk on top of the 8 FE/t upkeep, so a far away base always has a running cost. Its screen shows the area, the draw and your chunks, and the button turns the loader off.\n\nOut of power it waits 10 s, then lets the chunks go. Once its chunk is loaded again it restarts when it holds 20 ticks of FE.",

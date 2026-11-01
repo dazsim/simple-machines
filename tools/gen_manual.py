@@ -514,6 +514,65 @@ def d_entangled_pad():
     sh.text((320, 360), "2,000 FE + 20 FE per block, at most 50,000 FE", 12, SOFT)
     sh.save("entangled_pad")
 
+def pack(sh, cx, cy, k=1.0):
+    w, h = 60 * k, 76 * k
+    x0, y0 = cx - w / 2, cy - h / 2
+    sh.poly([(x0 + 6 * k, y0), (x0 + w - 6 * k, y0), (x0 + w, y0 + 10 * k), (x0 + w, y0 + h), (x0, y0 + h), (x0, y0 + 10 * k)])
+    sh.line((x0, y0 + 24 * k), (x0 + w, y0 + 24 * k), 1.4, SOFT)
+    sh.poly([(cx - 12 * k, cy - 4 * k), (cx + 12 * k, cy - 4 * k), (cx + 12 * k, cy + 18 * k), (cx - 12 * k, cy + 18 * k)], 1.4)
+    sh.circle((cx, cy + 7 * k), 4 * k, 1.2, fill=INK)
+
+def d_entangled_basics():
+    sh = Sheet()
+    sh.text((320, 40), "PRIVATE AND PUBLIC", 14)
+    for cx, label in ((170, "PRIVATE"), (470, "PUBLIC")):
+        P = iso((cx, 215), 0.62); machine(sh, P)
+        sh.text((cx, 80), label, 13)
+    # private: the owner's cable connects, a hopper does not
+    sh.line((40, 190), (100, 190), 2.0); sh.line((40, 204), (100, 204), 2.0); sh.arrow((100, 197), (118, 197))
+    sh.text((70, 176), "your cable", 11, SOFT)
+    sh.poly([(212, 98), (246, 98), (238, 122), (220, 122)]); sh.line((222, 132), (236, 146)); sh.line((236, 132), (222, 146))
+    sh.text((260, 96), "hopper", 11, SOFT, "lm")
+    # public: anything connects
+    sh.line((340, 190), (400, 190), 2.0); sh.line((340, 204), (400, 204), 2.0); sh.arrow((400, 197), (418, 197))
+    sh.text((370, 176), "any cable", 11, SOFT)
+    sh.poly([(512, 98), (546, 98), (538, 122), (520, 122)]); sh.arrow((529, 124), (529, 146))
+    sh.text((560, 96), "hopper", 11, SOFT, "lm")
+    sh.text((170, 300), "only your Simple Machines", 12, SOFT); sh.text((170, 318), "pipes and cables", 12, SOFT)
+    sh.text((470, 300), "hoppers, other mods' pipes,", 12, SOFT); sh.text((470, 318), "generators, anyone", 12, SOFT)
+    sh.text((320, 360), "private codes are yours alone; a private pad only teleports you", 12, SOFT)
+    sh.save("entangled_basics")
+
+def d_entangled_parts():
+    sh = Sheet()
+    sh.text((320, 40), "ENTANGLED PARTS", 14)
+    steps = [("redstone copper", "+ ender pearl"), ("ALLOY SMELTER", ""), ("entangled", "ingot"), ("ROLLING MILL", "rod mode"), ("2 entangled", "wire")]
+    for i, (a, b) in enumerate(steps):
+        x = 72 + i * 124
+        if i % 2: sh.poly([(x - 46, 110), (x + 46, 110), (x + 46, 170), (x - 46, 170)])
+        else: sh.circle((x, 140), 28, 1.6)
+        sh.text((x, 196), a, 11); sh.text((x, 212), b, 11, SOFT)
+        if i < len(steps) - 1: sh.arrow((x + 50, 140), (x + 72, 140))
+    for i, (a, b) in enumerate([("4 wire", "+ steel rod"), ("entangled", "coil")]):
+        x = 220 + i * 200
+        sh.circle((x, 280), 26, 1.6)
+        sh.text((x, 328), a, 11); sh.text((x, 344), b, 11, SOFT)
+    sh.arrow((256, 280), (384, 280)); sh.text((320, 266), "crafting table", 11, SOFT)
+    sh.text((320, 375), "coils build every buffer, tank, relay, pad, backpack and loader", 12, SOFT)
+    sh.save("entangled_parts")
+
+def d_entangled_backpack():
+    sh = Sheet()
+    sh.text((320, 40), "ENTANGLED BACKPACK", 14)
+    for i, (a, b) in enumerate([("hold it:", "right click"), ("wear it:", "chest slot, press B"), ("charge it:", "in a Charger")]):
+        x = 120 + i * 200
+        pack(sh, x, 170, 1.0)
+        sh.text((x, 250), a, 12); sh.text((x, 270), b, 12, SOFT)
+    sh.dash((120, 300), (520, 300))
+    sh.text((320, 330), "opens the buffer slots on its code, anywhere", 12, SOFT)
+    sh.text((320, 355), "1,000 FE an open from its own 50,000 FE", 12, SOFT)
+    sh.save("entangled_backpack")
+
 def chunk_grid(sh, cx, cy, n, lit, cell=26):
     # a 5x5 patch of chunks seen from above, the lit square around the middle is what loads
     x0, y0 = cx - 2.5 * cell, cy - 2.5 * cell
@@ -813,7 +872,7 @@ def pages():
 
 def main():
     os.makedirs(TEX, exist_ok=True)
-    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_programmer, d_entangled_buffer, d_entangled_tank, d_entangled_relay, d_entangled_pad, d_entangled_chunk_loader, d_entangled_range]: f()
+    for f in [d_intro, d_metals, d_chassis, d_assembly, d_finishes, d_machines, d_farm, d_power, d_voltage, d_solar, d_wind, d_quarry, d_pipes, d_filters, d_fluids, d_tanks, d_output, d_upgrades, d_tools, d_entangled_basics, d_entangled_parts, d_entangled_programmer, d_entangled_buffer, d_entangled_backpack, d_entangled_tank, d_entangled_relay, d_entangled_pad, d_entangled_chunk_loader, d_entangled_range]: f()
     textures()
     jdump({"extends": "simplebooks:text", "vars": {"rule": "#9cc0e4"},
            "styles": {"title": {"color": "$head", "scale": 2, "align": "center"}, "body": {"color": "$ink", "line_height": 20}},

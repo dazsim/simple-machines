@@ -60,7 +60,8 @@ public class SimpleMachinesJei implements IModPlugin {
         }
         for (String name : List.of("iron_solar_panel", "copper_solar_panel", "gold_solar_panel", "diamond_solar_panel", "wind_turbine", "turbine_blade",
                 "iron_core", "copper_core", "gold_core", "diamond_core", "pv_cell", "silicon_lapis_blend", "quarry", "quarry_assembly", "landmark",
-                "chunk_loader_module", "range_module")) {
+                "chunk_loader_module", "range_module", "entangled_ingot", "entangled_wire", "entangled_coil", "link_card", "entangled_programmer",
+                "entangled_buffer", "entangled_tank", "entangled_backpack")) {
             r.addItemStackInfo(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(SimpleMachines.id(name))),
                     net.minecraft.network.chat.Component.translatable("jei.simplemachines.info." + name));
         }

@@ -40,6 +40,11 @@ public class SimpleMachinesNeoForge {
     public SimpleMachinesNeoForge(IEventBus modBus) {
         modBus.addListener(SimpleMachinesNeoForge::onRegister);
         modBus.addListener(SimpleMachinesNeoForge::onCapabilities);
+        modBus.addListener((net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent e) -> e.registrar("1").playToServer(
+                com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.TYPE, com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.CODEC,
+                (payload, context) -> context.enqueueWork(() -> {
+                    if (context.player() instanceof ServerPlayer p) com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.openWorn(p);
+                })));
         NeoForge.EVENT_BUS.addListener(SimpleMachinesNeoForge::onUseBlock);
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartedEvent e) ->
                 com.workshopcraft.simplemachines.entangled.ChunkLoaders.onServerStarted(e.getServer()));

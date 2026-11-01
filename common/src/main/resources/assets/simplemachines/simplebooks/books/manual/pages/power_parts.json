@@ -3,7 +3,7 @@
   "sort": 1,
   "title": "Cables and Cells",
   "subtitle": "Carrying and storing FE",
-  "text": "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.",
+  "text": "Each power block is a chassis with its own assembly, built like any machine: fit the assembly, then the control board, panels and worktop. Generators, batteries and machines keep their energy when broken.\n\nThe Power Cell goes into the Battery Module of a powered tool.\n\nHold a powered block's item to read its info lines. Accepts is the voltage it takes and the most FE it takes a tick. Uses is what it spends, Sends what it gives out and at what voltage. Holds is its storage, or Energy once it has some. Entangled devices also show their Code, private or public, and Modules lists a fitted Chunk Loader and Range modules.",
   "drawing": "simplemachines:textures/simplebooks/manual/power.png",
   "caption": "Generator, battery, machine",
   "right_title": "Recipes",

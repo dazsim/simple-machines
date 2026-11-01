@@ -43,7 +43,7 @@ public class MachineItem extends BlockItem {
         if (ups.contains(Upgrade.CHUNK_LOADER)) {
             out.accept(Component.translatable("tooltip.simplemachines.modules", Upgrade.summary(Upgrade.pack(ups), false, true)).withStyle(ChatFormatting.BLUE));
             final int side = 2 * Math.min(Upgrade.MAX_RANGE, Upgrade.count(ups, Upgrade.RANGE)) + 1;
-            out.accept(Component.translatable("tooltip.simplemachines.loader_area", side, side * side,
+            out.accept(Component.translatable("tooltip.simplemachines.loader_area", side, side, PowerTooltip.chunks(side * side),
                     side * side * com.workshopcraft.simplemachines.ServerConfig.DEFAULT_FE_PER_CHUNK).withStyle(ChatFormatting.GRAY));
         }
     }

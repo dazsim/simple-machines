@@ -123,6 +123,24 @@ def part(m, when, y):
     a["when"] = when
     return a
 
+def backpack_worn():
+    # chest slot layer on the 64x32 humanoid sheet: the pack on the back of the body, straps on the front and shoulders
+    t = Image.new("RGBA", (64, 32), (0, 0, 0, 0))
+    EDGE, DEEP, MID, HI, LIGHT = (61, 28, 16, 255), (84, 39, 22, 255), (158, 73, 42, 255), (198, 92, 53, 255), (215, 107, 67, 255)
+    STEEL, STEEL_D = (137, 147, 176, 255), (110, 114, 130, 255)
+    rect(t, 32, 20, 39, 31, EDGE); rect(t, 33, 21, 38, 30, MID)
+    rect(t, 33, 21, 38, 21, STEEL); rect(t, 33, 22, 38, 22, STEEL_D)
+    rect(t, 33, 23, 38, 23, LIGHT); rect(t, 33, 24, 38, 24, HI)
+    rect(t, 34, 25, 37, 28, STEEL); rect(t, 35, 26, 36, 26, (44, 205, 177, 255)); rect(t, 35, 27, 36, 27, (16, 94, 81, 255))
+    rect(t, 33, 30, 38, 30, DEEP); px(t, 37, 29, (80, 220, 90, 255))
+    for x in (21, 26):
+        rect(t, x, 16, x, 31, EDGE)
+    px(t, 21, 26, STEEL); px(t, 26, 26, STEEL)
+    for x in (16, 17, 30, 31):
+        rect(t, x, 20, x, 31, DEEP)
+    save(t, A + "/textures/entity/equipment/humanoid/entangled_backpack.png")
+    jdump({"layers": {"humanoid": [{"texture": f"{MOD}:entangled_backpack"}]}}, f"{A}/equipment/entangled_backpack.json")
+
 def lang_update():
     p = f"{A}/lang/en_us.json"
     lang = json.load(open(p))
@@ -164,7 +182,7 @@ def lang_update():
         "block.simplemachines.entangled_tank": "Entangled Tank",
         "container.simplemachines.entangled_buffer": "Entangled Buffer",
         "container.simplemachines.entangled_tank": "Entangled Tank",
-        "container.simplemachines.entangled_backpack": "Entangled Backpack",
+        "container.simplemachines.entangled_backpack": "Backpack",
         "gui.simplemachines.entangled_no_card": "Put a Link Card or Backpack in the slot.",
         "gui.simplemachines.entangled_not_owner": "That holds someone else's code.",
         "gui.simplemachines.entangled_wrote": "Wrote %s.",
@@ -181,7 +199,10 @@ def lang_update():
         "tooltip.simplemachines.backpack": "Right-click to open the Entangled Buffer on its code",
         "tooltip.simplemachines.uses_open": "Uses %s FE per open",
         "message.simplemachines.backpack_no_code": "This backpack has no code yet",
-        "message.simplemachines.backpack_no_power": "The backpack needs charging",
+        "message.simplemachines.backpack_no_power": "Not enough charge: opening takes %s FE and it has %s FE. Charge it in a Charger",
+        "message.simplemachines.backpack_not_worn": "Wear an Entangled Backpack in your chest slot to open it with this key",
+        "key.simplemachines.open_backpack": "Open Entangled Backpack",
+        "tooltip.simplemachines.backpack_worn": "Or wear it in the chest slot and press %s",
         **{k: v for t in ("LV", "MV", "HV") for k, v in {
             f"block.simplemachines.entangled_relay_{t.lower()}": f"Entangled Relay {t}",
             f"item.simplemachines.entangled_relay_{t.lower()}_assembly": f"Entangled Relay {t} Assembly",
@@ -236,11 +257,11 @@ def lang_update():
         "tooltip.simplemachines.range_module": "Widens a Chunk Loader by one chunk each way",
         "tooltip.simplemachines.chunk_loader_cost": "1x1 area: %s FE/t, plus %s FE/t device upkeep",
         "tooltip.simplemachines.range_module_cost": "3x3 area: %s FE/t, 5x5 with two: %s FE/t",
-        "tooltip.simplemachines.module_cap": "Up to %s chunks per player, set by the server",
+        "tooltip.simplemachines.module_cap": "Up to %s per player, set by the server",
         "tooltip.simplemachines.chunk_loader_module_fit": "Fit after the control board of an Entangled Buffer, Tank or Relay, one per device",
         "tooltip.simplemachines.range_module_fit": "Fit next to a Chunk Loader, two at most",
         "tooltip.simplemachines.modules": "Modules: %s",
-        "tooltip.simplemachines.loader_area": "Loads %sx%s (%s chunks) for %s FE/t",
+        "tooltip.simplemachines.loader_area": "Loads %sx%s (%s) for %s FE/t",
         "tooltip.simplemachines.upgrade_fit": "Fit after a machine's control board, or on a finished tool on its stand, then screw in (2 slots, 3 on entangled devices)",
         "message.simplemachines.upgrades_full": "The upgrade slots are full",
         "message.simplemachines.no_overclock_entangled": "Entangled devices can't take an Overclocker",
@@ -256,9 +277,11 @@ def lang_update():
         "gui.simplemachines.loader_away": "Loader paused: owner offline",
         "gui.simplemachines.loader_grace": "No power: unloads in %s s",
         "gui.simplemachines.loader_no_power": "Needs %s FE to restart",
-        "gui.simplemachines.loader_over": "Over limit: %s chunks max",
-        "gui.simplemachines.loader_chunks": "%s chunks, you use %s/%s",
-        "gui.simplemachines.loader_chunks_uncapped": "%s chunks, you use %s",
+        "gui.simplemachines.loader_over": "Over limit: %s max",
+        "gui.simplemachines.loader_chunks": "%s, you use %s/%s",
+        "gui.simplemachines.loader_chunks_uncapped": "%s, you use %s",
+        "gui.simplemachines.chunk_count": "%s chunks",
+        "gui.simplemachines.chunk_count_one": "%s chunk",
         "gui.simplemachines.loader_switch_on": "On",
         "gui.simplemachines.loader_switch_off": "Off",
         "gui.simplemachines.loader_switch_hint": "Turn the Chunk Loader on or off",
@@ -267,6 +290,14 @@ def lang_update():
             "It keeps its own chunk loaded for 32 FE/t, even with nobody near and the owner offline. "
             "Out of power it waits 10 s, then lets the chunks go. Each player can load 75 chunks; the server can change that.",
         "jei.simplemachines.info.range_module": "Fit next to a Chunk Loader. One makes it load 3x3 chunks for 288 FE/t, two make it 5x5 for 800 FE/t.",
+        "jei.simplemachines.info.entangled_ingot": "Made in the Alloy Smelter from a Redstone Copper Ingot and an Ender Pearl. The Rolling Mill in rod mode turns it into 2 Entangled Wire.",
+        "jei.simplemachines.info.entangled_wire": "Rolled from an Entangled Ingot in rod mode. Wound on a Steel Rod it makes an Entangled Coil, and it goes into Link Cards, the programmer, the backpack and the modules.",
+        "jei.simplemachines.info.entangled_coil": "4 Entangled Wire wound on a Steel Rod. Every Entangled Buffer, Tank, Relay, Pad and Backpack and the Chunk Loader Module is built with it.",
+        "jei.simplemachines.info.link_card": "Write a code onto it in an Entangled Programmer, then right-click an entangled device to give it that code. Sneak right-click copies a device's code onto the card. Cards are not used up.",
+        "jei.simplemachines.info.entangled_programmer": "Writes codes onto Link Cards and Entangled Backpacks for 500 FE each. Type up to 6 digits or press Random. A private code belongs to you alone; a public code is shared by everyone.",
+        "jei.simplemachines.info.entangled_buffer": "Every buffer on its code shares 27 slots, in any dimension. Uses 8 FE/t. A private buffer only connects to its owner's Simple Machines pipes and cables; hoppers and other mods' pipes need a public one.",
+        "jei.simplemachines.info.entangled_tank": "Every tank on its code shares 16 buckets of one fluid, in any dimension. Uses 8 FE/t. A private tank only connects to its owner's Simple Machines pipes and cables; other mods' pipes need a public one.",
+        "jei.simplemachines.info.entangled_backpack": "Write a code onto it in an Entangled Programmer, then right-click while holding it, or wear it in the chest slot and press the Open Entangled Backpack key (B), to open the Entangled Buffer on that code from anywhere. Each open uses 1,000 FE of its 50,000 FE; charge it in a Charger. It won't open without charge.",
     })
     jdump(lang, p)
 
@@ -377,6 +408,7 @@ def main():
         shutil.copy(PLAN + it + ".png", A + f"/textures/block/{it}.png")
     for core, block in CORES.items():
         device(core, block)
+    backpack_worn()
     lang_update()
     recipes()
     g["recipe_unlocks"]()

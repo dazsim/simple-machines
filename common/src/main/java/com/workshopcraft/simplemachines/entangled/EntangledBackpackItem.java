@@ -6,6 +6,16 @@ import com.workshopcraft.simplemachines.item.PowerTooltip;
 import com.workshopcraft.simplemachines.machine.ChargerBlockEntity;
 import com.workshopcraft.simplemachines.machine.EnergyMenu;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,9 +38,30 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-/** Opens the Entangled Buffer channel on its code from anywhere, 1,000 FE a time from its own battery. */
+/** Opens the Entangled Buffer channel on its code from anywhere, 1,000 FE a time from its own battery. Held, or worn and opened with a key. */
 public class EntangledBackpackItem extends Item {
     public static final int CAPACITY = 50_000, PER_OPEN = 1000;
+    public static final String OPEN_KEY = "key.simplemachines.open_backpack";
+    public static final Identifier OPEN_ID = SimpleMachines.id("open_backpack");
+    @SuppressWarnings("unchecked")
+    public static final ResourceKey<EquipmentAsset> ASSET = ResourceKey.create((ResourceKey<? extends Registry<EquipmentAsset>>) EquipmentAssets.ROOT_ID,
+            SimpleMachines.id("entangled_backpack"));
+
+    /** Sent by the open key, opens the worn backpack. */
+    public record OpenPayload() implements CustomPacketPayload {
+        public static final OpenPayload INSTANCE = new OpenPayload();
+        public static final CustomPacketPayload.Type<OpenPayload> TYPE = new CustomPacketPayload.Type<>(OPEN_ID);
+        public static final StreamCodec<RegistryFriendlyByteBuf, OpenPayload> CODEC = StreamCodec.unit(INSTANCE);
+
+        @Override
+        public CustomPacketPayload.Type<OpenPayload> type() {
+            return TYPE;
+        }
+    }
+
+    public static Equippable equippable() {
+        return Equippable.builder(EquipmentSlot.CHEST).setAsset(ASSET).setEquipSound(SoundEvents.ARMOR_EQUIP_LEATHER).setSwappable(false).build();
+    }
 
     public EntangledBackpackItem(Properties properties) {
         super(properties);
@@ -47,23 +78,35 @@ public class EntangledBackpackItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        final ItemStack stack = player.getItemInHand(hand);
         if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
+        return open(sp, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+    }
+
+    /** The open key: the backpack in the chest slot. */
+    public static void openWorn(ServerPlayer player) {
+        if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof EntangledBackpackItem) open(player, EquipmentSlot.CHEST);
+        else player.sendOverlayMessage(Component.translatable("message.simplemachines.backpack_not_worn").withStyle(ChatFormatting.RED));
+    }
+
+    private static boolean open(ServerPlayer player, EquipmentSlot from) {
+        final ItemStack stack = player.getItemBySlot(from);
+        if (player.containerMenu instanceof EntangledBufferMenu) return false;
         final EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         final String refused = link == null ? "backpack_no_code" : !EntangledLink.allows(link, player) ? "entangled_not_owner"
                 : energy(stack) < PER_OPEN ? "backpack_no_power" : null;
         if (refused != null) {
-            player.sendOverlayMessage(Component.translatable("message.simplemachines." + refused).withStyle(ChatFormatting.RED));
-            return InteractionResult.FAIL;
+            player.sendOverlayMessage(Component.translatable("message.simplemachines." + refused, PowerTooltip.num(PER_OPEN), PowerTooltip.num(energy(stack)))
+                    .withStyle(ChatFormatting.RED));
+            return false;
         }
         stack.set(SimpleMachines.ENERGY, energy(stack) - PER_OPEN);
-        final EntangledData data = EntangledData.get(sp.level().getServer());
-        final View view = new View(data, data.channel(EntangledData.BUFFER, link).items, stack, hand);
-        final int slot = hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
-        sp.openMenu(new SimpleMenuProvider((id, inv, p) -> new EntangledBufferMenu(id, inv, view, new Data(stack, link), slot),
+        final EntangledData data = EntangledData.get(player.level().getServer());
+        final View view = new View(data, data.channel(EntangledData.BUFFER, link).items, stack, from);
+        final int slot = from == EquipmentSlot.MAINHAND ? player.getInventory().getSelectedSlot() : from == EquipmentSlot.OFFHAND ? Inventory.SLOT_OFFHAND : -1;
+        player.openMenu(new SimpleMenuProvider((id, inv, p) -> new EntangledBufferMenu(id, inv, view, new Data(stack, link), slot),
                 Component.translatable("container.simplemachines.entangled_backpack")));
-        level.playSound(null, player.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.PLAYERS, 0.5F, 1.2F);
-        return InteractionResult.SUCCESS;
+        player.level().playSound(null, player.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.PLAYERS, 0.5F, 1.2F);
+        return true;
     }
 
     @Override
@@ -90,10 +133,11 @@ public class EntangledBackpackItem extends Item {
         out.accept(Component.translatable("tooltip.simplemachines.charges_at", PowerTooltip.tier(Voltage.LV), PowerTooltip.num(ChargerBlockEntity.RATE)).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable("tooltip.simplemachines.uses_open", PowerTooltip.num(PER_OPEN)).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable("tooltip.simplemachines.backpack").withStyle(ChatFormatting.DARK_GRAY));
+        out.accept(Component.translatable("tooltip.simplemachines.backpack_worn", Component.keybind(OPEN_KEY)).withStyle(ChatFormatting.DARK_GRAY));
     }
 
-    /** The channel's slots, valid while the same backpack stays in the hand that opened it. */
-    private record View(EntangledData data, NonNullList<ItemStack> items, ItemStack backpack, InteractionHand hand) implements Container {
+    /** The channel's slots, valid while the same backpack stays in the hand or chest slot that opened it. */
+    private record View(EntangledData data, NonNullList<ItemStack> items, ItemStack backpack, EquipmentSlot from) implements Container {
         @Override
         public int getContainerSize() {
             return items.size();
@@ -141,7 +185,7 @@ public class EntangledBackpackItem extends Item {
 
         @Override
         public boolean stillValid(Player player) {
-            return player.getItemInHand(hand) == backpack && !backpack.isEmpty();
+            return player.getItemBySlot(from) == backpack && !backpack.isEmpty();
         }
 
         @Override

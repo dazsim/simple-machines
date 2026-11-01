@@ -1,0 +1,20 @@
+{
+  "section": "entangled",
+  "sort": 0,
+  "title": "Entangled Devices",
+  "subtitle": "Codes, owners, private and public",
+  "text": "Entangled devices that share a code are linked across any distance and any dimension. Write a code onto a Link Card in the Entangled Programmer, then right click a device with the card. Whoever wrote the card owns the devices it codes.\n\nA public code is shared by everyone, and anything can use a public device: hoppers, other mods' pipes and any cable or generator next to it.\n\nA private code belongs to its owner, so two players can both use 482913 without meeting. A private device only connects to Simple Machines pipes and cables placed by its owner. Hoppers and other mods' pipes do nothing, and a generator right next to it won't power it, so run your own cable. Pipes and cables placed before 2.2 have no owner: break them and place them again.\n\nOnly the owner can open a private device or change its code, and a private pad only teleports its owner. The owner switches a device between private and public with a screwdriver.",
+  "drawing": "simplemachines:textures/simplebooks/manual/entangled_basics.png",
+  "caption": "Who can connect",
+  "right_title": "Notes",
+  "steps": [
+    {
+      "kind": "text",
+      "text": "A device's tooltip and screen show its code and whether it is private or public."
+    },
+    {
+      "kind": "text",
+      "text": "Breaking a device keeps its code."
+    }
+  ]
+}

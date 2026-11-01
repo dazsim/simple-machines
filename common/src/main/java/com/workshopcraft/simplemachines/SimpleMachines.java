@@ -409,7 +409,8 @@ public class SimpleMachines {
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
         for (String name : List.of("entangled_ingot", "entangled_wire", "entangled_coil")) add(r, name, new Item(props(name)));
         linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.entangled.LinkCardItem(props("link_card").stacksTo(16)));
-        entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)));
+        entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)
+                .component(net.minecraft.core.component.DataComponents.EQUIPPABLE, com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.equippable())));
         add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));

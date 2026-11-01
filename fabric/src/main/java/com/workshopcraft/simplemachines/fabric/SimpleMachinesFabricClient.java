@@ -20,6 +20,10 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(ToolEffects::tick);
+        net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper.registerKeyMapping(com.workshopcraft.simplemachines.client.BackpackKey.KEY);
+        ClientTickEvents.END_CLIENT_TICK.register(com.workshopcraft.simplemachines.client.BackpackKey::tick);
+        com.workshopcraft.simplemachines.client.BackpackKey.send = () -> net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(
+                com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.INSTANCE);
         com.workshopcraft.simplemachines.compat.jei.ViewerRecipes.source = SimpleMachinesFabricClient::synced;
         com.workshopcraft.simplemachines.client.ToolRunning.registerDirect(SimpleMachines.id("tool_running"));
         net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry.getInstance().register(SimpleMachines.HOT_SPARK,

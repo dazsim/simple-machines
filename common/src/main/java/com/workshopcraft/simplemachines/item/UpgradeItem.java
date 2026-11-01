@@ -31,7 +31,7 @@ public class UpgradeItem extends Item {
         if (upgrade == Upgrade.CHUNK_LOADER) out.accept(Component.translatable("tooltip.simplemachines.chunk_loader_cost", fe,
                 EntangledDeviceBlockEntity.UPKEEP).withStyle(ChatFormatting.GRAY));
         else out.accept(Component.translatable("tooltip.simplemachines.range_module_cost", 9 * fe, 25 * fe).withStyle(ChatFormatting.GRAY));
-        out.accept(Component.translatable("tooltip.simplemachines.module_cap", ServerConfig.DEFAULT_MAX_CHUNKS).withStyle(ChatFormatting.GRAY));
+        out.accept(Component.translatable("tooltip.simplemachines.module_cap", PowerTooltip.chunks(ServerConfig.DEFAULT_MAX_CHUNKS)).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable("tooltip.simplemachines." + upgrade.id + "_fit").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

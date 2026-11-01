@@ -54,7 +54,7 @@ final class EntangledStatus {
             case GRACE -> Component.translatable("gui.simplemachines.loader_grace", menu.graceSeconds());
             case NO_POWER -> Component.translatable("gui.simplemachines.loader_no_power",
                     PowerTooltip.num(Math.min(menu.capacity(), EntangledDeviceBlockEntity.RESTART_TICKS * (menu.loaderDraw() + EntangledDeviceBlockEntity.UPKEEP))));
-            case OVER_LIMIT -> Component.translatable("gui.simplemachines.loader_over", menu.chunkCap());
+            case OVER_LIMIT -> Component.translatable("gui.simplemachines.loader_over", PowerTooltip.chunks(menu.chunkCap()));
         };
         final int colour = switch (st) {
             case ACTIVE -> GREEN;
@@ -71,8 +71,8 @@ final class EntangledStatus {
     /** "9 chunks, you use 18/75", or no cap shown when the server has none. */
     static Component chunks(EntangledDeviceMenu menu) {
         final int side = 2 * menu.loaderRadius() + 1;
-        return menu.chunkCap() > 0 ? Component.translatable("gui.simplemachines.loader_chunks", side * side, menu.chunksUsed(), menu.chunkCap())
-                : Component.translatable("gui.simplemachines.loader_chunks_uncapped", side * side, menu.chunksUsed());
+        return menu.chunkCap() > 0 ? Component.translatable("gui.simplemachines.loader_chunks", PowerTooltip.chunks(side * side), menu.chunksUsed(), menu.chunkCap())
+                : Component.translatable("gui.simplemachines.loader_chunks_uncapped", PowerTooltip.chunks(side * side), menu.chunksUsed());
     }
 
     static Component switchLabel(EntangledDeviceMenu menu) {

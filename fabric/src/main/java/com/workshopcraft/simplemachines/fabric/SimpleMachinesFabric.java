@@ -49,6 +49,9 @@ public class SimpleMachinesFabric implements ModInitializer {
         SimpleMachines.registerMenus(direct(BuiltInRegistries.MENU));
         SimpleMachines.registerRecipeTypes(direct(BuiltInRegistries.RECIPE_TYPE));
         SimpleMachines.registerRecipeSerializers(direct(BuiltInRegistries.RECIPE_SERIALIZER));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.TYPE, com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.TYPE,
+                (payload, context) -> com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.openWorn(context.player()));
         // Fabric only syncs opted-in serializers to the client; JEI and EMI need the manual recipe
         RecipeSynchronization.synchronizeRecipeSerializer(KeepToolRecipe.SERIALIZER);
         RecipeSynchronization.synchronizeRecipeSerializer(com.workshopcraft.simplemachines.recipe.QuarryAssemblyRecipe.SERIALIZER);

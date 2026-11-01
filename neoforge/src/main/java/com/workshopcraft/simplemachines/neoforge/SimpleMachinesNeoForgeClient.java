@@ -24,7 +24,13 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 public class SimpleMachinesNeoForgeClient {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public SimpleMachinesNeoForgeClient(IEventBus modBus) {
-        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> ToolEffects.tick(Minecraft.getInstance()));
+        NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
+            ToolEffects.tick(Minecraft.getInstance());
+            com.workshopcraft.simplemachines.client.BackpackKey.tick(Minecraft.getInstance());
+        });
+        com.workshopcraft.simplemachines.client.BackpackKey.send = () -> net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(
+                com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.OpenPayload.INSTANCE);
+        modBus.addListener((net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent e) -> e.register(com.workshopcraft.simplemachines.client.BackpackKey.KEY));
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, (net.neoforged.neoforge.client.event.RecipesReceivedEvent e) -> {
             final var map = e.getRecipeMap();
             com.workshopcraft.simplemachines.compat.jei.ViewerRecipes.source = t -> map.byType((net.minecraft.world.item.crafting.RecipeType) t);

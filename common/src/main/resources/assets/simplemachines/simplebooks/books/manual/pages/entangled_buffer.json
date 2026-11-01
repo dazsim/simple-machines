@@ -1,6 +1,6 @@
 {
   "section": "entangled",
-  "sort": 2,
+  "sort": 3,
   "title": "Entangled Buffer",
   "subtitle": "LV, 8 FE/t, 27 shared slots",
   "text": "Every Entangled Buffer on the same code shares one set of 27 slots, across any distance and any dimension. Give it a code with a Link Card.\n\nOn a public buffer, pipes, hoppers and other mods' pipes work on any side. A private buffer only connects to Simple Machines pipes and cables you placed yourself. Hoppers and other mods' pipes only work on public devices, and pipes placed before 2.2 have no owner, so replace them.\n\nIt uses 8 FE/t and holds 20k FE, and stops sharing without power. Without power or a code it takes nothing in. Breaking it keeps its code, and the items stay on the code.",

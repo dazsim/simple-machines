@@ -28,6 +28,11 @@ public final class PowerTooltip {
         return NumberFormat.getIntegerInstance(Locale.ROOT).format(n);
     }
 
+    /** "1 chunk" or "9 chunks". */
+    public static Component chunks(int n) {
+        return Component.translatable(n == 1 ? "gui.simplemachines.chunk_count_one" : "gui.simplemachines.chunk_count", n);
+    }
+
     /** "LV" in the colour of its cable. */
     public static Component tier(int tier) {
         return Component.literal(Voltage.NAME[tier]).withColor(Voltage.COLOR[tier]);

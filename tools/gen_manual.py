@@ -5,7 +5,7 @@ import json, math, os
 from PIL import Image, ImageDraw, ImageFont
 
 MOD = "simplemachines"
-ROOT = "common/src/main/resources"
+ROOT = "src/main/resources"
 A, D = f"{ROOT}/assets/{MOD}", f"{ROOT}/data/{MOD}"
 BOOK = f"{A}/simplebooks/books/manual"
 TEX = f"{A}/textures/simplebooks/manual"

@@ -2,7 +2,7 @@
 import numpy as np, subprocess, wave, os, tempfile
 
 SR = 22050
-OUT = "common/src/main/resources/assets/simplemachines/sounds/item"
+OUT = "src/main/resources/assets/simplemachines/sounds/item"
 rng = np.random.default_rng(7)
 
 
@@ -55,13 +55,13 @@ def wind():
     swell = np.sin(np.pi * t) ** 4
     swell = swell + 0.25 * np.sin(np.pi * t + 0.6) ** 2
     hum = np.sin(2 * np.pi * 55 * t) + 0.35 * np.sin(2 * np.pi * 110 * t + 1) + 0.12 * np.sin(2 * np.pi * 165 * t + 2)
-    write("wind_turbine", 1.6 * air * swell + 0.18 * hum * (0.85 + 0.15 * swell), 0.55, "common/src/main/resources/assets/simplemachines/sounds/block")
+    write("wind_turbine", 1.6 * air * swell + 0.18 * hum * (0.85 + 0.15 * swell), 0.55, "src/main/resources/assets/simplemachines/sounds/block")
 
 
 if __name__ == "__main__":
     import sys
     os.makedirs(OUT, exist_ok=True)
-    os.makedirs("common/src/main/resources/assets/simplemachines/sounds/block", exist_ok=True)
+    os.makedirs("src/main/resources/assets/simplemachines/sounds/block", exist_ok=True)
     if "wind" in sys.argv[1:]:
         wind()
     else:

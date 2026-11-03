@@ -27,4 +27,9 @@ runs
 .vscode
 .DS_Store
 logs
+
+.kotlin
+
+# local release output
+dist
 tools/__pycache__/

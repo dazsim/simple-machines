@@ -1,0 +1,37 @@
+{
+    "schemaVersion": 1,
+    "id": "${id}",
+    "version": "${version}",
+    "name": "${name}",
+    "description": "${description}",
+    "authors": [
+        "${author}"
+    ],
+    "license": "All Rights Reserved",
+    "icon": "simplemachines_logo.png",
+    "environment": "*",
+    "accessWidener": "simplemachines.accesswidener",
+    "entrypoints": {
+        "client": [
+            "com.workshopcraft.simplemachines.fabric.SimpleMachinesFabricClient"
+        ],
+        "main": [
+            "com.workshopcraft.simplemachines.fabric.SimpleMachinesFabric"
+        ],
+        "jei_mod_plugin": [
+            "com.workshopcraft.simplemachines.compat.jei.SimpleMachinesJei"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=${loader}",
+        "fabric-api": "*",
+        "team_reborn_energy": ">=${energy}",
+        "minecraft": "${minecraft}",
+        "java": ">=${java}"
+    },
+    "suggests": {
+        "simplebooks": "*",
+        "jei": "*"
+    }
+}
+  

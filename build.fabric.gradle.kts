@@ -1,0 +1,96 @@
+plugins {
+    id("dev.kikugie.loom-back-compat")
+}
+
+val modVersion = providers.gradleProperty("version").orNull ?: sc.properties.get<String>("mod.version")
+val mc = sc.current.version
+val modern = sc.current.parsed >= "26.1"
+version = modVersion
+group = property("mod.group") as String
+base.archivesName = "${property("mod.id")}-fabric-$mc"
+
+val requiredJava = when {
+    modern -> JavaVersion.VERSION_25
+    sc.current.parsed >= "1.20.5" -> JavaVersion.VERSION_21
+    else -> JavaVersion.VERSION_17
+}
+
+repositories {
+    exclusiveContent {
+        forRepository { maven("https://maven.blamejared.com") { name = "BlameJared" } }
+        filter { includeGroup("mezz.jei") }
+    }
+}
+
+dependencies {
+    minecraft("com.mojang:minecraft:$mc")
+    loomx.applyMojangMappings()
+    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+    modImplementation("teamreborn:energy:${property("deps.energy")}")
+    include("teamreborn:energy:${property("deps.energy")}")
+    compileOnly("mezz.jei:jei-$mc-common-api:${property("deps.jei")}")
+}
+
+loom {
+    fabricModJsonPath = rootProject.file("src/main/resources/fabric.mod.json")
+    if (modern) accessWidenerPath = rootProject.file("src/main/resources/simplemachines.accesswidener")
+    runConfigs.all {
+        runDirectory = rootProject.file("runs/${sc.current.project}")
+    }
+    providers.gradleProperty("quickPlay").orNull?.let { host -> runs.named("client") { programArgs("--quickPlayMultiplayer", host, "--username", "Dev") } }
+}
+
+sourceSets.main {
+    java.exclude("com/workshopcraft/simplemachines/neoforge/**", "com/workshopcraft/simplemachines/forge/**")
+    if (!modern) resources.setSrcDirs(listOf(rootProject.file("src/legacy/${if (sc.current.parsed < "1.21") "1.20.1" else "1.21.1"}"), rootProject.file("src/main/resources")))
+}
+
+java {
+    withSourcesJar()
+    targetCompatibility = requiredJava
+    sourceCompatibility = requiredJava
+    toolchain.languageVersion = JavaLanguageVersion.of(requiredJava.majorVersion)
+}
+
+tasks {
+    processResources {
+        val props = mapOf(
+            "id" to sc.properties.get<String>("mod.id"),
+            "name" to sc.properties.get<String>("mod.name"),
+            "version" to modVersion,
+            "author" to sc.properties.get<String>("mod.author"),
+            "description" to sc.properties.get<String>("mod.description"),
+            "minecraft" to sc.properties.get<String>("mod.mc_compat"),
+            "loader" to Regex("\\d+\\.\\d+\\.\\d+").find(sc.properties.get<String>("deps.fabric_loader"))!!.value,
+            "java" to requiredJava.majorVersion,
+            "energy" to sc.properties.get<String>("deps.energy"),
+        )
+        inputs.properties(props)
+        filesMatching(listOf("fabric.mod.json", "pack.mcmeta")) { expand(props) }
+        if (!modern) filesMatching("fabric.mod.json") { filter(StripAccessWidener::class.java) }
+        exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
+        if (!modern) exclude("pack.mcmeta", "simplemachines.accesswidener", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")
+        if (sc.current.parsed < "1.21") exclude("data/simplemachines/recipe/**", "data/simplemachines/loot_table/**")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    jar {
+        manifest.attributes(
+            "Specification-Title" to sc.properties.get<String>("mod.name"),
+            "Specification-Vendor" to sc.properties.get<String>("mod.author"),
+            "Specification-Version" to modVersion,
+            "Implementation-Title" to "fabric",
+            "Implementation-Version" to modVersion,
+            "Implementation-Vendor" to sc.properties.get<String>("mod.author"),
+            "Built-On-Minecraft" to mc,
+        )
+    }
+
+    withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        val name = project.property("mod.name")
+        inputs.property("mod_name", name)
+        from(rootProject.file("LICENSE")) { rename { "${it}_$name" } }
+    }
+}

@@ -9,7 +9,7 @@ import gen_manual
 import gen_tools
 import gen_pipes
 
-R = "common/src/main/resources"
+R = "src/main/resources"
 A = R + "/assets/simplemachines"
 D = R + "/data"
 MOD = "simplemachines"

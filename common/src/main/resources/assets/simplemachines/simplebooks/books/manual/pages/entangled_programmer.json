@@ -3,7 +3,7 @@
   "sort": 1,
   "title": "Entangled Programmer",
   "subtitle": "LV, 500 FE a write",
-  "text": "Entangled devices that share a code are linked wherever they are. The Entangled Programmer writes codes onto Link Cards.\n\nPut a card in the slot, type up to 6 digits or press Random, then press Write or Enter. Each write costs 500 FE; it holds 10k FE.\n\nRight click a device with a written card to give it that code. Sneak right click to copy the device's code onto the card. Cards are not used up.\n\nThe Private button makes the card write a private code. See Entangled Devices for what private changes.",
+  "text": "Entangled devices that share a code are linked wherever they are. The Entangled Programmer writes codes onto Link Cards and Entangled Backpacks.\n\nPut a card in the slot, type up to 6 digits or press Random, then press Write or Enter. Each write costs 500 FE; it holds 10k FE.\n\nRight click a device with a written card to give it that code. Only a Link Card sets a device's code. Sneak right click to copy the device's code onto the card. Cards are not used up.\n\nThe Private button makes the card write a private code. See Entangled Devices for what private changes.",
   "drawing": "simplemachines:textures/simplebooks/manual/entangled_programmer.png",
   "caption": "Programmer and card",
   "right_title": "Recipes",

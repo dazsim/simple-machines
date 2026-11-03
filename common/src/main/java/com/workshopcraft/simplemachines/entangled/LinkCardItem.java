@@ -24,8 +24,9 @@ public class LinkCardItem extends Item {
         super(properties);
     }
 
-    /** Returns null when the block is not an entangled device or the stack is not a written card. */
+    /** Returns null when the block is not an entangled device or the stack is not a written Link Card. Other coded items never write. */
     public static @Nullable InteractionResult writeTo(ItemStack stack, Level level, BlockPos pos, Player player) {
+        if (!(stack.getItem() instanceof LinkCardItem)) return null;
         final EntangledLink card = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (card == null || player.isSecondaryUseActive() || !(level.getBlockEntity(pos) instanceof EntangledLink.Holder holder)) return null;
         if (level.isClientSide()) return InteractionResult.SUCCESS;

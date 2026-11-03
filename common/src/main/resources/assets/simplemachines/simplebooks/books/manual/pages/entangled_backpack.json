@@ -3,7 +3,7 @@
   "sort": 4,
   "title": "Entangled Backpack",
   "subtitle": "The buffer, held or worn",
-  "text": "Write a code onto the Entangled Backpack in the Entangled Programmer, the same way as a Link Card. It opens the Entangled Buffer slots on that code from anywhere, in any dimension.\n\nRight click while holding it, or wear it in the chest slot and press B to open it. The key is Open Entangled Backpack under Inventory in Controls.\n\nEach open uses 1,000 FE from its own 50,000 FE store, shown on its tooltip and bar. It won't open without charge: put it in a Charger.\n\nA private backpack opens only its owner's private buffers. Backpacks cannot be put inside a buffer.",
+  "text": "Write a code onto the Entangled Backpack in the Entangled Programmer, the same way as a Link Card. It opens the Entangled Buffer slots on that code from anywhere, in any dimension.\n\nRight click while holding it, or wear it in the chest slot and press B to open it. The key is Open Entangled Backpack under Inventory in Controls.\n\nEach open uses 1,000 FE from its own 50,000 FE store, shown on its tooltip and bar. It won't open without charge: put it in a Charger.\n\nA private backpack opens only its owner's private buffers. Backpacks cannot be put inside a buffer, and they never change a device's code: that takes a Link Card.",
   "drawing": "simplemachines:textures/simplebooks/manual/entangled_backpack.png",
   "caption": "Hold it, wear it, charge it",
   "right_title": "Recipe",

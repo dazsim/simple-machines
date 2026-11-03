@@ -70,6 +70,7 @@ tasks {
             "author" to sc.properties.get<String>("mod.author"),
             "description" to sc.properties.get<String>("mod.description"),
             "minecraft" to sc.properties.get<String>("mod.mc_compat"),
+            "logo_key" to if (sc.current.parsed >= "26.3") "iconFile" else "logoFile",
             "neoforge" to when { sc.current.parsed >= "26.3" -> "[26.3,)"; modern -> "[26.1.0.0-beta,)"; else -> "[21.1,)" },
         )
         inputs.properties(props)
@@ -77,6 +78,7 @@ tasks {
         if (sc.current.parsed >= "26.3") {
             exclude("data/neoforge/data_maps/item/furnace_fuels.json")
             filesMatching("data/simplemachines/advancement/**") { filter { it.replace("\"recipe\":", "\"recipes\":") } }
+            filesMatching("data/simplemachines/loot_table/**") { filter(LootTable263::class.java) }
         } else exclude("data/simplemachines/context_int_provider/**")
         exclude("fabric.mod.json", "META-INF/mods.toml")
         if (!modern) exclude("pack.mcmeta", "simplemachines.accesswidener", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")

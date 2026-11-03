@@ -7,7 +7,7 @@ version = "${version}"
 displayName = "${name}"
 authors = "${author}"
 description = '''${description}'''
-logoFile = "simplemachines_logo.png"
+${logo_key} = "simplemachines_logo.png"
 [[dependencies.${id}]]
 modId = "neoforge"
 type = "required"

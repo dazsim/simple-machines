@@ -28,6 +28,7 @@ Contents so far:
 - Electric Drill and Chainsaw, see below.
 - Overclocker Circuit and Energy Cell machine upgrades, see below.
 - Compressor, Auto Crafter, Lava Generator, Solar Panels, Wind Turbine, Fluid Tank, fluid pipes, pipe filters, MV and HV cables, transformers and the Quarry, see below.
+- Entangled Programmer, Link Card, Entangled Buffer, Tank, Relay, Pad and Backpack, and Chunk Loader and Range Modules, see below.
 
 Powered machines keep their stored energy when broken, and a comparator reads how full they are.
 
@@ -143,7 +144,35 @@ Once powered, it builds a raised frame one piece at a time, then the gantry move
 
 Up to three pipe filters fit in it to choose what it keeps; sneak with an empty hand to take the last one back. A Deny filter always voids what it lists. If any Allow filter is fitted, only what at least one Allow filter lists is kept. So two Allow filters keep either list, and a Deny filter can take items back out of an Allow list. A diamond bit lets it dig obsidian.
 
+## Entangled tech
+
+Entangled devices that share a 6 digit code (000000 to 999999) are linked across any distance and any dimension, at no extra cost.
+
+- Parts: the Entangled Ingot (Redstone Copper Ingot and an Ender Pearl in the Alloy Smelter), Entangled Wire (2 per ingot, Rolling Mill in rod mode) and Entangled Coil (4 wire on a Steel Rod).
+- Entangled Programmer: LV, holds 10k FE, 500 FE a write. Type a code or press Random, then Write or Enter. It writes onto Link Cards and Entangled Backpacks.
+- Link Card: right click a device to give it the card's code, sneak right click to copy the device's code onto the card. Only a Link Card sets codes on devices. Cards are not used up.
+- Private or public: a screwdriver click switches a device, owner only. A private device only opens for its owner and only connects to Simple Machines pipes and cables its owner placed. Cables and pipes placed before 2.2 have no owner.
+- Entangled Buffer: 27 slots shared on the code. Entangled Tank: 16 buckets of one fluid shared on the code. Both LV, 8 FE/t, 20k FE.
+- Entangled Relay: LV, MV or HV (1,000, 8,000 or 64,000 FE/t), Send or Receive, 10% loss, 8 FE/t upkeep.
+- Entangled Pad: two pads per code, jump on one to go to the other. MV, 100k FE. A trip costs 2,000 FE plus 20 FE per block of x and z distance, at most 50,000 FE. 3 seconds between trips.
+- Entangled Backpack: coded in the Programmer, it opens the buffer slots on its code from anywhere. Hold and right click, or wear it and press B. 1,000 FE an open from 50k FE, charged in the Charger.
+- Chunk Loader Module and up to two Range Modules fit in a buffer, tank or relay (3 slots, no Overclocker): 1, 9 or 25 chunks at 32 FE/t a chunk. 75 chunks per player by default.
+
+Server config, config/simplemachines-server.properties, read live: entangled_chunk_loading=true, entangled_fe_per_chunk=32, entangled_max_range=5, entangled_max_chunks_per_player=75 (0 for no cap), entangled_load_when_owner_offline=true.
+
 ## Changelog
+
+### 2.2.0
+
+- Entangled tech: Entangled Ingot, Wire and Coil, the Entangled Programmer and Link Cards, and 6 digit codes that link devices across any distance and dimension.
+- Private and public codes, switched with a screwdriver. Private devices only open for their owner and only connect to their owner's Simple Machines pipes and cables.
+- Entangled Buffer (27 shared slots), Entangled Tank (16 shared buckets) and Entangled Relay in LV, MV and HV with 10% loss.
+- Entangled Pad: jump to teleport between two pads, 2,000 FE plus 20 FE per block, at most 50,000 FE.
+- Chunk Loader and Range Modules for buffers, tanks and relays, 32 FE/t a chunk, 75 chunks per player, with server config keys.
+- Entangled Backpack: opens the buffer on its code from anywhere, held or worn with a key, charged in the Charger.
+- Only a Link Card sets codes on devices. The backpack is coded in the Programmer.
+- Manual section and JEI info for entangled tech.
+- Cables and pipes remember who placed them.
 
 ### 2.1.1
 

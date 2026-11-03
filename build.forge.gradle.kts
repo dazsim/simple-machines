@@ -44,6 +44,7 @@ legacyForge {
 
 dependencies {
     compileOnly("mezz.jei:jei-$mc-common-api:${property("deps.jei")}")
+    compileOnly("org.jspecify:jspecify:1.0.0")
 }
 
 java {

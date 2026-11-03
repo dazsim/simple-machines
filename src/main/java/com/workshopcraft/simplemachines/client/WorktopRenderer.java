@@ -9,8 +9,6 @@ import com.workshopcraft.simplemachines.assembly.Worktops;
 import com.workshopcraft.simplemachines.machine.MachineBlock;
 import com.workshopcraft.simplemachines.machine.PoweredMachineBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -93,14 +91,14 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
             s.worktop = "";
         }
         if (!(state.getBlock() instanceof PoweredMachineBlock)) s.ports = 0;
-        s.topLight = be.getLevel() == null ? s.lightCoords : LevelRenderer.getLightCoords(be.getLevel(), be.getBlockPos().above());
+        s.topLight = be.getLevel() == null ? s.lightCoords : RenderCompat.light(be.getLevel(), be.getBlockPos().above());
     }
 
     @Override
     public void submit(State s, PoseStack pose, SubmitNodeCollector out, CameraRenderState camera) {
         if (s.ports != 0) {
             final TextureAtlasSprite port = get(Identifier.fromNamespaceAndPath(SimpleMachines.MODID, "block/port"));
-            out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+            out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
                 for (Direction d : Direction.Plane.HORIZONTAL) {
                     if ((s.ports & Ported.bit(d)) != 0) port(new Quads(p, vc, s.portLight[d.get3DDataValue()], OverlayTexture.NO_OVERLAY), d, port);
                 }
@@ -113,9 +111,9 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
         final float lift = s.loose ? 1.5F : 0F;
         pose.pushPose();
         pose.translate(0.5F, lift / 16F, 0.5F);
-        pose.mulPose(Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
+        RenderCompat.rotate(pose, Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
         pose.translate(-0.5F, 0, -0.5F);
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> draw(new Quads(p, vc, s.topLight, OverlayTexture.NO_OVERLAY), rects, sprite));
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> draw(new Quads(p, vc, s.topLight, OverlayTexture.NO_OVERLAY), rects, sprite));
         if (s.breakProgress != null) {
             final ModelFeatureRenderer.CrumblingOverlay c = s.breakProgress;
             out.submitCustomGeometry(pose, ModelBakery.DESTROY_TYPES.get(c.progress()), (p, vc) ->
@@ -128,9 +126,9 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
     private static void cards(State s, PoseStack pose, SubmitNodeCollector out) {
         pose.pushPose();
         pose.translate(0.5F, 0, 0.5F);
-        pose.mulPose(Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
+        RenderCompat.rotate(pose, Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
         pose.translate(-0.5F, 0, -0.5F);
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
             final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
             for (int i = 0; i < s.slots; i++) {
                 if (s.cards[i] == null) continue;
@@ -159,7 +157,7 @@ public class WorktopRenderer<T extends BlockEntity & Worktops.Holder> implements
             final BlockPos n = be.getBlockPos().relative(d);
             if ((outputs & Ported.bit(d)) != 0 || ItemPipeBlock.link(level.getBlockState(n), d.getOpposite()).inventory()) {
                 s.ports |= Ported.bit(d);
-                s.portLight[d.get3DDataValue()] = LevelRenderer.getLightCoords(level, n);
+                s.portLight[d.get3DDataValue()] = RenderCompat.light(level, n);
             }
         }
     }

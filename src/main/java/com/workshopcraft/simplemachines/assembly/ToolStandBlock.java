@@ -31,7 +31,9 @@ import java.util.List;
 
 /** Bench stand that electric tools are built on and kept on, see ToolStandBlockEntity. */
 public class ToolStandBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<ToolStandBlock> CODEC = simpleCodec(ToolStandBlock::new);
+    //?}
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     // anvil sized: foot, waist and a long cradle 14 px up
     private static final VoxelShape SHAPE_NS = Shapes.or(Block.box(2, 0, 2, 14, 5, 14), Block.box(6, 5, 4, 10, 10, 12),
@@ -45,10 +47,12 @@ public class ToolStandBlock extends Block implements EntityBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<ToolStandBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

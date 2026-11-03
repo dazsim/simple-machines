@@ -14,6 +14,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+//? if >=26.3 {
+/*import java.util.Map;
+import java.util.Optional;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.context.ContextKeySet;
+import net.minecraft.world.item.component.CookingFuel;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
+*///?}
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +49,42 @@ class GeneratorCategory extends Base<GeneratorCategory.Fuel> {
         for (Item item : BuiltInRegistries.ITEM) {
             final ItemStack stack = new ItemStack(item);
             if (!GeneratorBlockEntity.isSolidFuel(level, stack)) continue;
-            byBurn.computeIfAbsent(level.fuelValues().burnDuration(stack), k -> new ArrayList<>()).add(stack);
+            byBurn.computeIfAbsent(burn(level, stack), k -> new ArrayList<>()).add(stack);
         }
         final List<Fuel> out = new ArrayList<>();
         byBurn.forEach((burn, items) -> out.add(new Fuel(items, burn)));
         return out;
+    }
+
+    //? if >=26.3 {
+    /*private static final ContextKeySet JEI_SET = new ContextKeySet.Builder().required(LootContextParams.BLOCK_STATE).optional(LootContextParams.ORIGIN).build();
+    // vanilla normal furnace burn times, used when a remote server's fuel data is not available
+    private static final Map<String, Integer> VANILLA = Map.ofEntries(Map.entry("cooking/time_bamboo", 50), Map.entry("cooking/time_blaze_rod", 2400),
+            Map.entry("cooking/time_boats", 1200), Map.entry("cooking/time_coal", 1600), Map.entry("cooking/time_coal_block", 16000),
+            Map.entry("cooking/time_dried_kelp_block", 4001), Map.entry("cooking/time_dry_plants", 100), Map.entry("cooking/time_hanging_signs", 800),
+            Map.entry("cooking/time_lava_bucket", 20000), Map.entry("cooking/time_roots", 300), Map.entry("cooking/time_wood_blocks", 300),
+            Map.entry("cooking/time_wood_items_extra_small", 100), Map.entry("cooking/time_wood_items_large", 200),
+            Map.entry("cooking/time_wood_items_small", 300), Map.entry("cooking/time_wood_slabs", 150), Map.entry("cooking/time_wool", 100),
+            Map.entry("cooking/time_wool_carpets", 67), Map.entry("cooking/time_wool_slabs", 50), Map.entry("cooking/time_biofuel", 2400));
+    *///?}
+
+    private static int burn(Level level, ItemStack stack) {
+        //? if >=26.3 {
+        /*final CookingFuel fuel = stack.get(DataComponents.COOKING_FUEL);
+        if (fuel == null) return 0;
+        final MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
+        if (server != null) {
+            final LootContext ctx = new LootContext.Builder(new LootParams.Builder(server.overworld())
+                    .withParameter(LootContextParams.BLOCK_STATE, SimpleMachines.generator.defaultBlockState()).create(JEI_SET)).create(Optional.empty());
+            return fuel.burnTime().get(ctx, 0);
+        }
+        return switch (fuel.burnTime()) {
+            case ResolvableInt.Constant c -> c.value();
+            case ResolvableInt.Reference r -> VANILLA.getOrDefault(r.key().identifier().getPath(), 0);
+        };
+        *///?} else {
+        return level.fuelValues().burnDuration(stack);
+        //?}
     }
 
     @Override

@@ -68,7 +68,9 @@ public class SimpleMachinesFabric implements ModInitializer {
                 be instanceof com.workshopcraft.simplemachines.pipe.FluidStore store
                         ? be instanceof WorkBlockEntity w && !w.exposed() ? Storage.empty() : new FabricTank(store) : null,
                 SimpleMachines.MACHINE_ENTITIES.get(Core.LAVA), SimpleMachines.MACHINE_ENTITIES.get(Core.TANK));
+        //? if <26.3 {
         net.fabricmc.fabric.api.registry.FuelValueEvents.BUILD.register((builder, context) -> builder.add(SimpleMachines.biofuelItem, 2400));
+        //?}
         EnergyStorage.SIDED.registerForBlocks((level, pos, state, be, side) ->
                 level instanceof ServerLevel server ? new CableEnergyStorage(server, pos, side) : null, SimpleMachines.CABLES.toArray(new net.minecraft.world.level.block.Block[0]));
         EnergyStorage.SIDED.registerForBlockEntity((be, side) -> new BufferEnergyStorage(be.input(side), true, false), SimpleMachines.transformerEntity);

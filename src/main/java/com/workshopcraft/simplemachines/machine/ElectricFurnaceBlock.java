@@ -11,16 +11,20 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ElectricFurnaceBlock extends PoweredMachineBlock {
+    //? if <26.3 {
     public static final MapCodec<ElectricFurnaceBlock> CODEC = simpleCodec(ElectricFurnaceBlock::new);
+    //?}
 
     public ElectricFurnaceBlock(Properties properties) {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<ElectricFurnaceBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public Core core() {

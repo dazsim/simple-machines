@@ -45,7 +45,7 @@ public class MachineMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, inputs, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return level.fuelValues().isFuel(stack);
+                return Fuels.isFuel(level, stack);
             }
         });
         addSlot(new Slot(container, inputs + 1, 116, 35) {
@@ -76,7 +76,7 @@ public class MachineMenu extends AbstractContainerMenu {
         if (index < invStart) {
             if (!moveItemStackTo(stack, invStart, invEnd, index == out)) return ItemStack.EMPTY;
             if (index == out) slot.onQuickCraft(stack, before);
-        } else if (!(level.fuelValues().isFuel(stack) && moveItemStackTo(stack, fuel, fuel + 1, false))
+        } else if (!(Fuels.isFuel(level, stack) && moveItemStackTo(stack, fuel, fuel + 1, false))
                 && !moveItemStackTo(stack, 0, inputs, false)) {
             return ItemStack.EMPTY;
         }

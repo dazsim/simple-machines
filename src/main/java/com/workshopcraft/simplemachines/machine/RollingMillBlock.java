@@ -11,16 +11,20 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class RollingMillBlock extends PoweredMachineBlock {
+    //? if <26.3 {
     public static final MapCodec<RollingMillBlock> CODEC = simpleCodec(RollingMillBlock::new);
+    //?}
 
     public RollingMillBlock(Properties properties) {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<RollingMillBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public Core core() {

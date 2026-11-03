@@ -85,7 +85,7 @@ public class ToolStandRenderer implements BlockEntityRenderer<ToolStandBlockEnti
         if (item.isEmpty()) return;
         pose.pushPose();
         pose.translate(0.5F, ToolStandBlock.TOP + lift, 0.5F);
-        pose.mulPose(Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
+        RenderCompat.rotate(pose, Axis.YP.rotationDegrees(180F - s.facing.toYRot()));
         item.submit(pose, out, s.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         pose.popPose();
     }

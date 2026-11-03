@@ -25,16 +25,20 @@ import net.minecraft.world.phys.BlockHitResult;
 
 /** A full block tank, so a pipe can reach it from any side. */
 public class TankBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<TankBlock> CODEC = simpleCodec(TankBlock::new);
+    //?}
 
     public TankBlock(Properties properties) {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<TankBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

@@ -5,8 +5,6 @@ import com.mojang.math.Axis;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.gen.TurbineBladeBlock;
 import com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -53,7 +51,7 @@ public class WindTurbineRenderer implements BlockEntityRenderer<WindTurbineBlock
         while (n < TurbineBladeBlock.MAX) {
             final var st = level.getBlockState(pos.above(n + 1));
             if (!st.is(SimpleMachines.turbineBlade) || st.getValue(TurbineBladeBlock.STACK) != n + 1) break;
-            s.light[n] = LevelRenderer.getLightCoords(level, pos.above(n + 1));
+            s.light[n] = RenderCompat.light(level, pos.above(n + 1));
             n++;
         }
         s.blades = n;
@@ -82,7 +80,7 @@ public class WindTurbineRenderer implements BlockEntityRenderer<WindTurbineBlock
         final TextureAtlasSprite blade = WorktopRenderer.get(SimpleMachines.id("block/wind_turbine_blade"));
         final TextureAtlasSprite post = WorktopRenderer.get(SimpleMachines.id("block/wind_turbine_post"));
         final TextureAtlasSprite bolt = WorktopRenderer.get(net.minecraft.resources.Identifier.withDefaultNamespace("block/copper_block"));
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
             for (int k = 0; k < s.blades; k++) {
                 final Quads light = new Quads(p, vc, s.light[k], OverlayTexture.NO_OVERLAY);
                 final float y = 16 * (k + 1);
@@ -92,7 +90,7 @@ public class WindTurbineRenderer implements BlockEntityRenderer<WindTurbineBlock
                     final PoseStack ps = new PoseStack();
                     ps.last().set(p);
                     ps.translate(0.5F, 0F, 0.5F);
-                    ps.mulPose(Axis.YP.rotationDegrees(s.angle + (k * 16 + j) * TWIST));
+                    RenderCompat.rotate(ps, Axis.YP.rotationDegrees(s.angle + (k * 16 + j) * TWIST));
                     final Quads q = new Quads(ps.last(), vc, s.light[k], OverlayTexture.NO_OVERLAY);
                     box(q, -7.5F, y + j, -1F, 7.5F, y + j + 1, 1F, blade, 15 - j, 16 - j);
                 }

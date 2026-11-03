@@ -233,7 +233,7 @@ public class SimpleMachines {
 
     private static BlockBehaviour.Properties built(String name) {
         return machine(name).mapColor(MapColor.METAL).sound(SoundType.METAL).noOcclusion()
-                .isViewBlocking((s, l, p) -> false).isSuffocating((s, l, p) -> false);
+                .isViewBlocking(NOT_VIEW_BLOCKING).isSuffocating((s, l, p) -> false);
     }
 
     public static MenuType<PoweredMenu> menuFor(Layout layout) {
@@ -255,7 +255,7 @@ public class SimpleMachines {
     private static BlockBehaviour.Properties chassis(String name) {
         return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
                 .mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(4.0F).sound(SoundType.METAL)
-                .noOcclusion().isViewBlocking((s, l, p) -> false).isSuffocating((s, l, p) -> false);
+                .noOcclusion().isViewBlocking(NOT_VIEW_BLOCKING).isSuffocating((s, l, p) -> false);
     }
 
     public static void registerBlocks(BiConsumer<Identifier, Block> r) {
@@ -299,7 +299,7 @@ public class SimpleMachines {
         r.accept(id("landmark"), landmark);
         quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryFrameBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("quarry_frame"))).mapColor(MapColor.METAL).strength(1.0F)
-                .sound(SoundType.METAL).noOcclusion().noLootTable().isViewBlocking((st, l, p) -> false)
+                .sound(SoundType.METAL).noOcclusion().noLootTable().isViewBlocking(NOT_VIEW_BLOCKING)
                 .isSuffocating((st, l, p) -> false));
         r.accept(id("quarry_frame"), quarryFrame);
         quarryHead = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
@@ -315,7 +315,7 @@ public class SimpleMachines {
         r.accept(id("fluid_pipe"), fluidPipe);
         tank = new com.workshopcraft.simplemachines.pipe.TankBlock(BlockBehaviour.Properties.of()
                 .setId(ResourceKey.create(Registries.BLOCK, id("fluid_tank"))).mapColor(MapColor.METAL).strength(1.5F)
-                .sound(SoundType.COPPER).noOcclusion().isViewBlocking((st, l, p) -> false).isRedstoneConductor((st, l, p) -> false)
+                .sound(SoundType.COPPER).noOcclusion().isViewBlocking(NOT_VIEW_BLOCKING).isRedstoneConductor((st, l, p) -> false)
                 .isSuffocating((st, l, p) -> false));
         r.accept(id("fluid_tank"), tank);
         toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(BlockBehaviour.Properties.of()
@@ -402,7 +402,7 @@ public class SimpleMachines {
         add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
         add(r, "fluid_pipe", new BlockItem(fluidPipe, props("fluid_pipe").useBlockDescriptionPrefix()));
         add(r, "fluid_tank", new com.workshopcraft.simplemachines.pipe.TankItem(tank, props("fluid_tank").useBlockDescriptionPrefix()));
-        biofuelItem = add(r, "biofuel_block", new BlockItem(biofuelBlock, props("biofuel_block").useBlockDescriptionPrefix()));
+        biofuelItem = add(r, "biofuel_block", new BlockItem(biofuelBlock, fuel(props("biofuel_block").useBlockDescriptionPrefix())));
         pipeFilter = add(r, "pipe_filter", new com.workshopcraft.simplemachines.pipe.PipeFilterItem(props("pipe_filter")));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
@@ -423,6 +423,20 @@ public class SimpleMachines {
                 List.of(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL), 5.0F, -2.8F)));
         TOOLS.add(add(r, "chainsaw", new PoweredToolItem(props("chainsaw"), CHAINSAW_SOUND, List.of(BlockTags.MINEABLE_WITH_AXE), 8.0F, -3.0F)));
     }
+
+    private static Item.Properties fuel(Item.Properties p) {
+        //? if >=26.3 {
+        /*return p.cookingFuel(ResourceKey.create(Registries.CONTEXT_INT_PROVIDER, id("cooking/time_biofuel")));
+        *///?} else {
+        return p;
+        //?}
+    }
+
+    //? if >=26.3 {
+    /*private static final BlockBehaviour.StateArgumentPredicate<net.minecraft.world.phys.AABB> NOT_VIEW_BLOCKING = (s, l, p, box) -> false;
+    *///?} else {
+    private static final BlockBehaviour.StatePredicate NOT_VIEW_BLOCKING = (s, l, p) -> false;
+    //?}
 
     private static Item.Properties props(String name) {
         return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id(name)));

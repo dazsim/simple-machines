@@ -126,7 +126,11 @@ public final class ToolParts {
             return InteractionResult.SUCCESS;
         }
         final ItemStack tool = be.take();
+        //? if >=26.3 {
+        /*if (!player.getInventory().add(tool)) player.drop(tool, false, net.minecraft.util.Prediction.SERVER_ONLY);
+        *///?} else {
         if (!player.getInventory().add(tool)) player.drop(tool, false);
+        //?}
         level.playSound(null, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 0.8F, 1.0F);
         return InteractionResult.SUCCESS;
     }

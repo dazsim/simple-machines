@@ -69,6 +69,8 @@ tasks {
         )
         inputs.properties(props)
         filesMatching(listOf("fabric.mod.json", "pack.mcmeta")) { expand(props) }
+        if (sc.current.parsed < "26.3") exclude("data/simplemachines/context_int_provider/**")
+        if (sc.current.parsed >= "26.3") filesMatching("data/simplemachines/advancement/**") { filter { it.replace("\"recipe\":", "\"recipes\":") } }
         if (!modern) filesMatching("fabric.mod.json") { filter(StripAccessWidener::class.java) }
         exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
         if (!modern) exclude("pack.mcmeta", "simplemachines.accesswidener", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")

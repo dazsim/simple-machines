@@ -9,7 +9,9 @@ import net.minecraft.world.level.material.Fluid;
 
 /** Copper pipe that carries fluids between tanks and machines, with a window showing what flows. */
 public class FluidPipeBlock extends ItemPipeBlock {
+    //? if <26.3 {
     public static final MapCodec<FluidPipeBlock> CODEC = simpleCodec(FluidPipeBlock::new);
+    //?}
     public static final int BATCH_MB = 250;
     private static final int SHOW_TICKS = 40;
 
@@ -17,10 +19,12 @@ public class FluidPipeBlock extends ItemPipeBlock {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<FluidPipeBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected Transfer.Lookup lookup() {

@@ -29,7 +29,7 @@ public class GeneratorBlockEntity extends WorkBlockEntity {
     /** Solid furnace fuels only: no buckets or anything that leaves a container behind. */
     public static boolean isSolidFuel(Level level, ItemStack stack) {
         if (stack.getItem() instanceof BucketItem || stack.getItem().getCraftingRemainder() != null) return false;
-        return level.fuelValues().isFuel(stack);
+        return Fuels.isFuel(level, stack);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class GeneratorBlockEntity extends WorkBlockEntity {
         final int before = energy.energy;
         if (progress <= 0 && energy.energy < capacity) {
             final ItemStack fuel = items.get(0);
-            final int burn = isSolidFuel(level, fuel) ? level.fuelValues().burnDuration(fuel) : 0;
+            final int burn = isSolidFuel(level, fuel) ? Fuels.burn(level, fuel, this) : 0;
             if (burn > 0) {
                 progress = total = burn;
                 fuel.shrink(1);

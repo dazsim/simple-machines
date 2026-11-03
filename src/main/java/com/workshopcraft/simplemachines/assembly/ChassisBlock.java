@@ -32,8 +32,10 @@ import java.util.List;
  * 4 board fixed (upgrades fit here, see Upgrade), 5 panels loose, 6 panels fixed, 7 worktop loose. Screwing the worktop in finishes the machine.
  */
 public class ChassisBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<ChassisBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Tier.CODEC.fieldOf("tier").forGetter(b -> b.tier), propertiesCodec()).apply(i, ChassisBlock::new));
+    //?}
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<Core> CORE = EnumProperty.create("core", Core.class);
     public static final IntegerProperty STEP = IntegerProperty.create("step", 0, 7);
@@ -53,10 +55,12 @@ public class ChassisBlock extends Block implements EntityBlock {
         return new ChassisBlockEntity(pos, state);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<ChassisBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

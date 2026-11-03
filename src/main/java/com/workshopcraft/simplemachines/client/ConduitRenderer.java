@@ -15,7 +15,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import org.jspecify.annotations.Nullable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -122,7 +121,7 @@ public class ConduitRenderer implements BlockEntityRenderer<ConduitBlockEntity, 
         if (s.colour == 0) return;
         final TextureAtlasSprite sp = Minecraft.getInstance().getAtlasManager()
                 .get(new SpriteId(TextureAtlas.LOCATION_BLOCKS, Identifier.withDefaultNamespace("block/white_concrete")));
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
             final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
             final float c0 = 8 - s.core - GROW, c1 = 8 + s.core + GROW;
             cube(q, sp, s.colour, c0, c0, c0, c1, c1, c1);
@@ -164,7 +163,7 @@ public class ConduitRenderer implements BlockEntityRenderer<ConduitBlockEntity, 
         final String kind = s.copper ? "fluid_pipe" : "item_pipe";
         final TextureAtlasSprite[] tex = {sprite(kind + "_filter"), sprite(kind + "_link"), sprite(kind + "_filter_rib"),
                 sprite(kind + "_filter_sleeve"), sprite("item_pipe_filter_lens")};
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
             final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
             for (Direction d : Direction.values()) {
                 if ((s.filters & 1 << d.get3DDataValue()) == 0) continue;
@@ -180,7 +179,7 @@ public class ConduitRenderer implements BlockEntityRenderer<ConduitBlockEntity, 
     }
 
     private static void window(State s, PoseStack pose, SubmitNodeCollector out) {
-        out.submitCustomGeometry(pose, Sheets.translucentBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.translucentBlocks(), (p, vc) -> {
             final Quads q = new Quads(p, vc, s.lightCoords, OverlayTexture.NO_OVERLAY);
             for (Direction face : Direction.values()) {
                 if ((s.arms & 1 << face.get3DDataValue()) != 0) continue;

@@ -31,7 +31,9 @@ import org.jspecify.annotations.Nullable;
 
 /** Half height panel. Makes power while it sees the sky in daylight; the diamond tier also works at night. */
 public class SolarPanelBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<SolarPanelBlock> CODEC = simpleCodec(p -> new SolarPanelBlock(p, 1));
+    //?}
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 8, 16);
     public final int tier;
@@ -42,10 +44,12 @@ public class SolarPanelBlock extends Block implements EntityBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<SolarPanelBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

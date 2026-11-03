@@ -106,7 +106,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
 
         if (ready && litTime <= 0) {
             final ItemStack fuel = items.get(fuelSlot);
-            final int burn = level.fuelValues().burnDuration(fuel);
+            final int burn = Fuels.burn(level, fuel, this);
             if (burn > 0) {
                 litTime = litDuration = burn * 2 / 3;
                 final Item fuelItem = fuel.getItem();
@@ -167,7 +167,7 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == outSlot) return false;
-        if (slot == fuelSlot) return level != null && level.fuelValues().isFuel(stack);
+        if (slot == fuelSlot) return level != null && Fuels.isFuel(level, stack);
         if (!(level instanceof ServerLevel server)) return true;
         if (items.get(slot).isEmpty()) {
             for (int i = 0; i < inputs; i++) if (i != slot && ItemStack.isSameItemSameComponents(items.get(i), stack)) return false;

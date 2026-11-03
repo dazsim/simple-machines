@@ -10,16 +10,20 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 /** The battery, with its charge gauge as a block state: five bars of 20%. */
 public class BatteryBlock extends WorkMachineBlock {
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 5);
+    //? if <26.3 {
     private static final MapCodec<WorkMachineBlock> CODEC = simpleCodec(BatteryBlock::new);
+    //?}
 
     public BatteryBlock(Properties properties) {
         super(properties, Core.BATTERY);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<WorkMachineBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

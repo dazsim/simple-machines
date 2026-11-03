@@ -28,7 +28,9 @@ import org.jspecify.annotations.Nullable;
  * or is a sixth blade or higher; those do nothing and are drawn still. Blades in a stack are drawn by the base.
  */
 public class TurbineBladeBlock extends Block {
+    //? if <26.3 {
     public static final MapCodec<TurbineBladeBlock> CODEC = simpleCodec(TurbineBladeBlock::new);
+    //?}
     public static final int MAX = 5;
     public static final IntegerProperty STACK = IntegerProperty.create("stack", 0, MAX);
     private static final VoxelShape SHAPE = box(1, 0, 1, 15, 16, 15);
@@ -38,10 +40,12 @@ public class TurbineBladeBlock extends Block {
         registerDefaultState(stateDefinition.any().setValue(STACK, 0));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<TurbineBladeBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

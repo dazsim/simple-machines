@@ -8,16 +8,20 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ExtruderBlock extends MachineBlock {
+    //? if <26.3 {
     public static final MapCodec<ExtruderBlock> CODEC = simpleCodec(ExtruderBlock::new);
+    //?}
 
     public ExtruderBlock(Properties properties) {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<ExtruderBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected BlockEntityType<ExtruderBlockEntity> entityType() {

@@ -4,8 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.workshopcraft.simplemachines.SimpleMachines;
 import com.workshopcraft.simplemachines.machine.MachineBlock;
 import com.workshopcraft.simplemachines.quarry.QuarryBlockEntity;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
@@ -67,8 +65,8 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
         s.ty = (float) (tip[1] - pos.getY());
         s.tz = (float) (tip[2] - pos.getZ());
         s.gantryY = 2;
-        s.railLight = LevelRenderer.getLightCoords(level, BlockPos.containing(tip[0], pos.getY() + 3, tip[2]));
-        s.headLight = LevelRenderer.getLightCoords(level, BlockPos.containing(tip[0], tip[1] + 0.6, tip[2]));
+        s.railLight = RenderCompat.light(level, BlockPos.containing(tip[0], pos.getY() + 3, tip[2]));
+        s.headLight = RenderCompat.light(level, BlockPos.containing(tip[0], tip[1] + 0.6, tip[2]));
     }
 
     @Override
@@ -81,7 +79,7 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
         final TextureAtlasSprite carriage = get(tex("quarry_carriage"));
         final TextureAtlasSprite front = get(tex("quarry_head_front"));
         final TextureAtlasSprite bit = get(tex("quarry_bit_face"));
-        out.submitCustomGeometry(pose, Sheets.cutoutBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.cutoutBlocks(), (p, vc) -> {
             final Quads r = new Quads(p, vc, s.railLight, OverlayTexture.NO_OVERLAY);
             final float y0 = (s.gantryY + 11F / 16F) * 16F;
             final float y1 = y0 + 6F;
@@ -135,7 +133,7 @@ public class QuarryRenderer extends WorktopRenderer<QuarryBlockEntity> {
         final PoseStack ps = new PoseStack();
         ps.last().set(q.pose());
         ps.translate((x0 + x1) / 32F, y / 16F, (z0 + z1) / 32F);
-        ps.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));
+        RenderCompat.rotate(ps, com.mojang.math.Axis.YP.rotationDegrees(90));
         final float hx = (z1 - z0) / 2F;
         final float hz = (x1 - x0) / 2F;
         final Quads t = new Quads(ps.last(), q.vc(), q.light(), q.overlay());

@@ -37,7 +37,9 @@ import java.util.Map;
 
 /** Item pipe. Ends next to an inventory deliver into it; the screwdriver cycles them to extract, then disconnected. */
 public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recompute {
+    //? if <26.3 {
     public static final MapCodec<ItemPipeBlock> CODEC = simpleCodec(ItemPipeBlock::new);
+    //?}
     public static final int INTERVAL = 10;
     public static final int BATCH = 8;
     public static final Map<Direction, EnumProperty<Link>> LINKS = new EnumMap<>(Direction.class);
@@ -80,10 +82,12 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         registerDefaultState(state);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<? extends ItemPipeBlock> codec() {
         return CODEC;
     }
+    //?}
 
     public static Link link(BlockState state, Direction d) {
         return state.getBlock() instanceof ItemPipeBlock ? state.getValue(LINKS.get(d)) : Link.NONE;

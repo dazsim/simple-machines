@@ -70,10 +70,14 @@ tasks {
             "author" to sc.properties.get<String>("mod.author"),
             "description" to sc.properties.get<String>("mod.description"),
             "minecraft" to sc.properties.get<String>("mod.mc_compat"),
-            "neoforge" to if (modern) "[26.1.0.0-beta,)" else "[21.1,)",
+            "neoforge" to when { sc.current.parsed >= "26.3" -> "[26.3,)"; modern -> "[26.1.0.0-beta,)"; else -> "[21.1,)" },
         )
         inputs.properties(props)
         filesMatching(listOf("META-INF/neoforge.mods.toml", "pack.mcmeta")) { expand(props) }
+        if (sc.current.parsed >= "26.3") {
+            exclude("data/neoforge/data_maps/item/furnace_fuels.json")
+            filesMatching("data/simplemachines/advancement/**") { filter { it.replace("\"recipe\":", "\"recipes\":") } }
+        } else exclude("data/simplemachines/context_int_provider/**")
         exclude("fabric.mod.json", "META-INF/mods.toml")
         if (!modern) exclude("pack.mcmeta", "simplemachines.accesswidener", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE

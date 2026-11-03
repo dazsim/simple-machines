@@ -26,7 +26,9 @@ import org.jspecify.annotations.Nullable;
 
 /** Steps power between two tiers. The front, facing whoever placed it, is the high side; the other five faces are the low side. A screwdriver moves the front. */
 public class TransformerBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<TransformerBlock> CODEC = simpleCodec(p -> new TransformerBlock(p, Voltage.MV));
+    //?}
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public final int high;
 
@@ -36,10 +38,12 @@ public class TransformerBlock extends Block implements EntityBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<TransformerBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

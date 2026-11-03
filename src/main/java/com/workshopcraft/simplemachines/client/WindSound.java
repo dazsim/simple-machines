@@ -69,7 +69,7 @@ public final class WindSound extends AbstractTickableSoundInstance {
                 if (be.speed > 0.3F && be.blades() > 0) turning.add(be);
             }
         }
-        turning.sort(Comparator.comparingDouble(be -> be.getBlockPos().getCenter().distanceToSqr(eye)));
+        turning.sort(Comparator.comparingDouble(be -> net.minecraft.world.phys.Vec3.atCenterOf(be.getBlockPos()).distanceToSqr(eye)));
         final List<WindTurbineBlockEntity> play = turning.subList(0, Math.min(VOICES, turning.size()));
         synchronized (LOOPS) {
             for (Map.Entry<WindTurbineBlockEntity, WindSound> e : LOOPS.entrySet()) {

@@ -13,18 +13,24 @@ import net.minecraft.world.level.block.state.BlockState;
 /** A chassis-built machine whose behaviour lives entirely in its block entity. */
 public class WorkMachineBlock extends PoweredMachineBlock {
     private final Core core;
+    //? if <26.3 {
     private final MapCodec<WorkMachineBlock> codec;
+    //?}
 
     public WorkMachineBlock(Properties properties, Core core) {
         super(properties);
         this.core = core;
+        //? if <26.3 {
         this.codec = simpleCodec(p -> new WorkMachineBlock(p, core));
+        //?}
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<WorkMachineBlock> codec() {
         return codec;
     }
+    //?}
 
     @Override
     public Core core() {

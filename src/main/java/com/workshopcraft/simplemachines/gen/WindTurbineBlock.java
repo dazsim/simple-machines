@@ -37,7 +37,9 @@ import org.jspecify.annotations.Nullable;
  * HALF is only kept so turbines from 2.1.0-alpha.13 and earlier load: an old upper half becomes a blade.
  */
 public class WindTurbineBlock extends Block implements EntityBlock {
+    //? if <26.3 {
     public static final MapCodec<WindTurbineBlock> CODEC = simpleCodec(WindTurbineBlock::new);
+    //?}
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final VoxelShape LOWER = Shapes.or(box(1, 0, 1, 15, 2, 15), box(4, 2, 4, 12, 9, 12), box(6.5, 9, 6.5, 9.5, 16, 9.5));
     private static final VoxelShape UPPER = box(1, 0, 1, 15, 15.5, 15);
@@ -47,10 +49,12 @@ public class WindTurbineBlock extends Block implements EntityBlock {
         registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<WindTurbineBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

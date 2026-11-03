@@ -34,7 +34,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** Power cable of one voltage tier. Joins cables of the same tier and anything exposing FE, nothing else. Dyed cables only join blank or same colour cables. */
 public class CableBlock extends Block implements EntityBlock, Conduits.Recompute {
+    //? if <26.3 {
     public static final MapCodec<CableBlock> CODEC = simpleCodec(p -> new CableBlock(p, Voltage.LV));
+    //?}
     public final int tier;
     private static final VoxelShape[] SHAPES = new VoxelShape[64];
 
@@ -59,10 +61,12 @@ public class CableBlock extends Block implements EntityBlock, Conduits.Recompute
         registerDefaultState(state);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<CableBlock> codec() {
         return CODEC;
     }
+    //?}
 
     public int rate() {
         return Voltage.RATE[tier];

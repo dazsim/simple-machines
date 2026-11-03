@@ -9,16 +9,20 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GeneratorBlock extends PoweredMachineBlock {
+    //? if <26.3 {
     public static final MapCodec<GeneratorBlock> CODEC = simpleCodec(GeneratorBlock::new);
+    //?}
 
     public GeneratorBlock(Properties properties) {
         super(properties);
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<GeneratorBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     public Core core() {

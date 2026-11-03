@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.LightCoordsUtil;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -100,7 +99,7 @@ public class TankRenderer implements BlockEntityRenderer<TankBlockEntity, TankRe
         final float[][] planes = new float[SHELL.length + 1][];
         System.arraycopy(SHELL, 0, planes, 0, SHELL.length);
         planes[SHELL.length] = new float[]{0, 1, 0, top - 8};
-        out.submitCustomGeometry(pose, Sheets.translucentBlockSheet(), (p, vc) -> {
+        out.submitCustomGeometry(pose, RenderCompat.translucentBlocks(), (p, vc) -> {
             for (int i = 0; i < planes.length; i++) {
                 final List<float[]> poly = face(planes, i);
                 if (poly.size() >= 3) emit(p, vc, planes[i], poly, sp, tint, light);

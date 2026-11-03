@@ -18,7 +18,9 @@ import java.util.Map;
 
 /** A piece of quarry frame: an upright post, a top rail, or a corner where the two meet. */
 public class QuarryFrameBlock extends Block {
+    //? if <26.3 {
     public static final MapCodec<QuarryFrameBlock> CODEC = simpleCodec(QuarryFrameBlock::new);
+    //?}
     public static final BooleanProperty POST = BooleanProperty.create("post");
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -34,10 +36,12 @@ public class QuarryFrameBlock extends Block {
                 .setValue(SOUTH, false).setValue(WEST, false));
     }
 
+    //? if <26.3 {
     @Override
     protected MapCodec<QuarryFrameBlock> codec() {
         return CODEC;
     }
+    //?}
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

@@ -4,9 +4,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.level.ChunkPos;
 
-/** Chunk loader tickets that load and tick like a forced chunk. */
+import java.util.Comparator;
+
+/** Chunk loader tickets that load and tick like a forced chunk, but are our own type so /forceload remove leaves them alone. */
 public final class ChunkTickets {
-    private static final TicketType<ChunkPos> TYPE = TicketType.FORCED;
+    private static final TicketType<ChunkPos> TYPE = TicketType.create("simplemachines:chunk_loader", Comparator.comparingLong(ChunkPos::toLong));
 
     private ChunkTickets() {}
 

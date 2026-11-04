@@ -107,7 +107,11 @@ public class EntangledBackpackItem extends Item {
     }
     //?} else {
     /*public net.minecraft.world.InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        return swapWithEquipmentSlot(this, level, player, hand);
+        if (!player.isSecondaryUseActive()) return swapWithEquipmentSlot(this, level, player, hand);
+        final ItemStack held = player.getItemInHand(hand);
+        if (!(player instanceof ServerPlayer sp)) return net.minecraft.world.InteractionResultHolder.success(held);
+        return open(sp, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND)
+                ? net.minecraft.world.InteractionResultHolder.success(held) : net.minecraft.world.InteractionResultHolder.fail(held);
     }
     *///?}
 

@@ -109,7 +109,10 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
         }
         if (neighbour.isAir()) return Link.NONE;
         if (!(level instanceof Level real)) return current;
-        if (!EntangledAccess.check(real, pos.relative(dir), pos, () -> lookup().has(real, pos.relative(dir), dir.getOpposite()))) return Link.NONE;
+        if (!EntangledAccess.check(real, pos.relative(dir), pos, () -> lookup().has(real, pos.relative(dir), dir.getOpposite()))) {
+            // shapes worked out before the pipe's block entity (and its owner) exists keep what they were given
+            return current.end() && !(real.getBlockEntity(pos) instanceof ConduitBlockEntity) ? current : Link.NONE;
+        }
         return current.end() ? current : Link.LINK;
     }
 

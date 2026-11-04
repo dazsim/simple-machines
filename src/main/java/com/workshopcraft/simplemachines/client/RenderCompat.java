@@ -11,7 +11,7 @@ public final class RenderCompat {
     private RenderCompat() {}
 
     public static RenderType cutoutBlocks() {
-        //? if >=26.3 {
+        //? if >=26.2 {
         /*return net.minecraft.client.renderer.rendertype.RenderTypes.entityCutoutCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS);
         *///?} else {
         return net.minecraft.client.renderer.Sheets.cutoutBlockSheet();
@@ -21,13 +21,15 @@ public final class RenderCompat {
     public static RenderType translucentBlocks() {
         //? if >=26.3 {
         /*return net.minecraft.client.renderer.rendertype.RenderTypes.entityTranslucentCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS);
+        *///?} else if >=26.2 {
+        /*return net.minecraft.client.renderer.Sheets.translucentBlockItemSheet();
         *///?} else {
         return net.minecraft.client.renderer.Sheets.translucentBlockSheet();
         //?}
     }
 
     public static int light(BlockAndLightGetter level, BlockPos pos) {
-        //? if >=26.3 {
+        //? if >=26.2 {
         /*return net.minecraft.util.LightCoordsUtil.getLightCoords(level, pos);
         *///?} else {
         return net.minecraft.client.renderer.LevelRenderer.getLightCoords(level, pos);

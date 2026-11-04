@@ -131,7 +131,7 @@ public final class ToolEffects {
             Vec3 v = ToolSparks.spray(r, face, look, kind);
             if (near) {
                 // fan across the view rather than straight into the camera
-                //? if >=26.3 {
+                //? if >=26.2 {
                 /*final Vector3fc f = mc.gameRenderer.mainCamera().forwardVector();
                 *///?} else if >=26.1 {
                 final Vector3fc f = mc.gameRenderer.getMainCamera().forwardVector();

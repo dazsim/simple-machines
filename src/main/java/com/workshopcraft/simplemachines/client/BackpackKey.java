@@ -20,7 +20,7 @@ public final class BackpackKey {
 
     public static void tick(Minecraft mc) {
         while (KEY.consumeClick()) {
-            //? if >=26.3 {
+            //? if >=26.2 {
             /*if (mc.player != null && mc.gui.screen() == null) send.run();
             *///?} else {
             if (mc.player != null && mc.screen == null) send.run();

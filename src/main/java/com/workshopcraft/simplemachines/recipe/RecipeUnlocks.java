@@ -1,6 +1,6 @@
 package com.workshopcraft.simplemachines.recipe;
 
-//? if >=26.3 {
+//? if >=26.2 {
 /*import net.minecraft.advancements.triggers.CriteriaTriggers;
 *///?} else {
 import net.minecraft.advancements.CriteriaTriggers;

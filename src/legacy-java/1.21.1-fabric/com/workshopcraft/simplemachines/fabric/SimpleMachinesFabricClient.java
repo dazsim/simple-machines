@@ -40,6 +40,12 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
             var rm = net.minecraft.client.Minecraft.getInstance().getResourceManager();
             ctx.addModels(com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(rm));
             com.workshopcraft.simplemachines.client.EulerQuads.load(rm);
+            java.util.Map<net.minecraft.client.resources.model.UnbakedModel, net.minecraft.client.resources.model.UnbakedModel> once = new java.util.IdentityHashMap<>();
+            ctx.modifyModelBeforeBake().register((m, c) -> {
+                if (!(m instanceof net.minecraft.client.renderer.block.model.multipart.MultiPart) || c.topLevelId() == null
+                        || !c.topLevelId().id().getNamespace().equals(SimpleMachines.MODID)) return m;
+                synchronized (once) { return once.computeIfAbsent(m, BakeOnce::new); }
+            });
             ctx.modifyModelAfterBake().register((m, c) -> {
                 var id = c.resourceId() != null ? c.resourceId() : c.topLevelId() != null ? c.topLevelId().id() : null;
                 return id != null && id.getNamespace().equals(SimpleMachines.MODID) ? com.workshopcraft.simplemachines.client.EulerQuads.fix(m) : m;
@@ -101,5 +107,33 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         final var level = net.minecraft.client.Minecraft.getInstance().level;
         if (level == null) return java.util.List.of();
         return level.getRecipeManager().getAllRecipesFor((net.minecraft.world.item.crafting.RecipeType) type);
+    }
+
+    /** 1.21.1 bakes a multipart once per block state; the chassis has tens of thousands of states, so bake ours once. */
+    private static final class BakeOnce implements net.minecraft.client.resources.model.UnbakedModel {
+        private final net.minecraft.client.resources.model.UnbakedModel inner;
+        private net.minecraft.client.resources.model.BakedModel baked;
+
+        BakeOnce(net.minecraft.client.resources.model.UnbakedModel inner) {
+            this.inner = inner;
+        }
+
+        @Override
+        public java.util.Collection<net.minecraft.resources.ResourceLocation> getDependencies() {
+            return inner.getDependencies();
+        }
+
+        @Override
+        public void resolveParents(java.util.function.Function<net.minecraft.resources.ResourceLocation, net.minecraft.client.resources.model.UnbakedModel> f) {
+            inner.resolveParents(f);
+        }
+
+        @Override
+        public synchronized net.minecraft.client.resources.model.BakedModel bake(net.minecraft.client.resources.model.ModelBaker baker,
+                java.util.function.Function<net.minecraft.client.resources.model.Material, net.minecraft.client.renderer.texture.TextureAtlasSprite> sprites,
+                net.minecraft.client.resources.model.ModelState state) {
+            if (baked == null) baked = inner.bake(baker, sprites, state);
+            return baked;
+        }
     }
 }

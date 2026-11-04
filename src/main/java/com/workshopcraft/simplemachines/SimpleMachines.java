@@ -400,8 +400,12 @@ public class SimpleMachines {
         powerCell = add(r, "power_cell", new Item(props("power_cell")));
         for (String name : List.of("entangled_ingot", "entangled_wire", "entangled_coil")) add(r, name, new Item(props(name)));
         linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.entangled.LinkCardItem(props("link_card").stacksTo(16)));
+        //? if >=26.1 {
         entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)
                 .component(net.minecraft.core.component.DataComponents.EQUIPPABLE, com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.equippable())));
+        //?} else {
+        /*entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)));
+        *///?}
         add(r, "tool_stand", new BlockItem(toolStand, blockItemProps("tool_stand")));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
@@ -495,9 +499,11 @@ public class SimpleMachines {
                 .build());
     }
 
+    //? if >=26.1 {
     public static void registerTicketTypes(BiConsumer<Identifier, net.minecraft.server.level.TicketType> r) {
         r.accept(id("chunk_loader"), com.workshopcraft.simplemachines.entangled.ChunkLoaders.TICKET);
     }
+    //?}
 
     public static void registerBlockEntities(BiConsumer<Identifier, BlockEntityType<?>> r) {
         alloyFurnaceEntity = Registration.blockEntity(AlloyFurnaceBlockEntity::new, Set.of(alloyFurnace));

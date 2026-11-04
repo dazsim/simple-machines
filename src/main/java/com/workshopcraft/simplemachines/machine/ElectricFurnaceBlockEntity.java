@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+//? if >=26.1
 import net.minecraft.world.item.crafting.RecipePropertySet;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -37,7 +38,11 @@ public class ElectricFurnaceBlockEntity extends PoweredBlockEntity {
 
     @Override
     protected boolean accepts(ServerLevel level, ItemStack stack) {
+        //? if >=26.1 {
         return level.recipeAccess().propertySet(RecipePropertySet.FURNACE_INPUT).test(stack);
+        //?} else {
+        /*return check.getRecipeFor(new SingleRecipeInput(stack), level).isPresent();
+        *///?}
     }
 
     @Override

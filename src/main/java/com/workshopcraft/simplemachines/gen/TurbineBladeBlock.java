@@ -11,6 +11,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+//? if >=26.1
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -78,10 +79,19 @@ public class TurbineBladeBlock extends Block {
     }
 
     @Override
+    //? if >=26.1 {
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir,
                                      BlockPos neighbourPos, BlockState neighbour, RandomSource random) {
+    //?} else {
+    /*protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbour, net.minecraft.world.level.LevelAccessor level,
+                                     BlockPos pos, BlockPos neighbourPos) {
+    *///?}
         if (dir == Direction.DOWN) return state.setValue(STACK, place(neighbour));
+        //? if >=26.1 {
         return super.updateShape(state, level, ticks, pos, dir, neighbourPos, neighbour, random);
+        //?} else {
+        /*return super.updateShape(state, dir, neighbour, level, pos, neighbourPos);
+        *///?}
     }
 
     /** Commands and structures skip getStateForPlacement, so settle the stack here too. */

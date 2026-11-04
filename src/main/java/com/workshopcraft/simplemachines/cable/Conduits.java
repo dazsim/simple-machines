@@ -29,7 +29,11 @@ public final class Conduits {
     }
 
     public static InteractionResult dye(ItemStack held, BlockState state, Level level, BlockPos pos, Player player) {
+        //? if >=26.1 {
         final DyeColor c = held.get(net.minecraft.core.component.DataComponents.DYE);
+        //?} else {
+        /*final DyeColor c = held.getItem() instanceof net.minecraft.world.item.DyeItem d ? d.getDyeColor() : null;
+        *///?}
         if (c == null) return InteractionResult.TRY_WITH_EMPTY_HAND;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof ConduitBlockEntity)) {

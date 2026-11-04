@@ -13,9 +13,11 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
+//? if >=26.1 {
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
+//?}
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,19 +35,28 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+//? if >=26.1
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
 /** Opens the Entangled Buffer channel on its code from anywhere, 1,000 FE a time from its own battery. Held, or worn and opened with a key. */
+//? if >=26.1 {
 public class EntangledBackpackItem extends Item {
+//?} else {
+/*public class EntangledBackpackItem extends Item implements net.minecraft.world.item.Equipable {
+*///?}
     public static final int CAPACITY = 50_000, PER_OPEN = 1000;
     public static final String OPEN_KEY = "key.simplemachines.open_backpack";
     public static final Identifier OPEN_ID = SimpleMachines.id("open_backpack");
+    //? if >=26.1 {
     @SuppressWarnings("unchecked")
     public static final ResourceKey<EquipmentAsset> ASSET = ResourceKey.create((ResourceKey<? extends Registry<EquipmentAsset>>) EquipmentAssets.ROOT_ID,
             SimpleMachines.id("entangled_backpack"));
+    //?} else {
+    /*
+    *///?}
 
     /** Sent by the open key, opens the worn backpack. */
     public record OpenPayload() implements CustomPacketPayload {
@@ -59,9 +70,21 @@ public class EntangledBackpackItem extends Item {
         }
     }
 
+    //? if >=26.1 {
     public static Equippable equippable() {
         return Equippable.builder(EquipmentSlot.CHEST).setAsset(ASSET).setEquipSound(SoundEvents.ARMOR_EQUIP_LEATHER).setSwappable(false).build();
     }
+    //?} else {
+    /*@Override
+    public EquipmentSlot getEquipmentSlot() {
+        return EquipmentSlot.CHEST;
+    }
+
+    @Override
+    public net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent> getEquipSound() {
+        return SoundEvents.ARMOR_EQUIP_LEATHER;
+    }
+    *///?}
 
     public EntangledBackpackItem(Properties properties) {
         super(properties);
@@ -77,10 +100,16 @@ public class EntangledBackpackItem extends Item {
     }
 
     @Override
+    //? if >=26.1 {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
         return open(sp, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
     }
+    //?} else {
+    /*public net.minecraft.world.InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        return swapWithEquipmentSlot(this, level, player, hand);
+    }
+    *///?}
 
     /** The open key: the backpack in the chest slot. */
     public static void openWorn(ServerPlayer player) {
@@ -125,7 +154,12 @@ public class EntangledBackpackItem extends Item {
     }
 
     @Override
+    //? if >=26.1 {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
+    //?} else {
+    /*public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> lines, TooltipFlag flag) {
+        final Consumer<Component> out = lines::add;
+    *///?}
         final EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (link != null) link.tooltip(out);
         else out.accept(Component.translatable("tooltip.simplemachines.backpack_blank").withStyle(ChatFormatting.GRAY));

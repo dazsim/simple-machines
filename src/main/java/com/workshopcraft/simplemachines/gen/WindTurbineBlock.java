@@ -14,6 +14,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+//? if >=26.1
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -72,14 +73,23 @@ public class WindTurbineBlock extends Block implements EntityBlock {
     }
 
     @Override
+    //? if >=26.1 {
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction dir,
                                      BlockPos neighbourPos, BlockState neighbour, RandomSource random) {
+    //?} else {
+    /*protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbour, net.minecraft.world.level.LevelAccessor level,
+                                     BlockPos pos, BlockPos neighbourPos) {
+    *///?}
         // an old upper half on its own goes; on a base it is turned into a blade by the base
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER && dir == Direction.DOWN
                 && !(neighbour.is(this) && neighbour.getValue(HALF) == DoubleBlockHalf.LOWER)) {
             return Blocks.AIR.defaultBlockState();
         }
+        //? if >=26.1 {
         return super.updateShape(state, level, ticks, pos, dir, neighbourPos, neighbour, random);
+        //?} else {
+        /*return super.updateShape(state, dir, neighbour, level, pos, neighbourPos);
+        *///?}
     }
 
     @Override

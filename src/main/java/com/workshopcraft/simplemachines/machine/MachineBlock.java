@@ -54,7 +54,10 @@ public abstract class MachineBlock extends BaseEntityBlock {
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
                                           InteractionHand hand, BlockHitResult hit) {
         final InteractionResult card = LinkCardItem.writeTo(stack, level, pos, player);
+        //? if >=26.1 {
         return card != null ? card : super.useItemOn(stack, state, level, pos, player, hand, hit);
+        //?} else
+        /*return card != null ? card : InteractionResult.TRY_WITH_EMPTY_HAND;*/
     }
 
     @Override

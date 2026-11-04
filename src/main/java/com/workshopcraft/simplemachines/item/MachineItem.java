@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+//? if >=26.1
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
@@ -20,8 +21,14 @@ public class MachineItem extends BlockItem {
     }
 
     @Override
+    //? if >=26.1 {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, out, flag);
+    //?} else {
+    /*public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> lines, TooltipFlag flag) {
+        final Consumer<Component> out = lines::add;
+        super.appendHoverText(stack, context, lines, flag);
+    *///?}
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
         final com.workshopcraft.simplemachines.entangled.EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (link != null) link.tooltip(out);

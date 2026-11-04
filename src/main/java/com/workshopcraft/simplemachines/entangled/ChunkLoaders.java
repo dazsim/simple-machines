@@ -9,6 +9,7 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+//? if >=26.1
 import net.minecraft.server.level.TicketType;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.ChunkPos;
@@ -29,8 +30,12 @@ import java.util.UUID;
  */
 public class ChunkLoaders extends SavedData {
     /** Loads and ticks like a forced chunk, without timing out, but is not written to the chunk ticket file. */
+    //? if >=26.1 {
     public static final TicketType TICKET = new TicketType(TicketType.NO_TIMEOUT,
             TicketType.FLAG_LOADING | TicketType.FLAG_SIMULATION | TicketType.FLAG_KEEP_DIMENSION_ACTIVE);
+    //?} else {
+    /*
+    *///?}
     private static final int SWEEP = 100;
 
     public record Entry(GlobalPos pos, UUID owner, int radius) {
@@ -129,7 +134,11 @@ public class ChunkLoaders extends SavedData {
     private void hold(MinecraftServer server, Entry e) {
         if (!ticketed.add(e.pos())) return;
         final ServerLevel level = server.getLevel(e.pos().dimension());
+        //? if >=26.1 {
         if (level != null) level.getChunkSource().addTicketWithRadius(TICKET, e.chunk(), e.radius() + 2);
+        //?} else {
+        /*if (level != null) com.workshopcraft.simplemachines.compat.mc.ChunkTickets.add(level, e.chunk(), e.radius() + 2);
+        *///?}
     }
 
     private void release(MinecraftServer server, Entry e) {
@@ -137,7 +146,11 @@ public class ChunkLoaders extends SavedData {
         // two loaders in one chunk at one size share a single ticket, so only the last one out takes it
         for (GlobalPos p : ticketed) if (entries.get(p) instanceof Entry o && o.sameTicket(e)) return;
         final ServerLevel level = server.getLevel(e.pos().dimension());
+        //? if >=26.1 {
         if (level != null) level.getChunkSource().removeTicketWithRadius(TICKET, e.chunk(), e.radius() + 2);
+        //?} else {
+        /*if (level != null) com.workshopcraft.simplemachines.compat.mc.ChunkTickets.remove(level, e.chunk(), e.radius() + 2);
+        *///?}
     }
 
     public void restore(MinecraftServer server) {

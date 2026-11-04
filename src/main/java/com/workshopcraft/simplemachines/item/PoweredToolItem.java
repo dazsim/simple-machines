@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
+//? if >=26.1
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,16 +62,24 @@ public class PoweredToolItem extends Item {
     }
 
     private static Properties tool(Properties p, List<TagKey<Block>> mineable, float damage, float attackSpeed) {
+        //? if >=26.1 {
         final HolderGetter<Block> blocks = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
         final List<Tool.Rule> rules = new ArrayList<>();
         rules.add(Tool.Rule.deniesDrops(blocks.getOrThrow(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)));
         for (TagKey<Block> tag : mineable) rules.add(Tool.Rule.minesAndDrops(blocks.getOrThrow(tag), SPEED));
         return p.stacksTo(1).enchantable(10)
                 .component(DataComponents.TOOL, new Tool(rules, 1.0F, 0, true))
+        //?} else {
+        /*final List<Tool.Rule> rules = new ArrayList<>();
+        rules.add(Tool.Rule.deniesDrops(BlockTags.INCORRECT_FOR_NETHERITE_TOOL));
+        for (TagKey<Block> tag : mineable) rules.add(Tool.Rule.minesAndDrops(tag, SPEED));
+        return p.stacksTo(1)
+                .component(DataComponents.TOOL, new Tool(rules, 1.0F, 0))
+        *///?}
                 //? if >=26.3 {
                 /*.component(DataComponents.ATTACK_ANIMATION, new net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType.NONE, 6))
                 .component(DataComponents.INTERACT_ANIMATION, new net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType.NONE, 6))
-                *///?} else {
+                *///?} else if >=26.1 {
                 .component(DataComponents.SWING_ANIMATION, new net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType.NONE, 6))
                 //?}
                 .attributes(ItemAttributeModifiers.builder()
@@ -190,20 +199,44 @@ public class PoweredToolItem extends Item {
     }
 
     @Override
+    //? if >=26.1 {
     public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.Entity owner,
             @Nullable EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND && owner instanceof net.minecraft.server.level.ServerPlayer player
                 && level.getGameTime() % 2 == 0) ToolSparks.broadcast(this, stack, level, player);
     }
+    //?} else {
+    /*public void inventoryTick(ItemStack stack, Level world, net.minecraft.world.entity.Entity owner, int slot, boolean selected) {
+        if (selected && world instanceof net.minecraft.server.level.ServerLevel level && owner instanceof net.minecraft.server.level.ServerPlayer player
+                && player.getMainHandItem() == stack && level.getGameTime() % 2 == 0) ToolSparks.broadcast(this, stack, level, player);
+    }
+    *///?}
 
     public static boolean fells(ItemStack stack, BlockState state) {
         return stack.is(SimpleMachines.TOOLS.get(1)) && steel(stack) && diamond(stack) && state.is(BlockTags.LOGS);
     }
 
     @Override
+    //? if >=26.1 {
     public void hurtEnemy(ItemStack stack, LivingEntity mob, LivingEntity attacker) {
         use(stack, PER_HIT);
     }
+    //?} else {
+    /*public boolean hurtEnemy(ItemStack stack, LivingEntity mob, LivingEntity attacker) {
+        use(stack, PER_HIT);
+        return true;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 10;
+    }
+    *///?}
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
@@ -221,7 +254,12 @@ public class PoweredToolItem extends Item {
     }
 
     @Override
+    //? if >=26.1 {
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> out, TooltipFlag flag) {
+    //?} else {
+    /*public void appendHoverText(ItemStack stack, TooltipContext context, java.util.List<Component> lines, TooltipFlag flag) {
+        final Consumer<Component> out = lines::add;
+    *///?}
         final NumberFormat f = NumberFormat.getIntegerInstance(Locale.ROOT);
         out.accept(Component.translatable("tooltip.simplemachines.charge", f.format(energy(stack)), f.format(capacity(stack))).withStyle(ChatFormatting.GRAY));
         out.accept(Component.translatable("tooltip.simplemachines.charges_at", PowerTooltip.tier(Voltage.LV), f.format(ChargerBlockEntity.RATE)).withStyle(ChatFormatting.GRAY));

@@ -13,6 +13,7 @@ import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+//? if >=26.1
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -112,8 +113,13 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
                 final Item fuelItem = fuel.getItem();
                 fuel.shrink(1);
                 if (fuel.isEmpty()) {
+                    //? if >=26.1 {
                     final ItemStackTemplate left = fuelItem.getCraftingRemainder();
                     items.set(fuelSlot, left != null ? left.create() : ItemStack.EMPTY);
+                    //?} else {
+                    /*final Item left = fuelItem.getCraftingRemainingItem();
+                    items.set(fuelSlot, left != null ? new ItemStack(left) : ItemStack.EMPTY);
+                    *///?}
                 }
                 changed = true;
             }
@@ -172,7 +178,11 @@ public abstract class MachineBlockEntity<R extends MachineRecipe> extends BaseCo
         if (items.get(slot).isEmpty()) {
             for (int i = 0; i < inputs; i++) if (i != slot && ItemStack.isSameItemSameComponents(items.get(i), stack)) return false;
         }
+        //? if >=26.1 {
         for (RecipeHolder<?> holder : server.recipeAccess().getRecipes()) {
+        //?} else {
+        /*for (RecipeHolder<?> holder : server.getRecipeManager().getRecipes()) {
+        *///?}
             if (holder.value().getType() == type && ((MachineRecipe) holder.value()).usesItem(stack)) return true;
         }
         return false;

@@ -25,7 +25,10 @@ public class QuarryBlock extends WorkMachineBlock {
     @Override
     protected InteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
                                           InteractionHand hand, BlockHitResult hit) {
+        //? if >=26.1 {
         if (!held.is(SimpleMachines.pipeFilter)) return super.useItemOn(held, state, level, pos, player, hand, hit);
+        //?} else
+        /*if (!held.is(SimpleMachines.pipeFilter)) return super.useItemOn$(held, state, level, pos, player, hand, hit);*/
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (level.getBlockEntity(pos) instanceof QuarryBlockEntity be) {
             if (!be.addFilter(held)) {

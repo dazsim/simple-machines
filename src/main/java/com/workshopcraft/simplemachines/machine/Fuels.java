@@ -23,9 +23,11 @@ public final class Fuels {
     public static boolean isFuel(Level level, ItemStack stack) {
         //? if >=26.3 {
         /*return stack.has(DataComponents.COOKING_FUEL);
-        *///?} else {
+        *///?} else if >=26.1 {
         return level.fuelValues().isFuel(stack);
-        //?}
+        //?} else {
+        /*return burnTime(stack) > 0;
+        *///?}
     }
 
     /** Burn ticks for one item used by the given machine. */
@@ -39,8 +41,21 @@ public final class Fuels {
                 .withParameter(LootContextParams.CONTAINER, be)
                 .create(LootContextParamSets.CONTAINER_PROCESS)).create(Optional.empty());
         return ResolvableInt.getFromItem(stack, DataComponents.COOKING_FUEL, CookingFuel::burnTime, ctx, 0);
-        *///?} else {
+        *///?} else if >=26.1 {
         return level.fuelValues().burnDuration(stack);
-        //?}
+        //?} else {
+        /*return burnTime(stack);
+        *///?}
     }
+
+    //? if <26.1 {
+    /*private static int burnTime(ItemStack stack) {
+        //? if neoforge {
+        return stack.getBurnTime(null);
+        //?} else {
+        /^Integer t = net.fabricmc.fabric.api.registry.FuelRegistry.INSTANCE.get(stack.getItem());
+        return t == null ? 0 : t;
+        ^///?}
+    }
+    *///?}
 }

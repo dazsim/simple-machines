@@ -9,6 +9,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+//? if >=26.1
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -124,8 +125,13 @@ public class ItemPipeBlock extends Block implements EntityBlock, Conduits.Recomp
     }
 
     @Override
+    //? if >=26.1 {
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
                                      Direction dir, BlockPos neighbourPos, BlockState neighbour, RandomSource random) {
+    //?} else {
+    /*protected BlockState updateShape(BlockState state, Direction dir, BlockState neighbour, net.minecraft.world.level.LevelAccessor level,
+                                     BlockPos pos, BlockPos neighbourPos) {
+    *///?}
         final EnumProperty<Link> p = LINKS.get(dir);
         final BlockState next = state.setValue(p, connects(level, pos, dir, neighbour, state.getValue(p)));
         if (next != state && level instanceof ServerLevel server) {

@@ -28,3 +28,5 @@ ordering = "NONE"
 side = "BOTH"
 [[mixins]]
 config = "simplemachines.neoforge.mixins.json"
+[[mixins]]
+config = "simplemachines.mixins.json"

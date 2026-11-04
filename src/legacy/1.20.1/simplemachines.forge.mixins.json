@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.workshopcraft.simplemachines.forge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "simplemachines.refmap.json",
+  "client": ["SelectorMixin", "MultiPartLoadMixin", "MultiPartMixin"],
+  "injectors": {"defaultRequire": 1}
+}

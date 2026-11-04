@@ -3,6 +3,14 @@
   "minVersion": "0.8",
   "package": "com.workshopcraft.simplemachines.mixin",
   "compatibilityLevel": "JAVA_17",
-  "client": ["SelectorMixin", "MultiPartLoadMixin"],
-  "injectors": {"defaultRequire": 1}
+  "client": [
+    "SelectorMixin",
+    "MultiPartLoadMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ItemStackToolMixin"
+  ]
 }

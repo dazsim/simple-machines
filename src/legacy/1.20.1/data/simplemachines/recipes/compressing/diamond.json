@@ -1,9 +1,0 @@
-{
-  "type": "simplemachines:compressing",
-  "ingredient": {
-    "item": "minecraft:coal"
-  },
-  "result": "minecraft:diamond",
-  "input_count": 64,
-  "cooking_time": 2400
-}

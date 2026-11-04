@@ -39,7 +39,7 @@ import java.util.function.Consumer;
  * and 15% speed; the upgrade bonus is capped at +100%.
  * Steel chainsaw with a diamond-tipped chain fells whole natural trees, 50 FE per log.
  */
-public class PoweredToolItem extends Item {
+public class PoweredToolItem extends net.minecraft.world.item.DiggerItem {
     public static final int CAPACITY = 50_000;
     public static final int RATE = 1000;
     public static final int PER_BLOCK = 50;
@@ -48,8 +48,18 @@ public class PoweredToolItem extends Item {
 
     public final SoundEvent sound;
 
+    // DiggerItem makes the enchanting table offer digger enchantments; 0 uses keeps the tool unbreakable
+    private static final net.minecraft.world.item.Tier TIER = new net.minecraft.world.item.Tier() {
+        public int getUses() { return 0; }
+        public float getSpeed() { return SPEED; }
+        public float getAttackDamageBonus() { return 0; }
+        public int getLevel() { return 4; }
+        public int getEnchantmentValue() { return 10; }
+        public net.minecraft.world.item.crafting.Ingredient getRepairIngredient() { return net.minecraft.world.item.crafting.Ingredient.EMPTY; }
+    };
+
     public PoweredToolItem(Properties properties, SoundEvent sound, List<TagKey<Block>> mineable, float damage, float attackSpeed) {
-        super(tool(properties, mineable, damage, attackSpeed));
+        super(damage - 1, attackSpeed, TIER, mineable.get(0), tool(properties, mineable, damage, attackSpeed));
         this.sound = sound;
         this.mineable = List.copyOf(mineable);
         this.attributes = com.google.common.collect.ImmutableMultimap.<net.minecraft.world.entity.ai.attributes.Attribute, AttributeModifier>builder()

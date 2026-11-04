@@ -28,6 +28,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -63,6 +70,7 @@ public class SimpleMachinesForge {
             ctx.get().setPacketHandled(true);
         });
         MinecraftForge.EVENT_BUS.addListener(SimpleMachinesForge::onUseBlock);
+        MinecraftForge.EVENT_BUS.addListener(SimpleMachinesForge::onLootLoad);
         MinecraftForge.EVENT_BUS.addGenericListener(BlockEntity.class, SimpleMachinesForge::onBlockCaps);
         MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, SimpleMachinesForge::onItemCaps);
         MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> ChunkLoaders.onServerStarted(e.getServer()));
@@ -190,5 +198,15 @@ public class SimpleMachinesForge {
     private static IEnergyStorage item(Container container, int slot) {
         final ItemStack stack = container.getItem(slot);
         return stack.isEmpty() ? null : stack.getCapability(ForgeCapabilities.ENERGY).resolve().orElse(null);
+    }
+
+    // Forge 1.20.1 loot tables have no load conditions: the manual table ships empty and gets its book here when Simple Books is present
+    private static void onLootLoad(LootTableLoadEvent e) {
+        if (!e.getName().equals(new ResourceLocation(SimpleMachines.MODID, "manual")) || !ModList.get().isLoaded("simplebooks")) return;
+        Item guide = ForgeRegistries.ITEMS.getValue(new ResourceLocation("simplebooks", "guide"));
+        if (guide == null) return;
+        CompoundTag tag = new CompoundTag();
+        tag.putString("simplebooks:book", SimpleMachines.MODID + ":manual");
+        e.getTable().addPool(LootPool.lootPool().add(LootItem.lootTableItem(guide).apply(SetNbtFunction.setTag(tag))).build());
     }
 }

@@ -1,9 +1,0 @@
-{
-  "type": "simplemachines:sawing",
-  "ingredient": {
-    "tag": "minecraft:mangrove_logs"
-  },
-  "result": "minecraft:mangrove_planks",
-  "count": 6,
-  "cooking_time": 100
-}

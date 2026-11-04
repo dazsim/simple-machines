@@ -17,8 +17,13 @@ repositories {
 }
 
 sourceSets.main {
-    java.exclude("com/workshopcraft/simplemachines/fabric/**", "com/workshopcraft/simplemachines/neoforge/**")
+    java.exclude("com/workshopcraft/simplemachines/fabric/**", "com/workshopcraft/simplemachines/neoforge/**", "com/workshopcraft/simplemachines/mixin/**")
     resources.setSrcDirs(listOf(rootProject.file("src/legacy/1.20.1"), rootProject.file("src/legacy/1.21.1"), rootProject.file("src/main/resources")))
+    resources.srcDir(tasks.register<Data120>("data120") {
+        sources.from(rootProject.file("src/legacy/1.21.1"), rootProject.file("src/main/resources"))
+        forge = true
+        outputDir = layout.buildDirectory.dir("generated/data120")
+    }.map { it.outputDir })
     applyOverlays(rootProject.file("."), overlayChain(sc.current.version, "forge"), layout.buildDirectory.get().asFile)
 }
 
@@ -43,7 +48,13 @@ legacyForge {
     }
 }
 
+mixin {
+    add(sourceSets.main.get(), "simplemachines.refmap.json")
+    config("simplemachines.forge.mixins.json")
+}
+
 dependencies {
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
     compileOnly("mezz.jei:jei-$mc-common-api:${property("deps.jei")}")
     compileOnly("org.jspecify:jspecify:1.0.0")
 }
@@ -86,6 +97,7 @@ tasks {
             "Implementation-Version" to modVersion,
             "Implementation-Vendor" to sc.properties.get<String>("mod.author"),
             "Built-On-Minecraft" to mc,
+            "MixinConfigs" to "simplemachines.forge.mixins.json",
         )
     }
 

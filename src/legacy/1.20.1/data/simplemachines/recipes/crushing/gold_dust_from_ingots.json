@@ -1,8 +1,0 @@
-{
-  "type": "simplemachines:crushing",
-  "ingredient": {
-    "tag": "c:ingots/gold"
-  },
-  "result": "#c:dusts/gold",
-  "cooking_time": 100
-}

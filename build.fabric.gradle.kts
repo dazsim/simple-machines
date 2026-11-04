@@ -45,6 +45,11 @@ loom {
 sourceSets.main {
     java.exclude("com/workshopcraft/simplemachines/neoforge/**", "com/workshopcraft/simplemachines/forge/**")
     if (!modern) resources.setSrcDirs(listOf("1.20.1", "1.21.1").filter { sc.current.parsed < "1.21" || it == "1.21.1" }.map { rootProject.file("src/legacy/$it") } + rootProject.file("src/main/resources"))
+    if (sc.current.parsed < "1.21") resources.srcDir(tasks.register<Data120>("data120") {
+        sources.from(rootProject.file("src/legacy/1.21.1"), rootProject.file("src/main/resources"))
+        forge = false
+        outputDir = layout.buildDirectory.dir("generated/data120")
+    }.map { it.outputDir })
     // Whole-file replacements for old targets; the main copy of each file is left out
     if (!modern) applyOverlays(rootProject.file("."), overlayChain(sc.current.version, "fabric"), layout.buildDirectory.get().asFile)
 }
@@ -76,7 +81,7 @@ tasks {
         if (sc.current.parsed >= "26.3") filesMatching("data/simplemachines/loot_table/**") { filter(LootTable263::class.java) }
         exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
         if (!modern) exclude("pack.mcmeta", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")
-        if (sc.current.parsed < "1.21") exclude("data/simplemachines/recipe/**", "data/simplemachines/loot_table/**", "data/*/advancement/**", "data/*/tags/block/**", "data/*/tags/item/**", "data/neoforge/**", "simplemachines.neoforge.mixins.json")
+        if (sc.current.parsed < "1.21") exclude("data/simplemachines/recipe/**", "data/simplemachines/loot_table/**", "data/*/advancement/**", "data/*/tags/block/**", "data/*/tags/item/**", "data/neoforge/**", "simplemachines.neoforge.mixins.json", "simplemachines.forge.mixins.json")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 

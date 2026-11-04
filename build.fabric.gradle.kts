@@ -47,10 +47,10 @@ sourceSets.main {
     if (!modern) resources.setSrcDirs(listOf(rootProject.file("src/legacy/${if (sc.current.parsed < "1.21") "1.20.1" else "1.21.1"}"), rootProject.file("src/main/resources")))
     // Whole-file replacements for old targets; the main copy of each file is left out
     if (!modern) {
-        val overlay = rootProject.file("src/legacy-java/${sc.current.version}")
-        java.srcDir(overlay)
-        val replaced = rootProject.fileTree(overlay).files.map { it.relativeTo(overlay).invariantSeparatorsPath }
-        java.exclude { it.file.absolutePath.startsWith(overlay.absolutePath).not() && it.relativePath.pathString in replaced }
+        val overlays = listOf(sc.current.version, sc.current.project).map { rootProject.file("src/legacy-java/$it") }
+        overlays.forEach { java.srcDir(it) }
+        val replaced = overlays.flatMap { o -> rootProject.fileTree(o).files.map { it.relativeTo(o).invariantSeparatorsPath } }
+        java.exclude { e -> overlays.none { e.file.absolutePath.startsWith(it.absolutePath) } && e.relativePath.pathString in replaced }
     }
 }
 

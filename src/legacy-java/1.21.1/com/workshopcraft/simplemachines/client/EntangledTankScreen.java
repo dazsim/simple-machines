@@ -1,0 +1,94 @@
+package com.workshopcraft.simplemachines.client;
+
+import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.entangled.EntangledTankMenu;
+import com.workshopcraft.simplemachines.pipe.TankBlockEntity;
+import com.workshopcraft.simplemachines.pipe.TankItem;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+
+public class EntangledTankScreen extends AbstractContainerScreen<EntangledTankMenu> {
+    private static final ResourceLocation TEXTURE = SimpleMachines.id("textures/gui/entangled_tank.png");
+    private static final int GAUGE_X = 80, GAUGE_Y = 17, GAUGE_W = 16, GAUGE_H = 52;
+    private static final int MAX_MB = (int) (TankBlockEntity.CAPACITY / TankBlockEntity.MB);
+    private static final int BAR_X = 153, BAR_Y = 17, BAR_W = 14, BAR_H = 52;
+
+    public EntangledTankScreen(EntangledTankMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        imageWidth = 176;
+        imageHeight = EntangledTankMenu.HEIGHT;
+        inventoryLabelY = imageHeight - 94;
+    }
+
+    private Button loader;
+
+    @Override
+    protected void init() {
+        super.init();
+        loader = addRenderableWidget(EntangledStatus.switchButton(this, menu, leftPos + 138, topPos + 80));
+        EntangledStatus.refresh(loader, menu);
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        EntangledStatus.refresh(loader, menu);
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics graphics, float a, int mouseX, int mouseY) {
+        final int x = leftPos;
+        final int y = topPos;
+        graphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        final Fluid f = menu.fluid();
+        final int fh = f == Fluids.EMPTY ? 0 : Mth.ceil((float) menu.millibuckets() * GAUGE_H / MAX_MB);
+        if (fh > 0) {
+            final TextureAtlasSprite sprite = ConduitRenderer.fluidSprite(f);
+            final int tint = 0xFF000000 | ConduitRenderer.fluidTint(f, minecraft.level, minecraft.player.blockPosition());
+            final int bottom = y + GAUGE_Y + GAUGE_H;
+            graphics.enableScissor(x + GAUGE_X, bottom - fh, x + GAUGE_X + GAUGE_W, bottom);
+            for (int t = bottom - 16; t > bottom - fh - 16; t -= 16) graphics.blit(x + GAUGE_X, t, 0, 16, 16, sprite, (tint >> 16 & 255) / 255F, (tint >> 8 & 255) / 255F, (tint & 255) / 255F, 1F);
+            graphics.disableScissor();
+        }
+        for (int i = 0; i < 6; i++) graphics.fill(x + GAUGE_X + GAUGE_W - 6, y + GAUGE_Y + 6 + i * 8, x + GAUGE_X + GAUGE_W, y + GAUGE_Y + 7 + i * 8, 0xFF1F3B5E);
+        final int h = Mth.ceil(menu.energyFraction() * BAR_H);
+        if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
+        if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
+            EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
+        }
+        if (EntangledStatus.fitted(menu) && mouseX >= x + 8 && mouseX < x + 134 && mouseY >= y + 83 && mouseY < y + 93) {
+            Tips.show(EntangledStatus.chunks(menu));
+        }
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics graphics, int xm, int ym) {
+        graphics.drawString(font, title, 8, 6, EntangledStatus.TITLE, false);
+        EntangledStatus.codeAfter(graphics, font, menu, 8 + font.width(title) + 4, 6);
+        final Fluid f = menu.fluid();
+        final boolean empty = f == Fluids.EMPTY || menu.millibuckets() <= 0;
+        graphics.drawString(font, empty ? Component.translatable("gui.simplemachines.entangled_tank_empty") : TankItem.fluidName(f), 102, 21,
+                empty ? EntangledStatus.TITLE : EntangledStatus.BLUE, false);
+        graphics.drawString(font, Component.translatable("gui.simplemachines.entangled_tank_amount", buckets(menu.millibuckets()), MAX_MB / 1000), 102, 31, EntangledStatus.TITLE, false);
+        EntangledStatus.line(graphics, font, menu, 8, 72);
+        EntangledStatus.loader(graphics, font, menu, 8, 84);
+    }
+
+    private static String buckets(int mb) {
+        return mb % 1000 == 0 ? Integer.toString(mb / 1000) : String.format(java.util.Locale.ROOT, "%.1f", mb / 1000.0);
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float a) {
+        super.render(graphics, mouseX, mouseY, a);
+        renderTooltip(graphics, mouseX, mouseY);
+    }
+}

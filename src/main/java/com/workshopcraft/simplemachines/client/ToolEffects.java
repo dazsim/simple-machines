@@ -133,9 +133,11 @@ public final class ToolEffects {
                 // fan across the view rather than straight into the camera
                 //? if >=26.3 {
                 /*final Vector3fc f = mc.gameRenderer.mainCamera().forwardVector();
-                *///?} else {
+                *///?} else if >=26.1 {
                 final Vector3fc f = mc.gameRenderer.getMainCamera().forwardVector();
-                //?}
+                //?} else {
+                /*final Vector3fc f = mc.gameRenderer.getMainCamera().getLookVector();
+                *///?}
                 final double towards = v.x * f.x() + v.y * f.y() + v.z * f.z();
                 if (towards < 0) v = v.subtract(f.x() * towards * 0.7, f.y() * towards * 0.7, f.z() * towards * 0.7);
                 v = v.scale(0.6);

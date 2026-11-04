@@ -7,7 +7,11 @@ import net.minecraft.client.Minecraft;
 
 /** Opens the worn Entangled Backpack, B by default. */
 public final class BackpackKey {
+    //? if >=26.1 {
     public static final KeyMapping KEY = new KeyMapping(EntangledBackpackItem.OPEN_KEY, InputConstants.KEY_B, KeyMapping.Category.INVENTORY);
+    //?} else {
+    /*public static final KeyMapping KEY = new KeyMapping(EntangledBackpackItem.OPEN_KEY, InputConstants.KEY_B, "key.categories.inventory");
+    *///?}
     /** Set by the loader: sends the open packet. */
     public static Runnable send = () -> {};
 

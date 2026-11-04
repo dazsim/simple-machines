@@ -33,7 +33,11 @@ public final class ViewerRecipes {
                 }
             }
         }
+        //? if >=26.1 {
         out.sort(Comparator.comparing(h -> h.id().identifier().toString()));
+        //?} else {
+        /*out.sort(Comparator.comparing(h -> h.id().toString()));
+        *///?}
         return out;
     }
 }

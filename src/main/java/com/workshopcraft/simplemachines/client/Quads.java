@@ -26,7 +26,11 @@ public record Quads(PoseStack.Pose pose, VertexConsumer vc, int light, int overl
             case DOWN -> new float[][]{{x0, y0, z1}, {x0, y0, z0}, {x1, y0, z0}, {x1, y0, z1}};
         };
         float[][] uv = {{u0, v0}, {u0, v1}, {u1, v1}, {u1, v0}};
+        //? if >=26.1 {
         Vector3f n = pose.transformNormal(dir.getUnitVec3f(), new Vector3f());
+        //?} else {
+        /*Vector3f n = pose.transformNormal(dir.step(), new Vector3f());
+        *///?}
         Matrix4f m = pose.pose();
         Vector3f pos = new Vector3f();
         for (int i = 0; i < 4; i++) {

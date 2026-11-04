@@ -1,0 +1,88 @@
+package com.workshopcraft.simplemachines.client;
+
+import com.workshopcraft.simplemachines.SimpleMachines;
+import com.workshopcraft.simplemachines.assembly.Upgrade;
+import com.workshopcraft.simplemachines.machine.EnergyMenu;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import org.jspecify.annotations.Nullable;
+
+public class EnergyScreen extends AbstractContainerScreen<EnergyMenu> {
+    private static final ResourceLocation LIT = ResourceLocation.withDefaultNamespace("container/furnace/lit_progress");
+    private static final ResourceLocation BURN = ResourceLocation.withDefaultNamespace("container/furnace/burn_progress");
+    private static final int BAR_X = 153, BAR_Y = 17, BAR_W = 14, BAR_H = 52;
+    private final ResourceLocation texture;
+    private @Nullable Button mode;
+
+    public EnergyScreen(EnergyMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
+        texture = SimpleMachines.id(menu.generator ? "textures/gui/solid_fuel_generator.png"
+                : menu.mill ? "textures/gui/rolling_mill.png" : "textures/gui/electric_furnace.png");
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        titleLabelX = (imageWidth - font.width(title)) / 2;
+        if (menu.mill) {
+            mode = addRenderableWidget(Button.builder(modeLabel(), b -> minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0))
+                    .bounds(leftPos + 8, topPos + 34, 42, 18).build());
+        }
+    }
+
+    private Component modeLabel() {
+        return Component.translatable(switch (menu.millMode()) {
+            case com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.CASINGS -> "gui.simplemachines.casings";
+            case com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.SHEETS -> "gui.simplemachines.sheets";
+            default -> "gui.simplemachines.rods";
+        });
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        if (mode != null) mode.setMessage(modeLabel());
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics graphics, float a, int mouseX, int mouseY) {
+        final int x = leftPos;
+        final int y = topPos;
+        graphics.blit(texture, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        if (menu.generator) {
+            if (menu.progress() > 0) {
+                final int h = Mth.ceil(menu.progress() * 13) + 1;
+                graphics.blitSprite(LIT, 14, 14, 0, 14 - h, x + 80, y + 36 + 14 - h, 14, h);
+            }
+        } else {
+            final int w = Mth.ceil(menu.progress() * 24);
+            graphics.blitSprite(BURN, 24, 16, 0, 0, x + 79, y + 34, w, 16);
+        }
+        if (menu.mill && menu.millLocked()) {
+            final Component warn = Component.translatable(menu.millMode() == com.workshopcraft.simplemachines.machine.RollingMillBlockEntity.SHEETS
+                    ? "gui.simplemachines.sheet_removed" : "gui.simplemachines.mill_unlock");
+            graphics.drawString(font, warn, x + 8, y + 60, 0xFFB02020, false);
+        }
+        if (menu.upgrades() != 0) {
+            final Component ups = Upgrade.summary(menu.upgrades(), true);
+            graphics.drawString(font, ups, x + imageWidth - 8 - font.width(ups), y + inventoryLabelY, 0xFF2D5AA0, false);
+        }
+        EnergyBar.tag(graphics, font, x, y, BAR_X, BAR_Y, BAR_W, menu.voltage());
+        final int h = Mth.ceil(menu.energyFraction() * BAR_H);
+        if (h > 0) graphics.fillGradient(x + BAR_X, y + BAR_Y + BAR_H - h, x + BAR_X + BAR_W, y + BAR_Y + BAR_H, 0xFFF4785C, 0xFF9E2A22);
+        if (mouseX >= x + BAR_X && mouseX < x + BAR_X + BAR_W && mouseY >= y + BAR_Y && mouseY < y + BAR_Y + BAR_H) {
+            EnergyBar.hover(graphics, font, menu.energy(), menu.capacity(), menu.voltage(), menu.sendsOnly(), mouseX, mouseY);
+        }
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float a) {
+        super.render(graphics, mouseX, mouseY, a);
+        renderTooltip(graphics, mouseX, mouseY);
+    }
+}

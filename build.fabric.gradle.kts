@@ -35,7 +35,7 @@ dependencies {
 
 loom {
     fabricModJsonPath = rootProject.file("src/main/resources/fabric.mod.json")
-    if (modern) accessWidenerPath = rootProject.file("src/main/resources/simplemachines.accesswidener")
+    accessWidenerPath = rootProject.file(if (modern) "src/main/resources/simplemachines.accesswidener" else "src/legacy/1.21.1/simplemachines.accesswidener")
     runConfigs.all {
         runDirectory = rootProject.file("runs/${sc.current.project}")
     }

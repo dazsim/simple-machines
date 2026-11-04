@@ -51,7 +51,7 @@ public class AutoCrafterTransfer implements IRecipeTransferHandler<AutoCrafterMe
         if (!doTransfer) return null;
         for (int i = 0; i < 9; i++) {
             final ItemStack stack = inputs.get(i).getDisplayedIngredient().flatMap(t -> t.getIngredient(VanillaTypes.ITEM_STACK)).orElse(ItemStack.EMPTY);
-            Minecraft.getInstance().gameMode.handleInventoryButtonClick(menu.containerId, AutoCrafterMenu.setButton(i, stack));
+            for (int b : AutoCrafterMenu.bytePresses(AutoCrafterMenu.setButton(i, stack))) Minecraft.getInstance().gameMode.handleInventoryButtonClick(menu.containerId, b);
         }
         return null;
     }

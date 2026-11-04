@@ -15,12 +15,13 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
-/** Card slot 0, then the player inventory. A code is sent as a button id above BUTTON_SET. */
+/** Card slot 0, then the player inventory. A code is sent as a button id above BUTTON_SET, or as CLEAR then one DIGIT press per digit where button ids are a byte. */
 public class EntangledProgrammerMenu extends AbstractContainerMenu {
-    public static final int BUTTON_RANDOM = 0, BUTTON_PRIVATE = 1, BUTTON_WRITE = 2, BUTTON_SET = 1000;
+    public static final int BUTTON_RANDOM = 0, BUTTON_PRIVATE = 1, BUTTON_WRITE = 2, BUTTON_CLEAR = 3, BUTTON_DIGIT = 10, BUTTON_SET = 1000;
     public static final int CARD_X = 120, CARD_Y = 41;
     private final Container container;
     private final ContainerData data;
+    private int pending;
     private final @Nullable EntangledProgrammerBlockEntity machine;
 
     public static EntangledProgrammerMenu client(int id, Inventory inventory) {
@@ -55,6 +56,11 @@ public class EntangledProgrammerMenu extends AbstractContainerMenu {
         if (id == BUTTON_RANDOM) machine.random(level, player);
         else if (id == BUTTON_PRIVATE) machine.togglePrivate();
         else if (id == BUTTON_WRITE) machine.write(level, player);
+        else if (id == BUTTON_CLEAR) pending = 0;
+        else if (id >= BUTTON_DIGIT && id < BUTTON_DIGIT + 10) {
+            pending = Math.min(pending * 10 + id - BUTTON_DIGIT, EntangledLink.MAX);
+            machine.setCode(pending);
+        }
         else if (id >= BUTTON_SET && id <= BUTTON_SET + EntangledLink.MAX) machine.setCode(id - BUTTON_SET);
         else return false;
         return true;

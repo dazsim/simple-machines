@@ -71,6 +71,9 @@ public class SimpleMachinesForge {
         });
         MinecraftForge.EVENT_BUS.addListener(SimpleMachinesForge::onUseBlock);
         MinecraftForge.EVENT_BUS.addListener(SimpleMachinesForge::onLootLoad);
+        MinecraftForge.EVENT_BUS.addListener((net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent e) -> {
+            if (e.getItemStack().is(SimpleMachines.biofuelItem)) e.setBurnTime(2400);
+        });
         MinecraftForge.EVENT_BUS.addGenericListener(BlockEntity.class, SimpleMachinesForge::onBlockCaps);
         MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, SimpleMachinesForge::onItemCaps);
         MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> ChunkLoaders.onServerStarted(e.getServer()));

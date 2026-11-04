@@ -25,6 +25,7 @@ abstract class Data120 : DefaultTask() {
     abstract val outputDir: DirectoryProperty
 
     private val dirs = listOf("recipe/" to "recipes/", "loot_table/" to "loot_tables/", "advancement/" to "advancements/", "tags/item/" to "tags/items/", "tags/block/" to "tags/blocks/")
+    private val vanillaShaped = setOf("simplemachines:crafting_shaped_quarry", "simplemachines:crafting_shapeless_keep_tool")
     private val cooking = setOf("minecraft:smelting", "minecraft:blasting", "minecraft:smoking", "minecraft:campfire_cooking")
 
     private val vanilla = mapOf(
@@ -32,7 +33,7 @@ abstract class Data120 : DefaultTask() {
         "ingots/netherite" to listOf("minecraft:netherite_ingot"), "nuggets/iron" to listOf("minecraft:iron_nugget"), "nuggets/gold" to listOf("minecraft:gold_nugget"),
         "gems/diamond" to listOf("minecraft:diamond"), "gems/emerald" to listOf("minecraft:emerald"), "gems/lapis" to listOf("minecraft:lapis_lazuli"),
         "gems/quartz" to listOf("minecraft:quartz"), "dusts/redstone" to listOf("minecraft:redstone"), "ender_pearls" to listOf("minecraft:ender_pearl"),
-        "glass_blocks" to listOf("#minecraft:impermeable"), "raw_materials/iron" to listOf("minecraft:raw_iron"), "raw_materials/copper" to listOf("minecraft:raw_copper"),
+        "glass_blocks" to listOf("minecraft:glass", "minecraft:tinted_glass", "minecraft:white_stained_glass", "minecraft:orange_stained_glass", "minecraft:magenta_stained_glass", "minecraft:light_blue_stained_glass", "minecraft:yellow_stained_glass", "minecraft:lime_stained_glass", "minecraft:pink_stained_glass", "minecraft:gray_stained_glass", "minecraft:light_gray_stained_glass", "minecraft:cyan_stained_glass", "minecraft:purple_stained_glass", "minecraft:blue_stained_glass", "minecraft:brown_stained_glass", "minecraft:green_stained_glass", "minecraft:red_stained_glass", "minecraft:black_stained_glass"), "raw_materials/iron" to listOf("minecraft:raw_iron"), "raw_materials/copper" to listOf("minecraft:raw_copper"),
         "raw_materials/gold" to listOf("minecraft:raw_gold"), "ores/iron" to listOf("#minecraft:iron_ores"), "ores/copper" to listOf("#minecraft:copper_ores"),
         "ores/gold" to listOf("#minecraft:gold_ores"), "storage_blocks/iron" to listOf("minecraft:iron_block"), "storage_blocks/gold" to listOf("minecraft:gold_block"),
         "storage_blocks/redstone" to listOf("minecraft:redstone_block"), "sands" to listOf("#minecraft:sand"), "leathers" to listOf("minecraft:leather"),
@@ -75,6 +76,8 @@ abstract class Data120 : DefaultTask() {
     private fun recipe(j: MutableMap<String, Any?>) {
         val r = j["result"] as? Map<*, *> ?: return
         if ("id" !in r) return
+        // mod process recipes read the 1.21 shape through ItemStackTemplate
+        if ((j["type"] as? String)?.startsWith("simplemachines:") == true && j["type"] !in vanillaShaped) return
         if (j["type"] in cooking) { j["result"] = r["id"]; return }
         val n = LinkedHashMap<String, Any?>()
         n["item"] = r["id"]
@@ -128,7 +131,9 @@ abstract class Data120 : DefaultTask() {
                 val (a, b) = dirs.firstOrNull { rest.startsWith(it.first) } ?: return@forEach
                 val new = "$ns/$b${rest.removePrefix(a)}"
                 if (!done.add(new)) return@forEach
-                val text = f.readText()
+                // 1.20.5+ vanilla items that 1.20.1 lacks
+                val text = f.readText().replace("\"minecraft:crafter\"", "\"minecraft:crafting_table\"")
+                if (text.contains("\"neoforge:false\"")) return@forEach
                 ref.findAll(text).forEach { usedC.add(it.groupValues[1]) }
                 var j = obj(JsonSlurper().parseText(text))
                 val conds = j.remove("neoforge:conditions")

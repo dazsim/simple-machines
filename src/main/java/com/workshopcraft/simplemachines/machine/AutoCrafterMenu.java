@@ -18,8 +18,9 @@ import org.jspecify.annotations.Nullable;
 /** Ghost grid 0-8, result preview 9, buffer 10-18, outputs 19-22, then the player inventory. */
 public class AutoCrafterMenu extends AbstractContainerMenu {
     public static final int RESULT = 9, BUFFER = 10, OUT = 19, INV = 23;
-    public static final int BUTTON_CLEAR = 0, BUTTON_REDSTONE = 1, BUTTON_REDSTONE_BACK = 2, BUTTON_SET = 100;
+    public static final int BUTTON_CLEAR = 0, BUTTON_REDSTONE = 1, BUTTON_REDSTONE_BACK = 2, BUTTON_DIGIT = 10, BUTTON_APPLY = 20, BUTTON_SET = 100;
     private final Container container;
+    private long pending;
     private final Container pattern;
     private final ContainerData data;
     private final @Nullable AutoCrafterBlockEntity machine;
@@ -109,12 +110,30 @@ public class AutoCrafterMenu extends AbstractContainerMenu {
         if (machine == null) return false;
         if (id == BUTTON_CLEAR) machine.clearPattern();
         else if (id == BUTTON_REDSTONE || id == BUTTON_REDSTONE_BACK) machine.cycleRedstone(id == BUTTON_REDSTONE_BACK);
+        else if (id >= BUTTON_DIGIT && id < BUTTON_DIGIT + 10) pending = pending * 10 + id - BUTTON_DIGIT;
+        else if (id == BUTTON_APPLY) {
+            final int k = (int) Math.min(pending, Integer.MAX_VALUE) - BUTTON_SET;
+            pending = 0;
+            if (k < 0) return false;
+            final int raw = k / 9 - 1;
+            machine.setGhost(k % 9, raw < 0 ? ItemStack.EMPTY : new ItemStack(BuiltInRegistries.ITEM.byId(raw)));
+        }
         else if (id >= BUTTON_SET) {
             final int k = id - BUTTON_SET;
             final int raw = k / 9 - 1;
             machine.setGhost(k % 9, raw < 0 ? ItemStack.EMPTY : new ItemStack(BuiltInRegistries.ITEM.byId(raw)));
         } else return false;
         return true;
+    }
+
+    /** Presses for a button id where ids travel as a byte: its digits, then APPLY. */
+    public static int[] bytePresses(int id) {
+        if (id < BUTTON_DIGIT) return new int[] {id};
+        final String d = Integer.toString(id);
+        final int[] out = new int[d.length() + 1];
+        for (int i = 0; i < d.length(); i++) out[i] = BUTTON_DIGIT + d.charAt(i) - '0';
+        out[d.length()] = BUTTON_APPLY;
+        return out;
     }
 
     /** Button id that sets one ghost slot, for recipe transfer. */

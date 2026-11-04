@@ -70,7 +70,7 @@ tasks {
             "author" to sc.properties.get<String>("mod.author"),
             "description" to sc.properties.get<String>("mod.description"),
             "minecraft" to sc.properties.get<String>("mod.mc_compat"),
-            "loader" to Regex("\\d+\\.\\d+\\.\\d+").find(sc.properties.get<String>("deps.fabric_loader"))!!.value,
+            "loader" to if (mc == "1.20.1") "0.16.0" else Regex("\\d+\\.\\d+\\.\\d+").find(sc.properties.get<String>("deps.fabric_loader"))!!.value,
             "java" to requiredJava.majorVersion,
             "energy" to sc.properties.get<String>("deps.energy"),
         )

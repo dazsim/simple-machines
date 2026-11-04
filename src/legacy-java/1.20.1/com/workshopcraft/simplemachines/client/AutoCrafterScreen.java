@@ -132,7 +132,7 @@ public class AutoCrafterScreen extends AbstractContainerScreen<AutoCrafterMenu> 
 
     public void press(int id) {
         minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-        minecraft.gameMode.handleInventoryButtonClick(menu.containerId, id);
+        for (int b : AutoCrafterMenu.bytePresses(id)) minecraft.gameMode.handleInventoryButtonClick(menu.containerId, b);
     }
 
     @Override

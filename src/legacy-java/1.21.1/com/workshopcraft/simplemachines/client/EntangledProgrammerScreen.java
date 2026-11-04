@@ -72,7 +72,10 @@ public class EntangledProgrammerScreen extends AbstractContainerScreen<Entangled
         if (!s.isEmpty()) {
             final int code = Integer.parseInt(s);
             field.setValue(EntangledLink.format(code));
-            if (code != menu.code()) press(EntangledProgrammerMenu.BUTTON_SET + code);
+            if (code != menu.code()) {
+                press(EntangledProgrammerMenu.BUTTON_CLEAR);
+                for (char c : Integer.toString(code).toCharArray()) press(EntangledProgrammerMenu.BUTTON_DIGIT + c - '0');
+            }
         }
         press(EntangledProgrammerMenu.BUTTON_WRITE);
     }

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "Q": {
+      "tag": "c:gems/quartz"
+    },
+    "B": {
+      "item": "simplemachines:control_board"
+    }
+  },
+  "pattern": [
+    "RGR",
+    "QBQ",
+    "RGR"
+  ],
+  "result": {
+    "id": "simplemachines:overclocker_circuit"
+  }
+}

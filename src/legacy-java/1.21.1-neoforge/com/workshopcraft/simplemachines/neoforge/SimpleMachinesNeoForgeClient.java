@@ -39,6 +39,7 @@ public class SimpleMachinesNeoForgeClient {
             net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("tool_running"), com.workshopcraft.simplemachines.client.ToolRunning.INSTANCE);
             net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.INSTANCE);
             net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("charge"), com.workshopcraft.simplemachines.client.BatteryCharge.INSTANCE);
+            net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("tool_holder"), com.workshopcraft.simplemachines.client.ToolItemRenderer.HOLDER);
         }));
         modBus.addListener((net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent e) ->
         {
@@ -79,6 +80,21 @@ public class SimpleMachinesNeoForgeClient {
                         return com.workshopcraft.simplemachines.client.TankItemRenderer.get();
                     }
                 }, SimpleMachines.tank.asItem()));
+        modBus.addListener((net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent e) -> {
+            for (String t : com.workshopcraft.simplemachines.client.ToolItemRenderer.TOOLS)
+                e.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
+                    @Override
+                    public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                        return com.workshopcraft.simplemachines.client.ToolItemRenderer.get();
+                    }
+                }, net.minecraft.core.registries.BuiltInRegistries.ITEM.get(SimpleMachines.id(t)));
+        });
+        modBus.addListener((net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional e) -> {
+            for (var id : com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(net.minecraft.client.Minecraft.getInstance().getResourceManager()))
+                e.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(id));
+        });
+        com.workshopcraft.simplemachines.client.ToolItemRenderer.models = id -> net.minecraft.client.Minecraft.getInstance().getModelManager()
+                .getModel(net.minecraft.client.resources.model.ModelResourceLocation.standalone(id));
         modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> {
             for (Core core : SimpleMachines.NEW_CORES) renderer(e, SimpleMachines.MACHINE_ENTITIES.get(core));
             e.registerBlockEntityRenderer(SimpleMachines.chassisEntity, WorktopRenderer::new);

@@ -1,0 +1,10 @@
+{
+  "type": "simplemachines:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/copper"
+  },
+  "result": "#c:dusts/copper",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200
+}

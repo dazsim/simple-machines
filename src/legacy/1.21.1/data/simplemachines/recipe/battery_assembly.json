@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/iron"
+    },
+    "C": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "D": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "DID"
+  ],
+  "result": {
+    "id": "simplemachines:battery_assembly"
+  }
+}

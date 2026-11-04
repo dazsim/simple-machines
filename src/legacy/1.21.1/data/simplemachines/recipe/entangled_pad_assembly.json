@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/iron"
+    },
+    "C": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "E": {
+      "item": "simplemachines:entangled_coil"
+    },
+    "X": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "EXE"
+  ],
+  "result": {
+    "id": "simplemachines:entangled_pad_assembly"
+  }
+}

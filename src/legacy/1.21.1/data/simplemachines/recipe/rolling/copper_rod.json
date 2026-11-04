@@ -1,0 +1,13 @@
+{
+  "type": "simplemachines:rolling",
+  "input": {
+    "ingredient": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "result": {
+    "id": "simplemachines:copper_rod",
+    "count": 2
+  },
+  "cooking_time": 100
+}

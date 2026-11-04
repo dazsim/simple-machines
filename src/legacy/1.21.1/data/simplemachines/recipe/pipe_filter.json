@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "tag": "c:plates/iron"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "C": {
+      "item": "simplemachines:control_board"
+    }
+  },
+  "pattern": [
+    " S ",
+    "BCB",
+    " S "
+  ],
+  "result": {
+    "id": "simplemachines:pipe_filter"
+  }
+}

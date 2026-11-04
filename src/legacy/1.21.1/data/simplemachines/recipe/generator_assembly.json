@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/iron"
+    },
+    "C": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "IFI"
+  ],
+  "result": {
+    "id": "simplemachines:generator_assembly"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/iron"
+    },
+    "C": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "S": {
+      "item": "minecraft:stonecutter"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "ISI"
+  ],
+  "result": {
+    "id": "simplemachines:saw_assembly"
+  }
+}

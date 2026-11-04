@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:false"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:not",
+      "value": {
+        "condition": "fabric:true"
+      }
+    }
+  ],
+  "type": "simplemachines:sawing",
+  "ingredient": {
+    "tag": "minecraft:pale_oak_logs"
+  },
+  "result": "minecraft:pale_oak_planks",
+  "count": 6,
+  "cooking_time": 100
+}

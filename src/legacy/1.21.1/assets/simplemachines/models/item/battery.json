@@ -1,0 +1,35 @@
+{
+  "parent": "simplemachines:block/battery_item_0",
+  "overrides": [
+    {
+      "predicate": {
+        "simplemachines:charge": 1
+      },
+      "model": "simplemachines:block/battery_item_1"
+    },
+    {
+      "predicate": {
+        "simplemachines:charge": 2
+      },
+      "model": "simplemachines:block/battery_item_2"
+    },
+    {
+      "predicate": {
+        "simplemachines:charge": 3
+      },
+      "model": "simplemachines:block/battery_item_3"
+    },
+    {
+      "predicate": {
+        "simplemachines:charge": 4
+      },
+      "model": "simplemachines:block/battery_item_4"
+    },
+    {
+      "predicate": {
+        "simplemachines:charge": 5
+      },
+      "model": "simplemachines:block/battery_item_5"
+    }
+  ]
+}

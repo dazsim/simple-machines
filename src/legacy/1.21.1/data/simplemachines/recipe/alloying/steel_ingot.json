@@ -1,0 +1,18 @@
+{
+  "type": "simplemachines:alloying",
+  "first": {
+    "ingredient": {
+      "tag": "simplemachines:ingots_or_dusts/iron"
+    }
+  },
+  "second": {
+    "ingredient": {
+      "tag": "minecraft:coals"
+    },
+    "count": 2
+  },
+  "result": {
+    "id": "simplemachines:steel_ingot"
+  },
+  "cooking_time": 400
+}

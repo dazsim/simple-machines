@@ -32,6 +32,13 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
                 com.workshopcraft.simplemachines.client.HotSparkParticle::whiteProvider);
         net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("spin"), com.workshopcraft.simplemachines.client.ToolSpin.INSTANCE);
         net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("charge"), com.workshopcraft.simplemachines.client.BatteryCharge.INSTANCE);
+        net.minecraft.client.renderer.item.ItemProperties.registerGeneric(SimpleMachines.id("tool_holder"), com.workshopcraft.simplemachines.client.ToolItemRenderer.HOLDER);
+        for (String t : com.workshopcraft.simplemachines.client.ToolItemRenderer.TOOLS)
+            net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(SimpleMachines.id(t)),
+                    (stack, ctx, pose, buffers, light, overlay) -> com.workshopcraft.simplemachines.client.ToolItemRenderer.get().renderByItem(stack, ctx, pose, buffers, light, overlay));
+        net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(ctx ->
+                ctx.addModels(com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(net.minecraft.client.Minecraft.getInstance().getResourceManager())));
+        com.workshopcraft.simplemachines.client.ToolItemRenderer.models = id -> net.minecraft.client.Minecraft.getInstance().getModelManager().getModel(id);
         net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(SimpleMachines.tank,
                 (stack, ctx, pose, buffers, light, overlay) -> com.workshopcraft.simplemachines.client.TankItemRenderer.get().renderByItem(stack, ctx, pose, buffers, light, overlay));
         com.workshopcraft.simplemachines.client.ConduitRenderer.look = new com.workshopcraft.simplemachines.client.ConduitRenderer.FluidLook() {

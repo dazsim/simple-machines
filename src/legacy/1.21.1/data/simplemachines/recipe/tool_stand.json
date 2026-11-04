@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/steel"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "B": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    " R ",
+    "BBB"
+  ],
+  "result": {
+    "id": "simplemachines:tool_stand"
+  }
+}

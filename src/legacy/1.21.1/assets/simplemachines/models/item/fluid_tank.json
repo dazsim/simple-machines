@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:builtin/entity",
+  "textures": {
+    "particle": "simplemachines:block/fluid_tank_bottom"
+  }
+}

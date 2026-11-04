@@ -34,8 +34,8 @@ dependencies {
 }
 
 loom {
-    fabricModJsonPath = rootProject.file(if (modern) "src/main/resources/fabric.mod.json" else "src/legacy/1.21.1/fabric.mod.json")
-    accessWidenerPath = rootProject.file(if (modern) "src/main/resources/simplemachines.accesswidener" else "src/legacy/1.21.1/simplemachines.accesswidener")
+    fabricModJsonPath = rootProject.file(if (modern) "src/main/resources/fabric.mod.json" else if (sc.current.parsed < "1.21") "src/legacy/1.20.1/fabric.mod.json" else "src/legacy/1.21.1/fabric.mod.json")
+    accessWidenerPath = rootProject.file(if (modern) "src/main/resources/simplemachines.accesswidener" else if (sc.current.parsed < "1.21") "src/legacy/1.20.1/simplemachines.accesswidener" else "src/legacy/1.21.1/simplemachines.accesswidener")
     runConfigs.all {
         runDirectory = rootProject.file("runs/${sc.current.project}")
     }
@@ -44,14 +44,9 @@ loom {
 
 sourceSets.main {
     java.exclude("com/workshopcraft/simplemachines/neoforge/**", "com/workshopcraft/simplemachines/forge/**")
-    if (!modern) resources.setSrcDirs(listOf(rootProject.file("src/legacy/${if (sc.current.parsed < "1.21") "1.20.1" else "1.21.1"}"), rootProject.file("src/main/resources")))
+    if (!modern) resources.setSrcDirs(listOf("1.20.1", "1.21.1").filter { sc.current.parsed < "1.21" || it == "1.21.1" }.map { rootProject.file("src/legacy/$it") } + rootProject.file("src/main/resources"))
     // Whole-file replacements for old targets; the main copy of each file is left out
-    if (!modern) {
-        val overlays = listOf(sc.current.version, sc.current.project).map { rootProject.file("src/legacy-java/$it") }
-        overlays.forEach { java.srcDir(it) }
-        val replaced = overlays.flatMap { o -> rootProject.fileTree(o).files.map { it.relativeTo(o).invariantSeparatorsPath } }
-        java.exclude { e -> overlays.none { e.file.absolutePath.startsWith(it.absolutePath) } && e.relativePath.pathString in replaced }
-    }
+    if (!modern) applyOverlays(rootProject.file("."), overlayChain(sc.current.version, "fabric"), layout.buildDirectory.get().asFile)
 }
 
 java {
@@ -79,11 +74,9 @@ tasks {
         if (sc.current.parsed < "26.3") exclude("data/simplemachines/context_int_provider/**")
         if (sc.current.parsed >= "26.3") filesMatching("data/simplemachines/advancement/**") { filter { it.replace("\"recipe\":", "\"recipes\":") } }
         if (sc.current.parsed >= "26.3") filesMatching("data/simplemachines/loot_table/**") { filter(LootTable263::class.java) }
-        if (sc.current.parsed < "1.21") filesMatching("fabric.mod.json") { filter(StripAccessWidener::class.java) }
         exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
         if (!modern) exclude("pack.mcmeta", "META-INF/accesstransformer.cfg", "assets/simplemachines/items/**")
-        if (sc.current.parsed < "1.21") exclude("simplemachines.accesswidener")
-        if (sc.current.parsed < "1.21") exclude("data/simplemachines/recipe/**", "data/simplemachines/loot_table/**")
+        if (sc.current.parsed < "1.21") exclude("data/simplemachines/recipe/**", "data/simplemachines/loot_table/**", "data/*/advancement/**", "data/*/tags/block/**", "data/*/tags/item/**", "data/neoforge/**", "simplemachines.neoforge.mixins.json")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 

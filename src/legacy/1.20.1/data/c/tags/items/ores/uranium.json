@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/uranium",
+      "required": false
+    },
+    {
+      "id": "#c:uranium_ores",
+      "required": false
+    }
+  ]
+}

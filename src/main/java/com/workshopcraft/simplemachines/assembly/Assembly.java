@@ -70,7 +70,7 @@ public final class Assembly {
         if (step < 4 || !(level.getBlockEntity(pos) instanceof ChassisBlockEntity be)) msg = step % 2 == 1 ? hint(step) : "message.simplemachines.upgrade_early";
         else if (step > 4) msg = "message.simplemachines.upgrade_late";
         else if (be.loose() != null) msg = hint(1);
-        else if (upgrade.refusal(level.getBlockState(pos).getValue(CORE), be.upgrades()) instanceof String why) msg = why;
+        else if ((Object) upgrade.refusal(level.getBlockState(pos).getValue(CORE), be.upgrades()) instanceof String why) msg = why;
         else {
             be.setLoose(upgrade);
             stack.consume(1, player);

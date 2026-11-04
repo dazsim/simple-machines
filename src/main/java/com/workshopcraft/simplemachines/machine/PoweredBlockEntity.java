@@ -41,7 +41,7 @@ public abstract class PoweredBlockEntity extends WorkBlockEntity {
     }
 
     protected @Nullable Job find(ServerLevel level, List<ItemStack> inputs) {
-        return find(level, inputs.getFirst());
+        return find(level, inputs.get(0));
     }
 
     protected boolean accepts(ServerLevel level, ItemStack stack) {

@@ -34,7 +34,7 @@ class ProcessCategory extends Base<RecipeHolder<ProcessRecipe>> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder b, RecipeHolder<ProcessRecipe> holder, IFocusGroup focuses) {
         final ProcessRecipe r = holder.value();
-        input(b, 1, r.ingredients().getFirst());
+        input(b, 1, r.ingredients().get(0));
         final ItemStack out = r.output();
         output(b, 66).add(out);
         if (r.bonus() > 0 && !out.isEmpty()) {

@@ -40,7 +40,7 @@ public class ShearerBlockEntity extends AreaBlockEntity {
         final AABB box = area(state, tier, 3);
         final List<Mob> mobs = level.getEntitiesOfClass(Mob.class, box, m -> m instanceof Shearable s && s.readyForShearing() && m.isAlive());
         if (mobs.isEmpty()) return;
-        final Mob mob = mobs.getFirst();
+        final Mob mob = mobs.get(0);
         final AABB around = mob.getBoundingBox().inflate(1.5);
         final Set<UUID> before = new HashSet<>();
         for (ItemEntity e : level.getEntitiesOfClass(ItemEntity.class, around)) before.add(e.getUUID());

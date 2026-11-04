@@ -1,0 +1,9 @@
+{
+  "type": "simplemachines:sawing",
+  "ingredient": {
+    "tag": "minecraft:dark_oak_logs"
+  },
+  "result": "minecraft:dark_oak_planks",
+  "count": 6,
+  "cooking_time": 100
+}

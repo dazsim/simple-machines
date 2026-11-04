@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "W": {
+      "item": "simplemachines:entangled_wire"
+    },
+    "E": {
+      "item": "simplemachines:entangled_coil"
+    },
+    "P": {
+      "item": "simplemachines:power_cell"
+    }
+  },
+  "pattern": [
+    "LWL",
+    "LEL",
+    "LPL"
+  ],
+  "result": {
+    "item": "simplemachines:entangled_backpack"
+  }
+}

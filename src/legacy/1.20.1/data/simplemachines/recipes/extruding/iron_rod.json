@@ -1,0 +1,13 @@
+{
+  "type": "simplemachines:extruding",
+  "input": {
+    "ingredient": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "simplemachines:iron_rod",
+    "count": 2
+  },
+  "cooking_time": 400
+}

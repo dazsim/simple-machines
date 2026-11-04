@@ -1,0 +1,9 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": {
+    "tag": "c:sands"
+  },
+  "result": "simplemachines:silicon_wafer",
+  "input_count": 4,
+  "cooking_time": 200
+}

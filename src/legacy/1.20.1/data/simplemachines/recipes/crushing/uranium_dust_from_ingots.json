@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ingots/uranium",
+        "c:dusts/uranium"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": {
+    "tag": "c:ingots/uranium"
+  },
+  "result": "#c:dusts/uranium",
+  "cooking_time": 100,
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:ingots/uranium"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:dusts/uranium"
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "simplebooks"
+      ]
+    }
+  ],
+  "type": "simplemachines:crafting_shapeless_keep_tool",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "tag": "c:tools/screwdriver"
+    },
+    {
+      "tag": "c:ingots/copper"
+    }
+  ],
+  "keep": {
+    "tag": "c:tools/screwdriver"
+  },
+  "result": {
+    "item": "simplebooks:guide",
+    "components": {
+      "simplebooks:book": "simplemachines:manual"
+    }
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "simplebooks"
+    }
+  ]
+}

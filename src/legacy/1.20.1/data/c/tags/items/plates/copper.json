@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "simplemachines:copper_sheet",
+    {
+      "id": "#forge:plates/copper",
+      "required": false
+    },
+    {
+      "id": "#c:copper_plates",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:dusts/lead",
+      "required": false
+    },
+    {
+      "id": "#c:lead_dusts",
+      "required": false
+    }
+  ]
+}

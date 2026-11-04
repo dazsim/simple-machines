@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "muchmorestorage"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "simplemachines:spruce_worktop"
+    }
+  ],
+  "result": {
+    "item": "muchmorestorage:spruce_worktop"
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "muchmorestorage"
+    }
+  ]
+}

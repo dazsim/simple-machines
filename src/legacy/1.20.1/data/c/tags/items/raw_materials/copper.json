@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:raw_copper",
+    {
+      "id": "#forge:raw_materials/copper",
+      "required": false
+    },
+    {
+      "id": "#c:raw_copper_ores",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "tag": "c:plates/copper"
+    },
+    "R": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "D": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "pattern": [
+    "SRS",
+    "SDS",
+    "SRS"
+  ],
+  "result": {
+    "item": "simplemachines:power_cell"
+  }
+}

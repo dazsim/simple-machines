@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:dusts/silver",
+      "required": false
+    },
+    {
+      "id": "#c:silver_dusts",
+      "required": false
+    }
+  ]
+}

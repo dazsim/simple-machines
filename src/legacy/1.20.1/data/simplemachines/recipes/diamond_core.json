@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "tag": "c:plates/steel"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PDP",
+    " P "
+  ],
+  "result": {
+    "item": "simplemachines:diamond_core"
+  }
+}

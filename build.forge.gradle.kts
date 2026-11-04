@@ -18,7 +18,8 @@ repositories {
 
 sourceSets.main {
     java.exclude("com/workshopcraft/simplemachines/fabric/**", "com/workshopcraft/simplemachines/neoforge/**")
-    resources.setSrcDirs(listOf(rootProject.file("src/legacy/1.20.1"), rootProject.file("src/main/resources")))
+    resources.setSrcDirs(listOf(rootProject.file("src/legacy/1.20.1"), rootProject.file("src/legacy/1.21.1"), rootProject.file("src/main/resources")))
+    applyOverlays(rootProject.file("."), overlayChain(sc.current.version, "forge"), layout.buildDirectory.get().asFile)
 }
 
 legacyForge {
@@ -67,7 +68,8 @@ tasks {
         inputs.properties(props)
         filesMatching(listOf("META-INF/mods.toml", "pack.mcmeta")) { expand(props) }
         exclude("fabric.mod.json", "META-INF/neoforge.mods.toml", "simplemachines.accesswidener", "META-INF/accesstransformer.cfg",
-            "assets/simplemachines/items/**", "data/simplemachines/recipe/**", "data/simplemachines/loot_table/**")
+            "assets/simplemachines/items/**", "data/simplemachines/recipe/**", "data/simplemachines/loot_table/**",
+            "data/*/advancement/**", "data/*/tags/block/**", "data/*/tags/item/**", "data/neoforge/**", "data/simplemachines/context_int_provider/**", "simplemachines.mixins.json", "simplemachines.neoforge.mixins.json", "simplemachines.accesswidener")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 

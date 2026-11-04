@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "tag": "c:plates/steel"
+    },
+    "P": {
+      "item": "simplemachines:power_cell"
+    },
+    "B": {
+      "item": "simplemachines:control_board"
+    }
+  },
+  "pattern": [
+    " S ",
+    "PBP",
+    " S "
+  ],
+  "result": {
+    "item": "simplemachines:energy_cell"
+  }
+}

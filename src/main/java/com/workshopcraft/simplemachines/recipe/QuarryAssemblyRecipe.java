@@ -53,7 +53,7 @@ public class QuarryAssemblyRecipe extends ShapedRecipe {
         final ItemStack out = super.assemble(input);
         for (int i = 0; i < input.size(); i++) {
             final ItemStack in = input.getItem(i);
-            if (SimpleMachines.TOOLS.size() > 0 && in.is(SimpleMachines.TOOLS.getFirst())) {
+            if (SimpleMachines.TOOLS.size() > 0 && in.is(SimpleMachines.TOOLS.get(0))) {
                 out.set(SimpleMachines.QUARRY_DRILL, QuarryDrill.of(in).join());
                 break;
             }

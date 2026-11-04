@@ -32,7 +32,7 @@ public class MachineItem extends BlockItem {
         final List<Upgrade> ups = Upgrade.parse(stack.getOrDefault(SimpleMachines.UPGRADES_FITTED, ""));
         final com.workshopcraft.simplemachines.entangled.EntangledLink link = stack.get(SimpleMachines.ENTANGLED_LINK);
         if (link != null) link.tooltip(out);
-        final com.workshopcraft.simplemachines.cable.PowerInfo.Unit unit = com.workshopcraft.simplemachines.cable.PowerInfo.of(getBlock()) instanceof com.workshopcraft.simplemachines.cable.PowerInfo p
+        final com.workshopcraft.simplemachines.cable.PowerInfo.Unit unit = (Object) com.workshopcraft.simplemachines.cable.PowerInfo.of(getBlock()) instanceof com.workshopcraft.simplemachines.cable.PowerInfo p
                 ? p.unit() : com.workshopcraft.simplemachines.cable.PowerInfo.Unit.NONE;
         if (unit == com.workshopcraft.simplemachines.cable.PowerInfo.Unit.TELEPORT) {
             out.accept(Component.translatable(link == null ? "tooltip.simplemachines.pad_no_code" : link.priv() ? "tooltip.simplemachines.pad_private"

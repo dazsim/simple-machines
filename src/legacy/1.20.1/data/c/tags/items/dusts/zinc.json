@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:dusts/zinc",
+      "required": false
+    },
+    {
+      "id": "#c:zinc_dusts",
+      "required": false
+    }
+  ]
+}

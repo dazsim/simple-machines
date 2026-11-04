@@ -71,7 +71,7 @@ public class KeepToolRecipe extends NormalCraftingRecipe {
     public boolean matches(CraftingInput input, Level level) {
         if (input.ingredientCount() != ingredients.size()) return false;
         return input.size() == 1 && ingredients.size() == 1
-                ? ingredients.getFirst().test(input.getItem(0))
+                ? ingredients.get(0).test(input.getItem(0))
                 : input.stackedContents().canCraft(this, null);
     }
 

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "simplemachines:copper_dust",
+    {
+      "id": "#forge:dusts/copper",
+      "required": false
+    },
+    {
+      "id": "#c:copper_dusts",
+      "required": false
+    }
+  ]
+}

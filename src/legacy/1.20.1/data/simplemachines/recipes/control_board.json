@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "D": {
+      "tag": "c:dusts/redstone"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "pattern": [
+    "RDR",
+    "CCC"
+  ],
+  "result": {
+    "item": "simplemachines:control_board"
+  }
+}

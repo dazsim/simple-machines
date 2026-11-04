@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:dusts/aluminum",
+      "required": false
+    },
+    {
+      "id": "#c:aluminum_dusts",
+      "required": false
+    }
+  ]
+}

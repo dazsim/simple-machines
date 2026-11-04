@@ -1,0 +1,33 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:ingots/nickel",
+        "c:dusts/nickel"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": {
+    "tag": "c:ingots/nickel"
+  },
+  "result": "#c:dusts/nickel",
+  "cooking_time": 100,
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:ingots/nickel"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:dusts/nickel"
+      }
+    }
+  ]
+}

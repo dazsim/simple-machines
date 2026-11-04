@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:storage_blocks/gold",
+      "required": false
+    },
+    {
+      "id": "#c:gold_blocks",
+      "required": false
+    }
+  ]
+}

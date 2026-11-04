@@ -144,7 +144,7 @@ public class ChunkLoaders extends SavedData {
     private void release(MinecraftServer server, Entry e) {
         if (!ticketed.remove(e.pos())) return;
         // two loaders in one chunk at one size share a single ticket, so only the last one out takes it
-        for (GlobalPos p : ticketed) if (entries.get(p) instanceof Entry o && o.sameTicket(e)) return;
+        for (GlobalPos p : ticketed) if ((Object) entries.get(p) instanceof Entry o && o.sameTicket(e)) return;
         final ServerLevel level = server.getLevel(e.pos().dimension());
         //? if >=26.1 {
         if (level != null) level.getChunkSource().removeTicketWithRadius(TICKET, e.chunk(), e.radius() + 2);
@@ -159,7 +159,7 @@ public class ChunkLoaders extends SavedData {
     }
 
     public void resync(MinecraftServer server, GlobalPos pos) {
-        if (entries.get(pos) instanceof Entry e) sync(server, e);
+        if ((Object) entries.get(pos) instanceof Entry e) sync(server, e);
     }
 
     public void resync(MinecraftServer server) {

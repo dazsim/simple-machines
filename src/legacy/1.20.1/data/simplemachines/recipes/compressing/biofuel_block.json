@@ -1,0 +1,9 @@
+{
+  "type": "simplemachines:compressing",
+  "ingredient": {
+    "tag": "simplemachines:compostables"
+  },
+  "result": "simplemachines:biofuel_block",
+  "input_count": 32,
+  "cooking_time": 160
+}

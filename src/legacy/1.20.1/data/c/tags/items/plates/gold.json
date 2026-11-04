@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "simplemachines:gold_sheet",
+    {
+      "id": "#forge:plates/gold",
+      "required": false
+    },
+    {
+      "id": "#c:gold_plates",
+      "required": false
+    }
+  ]
+}

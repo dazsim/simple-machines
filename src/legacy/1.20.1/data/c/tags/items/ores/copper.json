@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/copper",
+      "required": false
+    },
+    {
+      "id": "#c:copper_ores",
+      "required": false
+    }
+  ]
+}

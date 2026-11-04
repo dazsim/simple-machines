@@ -1,0 +1,57 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "simplemachines:auto_crafter",
+          "functions": [
+            {
+              "function": "minecraft:copy_state",
+              "block": "simplemachines:auto_crafter",
+              "properties": [
+                "tier",
+                "panel"
+              ]
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "SimpleMachines.energy",
+                  "target": "SimpleMachines.energy",
+                  "op": "replace"
+                },
+                {
+                  "source": "SimpleMachines.worktop",
+                  "target": "SimpleMachines.worktop",
+                  "op": "replace"
+                },
+                {
+                  "source": "SimpleMachines.upgrades",
+                  "target": "SimpleMachines.upgrades",
+                  "op": "replace"
+                },
+                {
+                  "source": "SimpleMachines.crafter_pattern",
+                  "target": "SimpleMachines.crafter_pattern",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "simplemachines:blocks/auto_crafter"
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/iron"
+    },
+    "C": {
+      "item": "simplemachines:redstone_copper_ingot"
+    },
+    "E": {
+      "item": "simplemachines:entangled_coil"
+    },
+    "X": {
+      "item": "simplemachines:gold_cable"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "EXE"
+  ],
+  "result": {
+    "item": "simplemachines:entangled_relay_mv_assembly"
+  }
+}

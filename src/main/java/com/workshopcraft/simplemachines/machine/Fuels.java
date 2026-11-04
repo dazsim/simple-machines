@@ -50,7 +50,7 @@ public final class Fuels {
 
     //? if <26.1 {
     /*private static int burnTime(ItemStack stack) {
-        //? if neoforge {
+        //? if neoforge || forge {
         return stack.getBurnTime(null);
         //?} else {
         /^Integer t = net.fabricmc.fabric.api.registry.FuelRegistry.INSTANCE.get(stack.getItem());

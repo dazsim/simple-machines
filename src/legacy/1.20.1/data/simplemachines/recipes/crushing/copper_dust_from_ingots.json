@@ -1,0 +1,8 @@
+{
+  "type": "simplemachines:crushing",
+  "ingredient": {
+    "tag": "c:ingots/copper"
+  },
+  "result": "#c:dusts/copper",
+  "cooking_time": 100
+}

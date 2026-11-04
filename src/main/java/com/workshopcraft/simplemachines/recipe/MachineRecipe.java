@@ -47,7 +47,7 @@ public interface MachineRecipe extends Recipe<MachineInput> {
     default RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.FURNACE_MISC;
     }
-    //?} else {
+    //?} else if >=1.20.5 {
     /*ItemStack assemble(MachineInput input);
 
     @Override
@@ -63,6 +63,28 @@ public interface MachineRecipe extends Recipe<MachineInput> {
     @Override
     default boolean canCraftInDimensions(int width, int height) {
         return true;
+    }
+    *///?} else {
+    /*ItemStack assemble(MachineInput input);
+
+    @Override
+    default ItemStack assemble(MachineInput input, net.minecraft.core.RegistryAccess registries) {
+        return assemble(input);
+    }
+
+    @Override
+    default ItemStack getResultItem(net.minecraft.core.RegistryAccess registries) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    default boolean canCraftInDimensions(int width, int height) {
+        return true;
+    }
+
+    @Override
+    default net.minecraft.resources.ResourceLocation getId() {
+        return com.workshopcraft.simplemachines.compat.mc.Registration.id(this);
     }
     *///?}
 

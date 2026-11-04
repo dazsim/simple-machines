@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "tag": "c:plates/steel"
+    },
+    "C": {
+      "item": "simplemachines:entangled_coil"
+    },
+    "W": {
+      "item": "simplemachines:entangled_wire"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "B": {
+      "item": "simplemachines:control_board"
+    }
+  },
+  "pattern": [
+    "PCP",
+    "WDW",
+    "PBP"
+  ],
+  "result": {
+    "item": "simplemachines:chunk_loader_module"
+  }
+}

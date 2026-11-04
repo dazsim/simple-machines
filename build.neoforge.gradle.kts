@@ -26,12 +26,7 @@ sourceSets.main {
     java.exclude("com/workshopcraft/simplemachines/fabric/**", "com/workshopcraft/simplemachines/forge/**")
     if (!modern) resources.setSrcDirs(listOf(rootProject.file("src/legacy/1.21.1"), rootProject.file("src/main/resources")))
     // Whole-file replacements for old targets; the main copy of each file is left out
-    if (!modern) {
-        val overlays = listOf(sc.current.version, sc.current.project).map { rootProject.file("src/legacy-java/$it") }
-        overlays.forEach { java.srcDir(it) }
-        val replaced = overlays.flatMap { o -> rootProject.fileTree(o).files.map { it.relativeTo(o).invariantSeparatorsPath } }
-        java.exclude { e -> overlays.none { e.file.absolutePath.startsWith(it.absolutePath) } && e.relativePath.pathString in replaced }
-    }
+    if (!modern) applyOverlays(rootProject.file("."), overlayChain(sc.current.version, "neoforge"))
 }
 
 neoForge {

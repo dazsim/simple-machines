@@ -1,0 +1,35 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "values": [
+        "c:raw_materials/lead",
+        "c:dusts/lead"
+      ]
+    }
+  ],
+  "type": "simplemachines:crushing",
+  "ingredient": {
+    "tag": "c:raw_materials/lead"
+  },
+  "result": "#c:dusts/lead",
+  "count": 2,
+  "bonus": 0.1,
+  "cooking_time": 200,
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:raw_materials/lead"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "c:dusts/lead"
+      }
+    }
+  ]
+}

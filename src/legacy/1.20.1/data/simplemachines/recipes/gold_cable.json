@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "T": {
+      "item": "simplemachines:redstone_copper_cable"
+    },
+    "S": {
+      "tag": "c:plates/steel"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "SGS",
+    "TTT"
+  ],
+  "result": {
+    "item": "simplemachines:gold_cable",
+    "count": 6
+  }
+}

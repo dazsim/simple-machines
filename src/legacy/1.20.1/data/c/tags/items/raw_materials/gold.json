@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:raw_gold",
+    {
+      "id": "#forge:raw_materials/gold",
+      "required": false
+    },
+    {
+      "id": "#c:raw_gold_ores",
+      "required": false
+    }
+  ]
+}

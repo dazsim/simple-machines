@@ -1,0 +1,14 @@
+{
+  "type": "simplemachines:rolling",
+  "input": {
+    "ingredient": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "result": {
+    "item": "simplemachines:iron_casing",
+    "count": 2
+  },
+  "cooking_time": 100,
+  "mode": "casings"
+}

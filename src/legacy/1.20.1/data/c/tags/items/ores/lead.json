@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:ores/lead",
+      "required": false
+    },
+    {
+      "id": "#c:lead_ores",
+      "required": false
+    }
+  ]
+}

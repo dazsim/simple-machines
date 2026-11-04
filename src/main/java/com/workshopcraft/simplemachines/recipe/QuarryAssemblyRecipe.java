@@ -1,5 +1,6 @@
 package com.workshopcraft.simplemachines.recipe;
 
+import com.workshopcraft.simplemachines.compat.mc.Registration;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.workshopcraft.simplemachines.SimpleMachines;
@@ -29,7 +30,7 @@ public class QuarryAssemblyRecipe extends ShapedRecipe {
             ShapedRecipePattern.STREAM_CODEC, o -> o.pattern,
             ItemStackTemplate.STREAM_CODEC, o -> o.result,
             QuarryAssemblyRecipe::new);
-    public static final RecipeSerializer<QuarryAssemblyRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+    public static final RecipeSerializer<QuarryAssemblyRecipe> SERIALIZER = Registration.serializer(MAP_CODEC, STREAM_CODEC);
 
     private final ShapedRecipePattern pattern;
     private final ItemStackTemplate result;

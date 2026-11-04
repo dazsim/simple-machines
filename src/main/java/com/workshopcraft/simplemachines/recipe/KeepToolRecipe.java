@@ -1,5 +1,6 @@
 package com.workshopcraft.simplemachines.recipe;
 
+import com.workshopcraft.simplemachines.compat.mc.Registration;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
@@ -42,7 +43,7 @@ public class KeepToolRecipe extends NormalCraftingRecipe {
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
             Ingredient.CONTENTS_STREAM_CODEC, o -> o.keep,
             KeepToolRecipe::new);
-    public static final RecipeSerializer<KeepToolRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+    public static final RecipeSerializer<KeepToolRecipe> SERIALIZER = Registration.serializer(MAP_CODEC, STREAM_CODEC);
 
     private final ItemStackTemplate result;
     private final List<Ingredient> ingredients;

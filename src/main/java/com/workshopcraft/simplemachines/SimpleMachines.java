@@ -1,5 +1,6 @@
 package com.workshopcraft.simplemachines;
 
+import com.workshopcraft.simplemachines.compat.mc.Registration;
 import com.workshopcraft.simplemachines.assembly.Upgrade;
 import com.workshopcraft.simplemachines.item.MachineItem;
 import com.workshopcraft.simplemachines.item.PoweredToolItem;
@@ -71,17 +72,17 @@ public class SimpleMachines {
     public static final RecipeType<AlloyingRecipe> ALLOYING = type("alloying");
     public static final RecipeType<ExtrudingRecipe> EXTRUDING = type("extruding");
     public static final RecipeType<RollingRecipe> ROLLING = type("rolling");
-    public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER = new RecipeSerializer<>(AlloyingRecipe.MAP_CODEC, AlloyingRecipe.STREAM_CODEC);
-    public static final RecipeSerializer<ExtrudingRecipe> EXTRUDING_SERIALIZER = new RecipeSerializer<>(ExtrudingRecipe.MAP_CODEC, ExtrudingRecipe.STREAM_CODEC);
-    public static final RecipeSerializer<RollingRecipe> ROLLING_SERIALIZER = new RecipeSerializer<>(RollingRecipe.MAP_CODEC, RollingRecipe.STREAM_CODEC);
+    public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER = Registration.serializer(AlloyingRecipe.MAP_CODEC, AlloyingRecipe.STREAM_CODEC);
+    public static final RecipeSerializer<ExtrudingRecipe> EXTRUDING_SERIALIZER = Registration.serializer(ExtrudingRecipe.MAP_CODEC, ExtrudingRecipe.STREAM_CODEC);
+    public static final RecipeSerializer<RollingRecipe> ROLLING_SERIALIZER = Registration.serializer(RollingRecipe.MAP_CODEC, RollingRecipe.STREAM_CODEC);
     public static final RecipeType<ProcessRecipe> CRUSHING = type("crushing");
     public static final RecipeType<ProcessRecipe> SAWING = type("sawing");
-    public static final RecipeSerializer<ProcessRecipe> CRUSHING_SERIALIZER = new RecipeSerializer<>(
+    public static final RecipeSerializer<ProcessRecipe> CRUSHING_SERIALIZER = Registration.serializer(
             ProcessRecipe.mapCodec(ProcessRecipe.Kind.CRUSHING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.CRUSHING));
-    public static final RecipeSerializer<ProcessRecipe> SAWING_SERIALIZER = new RecipeSerializer<>(
+    public static final RecipeSerializer<ProcessRecipe> SAWING_SERIALIZER = Registration.serializer(
             ProcessRecipe.mapCodec(ProcessRecipe.Kind.SAWING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.SAWING));
     public static final RecipeType<ProcessRecipe> COMPRESSING = type("compressing");
-    public static final RecipeSerializer<ProcessRecipe> COMPRESSING_SERIALIZER = new RecipeSerializer<>(
+    public static final RecipeSerializer<ProcessRecipe> COMPRESSING_SERIALIZER = Registration.serializer(
             ProcessRecipe.mapCodec(ProcessRecipe.Kind.COMPRESSING), ProcessRecipe.streamCodec(ProcessRecipe.Kind.COMPRESSING));
     public static final List<Layout> LAYOUTS = List.of(Layout.PROCESS, Layout.ALLOY, Layout.BATTERY, Layout.STONE, Layout.HIVE, Layout.GRID, Layout.LAVA);
     public static final Map<Layout, MenuType<PoweredMenu>> MENUS = new HashMap<>();
@@ -226,7 +227,7 @@ public class SimpleMachines {
     }
 
     private static BlockBehaviour.Properties machine(String name) {
-        return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
+        return blockProps(name)
                 .mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.STONE)
                 .lightLevel(s -> s.getValue(BlockStateProperties.LIT) ? 13 : 0);
     }
@@ -253,7 +254,7 @@ public class SimpleMachines {
     }
 
     private static BlockBehaviour.Properties chassis(String name) {
-        return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
+        return blockProps(name)
                 .mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(4.0F).sound(SoundType.METAL)
                 .noOcclusion().isViewBlocking(NOT_VIEW_BLOCKING).isSuffocating((s, l, p) -> false);
     }
@@ -279,50 +280,41 @@ public class SimpleMachines {
         lvMvTransformer = transformer(r, "lv_mv_transformer", com.workshopcraft.simplemachines.cable.Voltage.MV);
         mvHvTransformer = transformer(r, "mv_hv_transformer", com.workshopcraft.simplemachines.cable.Voltage.HV);
         for (int i = 0; i < SOLAR.length; i++) {
-            final Block b = new com.workshopcraft.simplemachines.gen.SolarPanelBlock(BlockBehaviour.Properties.of()
-                    .setId(ResourceKey.create(Registries.BLOCK, id(SOLAR[i]))).mapColor(MapColor.METAL).strength(3.0F)
+            final Block b = new com.workshopcraft.simplemachines.gen.SolarPanelBlock(blockProps(SOLAR[i]).mapColor(MapColor.METAL).strength(3.0F)
                     .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion(), i + 1);
             r.accept(id(SOLAR[i]), b);
             SOLAR_PANELS.add(b);
         }
-        windTurbine = new com.workshopcraft.simplemachines.gen.WindTurbineBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("wind_turbine"))).mapColor(MapColor.METAL).strength(3.0F)
+        windTurbine = new com.workshopcraft.simplemachines.gen.WindTurbineBlock(blockProps("wind_turbine").mapColor(MapColor.METAL).strength(3.0F)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         r.accept(id("wind_turbine"), windTurbine);
-        turbineBlade = new com.workshopcraft.simplemachines.gen.TurbineBladeBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("turbine_blade"))).mapColor(MapColor.METAL).strength(2.0F)
+        turbineBlade = new com.workshopcraft.simplemachines.gen.TurbineBladeBlock(blockProps("turbine_blade").mapColor(MapColor.METAL).strength(2.0F)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion());
         r.accept(id("turbine_blade"), turbineBlade);
-        landmark = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("landmark"))).mapColor(MapColor.COLOR_YELLOW).strength(0.5F)
+        landmark = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(blockProps("landmark").mapColor(MapColor.COLOR_YELLOW).strength(0.5F)
                 .sound(SoundType.METAL).noOcclusion().lightLevel(st -> 7), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.POST);
         r.accept(id("landmark"), landmark);
-        quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryFrameBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_frame"))).mapColor(MapColor.METAL).strength(1.0F)
+        quarryFrame = new com.workshopcraft.simplemachines.quarry.QuarryFrameBlock(blockProps("quarry_frame").mapColor(MapColor.METAL).strength(1.0F)
                 .sound(SoundType.METAL).noOcclusion().noLootTable().isViewBlocking(NOT_VIEW_BLOCKING)
                 .isSuffocating((st, l, p) -> false));
         r.accept(id("quarry_frame"), quarryFrame);
-        quarryHead = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("quarry_drill_head"))).mapColor(MapColor.METAL).strength(1.0F)
+        quarryHead = new com.workshopcraft.simplemachines.quarry.QuarryPartBlock(blockProps("quarry_drill_head").mapColor(MapColor.METAL).strength(1.0F)
                 .sound(SoundType.METAL).noOcclusion().noLootTable(), com.workshopcraft.simplemachines.quarry.QuarryPartBlock.HEAD);
         r.accept(id("quarry_drill_head"), quarryHead);
-        itemPipe = new ItemPipeBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("item_pipe")))
+        itemPipe = new ItemPipeBlock(blockProps("item_pipe")
                 .mapColor(MapColor.METAL).strength(0.5F).sound(SoundType.COPPER).noOcclusion());
         r.accept(id("item_pipe"), itemPipe);
-        fluidPipe = new com.workshopcraft.simplemachines.pipe.FluidPipeBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("fluid_pipe"))).mapColor(MapColor.COLOR_ORANGE).strength(0.5F)
+        fluidPipe = new com.workshopcraft.simplemachines.pipe.FluidPipeBlock(blockProps("fluid_pipe").mapColor(MapColor.COLOR_ORANGE).strength(0.5F)
                 .sound(SoundType.COPPER).noOcclusion());
         r.accept(id("fluid_pipe"), fluidPipe);
-        tank = new com.workshopcraft.simplemachines.pipe.TankBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("fluid_tank"))).mapColor(MapColor.METAL).strength(1.5F)
+        tank = new com.workshopcraft.simplemachines.pipe.TankBlock(blockProps("fluid_tank").mapColor(MapColor.METAL).strength(1.5F)
                 .sound(SoundType.COPPER).noOcclusion().isViewBlocking(NOT_VIEW_BLOCKING).isRedstoneConductor((st, l, p) -> false)
                 .isSuffocating((st, l, p) -> false));
         r.accept(id("fluid_tank"), tank);
-        toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id("tool_stand"))).mapColor(MapColor.METAL).strength(2.0F)
+        toolStand = new com.workshopcraft.simplemachines.assembly.ToolStandBlock(blockProps("tool_stand").mapColor(MapColor.METAL).strength(2.0F)
                 .sound(SoundType.METAL).noOcclusion());
         r.accept(id("tool_stand"), toolStand);
-        biofuelBlock = new Block(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id("biofuel_block")))
+        biofuelBlock = new Block(blockProps("biofuel_block")
                 .mapColor(MapColor.COLOR_GREEN).strength(1.0F).sound(SoundType.GRASS));
         r.accept(id("biofuel_block"), biofuelBlock);
         MACHINES.put(Core.FURNACE, electricFurnace);
@@ -338,7 +330,7 @@ public class SimpleMachines {
     }
 
     private static Block cable(BiConsumer<Identifier, Block> r, String name, MapColor colour, int tier) {
-        final Block b = new CableBlock(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)))
+        final Block b = new CableBlock(blockProps(name)
                 .mapColor(colour).strength(0.5F).sound(SoundType.COPPER).noOcclusion(), tier);
         r.accept(id(name), b);
         CABLES.add(b);
@@ -346,8 +338,7 @@ public class SimpleMachines {
     }
 
     private static Block transformer(BiConsumer<Identifier, Block> r, String name, int high) {
-        final Block b = new com.workshopcraft.simplemachines.cable.TransformerBlock(BlockBehaviour.Properties.of()
-                .setId(ResourceKey.create(Registries.BLOCK, id(name))).mapColor(MapColor.METAL).strength(3.0F)
+        final Block b = new com.workshopcraft.simplemachines.cable.TransformerBlock(blockProps(name).mapColor(MapColor.METAL).strength(3.0F)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion(), high);
         r.accept(id(name), b);
         return b;
@@ -359,10 +350,10 @@ public class SimpleMachines {
             add(r, name, new Item(props(name)));
         }
         screwdriver = add(r, "screwdriver", new Item(props("screwdriver").stacksTo(1)));
-        add(r, "alloy_furnace", new BlockItem(alloyFurnace, props("alloy_furnace").useBlockDescriptionPrefix()));
-        add(r, "extruder", new BlockItem(extruder, props("extruder").useBlockDescriptionPrefix()));
-        add(r, "iron_chassis", new BlockItem(ironChassis, props("iron_chassis").useBlockDescriptionPrefix()));
-        add(r, "steel_chassis", new BlockItem(steelChassis, props("steel_chassis").useBlockDescriptionPrefix()));
+        add(r, "alloy_furnace", new BlockItem(alloyFurnace, blockItemProps("alloy_furnace")));
+        add(r, "extruder", new BlockItem(extruder, blockItemProps("extruder")));
+        add(r, "iron_chassis", new BlockItem(ironChassis, blockItemProps("iron_chassis")));
+        add(r, "steel_chassis", new BlockItem(steelChassis, blockItemProps("steel_chassis")));
         for (Core core : Core.values()) {
             if (core == Core.NONE) continue;
             final String name = core.getSerializedName() + "_assembly";
@@ -379,30 +370,30 @@ public class SimpleMachines {
             PANELS.put(finish, add(r, panels, new Item(props(panels))));
             WORKTOPS.put(finish, add(r, worktop, new Item(props(worktop))));
         }
-        add(r, "redstone_copper_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(cable, props("redstone_copper_cable").useBlockDescriptionPrefix()));
-        add(r, "gold_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(goldCable, props("gold_cable").useBlockDescriptionPrefix()));
-        add(r, "diamond_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(diamondCable, props("diamond_cable").useBlockDescriptionPrefix()));
-        add(r, "lv_mv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(lvMvTransformer, props("lv_mv_transformer").useBlockDescriptionPrefix()));
-        add(r, "mv_hv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(mvHvTransformer, props("mv_hv_transformer").useBlockDescriptionPrefix()));
+        add(r, "redstone_copper_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(cable, blockItemProps("redstone_copper_cable")));
+        add(r, "gold_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(goldCable, blockItemProps("gold_cable")));
+        add(r, "diamond_cable", new com.workshopcraft.simplemachines.item.HintBlockItem(diamondCable, blockItemProps("diamond_cable")));
+        add(r, "lv_mv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(lvMvTransformer, blockItemProps("lv_mv_transformer")));
+        add(r, "mv_hv_transformer", new com.workshopcraft.simplemachines.item.HintBlockItem(mvHvTransformer, blockItemProps("mv_hv_transformer")));
         for (String name : List.of("iron_core", "copper_core", "gold_core", "diamond_core", "pv_cell", "silicon_lapis_blend")) {
             add(r, name, new Item(props(name)));
         }
         for (int i = 0; i < SOLAR.length; i++) {
-            add(r, SOLAR[i], new com.workshopcraft.simplemachines.item.HintBlockItem(SOLAR_PANELS.get(i), props(SOLAR[i]).useBlockDescriptionPrefix()));
+            add(r, SOLAR[i], new com.workshopcraft.simplemachines.item.HintBlockItem(SOLAR_PANELS.get(i), blockItemProps(SOLAR[i])));
         }
-        add(r, "landmark", new BlockItem(landmark, props("landmark").useBlockDescriptionPrefix()));
-        add(r, "wind_turbine", new com.workshopcraft.simplemachines.item.HintBlockItem(windTurbine, props("wind_turbine").useBlockDescriptionPrefix(),
+        add(r, "landmark", new BlockItem(landmark, blockItemProps("landmark")));
+        add(r, "wind_turbine", new com.workshopcraft.simplemachines.item.HintBlockItem(windTurbine, blockItemProps("wind_turbine"),
                 "tooltip.simplemachines.wind_base"));
-        add(r, "turbine_blade", new com.workshopcraft.simplemachines.item.HintBlockItem(turbineBlade, props("turbine_blade").useBlockDescriptionPrefix(),
+        add(r, "turbine_blade", new com.workshopcraft.simplemachines.item.HintBlockItem(turbineBlade, blockItemProps("turbine_blade"),
                 "tooltip.simplemachines.blade_1", "tooltip.simplemachines.blade_2"));
-        add(r, "solid_fuel_generator", new MachineItem(generator, props("solid_fuel_generator").useBlockDescriptionPrefix()));
-        add(r, "rolling_mill", new MachineItem(rollingMill, props("rolling_mill").useBlockDescriptionPrefix()));
-        add(r, "electric_furnace", new MachineItem(electricFurnace, props("electric_furnace").useBlockDescriptionPrefix()));
-        for (Core core : NEW_CORES) add(r, core.block, new MachineItem(MACHINES.get(core), props(core.block).useBlockDescriptionPrefix()));
-        add(r, "item_pipe", new BlockItem(itemPipe, props("item_pipe").useBlockDescriptionPrefix()));
-        add(r, "fluid_pipe", new BlockItem(fluidPipe, props("fluid_pipe").useBlockDescriptionPrefix()));
-        add(r, "fluid_tank", new com.workshopcraft.simplemachines.pipe.TankItem(tank, props("fluid_tank").useBlockDescriptionPrefix()));
-        biofuelItem = add(r, "biofuel_block", new BlockItem(biofuelBlock, fuel(props("biofuel_block").useBlockDescriptionPrefix())));
+        add(r, "solid_fuel_generator", new MachineItem(generator, blockItemProps("solid_fuel_generator")));
+        add(r, "rolling_mill", new MachineItem(rollingMill, blockItemProps("rolling_mill")));
+        add(r, "electric_furnace", new MachineItem(electricFurnace, blockItemProps("electric_furnace")));
+        for (Core core : NEW_CORES) add(r, core.block, new MachineItem(MACHINES.get(core), blockItemProps(core.block)));
+        add(r, "item_pipe", new BlockItem(itemPipe, blockItemProps("item_pipe")));
+        add(r, "fluid_pipe", new BlockItem(fluidPipe, blockItemProps("fluid_pipe")));
+        add(r, "fluid_tank", new com.workshopcraft.simplemachines.pipe.TankItem(tank, blockItemProps("fluid_tank")));
+        biofuelItem = add(r, "biofuel_block", new BlockItem(biofuelBlock, fuel(blockItemProps("biofuel_block"))));
         pipeFilter = add(r, "pipe_filter", new com.workshopcraft.simplemachines.pipe.PipeFilterItem(props("pipe_filter")));
         for (String name : List.of("iron_dust", "copper_dust", "gold_dust")) add(r, name, new Item(props(name)));
         for (Upgrade u : Upgrade.values()) UPGRADES.put(u, add(r, u.id, new UpgradeItem(u, props(u.id).stacksTo(16))));
@@ -411,7 +402,7 @@ public class SimpleMachines {
         linkCard = add(r, "link_card", new com.workshopcraft.simplemachines.entangled.LinkCardItem(props("link_card").stacksTo(16)));
         entangledBackpack = add(r, "entangled_backpack", new com.workshopcraft.simplemachines.entangled.EntangledBackpackItem(props("entangled_backpack").stacksTo(1)
                 .component(net.minecraft.core.component.DataComponents.EQUIPPABLE, com.workshopcraft.simplemachines.entangled.EntangledBackpackItem.equippable())));
-        add(r, "tool_stand", new BlockItem(toolStand, props("tool_stand").useBlockDescriptionPrefix()));
+        add(r, "tool_stand", new BlockItem(toolStand, blockItemProps("tool_stand")));
         ironToolFrame = add(r, "iron_tool_frame", new Item(props("iron_tool_frame")));
         steelToolFrame = add(r, "steel_tool_frame", new Item(props("steel_tool_frame")));
         drillMotor = add(r, "drill_motor", new Item(props("drill_motor")));
@@ -439,7 +430,27 @@ public class SimpleMachines {
     //?}
 
     private static Item.Properties props(String name) {
+        //? if >=26.1 {
         return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id(name)));
+        //?} else {
+        /*return new Item.Properties();
+        *///?}
+    }
+
+    private static Item.Properties blockItemProps(String name) {
+        //? if >=26.1 {
+        return props(name).useBlockDescriptionPrefix();
+        //?} else {
+        /*return props(name);
+        *///?}
+    }
+
+    private static BlockBehaviour.Properties blockProps(String name) {
+        //? if >=26.1 {
+        return BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id(name)));
+        //?} else {
+        /*return BlockBehaviour.Properties.of();
+        *///?}
     }
 
     private static Item add(BiConsumer<Identifier, Item> r, String name, Item item) {
@@ -489,15 +500,15 @@ public class SimpleMachines {
     }
 
     public static void registerBlockEntities(BiConsumer<Identifier, BlockEntityType<?>> r) {
-        alloyFurnaceEntity = new BlockEntityType<>(AlloyFurnaceBlockEntity::new, Set.of(alloyFurnace));
+        alloyFurnaceEntity = Registration.blockEntity(AlloyFurnaceBlockEntity::new, Set.of(alloyFurnace));
         r.accept(id("alloy_furnace"), alloyFurnaceEntity);
-        extruderEntity = new BlockEntityType<>(ExtruderBlockEntity::new, Set.of(extruder));
+        extruderEntity = Registration.blockEntity(ExtruderBlockEntity::new, Set.of(extruder));
         r.accept(id("extruder"), extruderEntity);
-        generatorEntity = new BlockEntityType<>(GeneratorBlockEntity::new, Set.of(generator));
+        generatorEntity = Registration.blockEntity(GeneratorBlockEntity::new, Set.of(generator));
         r.accept(id("solid_fuel_generator"), generatorEntity);
-        rollingMillEntity = new BlockEntityType<>(RollingMillBlockEntity::new, Set.of(rollingMill));
+        rollingMillEntity = Registration.blockEntity(RollingMillBlockEntity::new, Set.of(rollingMill));
         r.accept(id("rolling_mill"), rollingMillEntity);
-        electricFurnaceEntity = new BlockEntityType<>(ElectricFurnaceBlockEntity::new, Set.of(electricFurnace));
+        electricFurnaceEntity = Registration.blockEntity(ElectricFurnaceBlockEntity::new, Set.of(electricFurnace));
         r.accept(id("electric_furnace"), electricFurnaceEntity);
         entity(r, Core.BATTERY, BatteryBlockEntity::new);
         entity(r, Core.CRUSHER, (p, st) -> new ProcessBlockEntity(MACHINE_ENTITIES.get(Core.CRUSHER), p, st, CRUSHING, "crusher"));
@@ -525,25 +536,25 @@ public class SimpleMachines {
         WORK_ENTITIES.add(generatorEntity);
         WORK_ENTITIES.add(rollingMillEntity);
         WORK_ENTITIES.add(electricFurnaceEntity);
-        chassisEntity = new BlockEntityType<>(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
+        chassisEntity = Registration.blockEntity(ChassisBlockEntity::new, Set.of(ironChassis, steelChassis));
         r.accept(id("chassis"), chassisEntity);
-        conduitEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, goldCable, diamondCable, itemPipe, fluidPipe));
+        conduitEntity = Registration.blockEntity(com.workshopcraft.simplemachines.cable.ConduitBlockEntity::new, Set.of(cable, goldCable, diamondCable, itemPipe, fluidPipe));
         r.accept(id("conduit"), conduitEntity);
-        transformerEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.cable.TransformerBlockEntity::new, Set.of(lvMvTransformer, mvHvTransformer));
+        transformerEntity = Registration.blockEntity(com.workshopcraft.simplemachines.cable.TransformerBlockEntity::new, Set.of(lvMvTransformer, mvHvTransformer));
         r.accept(id("transformer"), transformerEntity);
-        solarEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity::new, Set.copyOf(SOLAR_PANELS));
+        solarEntity = Registration.blockEntity(com.workshopcraft.simplemachines.gen.SolarPanelBlockEntity::new, Set.copyOf(SOLAR_PANELS));
         r.accept(id("solar_panel"), solarEntity);
-        windEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity::new, Set.of(windTurbine));
+        windEntity = Registration.blockEntity(com.workshopcraft.simplemachines.gen.WindTurbineBlockEntity::new, Set.of(windTurbine));
         r.accept(id("wind_turbine"), windEntity);
-        tankEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.pipe.TankBlockEntity::new, Set.of(tank));
+        tankEntity = Registration.blockEntity(com.workshopcraft.simplemachines.pipe.TankBlockEntity::new, Set.of(tank));
         r.accept(id("fluid_tank"), tankEntity);
-        toolStandEntity = new BlockEntityType<>(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));
+        toolStandEntity = Registration.blockEntity(com.workshopcraft.simplemachines.assembly.ToolStandBlockEntity::new, Set.of(toolStand));
         r.accept(id("tool_stand"), toolStandEntity);
     }
 
     private static <T extends WorkBlockEntity> void entity(BiConsumer<Identifier, BlockEntityType<?>> r, Core core,
                                                            BlockEntityType.BlockEntitySupplier<T> factory) {
-        final BlockEntityType<T> type = new BlockEntityType<>(factory, Set.of(MACHINES.get(core)));
+        final BlockEntityType<T> type = Registration.blockEntity(factory, Set.of(MACHINES.get(core)));
         MACHINE_ENTITIES.put(core, type);
         WORK_ENTITIES.add(type);
         r.accept(id(core.block), type);

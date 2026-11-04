@@ -8,7 +8,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+//? if >=26.1 {
 import net.minecraft.world.item.ItemStackTemplate;
+//?} else {
+/*import com.workshopcraft.simplemachines.compat.mc.ItemStackTemplate;
+*///?}
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;

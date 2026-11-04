@@ -1,10 +1,16 @@
 package com.workshopcraft.simplemachines.recipe;
 
 import net.minecraft.world.item.ItemStack;
+//? if >=26.1 {
 import net.minecraft.world.item.crafting.PlacementInfo;
+//?} else {
+/*import net.minecraft.core.HolderLookup;
+*///?}
 import net.minecraft.world.item.crafting.Recipe;
+//? if >=26.1 {
 import net.minecraft.world.item.crafting.RecipeBookCategories;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
+//?}
 
 import java.util.List;
 
@@ -26,6 +32,7 @@ public interface MachineRecipe extends Recipe<MachineInput> {
         return false;
     }
 
+    //? if >=26.1 {
     @Override
     default String group() {
         return "";
@@ -40,6 +47,24 @@ public interface MachineRecipe extends Recipe<MachineInput> {
     default RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.FURNACE_MISC;
     }
+    //?} else {
+    /*ItemStack assemble(MachineInput input);
+
+    @Override
+    default ItemStack assemble(MachineInput input, HolderLookup.Provider registries) {
+        return assemble(input);
+    }
+
+    @Override
+    default ItemStack getResultItem(HolderLookup.Provider registries) {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    default boolean canCraftInDimensions(int width, int height) {
+        return true;
+    }
+    *///?}
 
     default boolean usesItem(ItemStack stack) {
         for (CountedIngredient c : ingredients()) {

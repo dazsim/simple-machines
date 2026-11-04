@@ -36,8 +36,15 @@ public class SimpleMachinesFabricClient implements ClientModInitializer {
         for (String t : com.workshopcraft.simplemachines.client.ToolItemRenderer.TOOLS)
             net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(SimpleMachines.id(t)),
                     (stack, ctx, pose, buffers, light, overlay) -> com.workshopcraft.simplemachines.client.ToolItemRenderer.get().renderByItem(stack, ctx, pose, buffers, light, overlay));
-        net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(ctx ->
-                ctx.addModels(com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(net.minecraft.client.Minecraft.getInstance().getResourceManager())));
+        net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(ctx -> {
+            var rm = net.minecraft.client.Minecraft.getInstance().getResourceManager();
+            ctx.addModels(com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(rm));
+            com.workshopcraft.simplemachines.client.EulerQuads.load(rm);
+            ctx.modifyModelAfterBake().register((m, c) -> {
+                var id = c.resourceId() != null ? c.resourceId() : c.topLevelId() != null ? c.topLevelId().id() : null;
+                return id != null && id.getNamespace().equals(SimpleMachines.MODID) ? com.workshopcraft.simplemachines.client.EulerQuads.fix(m) : m;
+            });
+        });
         com.workshopcraft.simplemachines.client.ToolItemRenderer.models = id -> net.minecraft.client.Minecraft.getInstance().getModelManager().getModel(id);
         net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(SimpleMachines.tank,
                 (stack, ctx, pose, buffers, light, overlay) -> com.workshopcraft.simplemachines.client.TankItemRenderer.get().renderByItem(stack, ctx, pose, buffers, light, overlay));

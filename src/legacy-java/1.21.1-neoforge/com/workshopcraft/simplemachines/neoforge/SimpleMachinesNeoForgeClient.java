@@ -93,6 +93,10 @@ public class SimpleMachinesNeoForgeClient {
             for (var id : com.workshopcraft.simplemachines.client.ToolItemRenderer.leafModels(net.minecraft.client.Minecraft.getInstance().getResourceManager()))
                 e.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(id));
         });
+        modBus.addListener((net.neoforged.neoforge.client.event.ModelEvent.ModifyBakingResult e) -> {
+            com.workshopcraft.simplemachines.client.EulerQuads.load(net.minecraft.client.Minecraft.getInstance().getResourceManager());
+            e.getModels().forEach((k, m) -> { if (k.id().getNamespace().equals(SimpleMachines.MODID)) com.workshopcraft.simplemachines.client.EulerQuads.fix(m); });
+        });
         com.workshopcraft.simplemachines.client.ToolItemRenderer.models = id -> net.minecraft.client.Minecraft.getInstance().getModelManager()
                 .getModel(net.minecraft.client.resources.model.ModelResourceLocation.standalone(id));
         modBus.addListener((EntityRenderersEvent.RegisterRenderers e) -> {
